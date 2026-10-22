@@ -40,14 +40,14 @@ private const val LOCAL_NAME = "ローカル練習用"
 // Keeps the OAuth cookie, which holds returnTo, well under the 4096 bytes a browser accepts.
 private const val MAX_RETURN_TO = 1024
 
-// Where a login an app (the iPad, the Android or the Windows app) started ends: the apps wait for this scheme.
+// Where a login an app (the iPad, the Mac, the Android or the Windows app) started ends: the apps wait for this scheme.
 private const val APP_RETURN = "typle-r://login"
 
 // Far more than a code and a verifier take.
 private const val MAX_TOKEN_REQUEST = 4096
 
 // The signin's clients for a login an app starts. Every app logs in the same way.
-private val appClients = setOf("ipad", "android", "windows")
+private val appClients = setOf("ipad", "macos", "android", "windows")
 
 // What RFC 7636 allows as a code verifier; an S256 challenge is 43 of these characters.
 private val pkceValue = Regex("[A-Za-z0-9._~-]{43,128}")
@@ -144,9 +144,9 @@ private suspend fun ApplicationCall.loginReady(config: Config): Boolean {
 
 /**
  * Sends the browser to GitHub with a state and a PKCE challenge, and keeps the state, the verifier and where to return
- * to in the signed OAuth cookie. With client=ipad, client=android or client=windows and the app's own S256
- * code_challenge, the login is that app's: it ends at APP_RETURN with a code that only the holder of the challenge's verifier can trade for a
- * token. Only GET: it sets cookies, which a HEAD must not do.
+ * to in the signed OAuth cookie. With client=ipad, client=macos, client=android or client=windows and the app's own
+ * S256 code_challenge, the login is that app's: it ends at APP_RETURN with a code that only the holder of the
+ * challenge's verifier can trade for a token. Only GET: it sets cookies, which a HEAD must not do.
  */
 private suspend fun ApplicationCall.signin(config: Config) {
   if (!methods(HttpMethod.Get) || !loginReady(config)) return
