@@ -247,7 +247,7 @@ class WorkspaceRoutesTest {
     }
   }
 
-  // An app's (iPad or Android) token is judged alone: no Origin is needed, and a cookie never stands in for it.
+  // An app's (iPad, Android or Windows) token is judged alone: no Origin is needed, and a cookie never stands in for it.
   @Test fun appToken() = serve {
     val body = payload(TEST_OWNER, """"revision":0,"lists":[]""")
     val token = appToken(TEST_OWNER)

@@ -127,9 +127,11 @@ class AuthRoutesTest {
     expectJsonHeaders("token", token)
     val issued = Keys.create(TEST_SECRET).sealApp(newSession("github:7", "Octo Cat", "https://avatars.example/7", NOW))
     assertEquals("""{"token":"$issued","user":{"id":"github:7","name":"Octo Cat","image":"https://avatars.example/7"}}""" + "\n", token.body())
-    // The iPad's login ends the same way; a failed one goes back to the app.
+    // The iPad's and the Windows app's logins end the same way; a failed one goes back to the app.
     val ipad = login("/api/auth/signin?client=ipad&code_challenge=$challenge", code = "bad")
     assertEquals("typle-r://login?error=loginFailed", ipad.location())
+    val windows = login("/api/auth/signin?client=windows&code_challenge=$challenge", code = "bad")
+    assertEquals("typle-r://login?error=loginFailed", windows.location())
   }
 
   @Test fun tokenRefuses() = serve {

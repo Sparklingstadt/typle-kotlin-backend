@@ -16,8 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Whether the request is an app's (iPad or Android): it carries an Authorization header, which a browser does not send
- * to this site on its own, and is then judged by that header alone.
+ * Whether the request is an app's (iPad, Android or Windows): it carries an Authorization header, which a browser does
+ * not send to this site on its own, and is then judged by that header alone.
  */
 fun fromApp(call: ApplicationCall): Boolean = !call.request.headers["Authorization"].isNullOrEmpty()
 
