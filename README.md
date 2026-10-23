@@ -36,7 +36,7 @@ AUTH_SECRET=… AUTH_URL=http://127.0.0.1:3000 DATABASE_URL=… build/install/ty
 
 ## 構成
 
-Go の `server/internal/*` と 1 対 1 に対応します。Go を変えたら、ここも同じように直してください（CI の `Kotlin backend` が E2E で気づきます）。
+Go の `server/internal/*` と 1 対 1 に対応します。Go を変えたら、ここも同じように直してください（`TYPLE_BACKEND=kotlin npm run test:e2e` で確かめます）。
 
 | Kotlin（`src/main/kotlin/…/server/`） | Go |
 |---|---|
@@ -57,7 +57,7 @@ TYPLE_TEST_DATABASE_URL=postgresql://… ./gradlew test    # DB のテストは 
 ```
 
 - 単体テストは、Go のテストの入力と期待をそのまま移したものです。セッションは Go が作った値を固定し、同じ文字列になることを確かめます。HTTP のテストはポート 0 で実際のサーバーを起動して確かめます。
-- `.github/workflows/kotlin-server.yml`（`Kotlin backend`）が、PR と手動の実行で、単体テストと、バックエンドを Kotlin にした全 E2E を行います。`ci.yml` のリリース・デプロイとは別で、リリースの条件ではありません。
+- CI のワークフローはありません（v0.70.0 で削除）。`./gradlew test` と、`TYPLE_BACKEND=kotlin npm run test:e2e` は手元で行います。
 
 ## 範囲外
 
