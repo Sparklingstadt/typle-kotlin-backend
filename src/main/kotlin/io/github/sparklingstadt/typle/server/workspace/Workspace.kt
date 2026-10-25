@@ -34,6 +34,7 @@ data class Record(
 data class WordList(
   val id: String, val name: String, val words: List<Word>, val records: List<Record>, val createdAt: String,
   val extra: String = "",
+  val category: String = "", val tags: List<String> = emptyList(),
 )
 
 data class Workspace(val lists: List<WordList>, val devices: List<Device>)
@@ -82,6 +83,10 @@ private fun decodeList(raw: JsonValue): WordList {
   val id = optionalString(fields, "id")
   val name = optionalString(fields, "name")
   val createdAt = optionalString(fields, "createdAt")
+  val category = optionalString(fields, "category") ?: ""
+  val tags = optionalArray(fields, "tags").orEmpty().map {
+    (it as? JsonString)?.value ?: invalid("tags must be strings")
+  }
   val words = optionalArray(fields, "words")
   val records = optionalArray(fields, "records")
   if (id.isNullOrEmpty() || name == null || createdAt == null || words == null || records == null) {
@@ -109,7 +114,8 @@ private fun decodeList(raw: JsonValue): WordList {
     }
   }
   return WordList(id, name, decodedWords, decodedRecords, createdAt,
-    unknown(fields, "id", "name", "createdAt", "words", "records", "shared", "shareId"))
+    unknown(fields, "id", "name", "category", "tags", "createdAt", "words", "records", "shared", "shareId"),
+    category, tags)
 }
 
 private fun decodeRecord(raw: JsonValue): Record {

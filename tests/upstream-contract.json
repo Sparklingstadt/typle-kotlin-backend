@@ -1,0 +1,61 @@
+{
+  "upstream": "Sparklingstadt/typle-r",
+  "reviewedCommit": "b4ff19cf35571093d2414eb606989a11f6c25da5",
+  "groups": [
+    {
+      "directory": "server/internal/web",
+      "extension": ".go"
+    },
+    {
+      "directory": "server/internal/session",
+      "extension": ".go"
+    },
+    {
+      "directory": "server/internal/auth",
+      "extension": ".go"
+    },
+    {
+      "directory": "server/internal/store",
+      "extension": ".go"
+    },
+    {
+      "directory": "server/internal/workspace",
+      "extension": ".go"
+    }
+  ],
+  "extraFiles": [
+    "prisma/schema.prisma"
+  ],
+  "files": {
+    "prisma/schema.prisma": "d589e8141b39c5e8ea8eb288ee77045519c8e7119716b5fe83d39a104a6e8cf7",
+    "server/internal/auth/github.go": "59692b2cfc155b8e49eb66cf6ece509351ebaa09ed1b6435190714eb840c3d29",
+    "server/internal/auth/oauth.go": "91d89d6454047f8c0a038d560d0e0060444008d40a99156024c0c9584f2df4bf",
+    "server/internal/session/session.go": "9c78514a7860b3020a3424b0d8d72e3f8244997291c4ffaaa0cbd2a35ea941d8",
+    "server/internal/store/store.go": "5fe478d3ae71a829c6c2ed1ad03d13a6b4f8af82c51878e1693ccc24478622ee",
+    "server/internal/web/auth.go": "22ae81a31f304ddb15326e2148b9c64578ce0a4f3d8bc5cc89011801968d7770",
+    "server/internal/web/config.go": "7cbe78dd57094e65a39f0c11a254fb20dd920b0eceda657653f1bd191817fa60",
+    "server/internal/web/health.go": "60599ff69971c7c483f2c23a44483a5025dec04ecb49d551d522f199d9bf24a8",
+    "server/internal/web/report.go": "3e570cc9b671976c59ce32cd873cafe24581eb6360862bf7f4a4787c1363d5c0",
+    "server/internal/web/request.go": "cee7155311218324c9c6bec79d6ce0bbaf0d95ce45caed15fa70f459695db8d0",
+    "server/internal/web/web.go": "0dbd729b66aaa7742e46266dcd5d3dfd939940650e0c4747463c64f2ddd0fa32",
+    "server/internal/web/workspace.go": "71c0b5917ea820ef9577a56f3ce58850eeb40df6d8ff8d8d12915faacb8bba5b",
+    "server/internal/workspace/collate.go": "c7bf3a8ec5da4adf13350289d67288e16aefad5268ab653186a9fafce862f9ce",
+    "server/internal/workspace/copy.go": "5435dd52613c15fc57da3107894a541187918b849903e5943a94776164c0c152",
+    "server/internal/workspace/dashboard.go": "248730ddd0a26550a38080e6ed92b799799bf38357edd46c297969156f791c1b",
+    "server/internal/workspace/delimited.go": "3395d0ece7c158c29b06276376e3471847a6183884fcab24ca28808b1e8f7131",
+    "server/internal/workspace/devices.go": "60e9d18b55a340a8ef1d6dee645f6b22ccd96dbdc61d962f7f3aee687504b926",
+    "server/internal/workspace/encode.go": "b328dbb206881d1200c2353c8fd1ad42e56bb4a393f1b93e36597b485d117125",
+    "server/internal/workspace/extra.go": "fcf1c17b01b4fb5c71863d93b24a6d7c081f2fbe54792488f50690d75db4d500",
+    "server/internal/workspace/feed.go": "933e1c8ee3daf8f9f1bb19d6a430f770957a90260c1c35bc3beff975b1b832c3",
+    "server/internal/workspace/lists.go": "e33c30a3f5192350744e37fb0e808a547cadb688e602ebac8b7f2e3b6ca21d25",
+    "server/internal/workspace/lowercase.go": "462b8f7efdd382bcfc48102ac0608f753382f9ca2fbf120c7ffec532a75d40a6",
+    "server/internal/workspace/overview.go": "ceec0795abb95722dc92a70537ecbd54b58877cd8a1f375b49bc7005068fa213",
+    "server/internal/workspace/packs.go": "1fea1de4043431ab4c64bd30fab12eecbc4d2f10b960451461a300cea35b6d9d",
+    "server/internal/workspace/rank.go": "589dd31e33e3c658964105da744792112db33be8fa4063871bc92a8a6b60b83d",
+    "server/internal/workspace/rankings.go": "31d47cc94ae1db9dac2382ddb18f52ed123ac49137912a3ee084a755f3d281e9",
+    "server/internal/workspace/records.go": "0c8cb5e624daac0796f3247ec6b624273f495088f4ebbde252b0ce5e49ae914a",
+    "server/internal/workspace/time.go": "29aa63f18ce1b2a476b1f1d77c182c948097760116288034cf08953eea589f3b",
+    "server/internal/workspace/usage.go": "13e1bec55dd6a3f48ed8a19253fa9ab66d0537216f105ed6fa37811e36850cc0",
+    "server/internal/workspace/workspace.go": "d3d25433c101fadaf81679404670e08eadf63b0c50092942c6a77794d5571bc2"
+  }
+}

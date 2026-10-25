@@ -141,6 +141,6 @@ class WorkspaceTest {
       val error = assertFailsWith<WorkspaceError>(name) { checkLimits(listOf(ok[0], over)) }
       assertEquals("invalidWorkspace", error.key)
     }
-    assertTrue(MAX_LISTS == 100)
+    assertTrue(MAX_LISTS == 150)
   }
 }
