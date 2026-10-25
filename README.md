@@ -56,6 +56,12 @@ Go の `server/internal/*` と 1 対 1 に対応します。Go を変えたら�
 
 ## 確認
 
+Web・Goとの同期対象、API仕様と共通の回帰テストは [typle-rの互換性の確認](https://github.com/Sparklingstadt/typle-r/blob/main/docs/android-kotlin-compatibility.md) にあります。
+
+`TYPLE_R=../typle-r node --test tests/*.test.cjs` は対応するGoのコードの追加・削除・変更を検出します。`TYPLE_R=/absolute/path/to/typle-r ./gradlew test` はWeb・Go・Androidと同じ保存データのfixtureと上限を検証します。変更を取り込んでtyple-rの `TYPLE_TEST_DATABASE_URL=postgresql://… npm run test:compat:matrix -- --android` を通してから、`tests/upstream-contract.json` のレビュー済みコミットとハッシュを更新します。
+
+API互換性のテスト本体はtyple-rに1つだけ置き、GoとこのKotlinの実コマンドを同じケースで検証します。同じDB行の相互読み書き、トークンの相互受け入れ、更新競合、分類・タグと150件のリスト上限も対象です。単独テストで `TYPLE_R` を指定しない場合、共通fixtureのテストは未検証としてskipします。
+
 ```sh
 TYPLE_TEST_DATABASE_URL=postgresql://… ./gradlew test    # DB のテストは URL がなければ飛ばします
 ./gradlew installDist && cd ../typle-r && TYPLE_BACKEND=kotlin npm run test:e2e

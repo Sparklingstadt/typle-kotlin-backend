@@ -5,12 +5,15 @@ import io.github.sparklingstadt.typle.server.json.JsonObject
 
 // The limits of validateLists (src/core/workspaceRequest.ts) and MAX_LISTS (src/core/listOverview.ts). Lengths are in
 // UTF-16 code units, as JavaScript measures them.
-const val MAX_LISTS = 100
+const val MAX_LISTS = 150
 const val MAX_LIST_NAME = 200
 const val MAX_WORDS = 1000
 const val MAX_WORD_TEXT = 1000
 const val MAX_ANNOTATION = 2000
 const val MAX_RECORDS = 10000
+const val MAX_CATEGORY = 50
+const val MAX_TAG = 50
+const val MAX_TAGS = 20
 
 /** A change that cannot be made; key is the error key the API answers with. */
 class WorkspaceError(val key: String) : Exception(key)
@@ -21,7 +24,8 @@ class WorkspaceError(val key: String) : Exception(key)
  */
 fun checkLimits(lists: List<WordList>) {
   for (list in lists) {
-    if (list.words.size > MAX_WORDS || list.records.size > MAX_RECORDS || utf16Length(list.name) > MAX_LIST_NAME) {
+    if (list.words.size > MAX_WORDS || list.records.size > MAX_RECORDS || utf16Length(list.name) > MAX_LIST_NAME ||
+      utf16Length(list.category) > MAX_CATEGORY || list.tags.size > MAX_TAGS || list.tags.any { utf16Length(it) > MAX_TAG }) {
       throw WorkspaceError("invalidWorkspace")
     }
     for (word in list.words) {
@@ -36,7 +40,10 @@ fun checkLimits(lists: List<WordList>) {
 /** Writes lists as the app saves them in the lists column, as Go's workspace.Encode does. */
 fun encode(lists: List<WordList>): String = lists.joinToString(",", "[", "]") { list ->
   object_(list.extra,
-    "id" to str(list.id), "name" to str(list.name), "createdAt" to str(list.createdAt),
+    "id" to str(list.id), "name" to str(list.name),
+    "category" to list.category.takeIf { it.isNotEmpty() }?.let(::str),
+    "tags" to list.tags.takeIf { it.isNotEmpty() }?.joinToString(",", "[", "]", transform = ::str),
+    "createdAt" to str(list.createdAt),
     "words" to list.words.joinToString(",", "[", "]") { word ->
       object_(word.extra, "display" to str(word.display), "input" to str(word.input), "annotation" to str(word.annotation))
     },

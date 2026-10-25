@@ -24,6 +24,10 @@ application {
 
 tasks.test {
   useJUnitPlatform()
+  System.getenv("TYPLE_R")?.let {
+    inputs.file(file("$it/tests/contracts/workspace.json"))
+    environment("TYPLE_R", it)
+  }
   // The store tests run against this database when it is set, and are skipped otherwise.
   System.getenv("TYPLE_TEST_DATABASE_URL")?.let { environment("TYPLE_TEST_DATABASE_URL", it) }
   testLogging { events("failed"); exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL }
