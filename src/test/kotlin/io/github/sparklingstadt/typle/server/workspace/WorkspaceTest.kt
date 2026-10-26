@@ -244,6 +244,23 @@ class WorkspaceTest {
     checkPacks(listOf(pack, q), listOf(list, list.copy(id = "b", name = " A ", packId = "q")))
   }
 
+  // Lists of a pack whose paths (levels, or the name without levels) overlap are levelsConflict, as Go's TestCheckPacks.
+  @Test fun checksLevelOverlaps() {
+    val pack = Pack("p", "P", createdAt = "x")
+    val list = WordList("a", "a", listOf(Word("ls", "ls", "")), emptyList(), "x", packId = "p")
+    fun leveled(id: String, levels: String) = list.copy(id = id, name = id, extra = """{"levels":$levels}""")
+    fun refused(vararg lists: WordList) = assertFailsWith<WorkspaceError> { checkPacks(listOf(pack), lists.toList()) }.key
+    assertEquals("levelsConflict", refused(leveled("a", """["初級"]"""), leveled("b", """["初級"]""")))
+    assertEquals("levelsConflict", refused(leveled("a", """["中級1"]"""), leveled("b", """["中級1","A"]""")))
+    assertEquals("levelsConflict", refused(leveled("b", """["中級1","A"]"""), leveled("a", """["中級1"]""")))
+    assertEquals("levelsConflict", refused(list.copy(name = "初級"), leveled("b", """["初級"]""")))
+    // Different levels (case and spaces count) do not overlap, nor do the same levels in another pack.
+    checkPacks(listOf(pack), listOf(leveled("a", """["初級"]"""), leveled("b", """["初級（2）"]"""), leveled("c", """["Easy"]"""),
+      leveled("d", """["easy"]"""), leveled("e", """[" Easy"]"""), leveled("f", """["中級1","A"]"""), leveled("g", """["中級1","B"]""")))
+    val q = pack.copy(id = "q", name = "Q")
+    checkPacks(listOf(pack, q), listOf(leveled("a", """["初級"]"""), leveled("b", """["初級"]""").copy(packId = "q")))
+  }
+
   // Pack names are compared trimmed and lowercased as JavaScript's toLowerCase does.
   @Test fun packNamesCompareAsJavaScript() {
     val list = WordList("a", "a", listOf(Word("ls", "ls", "")), emptyList(), "x", packId = "p")

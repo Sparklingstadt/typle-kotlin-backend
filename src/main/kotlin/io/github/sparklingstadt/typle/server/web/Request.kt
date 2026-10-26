@@ -31,6 +31,9 @@ class LegacyRequestException : Exception("request for a profile that no longer e
 
 class InvalidRequestException : Exception("request is not a valid workspace")
 
+/** Lists sent with their packs whose levels overlap in a pack: levelsConflict. */
+class LevelsConflictException : Exception("lists of a pack have overlapping levels")
+
 /** Reads the body, giving up as soon as it is past limit rather than after reading all of it. */
 fun readLimited(input: InputStream, limit: Int): ByteArray {
   val data = input.readNBytes(limit + 1)
@@ -68,8 +71,8 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   if (packs != null) {
     try {
       checkLibrary(lists!!, packs)
-    } catch (_: WorkspaceError) {
-      throw InvalidRequestException()
+    } catch (e: WorkspaceError) {
+      throw if (e.key == "levelsConflict") LevelsConflictException() else InvalidRequestException()
     }
   }
   // A part that is left out is read as empty, so that only the other one is checked.
