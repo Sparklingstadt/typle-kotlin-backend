@@ -5,23 +5,35 @@ import io.github.sparklingstadt.typle.server.json.JsonObject
 
 // The limits of validateLists (src/core/workspaceRequest.ts) and MAX_LISTS (src/core/listOverview.ts). Lengths are in
 // UTF-16 code units, as JavaScript measures them.
-const val MAX_LISTS = 100
+const val MAX_LISTS = 150
 const val MAX_LIST_NAME = 200
 const val MAX_WORDS = 1000
 const val MAX_WORD_TEXT = 1000
 const val MAX_ANNOTATION = 2000
 const val MAX_RECORDS = 10000
 
+// The limits of a category and tags (MAX_CATEGORY, MAX_TAG and MAX_TAGS in src/core/wordLists.ts).
+const val MAX_CATEGORY = 50
+const val MAX_TAG = 50
+const val MAX_TAGS = 20
+
+// The limit of the group a list saved by an app that does not know packs may have (MAX_GROUP in src/core/wordLists.ts):
+// it becomes the name of a pack when the lists are read.
+const val MAX_GROUP = 200
+
 /** A change that cannot be made; key is the error key the API answers with. */
 class WorkspaceError(val key: String) : Exception(key)
 
 /**
- * Refuses lists past the limits of validateLists, which the app applies to every save. The number of lists is not
- * checked here: it is compared with the saved ones when the change is written.
+ * Refuses lists past the limits of validateLists, which the app applies to every save. The group, category and tags are
+ * those of lists sent by an app that does not know packs. The number of lists is not checked here: it is compared with
+ * the saved ones when the change is written.
  */
 fun checkLimits(lists: List<WordList>) {
   for (list in lists) {
-    if (list.words.size > MAX_WORDS || list.records.size > MAX_RECORDS || utf16Length(list.name) > MAX_LIST_NAME) {
+    if (list.words.size > MAX_WORDS || list.records.size > MAX_RECORDS || utf16Length(list.name) > MAX_LIST_NAME ||
+      utf16Length(list.category) > MAX_CATEGORY || list.tags.size > MAX_TAGS || list.tags.any { utf16Length(it) > MAX_TAG } ||
+      utf16Length(list.group) > MAX_GROUP) {
       throw WorkspaceError("invalidWorkspace")
     }
     for (word in list.words) {
@@ -33,14 +45,39 @@ fun checkLimits(lists: List<WordList>) {
   }
 }
 
-/** Writes lists as the app saves them in the lists column, as Go's workspace.Encode does. */
-fun encode(lists: List<WordList>): String = lists.joinToString(",", "[", "]") { list ->
+/**
+ * Writes lists as the app saves them in the lists column, as Go's workspace.Encode does. The category and tags belong to
+ * the list's pack, so they are left out (see encodePacks), and so is the group.
+ */
+fun encode(lists: List<WordList>): String = encodeLists(lists, labels = false)
+
+/**
+ * Writes lists as an app that does not know packs saves them, as Go's workspace.EncodeWithLabels does: each with its
+ * group, category and tags, which the app moves into packs when it reads them.
+ */
+fun encodeWithLabels(lists: List<WordList>): String = encodeLists(lists, labels = true)
+
+private fun encodeLists(lists: List<WordList>, labels: Boolean): String = lists.joinToString(",", "[", "]") { list ->
   object_(list.extra,
-    "id" to str(list.id), "name" to str(list.name), "createdAt" to str(list.createdAt),
+    "id" to str(list.id), "name" to str(list.name), "packId" to list.packId.ifEmpty { null }?.let(::str),
+    "group" to list.group.takeIf { labels && it.isNotEmpty() }?.let(::str),
+    "category" to list.category.takeIf { labels && it.isNotEmpty() }?.let(::str),
+    "tags" to list.tags.takeIf { labels && it.isNotEmpty() }?.let(::strings),
+    "createdAt" to str(list.createdAt),
     "words" to list.words.joinToString(",", "[", "]") { word ->
       object_(word.extra, "display" to str(word.display), "input" to str(word.input), "annotation" to str(word.annotation))
     },
     "records" to list.records.joinToString(",", "[", "]", transform = ::record),
+  )
+}
+
+/** Writes packs as the app saves them in the packs column, as Go's workspace.EncodePacks does. */
+fun encodePacks(packs: List<Pack>): String = packs.joinToString(",", "[", "]") { pack ->
+  object_(pack.extra,
+    "id" to str(pack.id), "name" to str(pack.name), "description" to pack.description.ifEmpty { null }?.let(::str),
+    "category" to pack.category.ifEmpty { null }?.let(::str), "tags" to pack.tags.ifEmpty { null }?.let(::strings),
+    "origin" to pack.origin?.let { object_("", "catalogId" to str(it.catalogId), "version" to GoJson.number(it.version)) },
+    "createdAt" to str(pack.createdAt),
   )
 }
 
@@ -57,6 +94,8 @@ private fun record(r: Record): String = object_(r.extra,
 private fun device(d: Device): String = object_(d.extra, "id" to str(d.id), "name" to str(d.name), "layout" to str(d.layout))
 
 private fun str(value: String) = GoJson.string(value, escapeHtml = false)
+
+private fun strings(values: List<String>) = values.joinToString(",", "[", "]", transform = ::str)
 
 // The known fields in order, a null value left out, followed by the unknown ones.
 private fun object_(extra: String, vararg fields: Pair<String, String?>): String {

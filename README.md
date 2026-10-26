@@ -39,6 +39,7 @@ AUTH_SECRET=… AUTH_URL=http://127.0.0.1:3000 DATABASE_URL=… build/install/ty
 - 同じ `AUTH_SECRET` なら、Go が発行したセッションの Cookie・アプリ（iPad・Android）のトークンを Kotlin が開け、その逆もできます。JSON の項目の順とエスケープまで Go の `encoding/json` と同じに書きます（`GoJson`）。
 - 同じ DB（`typle_workspaces`）を同じ SQL で読み書きするので、Go と Kotlin を入れ替えてもデータの形は変わりません。
 - 保存の検証（`workspace`）は Go の `workspace.Decode` と同じ規則です。JSON は Go の `encoding/json` と同じ厳しさで読む専用のパーサー（`json/JsonValue.kt`）で読みます。
+- 単語パック（typle-r v0.91.0）: `/api/workspace` の GET・PUT は Go と同じく `packs` 列を読み書きします（応答の項目の順は `lists`・`packs`・`devices`・`revision`・`accountId`、列が `NULL` か行がなければ `"packs":null`）。`lists` と `packs` を一緒に送る保存は Go の `CheckLibrary` と同じ検証をし、`lists` だけの保存は `group`・`category`・`tags` を送られたまま保存して `packs` 列を変えません。保存済みのリストのパックへの変換と補正は Go と違って行わず、アプリに任せます（応答は保存されたままなので、結果は同じです）。
 
 ## 構成
 
@@ -51,7 +52,7 @@ Go の `server/internal/*` と 1 対 1 に対応します。Go を変えたら�
 | `session/` | `server/internal/session` |
 | `auth/` | `server/internal/auth`（`OAuth` と `GitHub.User`） |
 | `store/` | `server/internal/store`（`ConnString`・`Ping`・`ReadRevision`・`WriteRevision`） |
-| `workspace/` | `server/internal/workspace`（`Decode`・`Encode`・`CheckLimits`・`ParseTime`・`trimJS`） |
+| `workspace/` | `server/internal/workspace`（`Decode`・`Encode`・`EncodeWithLabels`・`EncodePacks`・`CheckLimits`・`CheckPacks`・`CheckLibrary`・`ParseTime`・`trimJS`） |
 | `json/` | Go の `encoding/json` の書き方と読み方 |
 
 ## 確認
