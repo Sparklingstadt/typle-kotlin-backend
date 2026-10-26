@@ -127,6 +127,8 @@ private suspend fun ApplicationCall.writeWorkspace(config: Config) {
     return refuse(HttpStatusCode.Conflict, "conflict")
   } catch (_: LevelsConflictException) {
     return refuse(HttpStatusCode.BadRequest, "levelsConflict")
+  } catch (_: LevelDuplicateException) {
+    return refuse(HttpStatusCode.BadRequest, "levelDuplicate")
   } catch (_: InvalidRequestException) {
     return refuse(HttpStatusCode.BadRequest, "invalidWorkspace")
   }

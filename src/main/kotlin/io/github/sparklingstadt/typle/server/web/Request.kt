@@ -34,6 +34,9 @@ class InvalidRequestException : Exception("request is not a valid workspace")
 /** Lists sent with their packs whose levels overlap in a pack: levelsConflict. */
 class LevelsConflictException : Exception("lists of a pack have overlapping levels")
 
+/** A list sent with its pack that holds one level twice: levelDuplicate. */
+class LevelDuplicateException : Exception("a list has a level twice")
+
 /** Reads the body, giving up as soon as it is past limit rather than after reading all of it. */
 fun readLimited(input: InputStream, limit: Int): ByteArray {
   val data = input.readNBytes(limit + 1)
@@ -72,7 +75,11 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
     try {
       checkLibrary(lists!!, packs)
     } catch (e: WorkspaceError) {
-      throw if (e.key == "levelsConflict") LevelsConflictException() else InvalidRequestException()
+      throw when (e.key) {
+        "levelsConflict" -> LevelsConflictException()
+        "levelDuplicate" -> LevelDuplicateException()
+        else -> InvalidRequestException()
+      }
     }
   }
   // A part that is left out is read as empty, so that only the other one is checked.

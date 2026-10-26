@@ -10,7 +10,8 @@ import kotlin.test.assertSame
 // result needs no repair but separateLevels, which is all Kotlin does to a saved row (see readSaved): the app
 // (tests/wordPacks.test.cjs) and Go (TestPackFixtures) read them into the same lists and packs.
 private val fixtures = listOf(
-  "duplicate-in-pack.json", "levels-equal.json", "levels-long.json", "levels-name.json", "levels-prefix.json", "levels-second-collision.json",
+  "duplicate-in-pack.json", "levels-equal.json", "levels-long.json", "levels-name.json", "levels-prefix.json", "levels-repeated.json", "levels-repeated-overlap.json",
+  "levels-repeated-step.json", "levels-second-collision.json",
   "long-name-emoji.json", "pack-fields-kept.json",
 )
 
@@ -55,6 +56,18 @@ class SeparateLevelsTest {
     assertEquals(listOf("😀".repeat(23) + "（2）"), levelsOf(separated[13]))
     // A name cut inside a character of two units drops its first half.
     assertEquals("😀".repeat(98) + "（2）", fit("😀".repeat(100), "（2）", MAX_LIST_NAME))
+  }
+
+  // A level given twice in a list gets the smallest （n） the list does not hold, within MAX_LEVEL UTF-16 code units
+  // (Go's TestDistinctLevels).
+  @Test fun tellsRepeatedLevelsApart() {
+    val cases = listOf(
+      listOf("基本", "基本", "基本") to listOf("基本", "基本（2）", "基本（3）"),
+      listOf("基本", "基本", "基本（2）") to listOf("基本", "基本（3）", "基本（2）"),
+      listOf("a".repeat(50), "a".repeat(50)) to listOf("a".repeat(50), "a".repeat(47) + "（2）"),
+      listOf("😀".repeat(25), "😀".repeat(25)) to listOf("😀".repeat(25), "😀".repeat(23) + "（2）"),
+    )
+    for ((levels, want) in cases) assertEquals(want, levelsOf(separateLevels(listOf(leveled("a", "p", levels)))[0]), "$levels")
   }
 
   // Only later lists change, only where they meet, and only within a pack; the rest of a list is kept as it is.
