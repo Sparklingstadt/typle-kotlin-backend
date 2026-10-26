@@ -27,7 +27,6 @@ private fun nameKey(name: String) = lowerCase(trimJS(name))
  */
 fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   fun invalid(): Nothing = throw WorkspaceError("invalidWorkspace")
-  if (packs.size > MAX_LISTS) invalid()
   val ids = HashSet<String>()
   val names = HashSet<String>()
   for (pack in packs) {

@@ -215,7 +215,7 @@ class WorkspaceTest {
     checkPacks(listOf(pack), listOf(list))
     val q = pack.copy(id = "q", name = "Q")
     fun many(n: Int) = List(n) { pack.copy(id = "p$it", name = "P$it") } to List(n) { list.copy(id = "l$it", name = "l$it", packId = "p$it") }
-    val (tooManyPacks, tooManyLists) = many(MAX_LISTS + 1)
+    val (manyPacks, manyLists) = many(MAX_LISTS + 1)
     val cases = mapOf(
       "a list in a pack that does not exist" to (listOf(pack, q) to listOf(list.copy(packId = "r"),
         list.copy(id = "b", name = "b", packId = "q"), list.copy(id = "c", name = "c"))),
@@ -234,13 +234,13 @@ class WorkspaceTest {
       "a list with a group" to (listOf(pack) to listOf(list.copy(group = "g"))),
       "a list with a category" to (listOf(pack) to listOf(list.copy(category = "c"))),
       "a list with tags" to (listOf(pack) to listOf(list.copy(tags = listOf("t")))),
-      "more packs than the limit" to (tooManyPacks to tooManyLists),
     )
     for ((reason, case) in cases) {
       assertEquals("invalidWorkspace", assertFailsWith<WorkspaceError>(reason) { checkPacks(case.first, case.second) }.key, reason)
     }
-    // The same packs without the limit's excess are fine, and a list name may be used again in another pack.
-    checkPacks(tooManyPacks.take(MAX_LISTS), tooManyLists.take(MAX_LISTS))
+    // Packs have no limit of their own (every pack has a list, so the list limit bounds them), and a list name may be
+    // used again in another pack.
+    checkPacks(manyPacks, manyLists)
     checkPacks(listOf(pack, q), listOf(list, list.copy(id = "b", name = " A ", packId = "q")))
   }
 
