@@ -7,6 +7,7 @@ import io.github.sparklingstadt.typle.server.store.PgStore
 import io.github.sparklingstadt.typle.server.store.Saved
 import io.github.sparklingstadt.typle.server.workspace.MAX_GROUP
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
+import io.github.sparklingstadt.typle.server.workspace.levelsOf
 import java.net.http.HttpResponse
 import kotlin.random.Random
 import kotlin.test.Test
@@ -313,23 +314,25 @@ class WorkspaceRoutesTest {
     fun leveled(id: String, levels: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"$id\",\"name\":\"$id\",\"levels\":$levels")
     fun body(second: String) = payload(TEST_OWNER, """"revision":1,"lists":[${leveled("a", """["初級"]""")},${leveled("b", second)}],"packs":[$A_PACK]""")
     val writes = store.writes
-    expectError(put(body("""["初級","A"]""")), 400, "levelsConflict")
+    expectError(put(body("""["初級"]""")), 400, "levelsConflict")
     assertEquals(writes, store.writes)
     // Data separated on reading is saved as it is.
-    val ok = put(body("""["初級（2）","A"]"""))
+    val ok = put(body("""["初級（2）"]"""))
     assertEquals(200, ok.statusCode(), ok.body())
   }
 
-  // A list sent with its pack that holds one level twice is refused with levelDuplicate, and nothing is saved.
-  @Test fun putLevelDuplicate() = serve {
-    fun leveled(levels: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"one\",\"name\":\"One\",\"levels\":$levels")
-    fun body(levels: String) = payload(TEST_OWNER, """"revision":1,"lists":[${leveled(levels)}],"packs":[$A_PACK]""")
-    val writes = store.writes
-    expectError(put(body("""["基本","基本"]""")), 400, "levelDuplicate")
-    assertEquals(writes, store.writes)
-    // Data repaired on reading is saved as it is.
-    val ok = put(body("""["基本","基本（2）"]"""))
+  // A list sent with its pack by an app before v0.97.0 may have several levels (up to 5): the save is taken and the lists
+  // are stored, and answered, with them joined into one and told apart; more is invalidWorkspace.
+  @Test fun putSeveralLevels() = serve {
+    fun leveled(id: String, levels: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"$id\",\"name\":\"$id\",\"levels\":$levels")
+    fun body(vararg lists: String) = payload(TEST_OWNER, """"revision":1,"lists":[${lists.joinToString(",")}],"packs":[$A_PACK]""")
+    val ok = put(body(leveled("a", """["基本","初級"]"""), leveled("b", """["基本","初級",""]""")))
     assertEquals(200, ok.statusCode(), ok.body())
+    assertTrue("""["基本・初級"]""" in ok.body() && """["基本・初級（2）"]""" in ok.body(), ok.body())
+    assertEquals(listOf("基本・初級", "基本・初級（2）"), store.change!!.lists.map { levelsOf(it).single() })
+    val writes = store.writes
+    expectError(put(body(leveled("a", """["1","2","3","4","5","6"]"""))), 400, "invalidWorkspace")
+    assertEquals(writes, store.writes)
   }
 
   // A save with packs is stored as the app's repair would leave a library validateLibrary accepts: names trimmed.

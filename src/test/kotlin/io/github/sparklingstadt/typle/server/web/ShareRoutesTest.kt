@@ -255,17 +255,17 @@ class ShareRoutesTest {
           request("PUT", "/api/workspace", """{"accountId":"$owner","revision":$revision,$fields}""", headers)
 
         assertEquals(200, save(0, """"lists":[${list("a", "[\"初級\"]")}],"packs":[$pack]""").statusCode())
-        val overlapping = """"lists":[${list("a", "[\"初級\"]")},${list("b", "[\"初級\",\"A\"]")}]"""
+        val overlapping = """"lists":[${list("a", "[\"初級\"]")},${list("b", "[\"初級\"]")}]"""
         expectError(save(1, "$overlapping,\"packs\":[$pack]"), 400, "levelsConflict")
         assertEquals(200, save(1, overlapping).statusCode())
         val workspace = request("GET", "/api/workspace", headers = mapOf("Cookie" to cookie)).body()
-        assertTrue("""["初級","A"]""" in workspace && "初級（2）" !in workspace, workspace)
+        assertTrue("""["初級"]""" in workspace && "初級（2）" !in workspace, workspace)
 
         val put = share("PUT", "/api/shares", """{"packId":"p"}""", owner)
         assertEquals(200, put.statusCode(), put.body())
         val read = request("GET", "/api/shared?id=" + put.body().substringAfter("\"id\":\"").substringBefore('"'))
         assertEquals(200, read.statusCode())
-        assertTrue("\"初級（2）\",\n" in read.body(), read.body())
+        assertTrue("\"初級（2）\"\n" in read.body(), read.body())
       }
     }
   }

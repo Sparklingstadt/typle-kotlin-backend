@@ -7,7 +7,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 
 // What JavaScript's trim removes: White_Space and U+FEFF, but not U+0085.
-private fun isJsSpace(c: Char) = when (c) {
+internal fun isJsSpace(c: Char) = when (c) {
   '\t', '\n', '\u000b', '\u000c', '\r', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '　',
   '﻿' -> true
   else -> c in ' '..' '

@@ -100,8 +100,7 @@
         "records": [],
         "createdAt": "2026-10-01T00:00:00.000Z",
         "levels": [
-          "A（2）",
-          "B"
+          "A（2）・B"
         ],
         "packId": "p1"
       },
@@ -118,8 +117,7 @@
         "records": [],
         "createdAt": "2026-10-01T00:00:00.000Z",
         "levels": [
-          "A（2）",
-          "B（3）"
+          "A・B"
         ],
         "packId": "p1"
       }
