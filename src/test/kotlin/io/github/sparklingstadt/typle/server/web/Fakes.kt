@@ -7,6 +7,7 @@ import io.github.sparklingstadt.typle.server.session.Keys
 import io.github.sparklingstadt.typle.server.session.newSession
 import io.github.sparklingstadt.typle.server.store.Change
 import io.github.sparklingstadt.typle.server.store.Saved
+import io.github.sparklingstadt.typle.server.store.Share
 import io.github.sparklingstadt.typle.server.store.Store
 import io.github.sparklingstadt.typle.server.workspace.encode
 import io.github.sparklingstadt.typle.server.workspace.encodeDevices
@@ -27,7 +28,10 @@ const val TEST_BASE = "http://localhost:3000"
 const val TEST_OWNER = "github:42"
 const val TEST_SECRET = "test-secret"
 
-/** A store that answers from memory, counting reads and writes and keeping the last change. */
+/**
+ * A store that answers from memory, counting reads and writes and keeping the last change. Its links answer what the
+ * test sets (shares, put, putFailure, shared, and failure for the others), recording the calls and what reached them.
+ */
 class FakeStore(
   var saved: Saved? = null,
   var failure: Exception? = null,
@@ -37,6 +41,14 @@ class FakeStore(
   var writes = 0
   var revision = -1L
   var change: Change? = null
+  var shares: List<Share> = emptyList()
+  var put: Share? = null
+  var putFailure: Exception? = null
+  var shared: String? = null
+  val calls = ArrayList<String>()
+  var owner = ""
+  var packId = ""
+  var sharedId: String? = null
 
   override fun ping() {
     pingFailure?.let { throw it }
@@ -62,6 +74,35 @@ class FakeStore(
     val packs = if (change.hasPacks) encodePacks(change.packs) else saved?.packs
     val devices = if (change.hasDevices) encodeDevices(change.devices) else saved?.devices ?: "[]"
     return Saved(lists, devices, packs, revision + 1).also { saved = it }
+  }
+
+  override fun putShare(owner: String, packId: String): Share {
+    calls.add("put")
+    this.owner = owner
+    this.packId = packId
+    putFailure?.let { throw it }
+    return put!!
+  }
+
+  override fun deleteShare(owner: String, packId: String) {
+    calls.add("delete")
+    this.owner = owner
+    this.packId = packId
+    failure?.let { throw it }
+  }
+
+  override fun listShares(owner: String): List<Share> {
+    calls.add("list")
+    this.owner = owner
+    failure?.let { throw it }
+    return shares
+  }
+
+  override fun sharedPack(id: String): String? {
+    calls.add("shared")
+    sharedId = id
+    failure?.let { throw it }
+    return shared
   }
 }
 

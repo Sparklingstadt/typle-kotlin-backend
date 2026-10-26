@@ -1,0 +1,108 @@
+{
+  "library": {
+    "packs": [
+      {
+        "id": "pack-k",
+        "name": "Kotlin 構文",
+        "description": "\"引用\" と <tag> & \\ / の\t説明",
+        "category": "プログラミング",
+        "tags": [
+          "Kotlin",
+          "JVM"
+        ],
+        "origin": {
+          "catalogId": "pack-k",
+          "version": 1
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "memo": "Typle が知らない項目"
+      },
+      {
+        "id": "pack-other",
+        "name": "Other",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "k1",
+        "name": "初級1",
+        "packId": "pack-k",
+        "levels": [
+          "初級",
+          "1"
+        ],
+        "extra": {
+          "nested": true
+        },
+        "words": [
+          {
+            "display": "val x = 1",
+            "input": "val x = 1",
+            "annotation": "変数 宣言",
+            "note": "知らない項目"
+          },
+          {
+            "display": "fun f() {}",
+            "input": "fun f() {}",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "id": "r1",
+            "time": 12.5,
+            "date": "2026-10-05T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 98,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "o",
+        "name": "Other",
+        "packId": "pack-other",
+        "words": [
+          {
+            "display": "x",
+            "input": "x",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "k2",
+        "name": "初級2",
+        "packId": "pack-k",
+        "levels": [
+          "初級",
+          "2"
+        ],
+        "words": [
+          {
+            "display": "when (x) {}",
+            "input": "when (x) {}",
+            "annotation": "é ü 😀"
+          }
+        ],
+        "records": [
+          {
+            "id": "r2",
+            "time": 12.5,
+            "date": "2026-10-05T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 98,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-02T00:00:00.000Z"
+      }
+    ]
+  },
+  "packId": "pack-k",
+  "file": "{\n  \"format\": \"typle-pack\",\n  \"version\": 1,\n  \"pack\": {\n    \"name\": \"Kotlin 構文\",\n    \"description\": \"\\\"引用\\\" と <tag> & \\\\ / の\\t説明\",\n    \"category\": \"プログラミング\",\n    \"tags\": [\n      \"Kotlin\",\n      \"JVM\"\n    ]\n  },\n  \"lists\": [\n    {\n      \"name\": \"初級1\",\n      \"levels\": [\n        \"初級\",\n        \"1\"\n      ],\n      \"words\": [\n        {\n          \"display\": \"val x = 1\",\n          \"input\": \"val x = 1\",\n          \"annotation\": \"変数 宣言\"\n        },\n        {\n          \"display\": \"fun f() {}\",\n          \"input\": \"fun f() {}\",\n          \"annotation\": \"\"\n        }\n      ]\n    },\n    {\n      \"name\": \"初級2\",\n      \"levels\": [\n        \"初級\",\n        \"2\"\n      ],\n      \"words\": [\n        {\n          \"display\": \"when (x) {}\",\n          \"input\": \"when (x) {}\",\n          \"annotation\": \"é ü 😀\"\n        }\n      ]\n    }\n  ]\n}\n"
+}
