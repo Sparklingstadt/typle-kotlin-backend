@@ -72,8 +72,11 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   }
 }
 
-// repeatsLevel (Go's repeatsLevel): whether levels hold one level twice, compared as they are.
-private fun repeatsLevel(levels: List<String>) = levels.toSet().size != levels.size
+// repeatsLevel (Go's repeatsLevel): whether levels hold one level twice, compared trimmed.
+private fun repeatsLevel(levels: List<String>) = levels.indices.any { heldBefore(levels, it) }
+
+// Whether a level before levels[at] is the same, compared trimmed (Go's heldBefore).
+private fun heldBefore(levels: List<String>, at: Int) = levels.subList(0, at).any { trimJS(it) == trimJS(levels[at]) }
 
 // distinctLevels (src/core/wordPacks.ts), as Go's distinctLevels: a level given twice in one list gets the smallest （n）
 // from 2 that the list's levels do not hold yet, within MAX_LEVEL UTF-16 code units.
@@ -83,9 +86,9 @@ private fun distinctLevels(list: WordList): WordList {
   val levels = old.toMutableList()
   for (at in levels.indices) {
     val level = levels[at]
-    if (level !in levels.subList(0, at)) continue
+    if (!heldBefore(levels, at)) continue
     var count = 2
-    while (fit(level, "（$count）", MAX_LEVEL) in levels) count++
+    while (levels.any { trimJS(it) == trimJS(fit(level, "（$count）", MAX_LEVEL)) }) count++
     levels[at] = fit(level, "（$count）", MAX_LEVEL)
   }
   return withLevels(list, levels)
@@ -136,7 +139,7 @@ fun separateLevels(given: List<WordList>): List<WordList> {
     fun nameTaken() = !hasLevels && nameKey(path[0]) != nameKey(list.name) && nameKey(path[0]) in taken
     // The level just given a （n） may not be one the list holds at another step.
     var at = -1
-    fun repeated() = at >= 0 && path.indices.any { it != at && path[it] == path[at] }
+    fun repeated() = at >= 0 && path.indices.any { it != at && trimJS(path[it]) == trimJS(path[at]) }
     var count = 2
     while (true) {
       val other = others.firstOrNull { pathsOverlap(it, path) }

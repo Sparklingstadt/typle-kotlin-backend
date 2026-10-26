@@ -261,7 +261,7 @@ class WorkspaceTest {
     checkPacks(listOf(pack, q), listOf(leveled("a", """["初級"]"""), leveled("b", """["初級"]""").copy(packId = "q")))
   }
 
-  // A level given twice in one list is levelDuplicate, compared as it is (Go's TestCheckPacksLevels); it is checked
+  // A level given twice in one list is levelDuplicate, compared trimmed (Go's TestCheckPacksLevels); it is checked
   // list by list, after the list's own overlap check of the lists before it.
   @Test fun checksRepeatedLevels() {
     val pack = Pack("p", "P", createdAt = "x")
@@ -271,7 +271,8 @@ class WorkspaceTest {
     assertEquals("levelDuplicate", refused(leveled("a", """["中級1","A","中級1"]""")))
     assertEquals("levelsConflict", refused(leveled("a", """["x"]"""), leveled("b", """["x","y"]"""), leveled("c", """["z","z"]""")))
     assertEquals("levelDuplicate", refused(leveled("a", """["x","x"]"""), leveled("b", """["x"]""")))
-    checkPacks(listOf(pack), listOf(leveled("a", """["基本","基本 ","基本（2）"]""")))
+    assertEquals("levelDuplicate", refused(leveled("a", """["基本","基本 "]""")))
+    checkPacks(listOf(pack), listOf(leveled("a", """["基本","基本（2）"]""")))
   }
 
   // Pack names are compared trimmed and lowercased as JavaScript's toLowerCase does.

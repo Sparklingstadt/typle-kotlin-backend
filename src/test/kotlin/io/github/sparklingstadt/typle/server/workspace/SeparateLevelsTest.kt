@@ -11,7 +11,7 @@ import kotlin.test.assertSame
 // (tests/wordPacks.test.cjs) and Go (TestPackFixtures) read them into the same lists and packs.
 private val fixtures = listOf(
   "duplicate-in-pack.json", "levels-equal.json", "levels-long.json", "levels-name.json", "levels-prefix.json", "levels-repeated.json", "levels-repeated-overlap.json",
-  "levels-repeated-step.json", "levels-second-collision.json",
+  "levels-repeated-step.json", "levels-repeated-trim.json", "levels-second-collision.json",
   "long-name-emoji.json", "pack-fields-kept.json",
 )
 
