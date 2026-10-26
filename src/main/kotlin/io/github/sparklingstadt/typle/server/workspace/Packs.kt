@@ -54,8 +54,9 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   }
   // Every pack holds a list.
   if (ids.size != listNames.size) invalid()
-  // Lists of a pack whose paths overlap are refused (checkReach in Go), as levelsConflict. This checks a save as it was
-  // sent; saved lists that overlap are separated where the server reads them (separateLevels, see readSaved).
+  // Lists of a pack whose paths overlap are refused (checkReach in Go), as levelsConflict, and a list with a level given
+  // twice (tidyLevels in Go), as levelDuplicate. This checks a save as it was sent; saved lists that overlap or repeat a
+  // level are repaired where the server reads them (distinctLevels and separateLevels, see readSaved).
   val paths = HashMap<String, MutableList<List<String>>>()
   for (list in lists) {
     val levels = try {
@@ -63,11 +64,34 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
     } catch (_: InvalidWorkspaceException) {
       invalid()
     }
+    if (repeatsLevel(levels)) throw WorkspaceError("levelDuplicate")
     val path = if (levels.isEmpty()) listOf(list.name) else levels
     val taken = paths.getOrPut(list.packId) { ArrayList() }
     if (taken.any { pathsOverlap(it, path) }) throw WorkspaceError("levelsConflict")
     taken.add(path)
   }
+}
+
+// repeatsLevel (Go's repeatsLevel): whether levels hold one level twice, compared trimmed.
+private fun repeatsLevel(levels: List<String>) = levels.indices.any { heldBefore(levels, it) }
+
+// Whether a level before levels[at] is the same, compared trimmed (Go's heldBefore).
+private fun heldBefore(levels: List<String>, at: Int) = levels.subList(0, at).any { trimJS(it) == trimJS(levels[at]) }
+
+// distinctLevels (src/core/wordPacks.ts), as Go's distinctLevels: a level given twice in one list gets the smallest （n）
+// from 2 that the list's levels do not hold yet, within MAX_LEVEL UTF-16 code units.
+private fun distinctLevels(list: WordList): WordList {
+  val old = levelsOf(list)
+  if (!repeatsLevel(old)) return list
+  val levels = old.toMutableList()
+  for (at in levels.indices) {
+    val level = levels[at]
+    if (!heldBefore(levels, at)) continue
+    var count = 2
+    while (levels.any { trimJS(it) == trimJS(fit(level, "（$count）", MAX_LEVEL)) }) count++
+    levels[at] = fit(level, "（$count）", MAX_LEVEL)
+  }
+  return withLevels(list, levels)
 }
 
 // pathsOverlap (src/core/packEditing.ts): two paths overlap when they are equal or one starts the other, compared as
@@ -95,10 +119,12 @@ internal fun fit(name: String, suffix: String, limit: Int): String {
  * separateLevels (src/core/wordPacks.ts), as Go's separateLevels, which brings back in reach the lists an older app (or
  * lists saved without their packs) let overlap: a list whose path overlaps that of an earlier list of its pack gets
  * （2）, （3）… on the level where they meet, or on its name when it has no levels (a name another list of the pack does
- * not use, compared trimmed and lowercased). Earlier lists, and lists without overlaps, are kept as they are; a list
+ * not use, compared trimmed and lowercased, or a level the list does not hold). A level given twice in a list is told
+ * apart first (distinctLevels). Earlier lists, and lists without overlaps, are kept as they are; a list
  * whose levels change keeps the other fields Typle does not know.
  */
-fun separateLevels(lists: List<WordList>): List<WordList> {
+fun separateLevels(given: List<WordList>): List<WordList> {
+  val lists = given.map(::distinctLevels)
   val names = HashMap<String, HashSet<String>>()
   for (list in lists) names.getOrPut(list.packId) { HashSet() }.add(nameKey(list.name))
   val accepted = HashMap<String, MutableList<List<String>>>()
@@ -111,11 +137,14 @@ fun separateLevels(lists: List<WordList>): List<WordList> {
     val path = base.toMutableList()
     val others = accepted.getOrPut(list.packId) { ArrayList() }
     fun nameTaken() = !hasLevels && nameKey(path[0]) != nameKey(list.name) && nameKey(path[0]) in taken
+    // The level just given a （n） may not be one the list holds at another step.
+    var at = -1
+    fun repeated() = at >= 0 && path.indices.any { it != at && trimJS(path[it]) == trimJS(path[at]) }
     var count = 2
     while (true) {
       val other = others.firstOrNull { pathsOverlap(it, path) }
-      if (other == null && !nameTaken()) break
-      val at = if (other != null) minOf(path.size, other.size) - 1 else 0
+      if (other == null && !nameTaken() && !repeated()) break
+      if (!repeated()) at = if (other != null) minOf(path.size, other.size) - 1 else 0
       path[at] = fit(base[at], "（$count）", limit)
       count++
     }

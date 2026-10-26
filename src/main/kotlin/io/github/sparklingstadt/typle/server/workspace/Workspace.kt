@@ -6,7 +6,8 @@
 // /api/workspace answers what is stored (as Go's GET does). Of Go's repairs, only the separation of lists of a pack whose
 // levels overlap (separateLevels) is made, on rows that have packs, where the server builds something from a saved row
 // rather than answering it as stored: the snapshot of a shared link (readSaved, used by PutShare). A save with packs is
-// still checked as it was sent, so overlaps there are refused (levelsConflict).
+// still checked as it was sent, so overlaps there are refused (levelsConflict) and so is a level given twice in a list
+// (levelDuplicate); on reading, a repeated level gets （n） first (distinctLevels).
 package io.github.sparklingstadt.typle.server.workspace
 
 import io.github.sparklingstadt.typle.server.json.JsonArray

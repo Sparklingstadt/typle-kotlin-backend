@@ -320,6 +320,18 @@ class WorkspaceRoutesTest {
     assertEquals(200, ok.statusCode(), ok.body())
   }
 
+  // A list sent with its pack that holds one level twice is refused with levelDuplicate, and nothing is saved.
+  @Test fun putLevelDuplicate() = serve {
+    fun leveled(levels: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"one\",\"name\":\"One\",\"levels\":$levels")
+    fun body(levels: String) = payload(TEST_OWNER, """"revision":1,"lists":[${leveled(levels)}],"packs":[$A_PACK]""")
+    val writes = store.writes
+    expectError(put(body("""["基本","基本"]""")), 400, "levelDuplicate")
+    assertEquals(writes, store.writes)
+    // Data repaired on reading is saved as it is.
+    val ok = put(body("""["基本","基本（2）"]"""))
+    assertEquals(200, ok.statusCode(), ok.body())
+  }
+
   // A save with packs is stored as the app's repair would leave a library validateLibrary accepts: names trimmed.
   @Test fun putPacksTrimsNames() = serve {
     val list = PACKED_ONE.replace("\"One\"", "\" One \"")
