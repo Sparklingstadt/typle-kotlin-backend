@@ -251,28 +251,27 @@ class WorkspaceTest {
     fun leveled(id: String, levels: String) = list.copy(id = id, name = id, extra = """{"levels":$levels}""")
     fun refused(vararg lists: WordList) = assertFailsWith<WorkspaceError> { checkPacks(listOf(pack), lists.toList()) }.key
     assertEquals("levelsConflict", refused(leveled("a", """["初級"]"""), leveled("b", """["初級"]""")))
-    assertEquals("levelsConflict", refused(leveled("a", """["中級1"]"""), leveled("b", """["中級1","A"]""")))
-    assertEquals("levelsConflict", refused(leveled("b", """["中級1","A"]"""), leveled("a", """["中級1"]""")))
     assertEquals("levelsConflict", refused(list.copy(name = "初級"), leveled("b", """["初級"]""")))
     // Different levels (case and spaces count) do not overlap, nor do the same levels in another pack.
     checkPacks(listOf(pack), listOf(leveled("a", """["初級"]"""), leveled("b", """["初級（2）"]"""), leveled("c", """["Easy"]"""),
-      leveled("d", """["easy"]"""), leveled("e", """[" Easy"]"""), leveled("f", """["中級1","A"]"""), leveled("g", """["中級1","B"]""")))
+      leveled("d", """["easy"]"""), leveled("e", """[" Easy"]"""), leveled("f", """["中級1"]"""), leveled("g", """["中級2"]""")))
     val q = pack.copy(id = "q", name = "Q")
     checkPacks(listOf(pack, q), listOf(leveled("a", """["初級"]"""), leveled("b", """["初級"]""").copy(packId = "q")))
   }
 
-  // A level given twice in one list is levelDuplicate, compared trimmed (Go's TestCheckPacksLevels); it is checked
-  // list by list, after the list's own overlap check of the lists before it.
-  @Test fun checksRepeatedLevels() {
+  // A list with more than one level is tooManyLevels (Go's TestCheckPacksLevels); it is checked list by list, before the
+  // list's own overlap check of the lists before it.
+  @Test fun checksTooManyLevels() {
     val pack = Pack("p", "P", createdAt = "x")
     val list = WordList("a", "a", listOf(Word("ls", "ls", "")), emptyList(), "x", packId = "p")
     fun leveled(id: String, levels: String) = list.copy(id = id, name = id, extra = """{"levels":$levels}""")
     fun refused(vararg lists: WordList) = assertFailsWith<WorkspaceError> { checkPacks(listOf(pack), lists.toList()) }.key
-    assertEquals("levelDuplicate", refused(leveled("a", """["中級1","A","中級1"]""")))
-    assertEquals("levelsConflict", refused(leveled("a", """["x"]"""), leveled("b", """["x","y"]"""), leveled("c", """["z","z"]""")))
-    assertEquals("levelDuplicate", refused(leveled("a", """["x","x"]"""), leveled("b", """["x"]""")))
-    assertEquals("levelDuplicate", refused(leveled("a", """["基本","基本 "]""")))
-    checkPacks(listOf(pack), listOf(leveled("a", """["基本","基本（2）"]""")))
+    assertEquals("tooManyLevels", refused(leveled("a", """["中級1","A"]""")))
+    assertEquals("tooManyLevels", refused(leveled("a", """["x","y","z","u","v"]""")))
+    assertEquals("tooManyLevels", refused(leveled("a", """["基本","基本"]""")))
+    assertEquals("levelsConflict", refused(leveled("a", """["x"]"""), leveled("b", """["x"]"""), leveled("c", """["z","z"]""")))
+    assertEquals("tooManyLevels", refused(leveled("a", """["x"]"""), leveled("b", """["y","z"]"""), leveled("c", """["x"]""")))
+    checkPacks(listOf(pack), listOf(leveled("a", """["基本"]"""), leveled("b", """["基本（2）"]"""), leveled("c", """[]""")))
   }
 
   // Pack names are compared trimmed and lowercased as JavaScript's toLowerCase does.

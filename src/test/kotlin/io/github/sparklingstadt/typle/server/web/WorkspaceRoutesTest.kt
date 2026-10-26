@@ -313,22 +313,23 @@ class WorkspaceRoutesTest {
     fun leveled(id: String, levels: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"$id\",\"name\":\"$id\",\"levels\":$levels")
     fun body(second: String) = payload(TEST_OWNER, """"revision":1,"lists":[${leveled("a", """["初級"]""")},${leveled("b", second)}],"packs":[$A_PACK]""")
     val writes = store.writes
-    expectError(put(body("""["初級","A"]""")), 400, "levelsConflict")
+    expectError(put(body("""["初級"]""")), 400, "levelsConflict")
     assertEquals(writes, store.writes)
     // Data separated on reading is saved as it is.
-    val ok = put(body("""["初級（2）","A"]"""))
+    val ok = put(body("""["初級（2）"]"""))
     assertEquals(200, ok.statusCode(), ok.body())
   }
 
-  // A list sent with its pack that holds one level twice is refused with levelDuplicate, and nothing is saved.
-  @Test fun putLevelDuplicate() = serve {
+  // A list sent with its pack that has more than one level is refused with tooManyLevels, and nothing is saved.
+  @Test fun putTooManyLevels() = serve {
     fun leveled(levels: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"one\",\"name\":\"One\",\"levels\":$levels")
     fun body(levels: String) = payload(TEST_OWNER, """"revision":1,"lists":[${leveled(levels)}],"packs":[$A_PACK]""")
     val writes = store.writes
-    expectError(put(body("""["基本","基本"]""")), 400, "levelDuplicate")
+    expectError(put(body("""["基本","初級"]""")), 400, "tooManyLevels")
+    expectError(put(body("""["基本","基本"]""")), 400, "tooManyLevels")
     assertEquals(writes, store.writes)
-    // Data repaired on reading is saved as it is.
-    val ok = put(body("""["基本","基本（2）"]"""))
+    // One level is saved as it is.
+    val ok = put(body("""["基本"]"""))
     assertEquals(200, ok.statusCode(), ok.body())
   }
 

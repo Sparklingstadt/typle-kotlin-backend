@@ -3,11 +3,11 @@
 // the app's decodeLists, decodePacks and decodeDevices, so data the app would read is read here and data it would
 // refuse is refused. As in Go, null in an optional field reads as the field left out. Unlike Go, lists saved before
 // packs existed are not turned into packs here, nor are saved packs repaired: the app does that when it reads them, and
-// /api/workspace answers what is stored (as Go's GET does). Of Go's repairs, only the separation of lists of a pack whose
-// levels overlap (separateLevels) is made, on rows that have packs, where the server builds something from a saved row
+// /api/workspace answers what is stored (as Go's GET does). Of Go's repairs, only the joining of several levels of a list
+// into one (collapseLevels) and the separation of lists of a pack whose levels are equal (separateLevels) are made, on rows that have packs, where the server builds something from a saved row
 // rather than answering it as stored: the snapshot of a shared link (readSaved, used by PutShare). A save with packs is
-// still checked as it was sent, so overlaps there are refused (levelsConflict) and so is a level given twice in a list
-// (levelDuplicate); on reading, a repeated level gets （n） first (distinctLevels).
+// still checked as it was sent, so overlaps there are refused (levelsConflict) and so is a list with more than one level
+// (tooManyLevels); rows saved with up to 5 levels are still read.
 package io.github.sparklingstadt.typle.server.workspace
 
 import io.github.sparklingstadt.typle.server.json.JsonArray

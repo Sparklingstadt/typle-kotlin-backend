@@ -11,7 +11,8 @@ import kotlin.test.assertSame
 // (tests/wordPacks.test.cjs) and Go (TestPackFixtures) read them into the same lists and packs.
 private val fixtures = listOf(
   "duplicate-in-pack.json", "levels-equal.json", "levels-long.json", "levels-name.json", "levels-prefix.json", "levels-repeated.json", "levels-repeated-overlap.json",
-  "levels-repeated-step.json", "levels-repeated-trim.json", "levels-second-collision.json",
+  "levels-repeated-step.json", "levels-repeated-trim.json", "levels-second-collision.json", "levels-collapse.json",
+  "levels-collapse-collision.json", "levels-collapse-long.json",
   "long-name-emoji.json", "pack-fields-kept.json",
 )
 
@@ -58,26 +59,31 @@ class SeparateLevelsTest {
     assertEquals("😀".repeat(98) + "（2）", fit("😀".repeat(100), "（2）", MAX_LIST_NAME))
   }
 
-  // A level given twice in a list gets the smallest （n） the list does not hold, within MAX_LEVEL UTF-16 code units
-  // (Go's TestDistinctLevels).
-  @Test fun tellsRepeatedLevelsApart() {
+  // Several levels of a list are joined into one with ・, trimmed and without empty ones, within MAX_LEVEL UTF-16 code
+  // units (Go's TestCollapseLevels).
+  @Test fun joinsSeveralLevels() {
     val cases = listOf(
-      listOf("基本", "基本", "基本") to listOf("基本", "基本（2）", "基本（3）"),
-      listOf("基本", "基本", "基本（2）") to listOf("基本", "基本（3）", "基本（2）"),
-      listOf("a".repeat(50), "a".repeat(50)) to listOf("a".repeat(50), "a".repeat(47) + "（2）"),
-      listOf("😀".repeat(25), "😀".repeat(25)) to listOf("😀".repeat(25), "😀".repeat(23) + "（2）"),
+      listOf("基本", "初級") to listOf("基本・初級"),
+      listOf(" 基本 ", "", "  ", "初級") to listOf("基本・初級"),
+      listOf("基本") to listOf("基本"),
+      listOf("", " ") to emptyList(),
+      listOf("a".repeat(30), "b".repeat(30)) to listOf("a".repeat(30) + "・" + "b".repeat(19)),
+      listOf("😀".repeat(20), "😀".repeat(20)) to listOf("😀".repeat(20) + "・" + "😀".repeat(4)),
     )
     for ((levels, want) in cases) assertEquals(want, levelsOf(separateLevels(listOf(leveled("a", "p", levels)))[0]), "$levels")
+    // A list left without levels has no levels member, and the fields Typle does not know are kept.
+    val none = separateLevels(listOf(leveled("a", "p", listOf("", " ")).copy(extra = """{"future":1,"levels":["",""]}""")))
+    assertEquals("""{"future":1}""", none[0].extra)
   }
 
   // Only later lists change, only where they meet, and only within a pack; the rest of a list is kept as it is.
   @Test fun separatesWhereTheyMeet() {
     val first = leveled("a", "p", listOf("中級1"))
-    val second = leveled("b", "p", listOf("中級1", "A")).copy(extra = """{"future":1,"levels":["中級1","A"]}""")
+    val second = leveled("b", "p", listOf("中級1")).copy(extra = """{"future":1,"levels":["中級1"]}""")
     val other = leveled("c", "q", listOf("中級1"))
     val separated = separateLevels(listOf(first, second, other))
     assertSame(first, separated[0])
-    assertEquals("""{"future":1,"levels":["中級1（2）","A"]}""", separated[1].extra)
+    assertEquals("""{"future":1,"levels":["中級1（2）"]}""", separated[1].extra)
     assertSame(other, separated[2])
     // A list without levels gets a name no other list of its pack has, compared trimmed and lowercased.
     val named = separateLevels(listOf(leveled("x", "p", listOf("Easy")), leveled("y", "p", emptyList(), name = "Easy"),

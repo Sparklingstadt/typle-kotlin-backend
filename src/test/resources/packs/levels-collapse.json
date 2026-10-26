@@ -1,0 +1,159 @@
+{
+  "lists": [
+    {
+      "id": "a",
+      "name": "a",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "基本",
+        "初級"
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "b",
+      "name": "b",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        " 中級 ",
+        "",
+        "A"
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "c",
+      "name": "c",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "  ",
+        ""
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "d",
+      "name": "d",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "上級"
+      ],
+      "packId": "p1"
+    }
+  ],
+  "packs": [
+    {
+      "id": "p1",
+      "name": "P",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "expected": {
+    "packs": [
+      {
+        "id": "p1",
+        "name": "P",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "a",
+        "name": "a",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "基本・初級"
+        ],
+        "packId": "p1"
+      },
+      {
+        "id": "b",
+        "name": "b",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "中級・A"
+        ],
+        "packId": "p1"
+      },
+      {
+        "id": "c",
+        "name": "c",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p1"
+      },
+      {
+        "id": "d",
+        "name": "d",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "上級"
+        ],
+        "packId": "p1"
+      }
+    ]
+  }
+}

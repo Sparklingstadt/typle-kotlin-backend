@@ -34,8 +34,8 @@ class InvalidRequestException : Exception("request is not a valid workspace")
 /** Lists sent with their packs whose levels overlap in a pack: levelsConflict. */
 class LevelsConflictException : Exception("lists of a pack have overlapping levels")
 
-/** A list sent with its pack that holds one level twice: levelDuplicate. */
-class LevelDuplicateException : Exception("a list has a level twice")
+/** A list sent with its pack that has more than one level: tooManyLevels. */
+class TooManyLevelsException : Exception("a list has more than one level")
 
 /** Reads the body, giving up as soon as it is past limit rather than after reading all of it. */
 fun readLimited(input: InputStream, limit: Int): ByteArray {
@@ -77,7 +77,7 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
     } catch (e: WorkspaceError) {
       throw when (e.key) {
         "levelsConflict" -> LevelsConflictException()
-        "levelDuplicate" -> LevelDuplicateException()
+        "tooManyLevels" -> TooManyLevelsException()
         else -> InvalidRequestException()
       }
     }

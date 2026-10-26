@@ -8,7 +8,7 @@ import io.github.sparklingstadt.typle.server.json.JsonValue
 
 // Word packs follow src/core/wordPacks.ts, as Go's server/internal/workspace/packs_library.go: every list belongs to one
 // pack, which holds the category and tags the lists used to have. The checks of a save are here, and of the repairs Go
-// makes when it reads saved packs only separateLevels (see readSaved); the conversion and the other repairs are the app's.
+// makes when it reads saved packs only collapseLevels and separateLevels (see readSaved); the conversion and the other repairs are the app's.
 
 // The limits of a pack (MAX_PACK_NAME and MAX_PACK_DESCRIPTION in src/core/wordPacks.ts), in UTF-16 code units.
 const val MAX_PACK_NAME = 200
@@ -16,6 +16,11 @@ const val MAX_PACK_DESCRIPTION = 500
 
 // The limit of a level (MAX_LEVEL in src/core/packEditing.ts, Go's MaxLevel), in UTF-16 code units.
 const val MAX_LEVEL = 50
+
+// A list has one level at most (MAX_LEVELS in src/core/wordLists.ts, Go's MaxLevels); an app before v0.97.0 let it have up
+// to MAX_SAVED_LEVELS, which are still read and joined into one (collapseLevels).
+const val MAX_LEVELS = 1
+const val MAX_SAVED_LEVELS = 5
 
 /**
  * JavaScript's toLowerCase, which the app uses to compare names. Java's root locale lowercases as it does, İ to i and a
@@ -27,7 +32,8 @@ private fun nameKey(name: String) = lowerCase(trimJS(name))
 
 /**
  * validateLibrary (src/core/wordPacks.ts), as Go's CheckPacks: refuses packs and lists that are not in the saved shape,
- * with invalidWorkspace.
+ * with invalidWorkspace, a list with more than one level, with tooManyLevels, and lists of a pack whose paths overlap,
+ * with levelsConflict.
  */
 fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   fun invalid(): Nothing = throw WorkspaceError("invalidWorkspace")
@@ -54,9 +60,9 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   }
   // Every pack holds a list.
   if (ids.size != listNames.size) invalid()
-  // Lists of a pack whose paths overlap are refused (checkReach in Go), as levelsConflict, and a list with a level given
-  // twice (tidyLevels in Go), as levelDuplicate. This checks a save as it was sent; saved lists that overlap or repeat a
-  // level are repaired where the server reads them (distinctLevels and separateLevels, see readSaved).
+  // Lists of a pack whose paths overlap, or with more than one level, are refused (checkReach and tidyLevels in Go). This
+  // checks a save as it was sent; saved lists with several levels or overlapping ones are repaired where the server reads
+  // them (collapseLevels and separateLevels, see readSaved).
   val paths = HashMap<String, MutableList<List<String>>>()
   for (list in lists) {
     val levels = try {
@@ -64,7 +70,7 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
     } catch (_: InvalidWorkspaceException) {
       invalid()
     }
-    if (repeatsLevel(levels)) throw WorkspaceError("levelDuplicate")
+    if (levels.size > MAX_LEVELS) throw WorkspaceError("tooManyLevels")
     val path = if (levels.isEmpty()) listOf(list.name) else levels
     val taken = paths.getOrPut(list.packId) { ArrayList() }
     if (taken.any { pathsOverlap(it, path) }) throw WorkspaceError("levelsConflict")
@@ -72,26 +78,14 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   }
 }
 
-// repeatsLevel (Go's repeatsLevel): whether levels hold one level twice, compared trimmed.
-private fun repeatsLevel(levels: List<String>) = levels.indices.any { heldBefore(levels, it) }
-
-// Whether a level before levels[at] is the same, compared trimmed (Go's heldBefore).
-private fun heldBefore(levels: List<String>, at: Int) = levels.subList(0, at).any { trimJS(it) == trimJS(levels[at]) }
-
-// distinctLevels (src/core/wordPacks.ts), as Go's distinctLevels: a level given twice in one list gets the smallest （n）
-// from 2 that the list's levels do not hold yet, within MAX_LEVEL UTF-16 code units.
-private fun distinctLevels(list: WordList): WordList {
+// collapseLevels (src/core/wordPacks.ts), as Go's collapseLevels: a list holds one level at most since v0.97.0, so several
+// levels saved by an older app become one: the levels trimmed, without empty ones, joined with ・ and cut to MAX_LEVEL;
+// no level at all when none is left.
+private fun collapseLevels(list: WordList): WordList {
   val old = levelsOf(list)
-  if (!repeatsLevel(old)) return list
-  val levels = old.toMutableList()
-  for (at in levels.indices) {
-    val level = levels[at]
-    if (!heldBefore(levels, at)) continue
-    var count = 2
-    while (levels.any { trimJS(it) == trimJS(fit(level, "（$count）", MAX_LEVEL)) }) count++
-    levels[at] = fit(level, "（$count）", MAX_LEVEL)
-  }
-  return withLevels(list, levels)
+  if (old.size <= 1) return list
+  val joined = fit(old.map(::trimJS).filter { it != "" }.joinToString("・"), "", MAX_LEVEL)
+  return withLevels(list, if (joined == "") emptyList() else listOf(joined))
 }
 
 // pathsOverlap (src/core/packEditing.ts): two paths overlap when they are equal or one starts the other, compared as
@@ -117,14 +111,13 @@ internal fun fit(name: String, suffix: String, limit: Int): String {
 
 /**
  * separateLevels (src/core/wordPacks.ts), as Go's separateLevels, which brings back in reach the lists an older app (or
- * lists saved without their packs) let overlap: a list whose path overlaps that of an earlier list of its pack gets
- * （2）, （3）… on the level where they meet, or on its name when it has no levels (a name another list of the pack does
- * not use, compared trimmed and lowercased, or a level the list does not hold). A level given twice in a list is told
- * apart first (distinctLevels). Earlier lists, and lists without overlaps, are kept as they are; a list
- * whose levels change keeps the other fields Typle does not know.
+ * lists saved without their packs) let overlap: a list whose path equals that of an earlier list of its pack gets （2）,
+ * （3）… on its level, or on its name when it has no levels (a name another list of the pack does not use, compared
+ * trimmed and lowercased). Several levels of a list are joined into one first (collapseLevels). Earlier lists, and
+ * lists without overlaps, are kept as they are; a list whose levels change keeps the other fields Typle does not know.
  */
 fun separateLevels(given: List<WordList>): List<WordList> {
-  val lists = given.map(::distinctLevels)
+  val lists = given.map(::collapseLevels)
   val names = HashMap<String, HashSet<String>>()
   for (list in lists) names.getOrPut(list.packId) { HashSet() }.add(nameKey(list.name))
   val accepted = HashMap<String, MutableList<List<String>>>()
@@ -137,20 +130,14 @@ fun separateLevels(given: List<WordList>): List<WordList> {
     val path = base.toMutableList()
     val others = accepted.getOrPut(list.packId) { ArrayList() }
     fun nameTaken() = !hasLevels && nameKey(path[0]) != nameKey(list.name) && nameKey(path[0]) in taken
-    // The level just given a （n） may not be one the list holds at another step.
-    var at = -1
-    fun repeated() = at >= 0 && path.indices.any { it != at && trimJS(path[it]) == trimJS(path[at]) }
     var count = 2
-    while (true) {
-      val other = others.firstOrNull { pathsOverlap(it, path) }
-      if (other == null && !nameTaken() && !repeated()) break
-      if (!repeated()) at = if (other != null) minOf(path.size, other.size) - 1 else 0
-      path[at] = fit(base[at], "（$count）", limit)
+    while (others.any { pathsOverlap(it, path) } || nameTaken()) {
+      path[0] = fit(base[0], "（$count）", limit)
       count++
     }
     others.add(path.toList())
     when {
-      path == base -> list
+      path[0] == base[0] -> list
       hasLevels -> withLevels(list, path)
       else -> {
         taken.add(nameKey(path[0]))
@@ -164,7 +151,7 @@ fun separateLevels(given: List<WordList>): List<WordList> {
 // levels).
 private fun withLevels(list: WordList, levels: List<String>): WordList {
   val members = LinkedHashMap((JsonValue.parse(list.extra) as JsonObject).members)
-  members["levels"] = JsonArray(levels.map(::JsonString))
+  if (levels.isEmpty()) members.remove("levels") else members["levels"] = JsonArray(levels.map(::JsonString))
   return list.copy(extra = unknown(JsonObject(members)))
 }
 
