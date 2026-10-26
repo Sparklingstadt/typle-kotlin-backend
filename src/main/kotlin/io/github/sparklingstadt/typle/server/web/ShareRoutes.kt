@@ -30,6 +30,7 @@ private val isoTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 // One link as /api/shares answers it.
 private fun shareJson(share: Share) = "{\"id\":" + GoJson.string(share.id, escapeHtml = true) +
   ",\"packId\":" + GoJson.string(share.packId, escapeHtml = true) +
+  ",\"name\":" + GoJson.string(share.name, escapeHtml = true) +
   ",\"updatedAt\":" + GoJson.string(isoTime.format(share.updatedAt), escapeHtml = true) + "}"
 
 /** GET, HEAD, PUT and DELETE /api/shares; HEAD is served as GET. */
@@ -118,6 +119,8 @@ private suspend fun ApplicationCall.readPackId(): String? {
  * gone at once.
  */
 suspend fun ApplicationCall.shared(config: Config) {
+  // A shared pack is for people with the link, not for search engines; every answer says so, errors included.
+  response.headers.append("X-Robots-Tag", "noindex")
   if (!methods(HttpMethod.Get, HttpMethod.Head)) return
   val data = try {
     withContext(Dispatchers.IO) { config.store!!.sharedPack(request.queryParameters["id"].orEmpty()) }

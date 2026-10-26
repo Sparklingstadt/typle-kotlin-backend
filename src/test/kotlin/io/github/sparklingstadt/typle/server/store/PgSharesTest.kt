@@ -113,18 +113,73 @@ class PgSharesTest {
     twoPacks(owner)
     val a = store.putShare(owner, "a")
     val b = store.putShare(owner, "b")
-    // Lists alone leave the links as they are, even of a pack none of them is in.
-    store.writeRevision(owner, 1, Change(listOf(list("2", "b")), emptyList(), hasLists = true, hasDevices = false))
+    // Devices alone leave the links as they are.
+    store.writeRevision(owner, 1, Change(emptyList(), emptyList(), hasLists = false, hasDevices = true))
     assertEquals(setOf(a.id, b.id), store.listShares(owner).map { it.id }.toSet())
-    // Devices alone too.
-    store.writeRevision(owner, 2, Change(emptyList(), emptyList(), hasLists = false, hasDevices = true))
-    assertEquals(2, store.listShares(owner).size)
     // Lists with packs delete the links of the packs that are not among them.
-    store.writeRevision(owner, 3, library(listOf(list("2", "b")), listOf(pack("b"))))
+    store.writeRevision(owner, 2, library(listOf(list("2", "b")), listOf(pack("b"))))
     assertEquals(listOf(b.id), store.listShares(owner).map { it.id })
     // A save that fails changes nothing.
-    assertFailsWith<ConflictException> { store.writeRevision(owner, 3, library(listOf(list("3", "c")), listOf(pack("c")))) }
+    assertFailsWith<ConflictException> { store.writeRevision(owner, 2, library(listOf(list("3", "c")), listOf(pack("c")))) }
     assertEquals(listOf(b.id), store.listShares(owner).map { it.id })
+  }
+
+  // Lists saved without packs: the link of a pack none of the saved lists is in is deleted, though no packs are sent.
+  @Test fun listsOnlyDeletesSharesOfPacksWithoutLists() {
+    val owner = owner()
+    twoPacks(owner)
+    val a = store.putShare(owner, "a")
+    store.putShare(owner, "b")
+    // Both packs still have a list: the links stay.
+    store.writeRevision(owner, 1, Change(listOf(list("1", "a"), list("2", "b")), emptyList(), hasLists = true, hasDevices = false))
+    assertEquals(2, store.listShares(owner).size)
+    // No list is in b any more.
+    store.writeRevision(owner, 2, Change(listOf(list("1", "a")), emptyList(), hasLists = true, hasDevices = false))
+    assertEquals(listOf(a.id), store.listShares(owner).map { it.id })
+    // A save that fails changes nothing.
+    assertFailsWith<ConflictException> {
+      store.writeRevision(owner, 2, Change(listOf(list("3", "c")), emptyList(), hasLists = true, hasDevices = false))
+    }
+    assertEquals(listOf(a.id), store.listShares(owner).map { it.id })
+  }
+
+  // A row whose packs are still derived from its lists (packs NULL): the links Go made to derived packs (pack-<id>)
+  // stay while their lists do.
+  @Test fun listsOnlyOnDerivedPacks() {
+    val owner = owner()
+    val saved = store.writeRevision(owner, 0, Change(listOf(list("1", ""), list("2", "")), emptyList(), hasLists = true, hasDevices = false))
+    assertNull(saved.packs)
+    sql().use { db ->
+      for (pack in listOf("pack-1", "pack-2")) {
+        db.prepareStatement("INSERT INTO typle_shared_packs (id, owner_id, pack_id, data) VALUES (gen_random_uuid(), ?, ?, '{}'::jsonb)").use {
+          it.setString(1, owner); it.setString(2, pack); it.executeUpdate()
+        }
+      }
+    }
+    store.writeRevision(owner, 1, Change(listOf(list("1", ""), list("2", "")), emptyList(), hasLists = true, hasDevices = false))
+    assertEquals(setOf("pack-1", "pack-2"), store.listShares(owner).map { it.packId }.toSet())
+    store.writeRevision(owner, 2, Change(listOf(list("1", "")), emptyList(), hasLists = true, hasDevices = false))
+    assertEquals(listOf("pack-1"), store.listShares(owner).map { it.packId })
+  }
+
+  // A save of devices alone leaves the links as they are.
+  @Test fun devicesOnlyKeepsShares() {
+    val owner = owner()
+    twoPacks(owner)
+    store.putShare(owner, "a")
+    store.writeRevision(owner, 1, Change(emptyList(), emptyList(), hasLists = false, hasDevices = true))
+    assertEquals(1, store.listShares(owner).size)
+  }
+
+  // listShares and putShare both read the name from the snapshot.
+  @Test fun shareNames() {
+    val owner = owner()
+    twoPacks(owner)
+    val put = store.putShare(owner, "a")
+    val shares = store.listShares(owner)
+    assertEquals(1, shares.size)
+    assertEquals("Pack a", shares[0].name)
+    assertEquals(shares[0].name, put.name)
   }
 
   @Test fun putShareTooLarge() {
