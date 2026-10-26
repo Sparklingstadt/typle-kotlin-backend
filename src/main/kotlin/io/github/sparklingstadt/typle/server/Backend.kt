@@ -92,6 +92,8 @@ fun Application.backend(backend: Backend) {
       val store = withContext(Dispatchers.IO) { backend.store() }
       if (store == null) {
         secure(call)
+        // As Go's vercel.go: every answer of /api/shared says noindex, this one too.
+        if (call.request.path() == "/api/shared") call.response.headers.append("X-Robots-Tag", "noindex")
         call.refuse(HttpStatusCode.ServiceUnavailable, "databaseUnavailable")
       } else {
         call.serve(backend.login.copy(store = store))

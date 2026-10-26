@@ -275,10 +275,11 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
   // conversion makes, so no link of Go's is deleted that Go keeps). Kotlin does not repair the packs themselves, so only
   // their ids are known, and ids are all deleteRemovedShares needs.
   private fun packsAfterLists(w: Workspace): List<String> {
-    val saved = w.packs.map { it.id }.toSet()
+    val ids = w.packs.map { it.id }
+    val saved = ids.toSet()
     val used = w.lists.map { it.packId }.toSet()
     val own = w.lists.filter { it.packId.isEmpty() || it.packId !in saved }.map { "pack-" + it.id }
-    return w.packs.map { it.id }.filter { it in used } + own
+    return ids.filter { it in used } + own
   }
 
   // Deletes, in the transaction of a save, the owner's links to packs that are no longer among the packs saved.

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 // The cases of server/vercel/vercel_test.go that apply: the login works while the database is down, and the database is
@@ -31,6 +32,11 @@ class BackendTest {
     val backend = backend()
     TestServer { backend(backend) }.use { server ->
       for (path in listOf("/api/health", "/api/workspace", "/api/nope")) expectError(server.request("GET", path), 503, "databaseUnavailable", path)
+      // Only /api/shared says noindex, as Go's vercel.go.
+      val shared = server.request("GET", "/api/shared?id=0b6f2c1e-3d4a-4f5b-8c9d-0e1f2a3b4c5d")
+      expectError(shared, 503, "databaseUnavailable")
+      assertEquals("noindex", shared.headers().firstValue("X-Robots-Tag").orElse(null))
+      assertFalse(server.request("GET", "/api/workspace").headers().firstValue("X-Robots-Tag").isPresent)
       val session = server.request("GET", "/api/auth/session")
       assertEquals(200 to "{\"user\":null}\n", session.statusCode() to session.body())
       assertTrue(logged.any { "connection refused" in it }, logged.toString())
