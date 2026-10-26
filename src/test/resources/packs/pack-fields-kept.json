@@ -1,0 +1,62 @@
+{
+  "lists": [
+    {
+      "id": "a",
+      "name": "a",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p1"
+    }
+  ],
+  "packs": [
+    {
+      "id": "p1",
+      "name": "P",
+      "description": "d",
+      "origin": {
+        "catalogId": "c",
+        "version": 2
+      },
+      "future": 1,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "expected": {
+    "packs": [
+      {
+        "id": "p1",
+        "name": "P",
+        "description": "d",
+        "origin": {
+          "catalogId": "c",
+          "version": 2
+        },
+        "future": 1,
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "a",
+        "name": "a",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p1"
+      }
+    ]
+  }
+}

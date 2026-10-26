@@ -3,15 +3,19 @@ package io.github.sparklingstadt.typle.server.workspace
 import io.github.sparklingstadt.typle.server.json.JsonArray
 import io.github.sparklingstadt.typle.server.json.JsonNull
 import io.github.sparklingstadt.typle.server.json.JsonObject
+import io.github.sparklingstadt.typle.server.json.JsonString
 import io.github.sparklingstadt.typle.server.json.JsonValue
 
 // Word packs follow src/core/wordPacks.ts, as Go's server/internal/workspace/packs_library.go: every list belongs to one
-// pack, which holds the category and tags the lists used to have. Only the checks of a save are here; the conversion
-// and repair of saved data are the app's.
+// pack, which holds the category and tags the lists used to have. The checks of a save are here, and of the repairs Go
+// makes when it reads saved packs only separateLevels (see readSaved); the conversion and the other repairs are the app's.
 
 // The limits of a pack (MAX_PACK_NAME and MAX_PACK_DESCRIPTION in src/core/wordPacks.ts), in UTF-16 code units.
 const val MAX_PACK_NAME = 200
 const val MAX_PACK_DESCRIPTION = 500
+
+// The limit of a level (MAX_LEVEL in src/core/packEditing.ts, Go's MaxLevel), in UTF-16 code units.
+const val MAX_LEVEL = 50
 
 /**
  * JavaScript's toLowerCase, which the app uses to compare names. Java's root locale lowercases as it does, İ to i and a
@@ -50,8 +54,8 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   }
   // Every pack holds a list.
   if (ids.size != listNames.size) invalid()
-  // Lists of a pack whose paths overlap are refused (checkReach in Go), as levelsConflict. Kotlin does not repair
-  // saved data, so it does not separate them as Go's separateLevels does when it reads.
+  // Lists of a pack whose paths overlap are refused (checkReach in Go), as levelsConflict. This checks a save as it was
+  // sent; saved lists that overlap are separated where the server reads them (separateLevels, see readSaved).
   val paths = HashMap<String, MutableList<List<String>>>()
   for (list in lists) {
     val levels = try {
@@ -71,6 +75,68 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
 private fun pathsOverlap(a: List<String>, b: List<String>): Boolean {
   val n = minOf(a.size, b.size)
   return a.subList(0, n) == b.subList(0, n)
+}
+
+/**
+ * fit (src/core/workspaceDocument.ts), as Go's fit: name with suffix after it, the name cut so that the whole stays within
+ * limit UTF-16 code units, without the spaces the cut leaves at its end. A character of two code units is not split.
+ */
+internal fun fit(name: String, suffix: String, limit: Int): String {
+  var kept = name
+  val keep = limit - utf16Length(suffix)
+  if (utf16Length(kept) > keep) {
+    kept = kept.substring(0, maxOf(keep, 0))
+    if (kept.isNotEmpty() && kept.last().isHighSurrogate()) kept = kept.dropLast(1)
+  }
+  return trimEndJS(kept) + suffix
+}
+
+/**
+ * separateLevels (src/core/wordPacks.ts), as Go's separateLevels, which brings back in reach the lists an older app (or
+ * lists saved without their packs) let overlap: a list whose path overlaps that of an earlier list of its pack gets
+ * （2）, （3）… on the level where they meet, or on its name when it has no levels (a name another list of the pack does
+ * not use, compared trimmed and lowercased). Earlier lists, and lists without overlaps, are kept as they are; a list
+ * whose levels change keeps the other fields Typle does not know.
+ */
+fun separateLevels(lists: List<WordList>): List<WordList> {
+  val names = HashMap<String, HashSet<String>>()
+  for (list in lists) names.getOrPut(list.packId) { HashSet() }.add(nameKey(list.name))
+  val accepted = HashMap<String, MutableList<List<String>>>()
+  return lists.map { list ->
+    val taken = names.getValue(list.packId)
+    val levels = levelsOf(list)
+    val hasLevels = levels.isNotEmpty()
+    val limit = if (hasLevels) MAX_LEVEL else MAX_LIST_NAME
+    val base = if (hasLevels) levels else listOf(list.name)
+    val path = base.toMutableList()
+    val others = accepted.getOrPut(list.packId) { ArrayList() }
+    fun nameTaken() = !hasLevels && nameKey(path[0]) != nameKey(list.name) && nameKey(path[0]) in taken
+    var count = 2
+    while (true) {
+      val other = others.firstOrNull { pathsOverlap(it, path) }
+      if (other == null && !nameTaken()) break
+      val at = if (other != null) minOf(path.size, other.size) - 1 else 0
+      path[at] = fit(base[at], "（$count）", limit)
+      count++
+    }
+    others.add(path.toList())
+    when {
+      path == base -> list
+      hasLevels -> withLevels(list, path)
+      else -> {
+        taken.add(nameKey(path[0]))
+        list.copy(name = path[0])
+      }
+    }
+  }
+}
+
+// list with levels in place of its own, which Kotlin keeps with the fields Typle does not know (extra, which then has
+// levels).
+private fun withLevels(list: WordList, levels: List<String>): WordList {
+  val members = LinkedHashMap((JsonValue.parse(list.extra) as JsonObject).members)
+  members["levels"] = JsonArray(levels.map(::JsonString))
+  return list.copy(extra = unknown(JsonObject(members)))
 }
 
 /**
