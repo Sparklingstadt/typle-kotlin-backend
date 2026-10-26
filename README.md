@@ -30,7 +30,7 @@ AUTH_SECRET=… AUTH_URL=http://127.0.0.1:3000 DATABASE_URL=… build/install/ty
 ```
 
 - ログインの設定（`AUTH_SECRET`・`AUTH_URL`）がなければ、理由を出して起動しません。
-- DB につながらなくても起動し、その間 `/api/health`・`/api/workspace` は `503 databaseUnavailable` を返し、次のリクエストでつなぎ直します（失敗から 1 秒はつなぎ直しません）。`/api/auth/*` は DB なしで動きます。
+- DB につながらなくても起動し、その間 `/api/health`・`/api/workspace`・`/api/shares`・`/api/shared` は `503 databaseUnavailable` を返し、次のリクエストでつなぎ直します（失敗から 1 秒はつなぎ直しません）。`/api/auth/*` は DB なしで動きます。
 - SIGINT・SIGTERM では、処理中のリクエストを最大 5 秒待ってから止まります。
 
 ## Go との互換
@@ -40,6 +40,8 @@ AUTH_SECRET=… AUTH_URL=http://127.0.0.1:3000 DATABASE_URL=… build/install/ty
 - 同じ DB（`typle_workspaces`）を同じ SQL で読み書きするので、Go と Kotlin を入れ替えてもデータの形は変わりません。
 - 保存の検証（`workspace`）は Go の `workspace.Decode` と同じ規則です。JSON は Go の `encoding/json` と同じ厳しさで読む専用のパーサー（`json/JsonValue.kt`）で読みます。
 - 単語パック（typle-r v0.91.0）: `/api/workspace` の GET・PUT は Go と同じく `packs` 列を読み書きします（応答の項目の順は `lists`・`packs`・`devices`・`revision`・`accountId`、列が `NULL` か行がなければ `"packs":null`）。`lists` と `packs` を一緒に送る保存は Go の `CheckLibrary` と同じ検証をし、`lists` だけの保存は `group`・`category`・`tags` を送られたまま保存して `packs` 列を変えません。保存済みのリストのパックへの変換と補正は Go と違って行わず、アプリに任せます（応答は保存されたままなので、結果は同じです）。
+- リンクで共有（typle-r v0.96.0）: `/api/shares`（`GET`・`HEAD`・`PUT`・`DELETE`）と `/api/shared?id=`（`GET`・`HEAD`、ログインなし）は Go と同じパス・ステータス・エラーのキー・ヘッダーで答えます。スナップショット（`typle_shared_packs.data`）は Go の `EncodePackFile` と同じバイト列で書き、`/api/shared` は保存されたものを読み直して同じバイト列で返します（`workspace/PackFile.kt`。typle-r の `tests/fixtures/pack-file` の写しを `src/test/resources/pack-file` に置いて確かめます）。`packs` を送る保存は、同じトランザクションで保存したパックにない共有を消し、最初の保存（revision 0）は Go と同じ `pg_advisory_xact_lock` を取ります。
+  - Go との違い: 一度も保存していないアカウント（`typle_workspaces` に行がない）は、Go では最初のパック（`workspace.Initial()`）を共有できますが、Kotlin は最初のワークスペースを作らないので `404 packNotFound` を返します。パックができる前に保存したリスト（`packs` が `NULL`）も、Go と違ってパックに変換しないので共有できず `404 packNotFound` です。保存済みのパックの補正（Go の `Decode` の修復）もしないので、補正が要る保存データでは共有の中身が Go と違うことがあります（アプリが保存するデータでは起きません）。
 - JSON のオブジェクトのキーは、Go（`encoding/json`）が大文字と小文字を区別せずに照合するのに対し、Kotlin は完全に一致するものだけを読みます。そのため大文字と小文字だけが違うキー（例: `"Category"`）を持つ保存は、Go と Kotlin で受け付けるかどうかが変わることがあります。アプリはそのようなキーを送りません。
 
 ## 構成
@@ -52,8 +54,8 @@ Go の `server/internal/*` と 1 対 1 に対応します。Go を変えたら�
 | `web/` | `server/internal/web` |
 | `session/` | `server/internal/session` |
 | `auth/` | `server/internal/auth`（`OAuth` と `GitHub.User`） |
-| `store/` | `server/internal/store`（`ConnString`・`Ping`・`ReadRevision`・`WriteRevision`） |
-| `workspace/` | `server/internal/workspace`（`Decode`・`Encode`・`EncodeWithLabels`・`EncodePacks`・`CheckLimits`・`CheckPacks`・`CheckLibrary`・`ParseTime`・`trimJS`） |
+| `store/` | `server/internal/store`（`ConnString`・`Ping`・`ReadRevision`・`WriteRevision`・`PutShare`・`DeleteShare`・`ListShares`・`SharedPack`） |
+| `workspace/` | `server/internal/workspace`（`Decode`・`Encode`・`EncodeWithLabels`・`EncodePacks`・`CheckLimits`・`CheckPacks`・`CheckLibrary`・`EncodePackFile`・`PackFile.Encode`・`DecodePackFile`（共有の読み直しに要る分）・`ParseTime`・`trimJS`） |
 | `json/` | Go の `encoding/json` の書き方と読み方 |
 
 ## 確認

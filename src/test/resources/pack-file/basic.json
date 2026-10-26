@@ -1,0 +1,53 @@
+{
+  "library": {
+    "packs": [
+      {
+        "id": "pack-other",
+        "name": "Other",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "pack-a",
+        "name": "Fruits",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "o",
+        "name": "Other",
+        "packId": "pack-other",
+        "words": [
+          {
+            "display": "x",
+            "input": "x",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "a",
+        "name": "果物",
+        "packId": "pack-a",
+        "words": [
+          {
+            "display": "りんご",
+            "input": "ringo",
+            "annotation": ""
+          },
+          {
+            "display": "Banana",
+            "input": "banana",
+            "annotation": "黄色い"
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ]
+  },
+  "packId": "pack-a",
+  "file": "{\n  \"format\": \"typle-pack\",\n  \"version\": 1,\n  \"pack\": {\n    \"name\": \"Fruits\"\n  },\n  \"lists\": [\n    {\n      \"name\": \"果物\",\n      \"words\": [\n        {\n          \"display\": \"りんご\",\n          \"input\": \"ringo\",\n          \"annotation\": \"\"\n        },\n        {\n          \"display\": \"Banana\",\n          \"input\": \"banana\",\n          \"annotation\": \"黄色い\"\n        }\n      ]\n    }\n  ]\n}\n"
+}
