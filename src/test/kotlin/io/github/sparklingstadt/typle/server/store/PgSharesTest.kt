@@ -197,4 +197,23 @@ class PgSharesTest {
     assertEquals(emptyList(), store.listShares(owner))
     assertNotEquals(0, store.readRevision(owner)!!.revision)
   }
+
+  // A pack whose saved lists overlap (saved by an app that let them, or by lists sent alone) is shared with its levels
+  // separated, as Go reads the row (separateLevels), so the snapshot can be added again without levelsConflict. The row
+  // itself stays as stored.
+  @Test fun putShareSeparatesLevels() {
+    val owner = owner()
+    fun leveled(id: String, levels: String) = list(id, "a").copy(name = id, extra = """{"levels":$levels}""")
+    // The store leaves the overlap check to the handler (checkLibrary), so the row can be written with one.
+    val saved = store.writeRevision(owner, 0, library(listOf(leveled("x", """["初級"]"""), leveled("y", """["初級","A"]""")), listOf(pack("a"))))
+    val share = store.putShare(owner, "a")
+    val data = store.sharedPack(share.id)!!
+    assertTrue("\"初級（2）\"" in data, data)
+    val separated = decode(saved.lists, saved.devices, saved.packs).let { w ->
+      w.copy(lists = listOf(w.lists[0], w.lists[1].copy(extra = """{"levels":["初級（2）","A"]}""")))
+    }
+    assertEquals(encodePackFile(separated, "a"), data)
+    assertEquals(saved, store.readRevision(owner))
+    assertTrue("\"初級（2）\"" !in store.readRevision(owner)!!.lists)
+  }
 }

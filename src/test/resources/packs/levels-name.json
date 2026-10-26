@@ -1,0 +1,262 @@
+{
+  "lists": [
+    {
+      "id": "a",
+      "name": "初級",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p1"
+    },
+    {
+      "id": "b",
+      "name": "b",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "初級"
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "c",
+      "name": "c",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "初級"
+      ],
+      "packId": "p2"
+    },
+    {
+      "id": "d",
+      "name": "初級",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p2"
+    },
+    {
+      "id": "e",
+      "name": "e",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "初級"
+      ],
+      "packId": "p3"
+    },
+    {
+      "id": "f",
+      "name": "初級",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p3"
+    },
+    {
+      "id": "g",
+      "name": "初級（2）",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "上級"
+      ],
+      "packId": "p3"
+    }
+  ],
+  "packs": [
+    {
+      "id": "p1",
+      "name": "A",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "p2",
+      "name": "B",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "p3",
+      "name": "C",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "expected": {
+    "packs": [
+      {
+        "id": "p1",
+        "name": "A",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p2",
+        "name": "B",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p3",
+        "name": "C",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "a",
+        "name": "初級",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p1"
+      },
+      {
+        "id": "b",
+        "name": "b",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "初級（2）"
+        ],
+        "packId": "p1"
+      },
+      {
+        "id": "c",
+        "name": "c",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "初級"
+        ],
+        "packId": "p2"
+      },
+      {
+        "id": "d",
+        "name": "初級（2）",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p2"
+      },
+      {
+        "id": "e",
+        "name": "e",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "初級"
+        ],
+        "packId": "p3"
+      },
+      {
+        "id": "f",
+        "name": "初級（3）",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p3"
+      },
+      {
+        "id": "g",
+        "name": "初級（2）",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "上級"
+        ],
+        "packId": "p3"
+      }
+    ]
+  }
+}

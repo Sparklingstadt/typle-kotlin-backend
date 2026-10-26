@@ -1,0 +1,128 @@
+{
+  "lists": [
+    {
+      "id": "a",
+      "name": "a",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "A"
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "b",
+      "name": "b",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "A（2）",
+        "B"
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "c",
+      "name": "c",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "A",
+        "B"
+      ],
+      "packId": "p1"
+    }
+  ],
+  "packs": [
+    {
+      "id": "p1",
+      "name": "P",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "expected": {
+    "packs": [
+      {
+        "id": "p1",
+        "name": "P",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "a",
+        "name": "a",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "A"
+        ],
+        "packId": "p1"
+      },
+      {
+        "id": "b",
+        "name": "b",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "A（2）",
+          "B"
+        ],
+        "packId": "p1"
+      },
+      {
+        "id": "c",
+        "name": "c",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "A（2）",
+          "B（3）"
+        ],
+        "packId": "p1"
+      }
+    ]
+  }
+}

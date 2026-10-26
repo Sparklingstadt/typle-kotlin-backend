@@ -3,7 +3,10 @@
 // the app's decodeLists, decodePacks and decodeDevices, so data the app would read is read here and data it would
 // refuse is refused. As in Go, null in an optional field reads as the field left out. Unlike Go, lists saved before
 // packs existed are not turned into packs here, nor are saved packs repaired: the app does that when it reads them, and
-// /api/workspace answers what is stored.
+// /api/workspace answers what is stored (as Go's GET does). Of Go's repairs, only the separation of lists of a pack whose
+// levels overlap (separateLevels) is made, on rows that have packs, where the server builds something from a saved row
+// rather than answering it as stored: the snapshot of a shared link (readSaved, used by PutShare). A save with packs is
+// still checked as it was sent, so overlaps there are refused (levelsConflict).
 package io.github.sparklingstadt.typle.server.workspace
 
 import io.github.sparklingstadt.typle.server.json.JsonArray
@@ -64,6 +67,17 @@ private fun invalid(message: String): Nothing = throw InvalidWorkspaceException(
 /** Reads a saved row: its lists, devices and packs columns. packs is null (NULL) for lists saved before packs existed. */
 fun decode(lists: String, devices: String, packs: String? = null): Workspace =
   decodeValues(parse(lists, "lists"), parse(devices, "devices"), packs?.let { parse(it, "packs") })
+
+/**
+ * A saved row as the server reads it to build an answer or new data from it, such as the snapshot of a shared link:
+ * decode, with the lists of a row that has packs separated as Go's Decode separates them when it repairs saved packs
+ * (separateLevels), so it reads them as Go does. A row without packs (packs null) is read as decode reads it, as Kotlin
+ * does not make its packs. /api/workspace answers the row as stored and does not use this.
+ */
+fun readSaved(lists: String, devices: String, packs: String?): Workspace {
+  val w = decode(lists, devices, packs)
+  return if (packs == null) w else w.copy(lists = separateLevels(w.lists))
+}
 
 /** decode for lists, devices and packs already read as JSON, such as the parts of a save. */
 fun decodeValues(lists: JsonValue, devices: JsonValue, packs: JsonValue? = null): Workspace {

@@ -236,4 +236,37 @@ class ShareRoutesTest {
       }
     }
   }
+
+  // With a real database: lists sent alone (an app that does not know packs) may overlap and are saved as sent, and
+  // /api/workspace answers them so; a link to their pack shares them separated, as Go reads the row (Go's
+  // TestPutLevelsWithoutPacksRealStore). Sent with their packs, they are refused.
+  @Test fun realDatabaseSeparatesLevels() {
+    val connection = System.getenv("TYPLE_TEST_DATABASE_URL").orEmpty()
+    assumeTrue(connection.isNotEmpty(), "TYPLE_TEST_DATABASE_URL is not set")
+    val owner = "github:8" + Random.nextLong(100_000_000_000L, 999_999_999_999L)
+    val cookie = sessionCookie(owner)
+    fun list(id: String, levels: String) =
+      """{"id":"$id","name":"$id","packId":"p","levels":$levels,"createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[]}"""
+    val pack = """{"id":"p","name":"P","createdAt":"2026-09-06"}"""
+    PgStore.open(connection).use { real ->
+      serve(testConfig(real)) {
+        val headers = mapOf("Origin" to TEST_BASE, "Content-Type" to "application/json", "Cookie" to cookie)
+        fun save(revision: Int, fields: String) =
+          request("PUT", "/api/workspace", """{"accountId":"$owner","revision":$revision,$fields}""", headers)
+
+        assertEquals(200, save(0, """"lists":[${list("a", "[\"初級\"]")}],"packs":[$pack]""").statusCode())
+        val overlapping = """"lists":[${list("a", "[\"初級\"]")},${list("b", "[\"初級\",\"A\"]")}]"""
+        expectError(save(1, "$overlapping,\"packs\":[$pack]"), 400, "levelsConflict")
+        assertEquals(200, save(1, overlapping).statusCode())
+        val workspace = request("GET", "/api/workspace", headers = mapOf("Cookie" to cookie)).body()
+        assertTrue("""["初級","A"]""" in workspace && "初級（2）" !in workspace, workspace)
+
+        val put = share("PUT", "/api/shares", """{"packId":"p"}""", owner)
+        assertEquals(200, put.statusCode(), put.body())
+        val read = request("GET", "/api/shared?id=" + put.body().substringAfter("\"id\":\"").substringBefore('"'))
+        assertEquals(200, read.statusCode())
+        assertTrue("\"初級（2）\",\n" in read.body(), read.body())
+      }
+    }
+  }
 }

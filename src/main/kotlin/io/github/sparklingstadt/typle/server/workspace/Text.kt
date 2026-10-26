@@ -16,6 +16,9 @@ private fun isJsSpace(c: Char) = when (c) {
 /** JavaScript's trim. The app trims names and words with it. */
 fun trimJS(value: String): String = value.trim(::isJsSpace)
 
+/** JavaScript's trimEnd (Go's trimEndJS). */
+fun trimEndJS(value: String): String = value.trimEnd(::isJsSpace)
+
 /** The length of value as JavaScript measures it, in UTF-16 code units. */
 fun utf16Length(value: String): Int = value.length
 

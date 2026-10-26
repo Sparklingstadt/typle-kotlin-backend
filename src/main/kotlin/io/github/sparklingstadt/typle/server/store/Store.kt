@@ -20,6 +20,7 @@ import io.github.sparklingstadt.typle.server.workspace.encodePackFile
 import io.github.sparklingstadt.typle.server.workspace.encodePackFileAgain
 import io.github.sparklingstadt.typle.server.workspace.encodePacks
 import io.github.sparklingstadt.typle.server.workspace.encodeWithLabels
+import io.github.sparklingstadt.typle.server.workspace.readSaved
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -201,7 +202,8 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
    *
    * Unlike Go, an account that has saved nothing has no pack to share (packNotFound): Kotlin does not make the initial
    * workspace, nor does it turn lists saved before packs existed into packs. A pack not in the workspace is
-   * packNotFound (WorkspaceError); a snapshot past MAX_SHARED_PACK_BYTES is invalidWorkspace.
+   * packNotFound (WorkspaceError); a snapshot past MAX_SHARED_PACK_BYTES is invalidWorkspace. Lists of the pack whose
+   * levels overlap are shared separated, as Go's Decode reads them (readSaved).
    */
   override fun putShare(owner: String, packId: String): Share = transaction { db ->
     lockOwner(db, owner)
@@ -211,8 +213,9 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
       q.setString(1, owner)
       q.executeQuery().use { r -> if (r.next()) saved(r) else null }
     } ?: throw WorkspaceError("packNotFound")
+    // Read as Go reads the row, with overlapping levels separated, so the snapshot can be added again (readSaved).
     val workspace = try {
-      decode(saved.lists, saved.devices, saved.packs)
+      readSaved(saved.lists, saved.devices, saved.packs)
     } catch (e: InvalidWorkspaceException) {
       throw IllegalStateException("saved workspace of $owner: ${e.message}", e)
     }
