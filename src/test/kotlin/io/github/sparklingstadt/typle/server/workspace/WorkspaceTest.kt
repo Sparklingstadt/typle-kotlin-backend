@@ -259,18 +259,17 @@ class WorkspaceTest {
     checkPacks(listOf(pack, q), listOf(leveled("a", """["初級"]"""), leveled("b", """["初級"]""").copy(packId = "q")))
   }
 
-  // A list with more than one level is tooManyLevels (Go's TestCheckPacksLevels); it is checked list by list, before the
-  // list's own overlap check of the lists before it.
-  @Test fun checksTooManyLevels() {
+  // A list with several levels (up to 5, sent by an app before v0.97.0) is taken and not checked for overlaps; more is
+  // invalidWorkspace (Go's TestCheckPacksLevels).
+  @Test fun checksSeveralLevels() {
     val pack = Pack("p", "P", createdAt = "x")
     val list = WordList("a", "a", listOf(Word("ls", "ls", "")), emptyList(), "x", packId = "p")
     fun leveled(id: String, levels: String) = list.copy(id = id, name = id, extra = """{"levels":$levels}""")
     fun refused(vararg lists: WordList) = assertFailsWith<WorkspaceError> { checkPacks(listOf(pack), lists.toList()) }.key
-    assertEquals("tooManyLevels", refused(leveled("a", """["中級1","A"]""")))
-    assertEquals("tooManyLevels", refused(leveled("a", """["x","y","z","u","v"]""")))
-    assertEquals("tooManyLevels", refused(leveled("a", """["基本","基本"]""")))
-    assertEquals("levelsConflict", refused(leveled("a", """["x"]"""), leveled("b", """["x"]"""), leveled("c", """["z","z"]""")))
-    assertEquals("tooManyLevels", refused(leveled("a", """["x"]"""), leveled("b", """["y","z"]"""), leveled("c", """["x"]""")))
+    checkPacks(listOf(pack), listOf(leveled("a", """["基本","初級"]"""), leveled("b", """["基本"]"""), leveled("c", """["基本","初級"]""")))
+    checkPacks(listOf(pack), listOf(leveled("a", """["x","y","z","u","v"]""")))
+    assertEquals("invalidWorkspace", refused(leveled("a", """["1","2","3","4","5","6"]""")))
+    assertEquals("levelsConflict", refused(leveled("a", """["x"]"""), leveled("b", """["x"]""")))
     checkPacks(listOf(pack), listOf(leveled("a", """["基本"]"""), leveled("b", """["基本（2）"]"""), leveled("c", """[]""")))
   }
 

@@ -73,6 +73,62 @@
         "b"
       ],
       "packId": "p1"
+    },
+    {
+      "id": "e",
+      "name": "e",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "・基本・ ",
+        " ・ ",
+        "・",
+        "初級・"
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "f",
+      "name": "f",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "・",
+        " ・ "
+      ],
+      "packId": "p1"
+    },
+    {
+      "id": "g",
+      "name": "g",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "levels": [
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "・・b"
+      ],
+      "packId": "p1"
     }
   ],
   "packs": [
@@ -155,7 +211,55 @@
         "records": [],
         "createdAt": "2026-10-01T00:00:00.000Z",
         "levels": [
-          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa・"
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ],
+        "packId": "p1"
+      },
+      {
+        "id": "e",
+        "name": "e",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "基本・初級"
+        ],
+        "packId": "p1"
+      },
+      {
+        "id": "f",
+        "name": "f",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p1"
+      },
+      {
+        "id": "g",
+        "name": "g",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "levels": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa・b"
         ],
         "packId": "p1"
       }

@@ -32,8 +32,7 @@ private fun nameKey(name: String) = lowerCase(trimJS(name))
 
 /**
  * validateLibrary (src/core/wordPacks.ts), as Go's CheckPacks: refuses packs and lists that are not in the saved shape,
- * with invalidWorkspace, a list with more than one level, with tooManyLevels, and lists of a pack whose paths overlap,
- * with levelsConflict.
+ * with invalidWorkspace, and lists of a pack whose paths overlap, with levelsConflict.
  */
 fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   fun invalid(): Nothing = throw WorkspaceError("invalidWorkspace")
@@ -53,16 +52,22 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   val listNames = HashMap<String, HashSet<String>>()
   for (list in lists) {
     val taken = listNames.getOrPut(list.packId) { HashSet() }
+    // The lists are stored as they are repaired, with several levels joined, so the number sent is checked here.
+    val sent = try {
+      levelsOf(list).size
+    } catch (_: InvalidWorkspaceException) {
+      invalid()
+    }
     if (list.packId == "" || list.packId !in ids || !taken.add(nameKey(list.name)) || list.group != "" || list.category != "" ||
-      list.tags.isNotEmpty()) {
+      list.tags.isNotEmpty() || sent > MAX_SAVED_LEVELS) {
       invalid()
     }
   }
   // Every pack holds a list.
   if (ids.size != listNames.size) invalid()
-  // Lists of a pack whose paths overlap, or with more than one level, are refused (checkReach and tidyLevels in Go). This
-  // checks a save as it was sent; saved lists with several levels or overlapping ones are repaired where the server reads
-  // them (collapseLevels and separateLevels, see readSaved).
+  // Lists of a pack whose paths overlap are refused (checkReach in Go). A list with several levels (up to MAX_SAVED_LEVELS),
+  // sent by an app before v0.97.0, is taken and not checked for overlaps: it is stored joined into one level and told
+  // apart (collapseLevels and separateLevels, as readSaved reads saved rows).
   val paths = HashMap<String, MutableList<List<String>>>()
   for (list in lists) {
     val levels = try {
@@ -70,7 +75,7 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
     } catch (_: InvalidWorkspaceException) {
       invalid()
     }
-    if (levels.size > MAX_LEVELS) throw WorkspaceError("tooManyLevels")
+    if (levels.size > MAX_LEVELS) continue
     val path = if (levels.isEmpty()) listOf(list.name) else levels
     val taken = paths.getOrPut(list.packId) { ArrayList() }
     if (taken.any { pathsOverlap(it, path) }) throw WorkspaceError("levelsConflict")
@@ -78,13 +83,16 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   }
 }
 
+// bare (src/core/wordPacks.ts): a level without the spaces and ・ at its ends.
+private fun bare(level: String) = level.trim { isJsSpace(it) || it == '・' }
+
 // collapseLevels (src/core/wordPacks.ts), as Go's collapseLevels: a list holds one level at most since v0.97.0, so several
-// levels saved by an older app become one: the levels trimmed, without empty ones, joined with ・ and cut to MAX_LEVEL;
-// no level at all when none is left.
+// levels saved by an older app become one: the levels made bare, without empty ones, joined with ・, cut to MAX_LEVEL and
+// made bare again; no level at all when none is left.
 private fun collapseLevels(list: WordList): WordList {
   val old = levelsOf(list)
   if (old.size <= 1) return list
-  val joined = fit(old.map(::trimJS).filter { it != "" }.joinToString("・"), "", MAX_LEVEL)
+  val joined = bare(fit(old.map(::bare).filter { it != "" }.joinToString("・"), "", MAX_LEVEL))
   return withLevels(list, if (joined == "") emptyList() else listOf(joined))
 }
 

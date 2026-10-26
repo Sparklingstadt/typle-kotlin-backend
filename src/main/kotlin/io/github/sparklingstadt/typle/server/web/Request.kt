@@ -10,6 +10,7 @@ import io.github.sparklingstadt.typle.server.json.JsonValue
 import io.github.sparklingstadt.typle.server.store.Change
 import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
+import io.github.sparklingstadt.typle.server.workspace.separateLevels
 import io.github.sparklingstadt.typle.server.workspace.checkLibrary
 import io.github.sparklingstadt.typle.server.workspace.decodeValues
 import io.github.sparklingstadt.typle.server.workspace.trimJS
@@ -33,9 +34,6 @@ class InvalidRequestException : Exception("request is not a valid workspace")
 
 /** Lists sent with their packs whose levels overlap in a pack: levelsConflict. */
 class LevelsConflictException : Exception("lists of a pack have overlapping levels")
-
-/** A list sent with its pack that has more than one level: tooManyLevels. */
-class TooManyLevelsException : Exception("a list has more than one level")
 
 /** Reads the body, giving up as soon as it is past limit rather than after reading all of it. */
 fun readLimited(input: InputStream, limit: Int): ByteArray {
@@ -77,7 +75,6 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
     } catch (e: WorkspaceError) {
       throw when (e.key) {
         "levelsConflict" -> LevelsConflictException()
-        "tooManyLevels" -> TooManyLevelsException()
         else -> InvalidRequestException()
       }
     }
@@ -93,8 +90,9 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
     return revision to Change(decoded.lists, decoded.devices, hasLists = lists != null, hasDevices = devices != null)
   }
   // Go repairs the library before it is saved, which leaves one that checkLibrary accepts as it is but for the names of
-  // its packs and lists, trimmed (their trimmed lowercase is already unique).
-  return revision to Change(decoded.lists.map { it.copy(name = trimJS(it.name)) }, decoded.devices, hasLists = true,
+  // its packs and lists, trimmed (their trimmed lowercase is already unique), and the levels of lists sent with several
+  // (by an app before v0.97.0), joined into one and told apart (separateLevels).
+  return revision to Change(separateLevels(decoded.lists.map { it.copy(name = trimJS(it.name)) }), decoded.devices, hasLists = true,
     hasDevices = devices != null, packs = decoded.packs.map { it.copy(name = trimJS(it.name)) }, hasPacks = true)
 }
 

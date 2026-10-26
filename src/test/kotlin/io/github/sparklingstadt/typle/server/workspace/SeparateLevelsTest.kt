@@ -67,6 +67,9 @@ class SeparateLevelsTest {
       listOf(" 基本 ", "", "  ", "初級") to listOf("基本・初級"),
       listOf("基本") to listOf("基本"),
       listOf("", " ") to emptyList(),
+      listOf("・基本・ ", " ・ ", "初級・") to listOf("基本・初級"),
+      listOf("・", " ") to emptyList(),
+      listOf("a".repeat(48), "😀") to listOf("a".repeat(48)),
       listOf("a".repeat(30), "b".repeat(30)) to listOf("a".repeat(30) + "・" + "b".repeat(19)),
       listOf("😀".repeat(20), "😀".repeat(20)) to listOf("😀".repeat(20) + "・" + "😀".repeat(4)),
     )
