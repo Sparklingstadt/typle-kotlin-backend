@@ -50,6 +50,27 @@ fun checkPacks(packs: List<Pack>, lists: List<WordList>) {
   }
   // Every pack holds a list.
   if (ids.size != listNames.size) invalid()
+  // Lists of a pack whose paths overlap are refused (checkReach in Go), as levelsConflict. Kotlin does not repair
+  // saved data, so it does not separate them as Go's separateLevels does when it reads.
+  val paths = HashMap<String, MutableList<List<String>>>()
+  for (list in lists) {
+    val levels = try {
+      levelsOf(list)
+    } catch (_: InvalidWorkspaceException) {
+      invalid()
+    }
+    val path = if (levels.isEmpty()) listOf(list.name) else levels
+    val taken = paths.getOrPut(list.packId) { ArrayList() }
+    if (taken.any { pathsOverlap(it, path) }) throw WorkspaceError("levelsConflict")
+    taken.add(path)
+  }
+}
+
+// pathsOverlap (src/core/packEditing.ts): two paths overlap when they are equal or one starts the other, compared as
+// they are (case and spaces count).
+private fun pathsOverlap(a: List<String>, b: List<String>): Boolean {
+  val n = minOf(a.size, b.size)
+  return a.subList(0, n) == b.subList(0, n)
 }
 
 /**

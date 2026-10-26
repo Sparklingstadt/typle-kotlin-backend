@@ -308,6 +308,18 @@ class WorkspaceRoutesTest {
     assertEquals(writes, store.writes)
   }
 
+  // Lists of a pack whose levels overlap are refused with levelsConflict when sent with their packs, and nothing is saved.
+  @Test fun putLevelsConflict() = serve {
+    fun leveled(id: String, levels: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"$id\",\"name\":\"$id\",\"levels\":$levels")
+    fun body(second: String) = payload(TEST_OWNER, """"revision":1,"lists":[${leveled("a", """["初級"]""")},${leveled("b", second)}],"packs":[$A_PACK]""")
+    val writes = store.writes
+    expectError(put(body("""["初級","A"]""")), 400, "levelsConflict")
+    assertEquals(writes, store.writes)
+    // Data separated on reading is saved as it is.
+    val ok = put(body("""["初級（2）","A"]"""))
+    assertEquals(200, ok.statusCode(), ok.body())
+  }
+
   // A save with packs is stored as the app's repair would leave a library validateLibrary accepts: names trimmed.
   @Test fun putPacksTrimsNames() = serve {
     val list = PACKED_ONE.replace("\"One\"", "\" One \"")
