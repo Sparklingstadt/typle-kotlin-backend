@@ -3,18 +3,29 @@ package io.github.sparklingstadt.typle.server.web
 import io.github.sparklingstadt.typle.server.session.Keys
 import io.github.sparklingstadt.typle.server.session.newSession
 import io.github.sparklingstadt.typle.server.store.ConflictException
+import io.github.sparklingstadt.typle.server.store.PgStore
 import io.github.sparklingstadt.typle.server.store.Saved
+import io.github.sparklingstadt.typle.server.workspace.MAX_GROUP
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
 import java.net.http.HttpResponse
+import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import org.junit.jupiter.api.Assumptions.assumeTrue
 
 private const val ONE_LIST =
   """{"id":"one","name":"One","createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[]}"""
 
 private fun payload(owner: String, fields: String) = """{"accountId":"$owner",$fields}"""
+
+private const val A_PACK = """{"id":"p","name":"P","category":"C","createdAt":"2026-09-06"}"""
+
+private const val PACKED_ONE =
+  """{"id":"one","name":"One","packId":"p","createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[]}"""
+
+private fun aList(id: String, name: String) = ONE_LIST.replace("\"one\"", "\"$id\"").replace("\"One\"", "\"$name\"")
 
 // The cases of server/internal/web/workspace_test.go.
 class WorkspaceRoutesTest {
@@ -69,19 +80,23 @@ class WorkspaceRoutesTest {
 
   @Test fun getEmpty() = serve {
     val response = get()
-    assertEquals(200 to """{"lists":[],"devices":[],"revision":0,"accountId":"$TEST_OWNER"}""" + "\n", response.statusCode() to response.body())
+    assertEquals(200 to """{"lists":[],"packs":null,"devices":[],"revision":0,"accountId":"$TEST_OWNER"}""" + "\n", response.statusCode() to response.body())
     expectJsonHeaders("get", response)
   }
 
   // The stored jsonb text is answered compact, with HTML characters escaped, as Go's encoder writes a RawMessage.
   @Test fun getSaved() {
-    store.saved = Saved("""[{"id": "a", "name": "<b>"}]""", """[{"id": "d", "name": "&"}]""", 4)
+    store.saved = Saved("""[{"id": "a", "name": "<b>"}]""", """[{"id": "d", "name": "&"}]""", """[{"id": "p", "name": "<P>"}]""", 4)
     serve {
       val response = get()
       assertEquals(
-        """{"lists":[{"id":"a","name":"\u003cb\u003e"}],"devices":[{"id":"d","name":"\u0026"}],"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
+        """{"lists":[{"id":"a","name":"\u003cb\u003e"}],"packs":[{"id":"p","name":"\u003cP\u003e"}],""" +
+          """"devices":[{"id":"d","name":"\u0026"}],"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
         response.body())
     }
+    // Lists saved before packs existed have none: null.
+    store.saved = Saved("[]", "[]", null, 5)
+    serve { assertEquals("""{"lists":[],"packs":null,"devices":[],"revision":5,"accountId":"$TEST_OWNER"}""" + "\n", get().body()) }
   }
 
   @Test fun head() = serve {
@@ -221,14 +236,14 @@ class WorkspaceRoutesTest {
     val response = put(payload(TEST_OWNER, """"revision":3,"lists":[$list],"devices":[$device]"""))
     assertEquals(
       """{"lists":[{"id":"one","name":"One","createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[],"keep":1}],""" +
-        """"devices":[$device],"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
+        """"packs":null,"devices":[$device],"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
       response.body())
     expectJsonHeaders("put", response)
     assertEquals(3L, store.revision)
     assertTrue(store.change!!.hasLists && store.change!!.hasDevices)
     // A part left out stays as saved.
-    store.saved = Saved("[]", "[]", 4)
-    assertEquals("""{"lists":[],"devices":[],"revision":5,"accountId":"$TEST_OWNER"}""" + "\n",
+    store.saved = Saved("[]", "[]", null, 4)
+    assertEquals("""{"lists":[],"packs":null,"devices":[],"revision":5,"accountId":"$TEST_OWNER"}""" + "\n",
       put(payload(TEST_OWNER, """"revision":4,"devices":[]""")).body())
     assertFalse(store.change!!.hasLists)
   }
@@ -257,5 +272,82 @@ class WorkspaceRoutesTest {
     for (authorization in listOf("Bearer $cookieValue", "Basic x", "Bearer a b", "Bearer ", "bearer $token")) {
       expectError(get(sessionCookie(TEST_OWNER), headers = mapOf("Authorization" to authorization)), 401, "loginRequired", authorization)
     }
+  }
+
+  // packs are taken only with the lists they hold, and checked as sent, as validateWorkspaceRequest and validateLibrary
+  // do: a list of a save with packs has no labels of its own, not even empty ones.
+  @Test fun putPacks() = serve {
+    val response = put(payload(TEST_OWNER, """"revision":1,"lists":[$PACKED_ONE],"packs":[$A_PACK]"""))
+    assertEquals("""{"lists":[$PACKED_ONE],"packs":[$A_PACK],"devices":[],"revision":2,"accountId":"$TEST_OWNER"}""" + "\n",
+      response.body())
+    val change = store.change!!
+    assertTrue(change.hasLists && change.hasPacks && change.packs.size == 1 && change.packs[0].category == "C", change.toString())
+    // A save from an app that does not know packs keeps the labels it sent on its lists, and the saved packs.
+    val labeled = ONE_LIST.replace(""""records":[]""", """"records":[],"group":"G","category":"C","tags":["t"]""")
+    val again = put(payload(TEST_OWNER, """"revision":2,"lists":[$labeled]"""))
+    assertEquals(200, again.statusCode(), again.body())
+    assertTrue(""""group":"G","category":"C","tags":["t"]""" in again.body() && """"packs":[$A_PACK]""" in again.body(), again.body())
+    val list = store.change!!.lists[0]
+    assertTrue(!store.change!!.hasPacks && list.group == "G" && list.category == "C" && list.packId == "", store.change.toString())
+    val writes = store.writes
+    fun with(fields: String) = PACKED_ONE.replace(""""records":[]""", """"records":[],$fields""")
+    val cases = mapOf(
+      "null packs" to """"lists":[$PACKED_ONE],"packs":null""",
+      "packs alone" to """"packs":[$A_PACK]""",
+      "packs with devices" to """"devices":[],"packs":[$A_PACK]""",
+      "packs object" to """"lists":[$PACKED_ONE],"packs":{}""",
+      "missing pack" to """"lists":[${PACKED_ONE.replace("\"p\"", "\"q\"")}],"packs":[$A_PACK]""",
+      "empty category" to """"lists":[${with(""""category":""""")}],"packs":[$A_PACK]""",
+      "empty tags" to """"lists":[${with(""""tags":[]""")}],"packs":[$A_PACK]""",
+      "group" to """"lists":[${with(""""group":"G"""")}],"packs":[$A_PACK]""",
+      "null description" to """"lists":[$PACKED_ONE],"packs":[${A_PACK.replace(""""category":"C"""", """"description":null""")}]""",
+      "pack without lists" to """"lists":[$PACKED_ONE],"packs":[$A_PACK,{"id":"q","name":"Q","createdAt":"2026-09-06"}]""",
+      "unstorable pack" to """"lists":[$PACKED_ONE],"packs":[${A_PACK.replace("\"P\"", "\"a\\u0000b\"")}]""",
+    )
+    for ((name, fields) in cases) expectError(put(payload(TEST_OWNER, """"revision":1,$fields""")), 400, "invalidWorkspace", name)
+    assertEquals(writes, store.writes)
+  }
+
+  // A save with packs is stored as the app's repair would leave a library validateLibrary accepts: names trimmed.
+  @Test fun putPacksTrimsNames() = serve {
+    val list = PACKED_ONE.replace("\"One\"", "\" One \"")
+    val pack = A_PACK.replace("\"P\"", "\"\u3000P \"")
+    val response = put(payload(TEST_OWNER, """"revision":1,"lists":[$list],"packs":[$pack]"""))
+    assertEquals("""{"lists":[$PACKED_ONE],"packs":[$A_PACK],"devices":[],"revision":2,"accountId":"$TEST_OWNER"}""" + "\n",
+      response.body())
+  }
+
+  // The database tests run against TYPLE_TEST_DATABASE_URL, as PgStoreTest, and are skipped without it.
+  private fun <T> serveReal(block: TestServer.(owner: String) -> T): T {
+    val connection = System.getenv("TYPLE_TEST_DATABASE_URL").orEmpty()
+    assumeTrue(connection.isNotEmpty(), "TYPLE_TEST_DATABASE_URL is not set")
+    val owner = "github:8" + Random.nextLong(100_000_000_000L, 999_999_999_999L)
+    return PgStore.open(connection).use { real -> serve(testConfig(real)) { block(owner) } }
+  }
+
+  private fun packsOf(response: HttpResponse<String>): String =
+    response.body().substringAfter("\"packs\":").substringBefore(",\"devices\":")
+
+  @Test fun packsFlowRealStore() = serveReal { owner ->
+    val cookie = sessionCookie(owner)
+    assertEquals("null", packsOf(get(cookie)), "without a row")
+    assertEquals(200, put(payload(owner, """"revision":0,"lists":[$ONE_LIST]"""), cookie).statusCode())
+    assertEquals("null", packsOf(get(cookie)), "for a row saved without packs")
+    val saved = put(payload(owner, """"revision":1,"lists":[$PACKED_ONE],"packs":[$A_PACK]"""), cookie)
+    val read = get(cookie)
+    assertEquals(200 to saved.body(), saved.statusCode() to read.body())
+    assertTrue(""""category":"C"""" in packsOf(read), read.body())
+    // Lists sent alone leave the saved packs as they are.
+    assertEquals(200, put(payload(owner, """"revision":2,"lists":[$PACKED_ONE,${aList("two", "Two")}]"""), cookie).statusCode())
+    assertEquals(packsOf(read), packsOf(get(cookie)))
+  }
+
+  // A lists-only save stores the group it sends, which becomes a pack's name when it is read, so a group longer than
+  // validateLists allows is refused, as the app does: a pack name over the limit would refuse every later save.
+  @Test fun groupLimitRealStore() = serveReal { owner ->
+    val cookie = sessionCookie(owner)
+    fun group(n: Int) = ONE_LIST.replace(""""records":[]""", """"records":[],"group":"${"g".repeat(n)}"""")
+    expectError(put(payload(owner, """"revision":0,"lists":[${group(MAX_GROUP + 1)}]"""), cookie), 400, "invalidWorkspace")
+    assertEquals(200, put(payload(owner, """"revision":0,"lists":[${group(MAX_GROUP)}]"""), cookie).statusCode())
   }
 }

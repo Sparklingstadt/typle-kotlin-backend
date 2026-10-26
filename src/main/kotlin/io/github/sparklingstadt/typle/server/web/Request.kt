@@ -9,7 +9,10 @@ import io.github.sparklingstadt.typle.server.json.JsonSyntaxException
 import io.github.sparklingstadt.typle.server.json.JsonValue
 import io.github.sparklingstadt.typle.server.store.Change
 import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
+import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
+import io.github.sparklingstadt.typle.server.workspace.checkLibrary
 import io.github.sparklingstadt.typle.server.workspace.decodeValues
+import io.github.sparklingstadt.typle.server.workspace.trimJS
 import java.io.InputStream
 
 /** MAX_WORKSPACE_BYTES (src/core/workspaceRequest.ts). */
@@ -44,8 +47,8 @@ fun parseObject(body: String): JsonObject = try {
 
 /**
  * Reads a save, as validateWorkspaceRequest does and in its order: the revision, then the legacy profile
- * (LegacyRequestException), then the lists and devices (InvalidRequestException). The limits of the lists and the
- * number of them are checked by the store, before it touches the database.
+ * (LegacyRequestException), then the lists, packs and devices (InvalidRequestException). The limits of the lists and
+ * the number of them are checked by the store, before it touches the database.
  */
 fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   val members = fields.members
@@ -53,18 +56,36 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   if ("profileId" in members && members["profileId"] != JsonString("default")) throw LegacyRequestException()
   if ("profiles" in members) throw LegacyRequestException()
   val lists = members["lists"]
+  val packs = members["packs"]
   val devices = members["devices"]
+  // Packs only make sense with the lists that belong to them.
+  if (packs != null && lists == null) throw InvalidRequestException()
   if (lists == null && devices == null) return revision to Change(emptyList(), emptyList(), hasLists = false, hasDevices = false)
   // null is not a left-out part: the app refuses it.
-  if (lists == JsonNull || devices == JsonNull) throw InvalidRequestException()
-  if ((lists != null && unstorable(lists)) || (devices != null && unstorable(devices))) throw InvalidRequestException()
+  if (lists == JsonNull || packs == JsonNull || devices == JsonNull) throw InvalidRequestException()
+  if (listOfNotNull(lists, packs, devices).any(::unstorable)) throw InvalidRequestException()
+  // Lists sent with packs are checked as they were sent.
+  if (packs != null) {
+    try {
+      checkLibrary(lists!!, packs)
+    } catch (_: WorkspaceError) {
+      throw InvalidRequestException()
+    }
+  }
   // A part that is left out is read as empty, so that only the other one is checked.
   val decoded = try {
-    decodeValues(lists ?: JsonArray(emptyList()), devices ?: JsonArray(emptyList()))
+    decodeValues(lists ?: JsonArray(emptyList()), devices ?: JsonArray(emptyList()), packs)
   } catch (_: InvalidWorkspaceException) {
     throw InvalidRequestException()
   }
-  return revision to Change(decoded.lists, decoded.devices, hasLists = lists != null, hasDevices = devices != null)
+  if (packs == null) {
+    // An app that does not know packs sends its lists with their labels, which are saved as it sent them.
+    return revision to Change(decoded.lists, decoded.devices, hasLists = lists != null, hasDevices = devices != null)
+  }
+  // Go repairs the library before it is saved, which leaves one that checkLibrary accepts as it is but for the names of
+  // its packs and lists, trimmed (their trimmed lowercase is already unique).
+  return revision to Change(decoded.lists.map { it.copy(name = trimJS(it.name)) }, decoded.devices, hasLists = true,
+    hasDevices = devices != null, packs = decoded.packs.map { it.copy(name = trimJS(it.name)) }, hasPacks = true)
 }
 
 /**

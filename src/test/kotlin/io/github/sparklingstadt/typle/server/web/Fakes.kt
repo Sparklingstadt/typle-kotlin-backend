@@ -8,6 +8,10 @@ import io.github.sparklingstadt.typle.server.session.newSession
 import io.github.sparklingstadt.typle.server.store.Change
 import io.github.sparklingstadt.typle.server.store.Saved
 import io.github.sparklingstadt.typle.server.store.Store
+import io.github.sparklingstadt.typle.server.workspace.encode
+import io.github.sparklingstadt.typle.server.workspace.encodeDevices
+import io.github.sparklingstadt.typle.server.workspace.encodePacks
+import io.github.sparklingstadt.typle.server.workspace.encodeWithLabels
 import io.ktor.server.application.Application
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
@@ -49,10 +53,15 @@ class FakeStore(
     failure?.let { throw it }
     this.revision = revision
     this.change = change
-    val lists = if (change.hasLists) io.github.sparklingstadt.typle.server.workspace.encode(change.lists) else saved?.lists ?: "[]"
-    val devices = if (change.hasDevices) io.github.sparklingstadt.typle.server.workspace.encodeDevices(change.devices)
-    else saved?.devices ?: "[]"
-    return Saved(lists, devices, revision + 1).also { saved = it }
+    // As the store does: lists sent without packs keep their labels, and the saved packs stay as they are.
+    val lists = when {
+      !change.hasLists -> saved?.lists ?: "[]"
+      change.hasPacks -> encode(change.lists)
+      else -> encodeWithLabels(change.lists)
+    }
+    val packs = if (change.hasPacks) encodePacks(change.packs) else saved?.packs
+    val devices = if (change.hasDevices) encodeDevices(change.devices) else saved?.devices ?: "[]"
+    return Saved(lists, devices, packs, revision + 1).also { saved = it }
   }
 }
 

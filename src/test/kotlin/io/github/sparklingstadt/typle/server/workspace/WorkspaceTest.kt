@@ -1,5 +1,6 @@
 package io.github.sparklingstadt.typle.server.workspace
 
+import io.github.sparklingstadt.typle.server.json.JsonValue
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -141,6 +142,150 @@ class WorkspaceTest {
       val error = assertFailsWith<WorkspaceError>(name) { checkLimits(listOf(ok[0], over)) }
       assertEquals("invalidWorkspace", error.key)
     }
-    assertTrue(MAX_LISTS == 100)
+    assertTrue(MAX_LISTS == 150)
+  }
+
+  // The labels of lists sent by an app that does not know packs: the group is that of lists saved before packs, which
+  // becomes a pack's name when they are read.
+  @Test fun checkLimitsOfLabels() {
+    val base = WordList("c", "c", listOf(Word("a", "a", "")), emptyList(), "x")
+    checkLimits(listOf(base.copy(category = "a".repeat(MAX_CATEGORY), tags = List(MAX_TAGS) { "a".repeat(MAX_TAG) }),
+      base.copy(group = "𠮷".repeat(MAX_GROUP / 2))))
+    val tooMuch = mapOf(
+      "category" to base.copy(category = "a".repeat(MAX_CATEGORY + 1)),
+      "tags" to base.copy(tags = List(MAX_TAGS + 1) { "" }),
+      "tag" to base.copy(tags = listOf("a".repeat(MAX_TAG + 1))),
+      "group" to base.copy(group = "a".repeat(MAX_GROUP + 1)),
+      "group in UTF-16 units" to base.copy(group = "𠮷".repeat(MAX_GROUP / 2) + "a"),
+    )
+    for ((name, over) in tooMuch) {
+      assertEquals("invalidWorkspace", assertFailsWith<WorkspaceError>(name) { checkLimits(listOf(over)) }.key, name)
+    }
+  }
+
+  // A list keeps its packId, group, category and tags as they are stored; they are read, not left in extra.
+  @Test fun decodesLabels() {
+    val w = decode("""[{"id":"a","name":"A","packId":"p","group":"G","category":"語学","tags":["英語","<b>"],"createdAt":"x",""" +
+      """"words":[{"display":"a","input":"a","annotation":""}],"records":[]},""" +
+      """{"id":"b","name":"B","category":null,"tags":null,"group":null,"packId":null,"createdAt":"x",""" +
+      """"words":[{"display":"a","input":"a","annotation":""}],"records":[]}]""", "[]")
+    val a = w.lists[0]
+    assertEquals(listOf("p", "G", "語学", listOf("英語", "<b>"), ""), listOf(a.packId, a.group, a.category, a.tags, a.extra))
+    val b = w.lists[1]
+    assertEquals(listOf("", "", "", emptyList<String>()), listOf(b.packId, b.group, b.category, b.tags))
+    assertTrue(""""name":"A","packId":"p","createdAt"""" in encode(w.lists), encode(w.lists))
+    assertTrue(""""name":"A","packId":"p","group":"G","category":"語学","tags":["英語","<b>"],"createdAt"""" in
+      encodeWithLabels(w.lists), encodeWithLabels(w.lists))
+    assertTrue("""{"id":"b","name":"B","createdAt"""" in encodeWithLabels(w.lists), encodeWithLabels(w.lists))
+    for (labels in listOf(""""category":1""", """"tags":"a"""", """"tags":[1]""", """"tags":[null]""", """"packId":1""", """"group":1""")) {
+      assertFailsWith<InvalidWorkspaceException>(labels) {
+        decode("""[{"id":"a","name":"A",$labels,"createdAt":"x","words":[{"display":"a","input":"a","annotation":""}],"records":[]}]""", "[]")
+      }
+    }
+  }
+
+  // decodePacks of src/core/wordPacks.ts, as Go's TestDecodeRefusesBadPacks.
+  @Test fun decodesPacks() {
+    val pack = """{"id":"p","name":"P","createdAt":"2026-10-01T00:00:00.000Z","future":1}"""
+    val list = """[{"id":"a","name":"a","packId":"p","createdAt":"x","words":[{"display":"a","input":"a","annotation":""}],"records":[]}]"""
+    val w = decode(list, "[]", "[$pack]")
+    assertEquals(listOf(Pack("p", "P", createdAt = "2026-10-01T00:00:00.000Z", extra = """{"future":1}""")), w.packs)
+    assertEquals(emptyList(), decode(list, "[]").packs)
+    for (bad in listOf("null", "{}", """[{"id":1,"name":"P","createdAt":"x"}]""", """[{"id":"","name":"P","createdAt":"x"}]""",
+      """[{"id":"p","createdAt":"x"}]""", """[{"id":"p","name":"P"}]""", """[{"id":"p","name":"P","createdAt":"x","tags":"x"}]""",
+      """[{"id":"p","name":"P","createdAt":"x","tags":[null]}]""", """[{"id":"p","name":"P","createdAt":"x","origin":{"catalogId":"c"}}]""",
+      """[{"id":"p","name":"P","createdAt":"x","origin":"c"}]""", "[null]", "[$pack,$pack]")) {
+      assertFailsWith<InvalidWorkspaceException>(bad) { decode(list, "[]", bad) }
+    }
+  }
+
+  // EncodePacks: what a pack does not have is left out, and the fields Typle does not know are kept.
+  @Test fun encodesPacks() {
+    val packs = decode("[]", "[]", """[{"id":"a","name":"A","description":"","category":"語学","tags":["英語","<b>"],"createdAt":"x"},""" +
+      """{"id":"b","name":"B","tags":[],"origin":{"catalogId":"c","version":2.50,"x":1},"createdAt":"x","future":[1]}]""").packs
+    assertEquals("""[{"id":"a","name":"A","category":"語学","tags":["英語","<b>"],"createdAt":"x"},""" +
+      """{"id":"b","name":"B","origin":{"catalogId":"c","version":2.5},"createdAt":"x","future":[1]}]""", encodePacks(packs))
+    assertEquals("[]", encodePacks(emptyList()))
+  }
+
+  // validateLibrary (src/core/wordPacks.ts), as Go's TestCheckPacks.
+  @Test fun checksPacks() {
+    val list = WordList("a", "a", listOf(Word("ls", "ls", "")), emptyList(), "2026-10-01T00:00:00.000Z", packId = "p")
+    val pack = Pack("p", "P", createdAt = "2026-10-01T00:00:00.000Z")
+    checkPacks(listOf(pack), listOf(list))
+    val q = pack.copy(id = "q", name = "Q")
+    fun many(n: Int) = List(n) { pack.copy(id = "p$it", name = "P$it") } to List(n) { list.copy(id = "l$it", name = "l$it", packId = "p$it") }
+    val (manyPacks, manyLists) = many(MAX_LISTS + 1)
+    val cases = mapOf(
+      "a list in a pack that does not exist" to (listOf(pack, q) to listOf(list.copy(packId = "r"),
+        list.copy(id = "b", name = "b", packId = "q"), list.copy(id = "c", name = "c"))),
+      "a list without a packId" to (listOf(pack) to listOf(list, list.copy(id = "b", name = "b", packId = ""))),
+      "a pack without lists" to (listOf(pack, q) to listOf(list)),
+      "two packs with one name" to (listOf(pack, pack.copy(id = "q", name = " p ")) to
+        listOf(list, list.copy(id = "b", name = "b", packId = "q"))),
+      "two packs with one id" to (listOf(pack, pack.copy(name = "Q")) to listOf(list)),
+      "a blank pack name" to (listOf(pack.copy(name = " ")) to listOf(list)),
+      "a pack name over the limit" to (listOf(pack.copy(name = "n".repeat(MAX_PACK_NAME + 1))) to listOf(list)),
+      "a description over the limit" to (listOf(pack.copy(description = "d".repeat(MAX_PACK_DESCRIPTION + 1))) to listOf(list)),
+      "a category over the limit" to (listOf(pack.copy(category = "c".repeat(MAX_CATEGORY + 1))) to listOf(list)),
+      "a tag over the limit" to (listOf(pack.copy(tags = listOf("t".repeat(MAX_TAG + 1)))) to listOf(list)),
+      "more tags than the limit" to (listOf(pack.copy(tags = List(MAX_TAGS + 1) { "t$it" })) to listOf(list)),
+      "a list name repeated in a pack" to (listOf(pack) to listOf(list, list.copy(id = "b", name = "A"))),
+      "a list with a group" to (listOf(pack) to listOf(list.copy(group = "g"))),
+      "a list with a category" to (listOf(pack) to listOf(list.copy(category = "c"))),
+      "a list with tags" to (listOf(pack) to listOf(list.copy(tags = listOf("t")))),
+    )
+    for ((reason, case) in cases) {
+      assertEquals("invalidWorkspace", assertFailsWith<WorkspaceError>(reason) { checkPacks(case.first, case.second) }.key, reason)
+    }
+    // Packs have no limit of their own (every pack has a list, so the list limit bounds them), and a list name may be
+    // used again in another pack.
+    checkPacks(manyPacks, manyLists)
+    checkPacks(listOf(pack, q), listOf(list, list.copy(id = "b", name = " A ", packId = "q")))
+  }
+
+  // Pack names are compared trimmed and lowercased as JavaScript's toLowerCase does.
+  @Test fun packNamesCompareAsJavaScript() {
+    val list = WordList("a", "a", listOf(Word("ls", "ls", "")), emptyList(), "x", packId = "p")
+    fun packs(first: String, second: String) = listOf(Pack("p", first, createdAt = "x"), Pack("q", second, createdAt = "x"))
+    val lists = listOf(list, list.copy(id = "b", packId = "q"))
+    for ((first, second) in listOf("\u0130" to "i\u0307", "ΟΔΟΣ" to "οδο\u03c2", "Linux" to "\u3000linux ")) {
+      assertFailsWith<WorkspaceError>(first) { checkPacks(packs(first, second), lists) }
+    }
+    // Σ at the end of a word is ς, so it is not σ.
+    checkPacks(packs("ΟΔΟΣ", "οδο\u03c3"), lists)
+  }
+
+  // validateLibrary for a save with lists and packs, read as they were sent, as Go's TestCheckLibrary.
+  @Test fun checksLibrary() {
+    val list = """{"id":"a","name":"a","packId":"p","createdAt":"2026-10-01T00:00:00.000Z","words":[{"display":"ls","input":"ls","annotation":""}],"records":[]}"""
+    val pack = """{"id":"p","name":"P","createdAt":"2026-10-01T00:00:00.000Z"}"""
+    fun withList(fields: String) = list.replace(""""records":[]""", """"records":[],$fields""")
+    fun withPack(fields: String) = pack.replace(""""createdAt"""", """$fields,"createdAt"""")
+    fun check(lists: String, packs: String) = checkLibrary(JsonValue.parse(lists), JsonValue.parse(packs))
+    check("[$list]", "[${withPack(""""description":"d","category":"c","tags":["t"],"origin":{"catalogId":"x","version":1}""")}]")
+    val cases = mapOf(
+      "an empty category" to ("[${withList(""""category":""""")}]" to "[$pack]"),
+      "a category" to ("[${withList(""""category":"c"""")}]" to "[$pack]"),
+      "a null category" to ("[${withList(""""category":null""")}]" to "[$pack]"),
+      "empty tags" to ("[${withList(""""tags":[]""")}]" to "[$pack]"),
+      "tags" to ("[${withList(""""tags":["t"]""")}]" to "[$pack]"),
+      "an empty group" to ("[${withList(""""group":""""")}]" to "[$pack]"),
+      "a group" to ("[${withList(""""group":"g"""")}]" to "[$pack]"),
+      "a pack that is not there" to ("[${list.replace("\"p\"", "\"missing\"")}]" to "[$pack]"),
+      "a pack without lists" to ("[$list]" to "[$pack,${withPack(""""category":"c"""").replace("\"p\"", "\"q\"")}]"),
+      "a null description" to ("[$list]" to "[${withPack(""""description":null""")}]"),
+      "a null pack category" to ("[$list]" to "[${withPack(""""category":null""")}]"),
+      "null pack tags" to ("[$list]" to "[${withPack(""""tags":null""")}]"),
+      "a null origin" to ("[$list]" to "[${withPack(""""origin":null""")}]"),
+      "packs not an array" to ("[$list]" to "{}"),
+      "null packs" to ("[$list]" to "null"),
+      "a pack without a name" to ("[$list]" to """[{"id":"p","createdAt":"2026-10-01T00:00:00.000Z"}]"""),
+      "an unreadable list" to ("""[{"id":""}]""" to "[$pack]"),
+      "lists not an array" to ("{}" to "[$pack]"),
+    )
+    for ((name, case) in cases) {
+      assertEquals("invalidWorkspace", assertFailsWith<WorkspaceError>(name) { check(case.first, case.second) }.key, name)
+    }
   }
 }

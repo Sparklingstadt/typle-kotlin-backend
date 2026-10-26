@@ -75,9 +75,13 @@ suspend fun ApplicationCall.workspace(config: Config) {
   if (request.httpMethod == HttpMethod.Put) writeWorkspace(config) else readWorkspace(config)
 }
 
-// The answer of GET and PUT: the lists and devices as the database stores them, with the fields Typle does not know.
+// The answer of GET and PUT, in the order of Go's saved: the lists, packs and devices as the database stores them, with
+// the fields Typle does not know. Packs are null for lists saved before packs existed, and for an account that has
+// saved nothing.
 private suspend fun ApplicationCall.answer(saved: Saved, owner: String) = reply(HttpStatusCode.OK,
-  "{\"lists\":" + GoJson.compact(saved.lists, escapeHtml = true) + ",\"devices\":" + GoJson.compact(saved.devices, escapeHtml = true) +
+  "{\"lists\":" + GoJson.compact(saved.lists, escapeHtml = true) +
+    ",\"packs\":" + (saved.packs?.let { GoJson.compact(it, escapeHtml = true) } ?: "null") +
+    ",\"devices\":" + GoJson.compact(saved.devices, escapeHtml = true) +
     ",\"revision\":" + saved.revision + ",\"accountId\":" + GoJson.string(owner, escapeHtml = true) + "}")
 
 private suspend fun ApplicationCall.readWorkspace(config: Config) {
@@ -89,7 +93,7 @@ private suspend fun ApplicationCall.readWorkspace(config: Config) {
     return refuse(HttpStatusCode.ServiceUnavailable, "databaseUnavailable")
   }
   // An account that has saved nothing has no lists, not the first lists that /api/v1 starts with.
-  answer(result ?: Saved("[]", "[]", 0), user.sub)
+  answer(result ?: Saved("[]", "[]", null, 0), user.sub)
 }
 
 private suspend fun ApplicationCall.writeWorkspace(config: Config) {

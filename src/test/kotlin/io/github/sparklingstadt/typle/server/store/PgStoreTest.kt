@@ -2,6 +2,7 @@ package io.github.sparklingstadt.typle.server.store
 
 import io.github.sparklingstadt.typle.server.workspace.Device
 import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
+import io.github.sparklingstadt.typle.server.workspace.Pack
 import io.github.sparklingstadt.typle.server.workspace.Word
 import io.github.sparklingstadt.typle.server.workspace.WordList
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
@@ -108,13 +109,13 @@ class PgStoreTest {
   }
 
   @Test fun listLimit() {
-    assertEquals("listLimit", assertFailsWith<WorkspaceError> { store.writeRevision(owner(), 0, lists(101)) }.key)
-    // Saved data merged from removed profiles may have more than 100 lists: a save may keep that number, not raise it.
+    assertEquals("listLimit", assertFailsWith<WorkspaceError> { store.writeRevision(owner(), 0, lists(151)) }.key)
+    // Saved data merged from removed profiles may have more than 150 lists: a save may keep that number, not raise it.
     val id = owner()
-    insert(id, encodeLists(101))
-    assertEquals(2, store.writeRevision(id, 1, lists(101)).revision)
-    assertEquals("listLimit", assertFailsWith<WorkspaceError> { store.writeRevision(id, 2, lists(102)) }.key)
-    assertEquals(3, store.writeRevision(id, 2, lists(100)).revision)
+    insert(id, encodeLists(151))
+    assertEquals(2, store.writeRevision(id, 1, lists(151)).revision)
+    assertEquals("listLimit", assertFailsWith<WorkspaceError> { store.writeRevision(id, 2, lists(152)) }.key)
+    assertEquals(3, store.writeRevision(id, 2, lists(150)).revision)
   }
 
   private fun encodeLists(n: Int) = io.github.sparklingstadt.typle.server.workspace.encode(newLists(n))
@@ -217,5 +218,59 @@ class PgStoreTest {
     } finally {
       pool.shutdown()
     }
+  }
+
+  private fun packsColumn(owner: String): String? = sql().use { db ->
+    db.prepareStatement("SELECT packs::text FROM typle_workspaces WHERE owner_id = ?").use { q ->
+      q.setString(1, owner)
+      q.executeQuery().use { r -> r.next(); r.getString(1) }
+    }
+  }
+
+  // A save with packs writes them, and its lists without labels; a save of lists alone, from an app that does not know
+  // packs, keeps the saved packs and the labels on its lists, which the app moves into packs when it reads them.
+  @Test fun writeRevisionPacks() {
+    val id = owner()
+    val packed = newLists(1).map { it.copy(packId = "p") }
+    val packs = listOf(Pack("p", "P", category = "C", createdAt = "2026-10-10T01:23:45.000Z"))
+    val saved = store.writeRevision(id, 0, Change(packed, emptyList(), hasLists = true, hasDevices = false, packs = packs, hasPacks = true))
+    assertEquals(packs, decode(saved.lists, saved.devices, saved.packs).packs)
+    assertEquals("p", decode(saved.lists, saved.devices, saved.packs).lists[0].packId)
+    assertEquals(saved, store.readRevision(id))
+    val sent = newLists(2).let { listOf(it[0].copy(packId = "p"), it[1].copy(category = "語学", tags = listOf("英語"), group = "G")) }
+    val again = store.writeRevision(id, 1, Change(sent, emptyList(), hasLists = true, hasDevices = false))
+    assertTrue("\"語学\"" in again.lists && "\"group\": \"G\"" in again.lists, again.lists)
+    assertEquals(saved.packs, again.packs)
+    assertEquals(again.packs, packsColumn(id))
+    // A row created without packs is one saved before them: NULL, read as null.
+    val other = owner()
+    assertNull(store.writeRevision(other, 0, Change(sent, emptyList(), hasLists = true, hasDevices = false)).packs)
+    assertNull(packsColumn(other))
+    assertNull(store.readRevision(other)!!.packs)
+    // A save of the devices alone leaves both as they are.
+    val devicesOnly = store.writeRevision(id, 2, Change(emptyList(), devices, hasLists = false, hasDevices = true))
+    assertEquals(again.lists to again.packs, devicesOnly.lists to devicesOnly.packs)
+  }
+
+  // Packs are set only with the lists they hold.
+  @Test fun packsWithoutListsAreRefused() {
+    val fresh = owner()
+    val packs = listOf(Pack("p", "P", createdAt = "x"))
+    val error = assertFailsWith<WorkspaceError> {
+      store.writeRevision(fresh, 0, Change(emptyList(), devices, hasLists = false, hasDevices = true, packs = packs, hasPacks = true))
+    }
+    assertEquals("invalidWorkspace", error.key)
+    assertNull(store.readRevision(fresh))
+  }
+
+  @Test fun unreadableSavedPacksAreAnError() {
+    val id = owner()
+    sql().use { db ->
+      db.prepareStatement("INSERT INTO typle_workspaces (owner_id, lists, packs) VALUES (?, '[]'::jsonb, '[{\"id\": \"\"}]'::jsonb)").use { q ->
+        q.setString(1, id)
+        q.executeUpdate()
+      }
+    }
+    assertFailsWith<InvalidWorkspaceException> { store.readRevision(id) }
   }
 }

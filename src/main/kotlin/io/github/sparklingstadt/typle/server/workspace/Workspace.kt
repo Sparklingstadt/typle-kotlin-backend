@@ -1,7 +1,9 @@
-// Package workspace reads a Typle workspace: the lists and devices of an account, as the app saves them in the
-// typle_workspaces table. The checks are those of the Go backend's server/internal/workspace (Decode), which follow
-// the app's decodeLists and decodeDevices, so data the app would read is read here and data it would refuse is
-// refused. As in Go, null in an optional field reads as the field left out.
+// Package workspace reads a Typle workspace: the lists, word packs and devices of an account, as the app saves them in
+// the typle_workspaces table. The checks are those of the Go backend's server/internal/workspace (Decode), which follow
+// the app's decodeLists, decodePacks and decodeDevices, so data the app would read is read here and data it would
+// refuse is refused. As in Go, null in an optional field reads as the field left out. Unlike Go, lists saved before
+// packs existed are not turned into packs here, nor are saved packs repaired: the app does that when it reads them, and
+// /api/workspace answers what is stored.
 package io.github.sparklingstadt.typle.server.workspace
 
 import io.github.sparklingstadt.typle.server.json.JsonArray
@@ -31,31 +33,91 @@ data class Record(
   val device: Device?, val extra: String = "",
 )
 
+/**
+ * A list as it is stored. packId is the word pack it belongs to, "" when it has none (lists saved before packs existed).
+ * group, category and tags are those of a list saved by an app that does not know packs: "" and empty when it has none,
+ * which is how they are stored, left out. A list saved with packs has none of the three; its pack has the labels.
+ */
 data class WordList(
   val id: String, val name: String, val words: List<Word>, val records: List<Record>, val createdAt: String,
-  val extra: String = "",
+  val extra: String = "", val packId: String = "", val group: String = "", val category: String = "",
+  val tags: List<String> = emptyList(),
 )
 
-data class Workspace(val lists: List<WordList>, val devices: List<Device>)
+/** Origin is set on a pack added from the official catalog. */
+data class Origin(val catalogId: String, val version: Double)
+
+/** A word pack. description and category are "" and tags empty when it has none, which is how they are stored: left out. */
+data class Pack(
+  val id: String, val name: String, val description: String = "", val category: String = "", val tags: List<String> = emptyList(),
+  val origin: Origin? = null, val createdAt: String, val extra: String = "",
+)
+
+/** A workspace as read. packs is empty when the packs column is NULL (lists saved before packs existed). */
+data class Workspace(val lists: List<WordList>, val devices: List<Device>, val packs: List<Pack> = emptyList())
 
 /** Saved data, or a save, that the app would not read. */
 class InvalidWorkspaceException(message: String) : Exception(message)
 
 private fun invalid(message: String): Nothing = throw InvalidWorkspaceException(message)
 
-/** Reads a saved row: its lists and devices columns. */
-fun decode(lists: String, devices: String): Workspace = decodeValues(parse(lists, "lists"), parse(devices, "devices"))
+/** Reads a saved row: its lists, devices and packs columns. packs is null (NULL) for lists saved before packs existed. */
+fun decode(lists: String, devices: String, packs: String? = null): Workspace =
+  decodeValues(parse(lists, "lists"), parse(devices, "devices"), packs?.let { parse(it, "packs") })
 
-/** decode for lists and devices already read as JSON, such as the parts of a save. */
-fun decodeValues(lists: JsonValue, devices: JsonValue): Workspace {
-  val rawLists = lists
-  if (rawLists !is JsonArray) invalid("lists must be an array")
+/** decode for lists, devices and packs already read as JSON, such as the parts of a save. */
+fun decodeValues(lists: JsonValue, devices: JsonValue, packs: JsonValue? = null): Workspace {
+  val decoded = decodeLists(lists)
   val rawDevices = when (val parsed = devices) {
     is JsonArray -> parsed.items
     JsonNull -> emptyList()
     else -> invalid("devices are not valid")
   }
-  return Workspace(decodeLists(rawLists.items), decodeDevices(rawDevices))
+  val registered = decodeDevices(rawDevices)
+  return Workspace(decoded, registered, packs?.let(::decodePacks) ?: emptyList())
+}
+
+/** Reads lists as they were sent or saved: each keeps its packId, group, category and tags as they are. */
+fun decodeLists(lists: JsonValue): List<WordList> {
+  if (lists !is JsonArray) invalid("lists must be an array")
+  return decodeLists(lists.items)
+}
+
+/** decodePacks (src/core/wordPacks.ts), as Go's decodePacks. */
+fun decodePacks(packs: JsonValue): List<Pack> {
+  if (packs == JsonNull) invalid("packs must be an array")
+  if (packs !is JsonArray) invalid("packs are not valid")
+  val ids = HashSet<String>()
+  return packs.items.mapIndexed { index, item ->
+    val pack = try {
+      decodePack(item)
+    } catch (e: InvalidWorkspaceException) {
+      invalid("pack ${index + 1}: ${e.message}")
+    }
+    if (!ids.add(pack.id)) invalid("pack ${index + 1} is invalid")
+    pack
+  }
+}
+
+private fun decodePack(raw: JsonValue): Pack {
+  val fields = fieldsOf(raw) ?: invalid("is invalid")
+  val id = optionalString(fields, "id")
+  val name = optionalString(fields, "name")
+  val createdAt = optionalString(fields, "createdAt")
+  val origin = when (val value = fields.members["origin"]) {
+    null, JsonNull -> null
+    is JsonObject -> {
+      val catalogId = optionalString(value, "catalogId")
+      val version = optionalFloat(value, "version")
+      if (catalogId == null || version == null) invalid("is invalid")
+      Origin(catalogId, version)
+    }
+    else -> invalid("origin must be an object")
+  }
+  if (id.isNullOrEmpty() || name == null || createdAt == null) invalid("is invalid")
+  return Pack(id, name, optionalString(fields, "description") ?: "", optionalString(fields, "category") ?: "",
+    optionalStrings(fields, "tags"), origin, createdAt,
+    unknown(fields, "id", "name", "description", "category", "tags", "origin", "createdAt"))
 }
 
 private fun parse(text: String, part: String): JsonValue = try {
@@ -108,8 +170,11 @@ private fun decodeList(raw: JsonValue): WordList {
       invalid("record ${index + 1}: ${e.message}")
     }
   }
+  // The labels are optional; decodeLists checks only that they are a string and strings.
   return WordList(id, name, decodedWords, decodedRecords, createdAt,
-    unknown(fields, "id", "name", "createdAt", "words", "records", "shared", "shareId"))
+    unknown(fields, "id", "name", "category", "tags", "group", "packId", "createdAt", "words", "records", "shared", "shareId"),
+    packId = optionalString(fields, "packId") ?: "", group = optionalString(fields, "group") ?: "",
+    category = optionalString(fields, "category") ?: "", tags = optionalStrings(fields, "tags"))
 }
 
 private fun decodeRecord(raw: JsonValue): Record {
@@ -180,6 +245,11 @@ private fun optionalString(fields: JsonObject, name: String): String? = when (va
   is JsonString -> value.value
   else -> invalid("$name must be a string")
 }
+
+// Go's []*string: left out or null is empty, an array of strings is itself, and a null in it or anything else is an
+// error.
+private fun optionalStrings(fields: JsonObject, name: String): List<String> =
+  optionalArray(fields, name)?.map { (it as? JsonString)?.value ?: invalid("$name must be strings") } ?: emptyList()
 
 private fun optionalArray(fields: JsonObject, name: String): List<JsonValue>? = when (val value = fields.members[name]) {
   null, JsonNull -> null
