@@ -10,6 +10,7 @@ import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
 import io.github.sparklingstadt.typle.server.workspace.MAX_LISTS
 import io.github.sparklingstadt.typle.server.workspace.Pack
 import io.github.sparklingstadt.typle.server.workspace.WordList
+import io.github.sparklingstadt.typle.server.workspace.Workspace
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
 import io.github.sparklingstadt.typle.server.workspace.checkLimits
 import io.github.sparklingstadt.typle.server.workspace.decode
@@ -53,8 +54,8 @@ class ConflictException : Exception("workspace revision is stale")
 /** The largest snapshot a link keeps (Go's MaxSharedPackBytes), in bytes of UTF-8. */
 const val MAX_SHARED_PACK_BYTES = 1 shl 20
 
-/** A link to one of the owner's packs. */
-data class Share(val id: String, val packId: String, val updatedAt: Instant)
+/** A link to one of the owner's packs; name is the pack's name in the snapshot, or "" when it has none. */
+data class Share(val id: String, val packId: String, val name: String, val updatedAt: Instant)
 
 /** What the handlers need of the database. */
 interface Store {
@@ -121,7 +122,8 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
    * Saves change over the workspace at revision: revision 0 creates the row, any other revision replaces what is saved
    * only if it is still that revision (else ConflictException). Lists may be more than MAX_LISTS in saved data merged
    * from removed profiles; a save may keep or lower that number, never raise it. A save with packs deletes, in the same
-   * transaction, the owner's links to packs that are no longer among them; other saves leave the links as they are.
+   * transaction, the owner's links to packs that are no longer among them. So does a save of lists without packs, against
+   * the packs the row then has (derived from the lists when it has none); devices alone leave the links as they are.
    *
    * Throws ConflictException for a stale revision, WorkspaceError for lists past the limits or packs without lists
    * (invalidWorkspace) or more lists than allowed (listLimit), InvalidWorkspaceException for a change decode would
@@ -149,7 +151,16 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     decode(lists ?: "[]", devices ?: "[]", packs)
     return transaction { db ->
       val saved = writeRevision(db, owner, revision, change, lists, packs, devices)
-      if (change.hasPacks) deleteRemovedShares(db, owner, change.packs)
+      if (change.hasPacks) {
+        deleteRemovedShares(db, owner, change.packs.map { it.id })
+      } else if (change.hasLists) {
+        val w = try {
+          decode(saved.lists, saved.devices, saved.packs)
+        } catch (e: InvalidWorkspaceException) {
+          throw IllegalStateException("saved workspace of $owner: ${e.message}", e)
+        }
+        deleteRemovedShares(db, owner, packsAfterLists(w))
+      }
       saved
     }
   }
@@ -209,11 +220,11 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     if (data.toByteArray(Charsets.UTF_8).size > MAX_SHARED_PACK_BYTES) throw WorkspaceError("invalidWorkspace")
     db.prepareStatement("""INSERT INTO typle_shared_packs (id, owner_id, pack_id, data) VALUES (?::uuid, ?, ?, ?::jsonb)
       ON CONFLICT (owner_id, pack_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
-      RETURNING id::text, updated_at""").use { q ->
+      RETURNING id::text, COALESCE(data #>> '{pack,name}', ''), updated_at""").use { q ->
       bind(q, arrayOf(UUID.randomUUID().toString(), owner, packId, data))
       q.executeQuery().use { r ->
         r.next()
-        Share(r.getString(1), packId, r.getObject(2, OffsetDateTime::class.java).toInstant())
+        Share(r.getString(1), packId, r.getString(2), r.getObject(3, OffsetDateTime::class.java).toInstant())
       }
     }
   }
@@ -230,11 +241,11 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
 
   /** The owner's links, the most recently updated first. */
   override fun listShares(owner: String): List<Share> = dataSource.connection.use { db ->
-    db.prepareStatement("""SELECT id::text, pack_id, updated_at FROM typle_shared_packs WHERE owner_id = ?
+    db.prepareStatement("""SELECT id::text, pack_id, COALESCE(data #>> '{pack,name}', ''), updated_at FROM typle_shared_packs WHERE owner_id = ?
       ORDER BY updated_at DESC, id""").use { q ->
       q.setString(1, owner)
       q.executeQuery().use { r ->
-        buildList { while (r.next()) add(Share(r.getString(1), r.getString(2), r.getObject(3, OffsetDateTime::class.java).toInstant())) }
+        buildList { while (r.next()) add(Share(r.getString(1), r.getString(2), r.getString(3), r.getObject(4, OffsetDateTime::class.java).toInstant())) }
       }
     }
   }
@@ -259,11 +270,22 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     }
   }
 
+  // The packs a row has once its lists are saved without packs, as the ids Go's Decode leaves: a saved pack some list is
+  // in, and "pack-<id>" for each list that is in none (a row without packs: for every list, a superset of the packs Go's
+  // conversion makes, so no link of Go's is deleted that Go keeps). Kotlin does not repair the packs themselves, so only
+  // their ids are known, and ids are all deleteRemovedShares needs.
+  private fun packsAfterLists(w: Workspace): List<String> {
+    val saved = w.packs.map { it.id }.toSet()
+    val used = w.lists.map { it.packId }.toSet()
+    val own = w.lists.filter { it.packId.isEmpty() || it.packId !in saved }.map { "pack-" + it.id }
+    return w.packs.map { it.id }.filter { it in used } + own
+  }
+
   // Deletes, in the transaction of a save, the owner's links to packs that are no longer among the packs saved.
-  private fun deleteRemovedShares(db: Connection, owner: String, packs: List<Pack>) {
+  private fun deleteRemovedShares(db: Connection, owner: String, packIds: Collection<String>) {
     db.prepareStatement("DELETE FROM typle_shared_packs WHERE owner_id = ? AND NOT (pack_id = ANY(?::text[]))").use { q ->
       q.setString(1, owner)
-      q.setArray(2, db.createArrayOf("text", packs.map { it.id }.toTypedArray()))
+      q.setArray(2, db.createArrayOf("text", packIds.toTypedArray()))
       q.executeUpdate()
     }
   }

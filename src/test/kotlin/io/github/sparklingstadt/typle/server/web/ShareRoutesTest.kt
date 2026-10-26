@@ -52,7 +52,7 @@ class ShareRoutesTest {
   // A cookie's request must come from the app's own origin, with a JSON body, as PUT /api/workspace; an app's token
   // needs no Origin.
   @Test fun forbidden() = serve {
-    store.put = Share("i", "p", sharedAt)
+    store.put = Share("i", "p", "", sharedAt)
     val body = """{"packId":"p"}"""
     expectError(share("PUT", "/api/shares", body) { it.remove("Origin") }, 403, "forbiddenRequest", "no origin")
     expectError(share("PUT", "/api/shares", body) { it["Origin"] = "https://evil.example" }, 403, "forbiddenRequest", "other origin")
@@ -69,8 +69,14 @@ class ShareRoutesTest {
     assertEquals(204, share("DELETE", "/api/shares?pack=p", owner = null, change = token).statusCode(), "app token delete")
   }
 
+  // A cookie's DELETE from another origin is refused before the store is asked.
+  @Test fun deleteWrongOrigin() = serve {
+    expectError(share("DELETE", "/api/shares?pack=p") { it["Origin"] = "https://evil.example" }, 403, "forbiddenRequest")
+    assertEquals(emptyList(), store.calls)
+  }
+
   @Test fun putInvalid() = serve {
-    store.put = Share("i", "p", sharedAt)
+    store.put = Share("i", "p", "", sharedAt)
     for (body in listOf("[]", "null", "\"p\"", "{}", """{"packId":""}""", """{"packId":1}""", """{"packId":null}""",
       """{"packId":"p","more":1}""", "{", """{"packId":"${"p".repeat(5000)}"}""")) {
       expectError(share("PUT", "/api/shares", body), 400, "invalidWorkspace", body.take(30))
@@ -82,9 +88,9 @@ class ShareRoutesTest {
   }
 
   @Test fun put() = serve {
-    store.put = Share(A_SHARED_ID, "pk", sharedAt)
+    store.put = Share(A_SHARED_ID, "pk", "Pack K", sharedAt)
     val response = share("PUT", "/api/shares", """{"packId":"pk"}""")
-    assertEquals(200 to """{"id":"$A_SHARED_ID","packId":"pk","updatedAt":"2026-10-26T09:30:15.123Z"}""" + "\n",
+    assertEquals(200 to """{"id":"$A_SHARED_ID","packId":"pk","name":"Pack K","updatedAt":"2026-10-26T09:30:15.123Z"}""" + "\n",
       response.statusCode() to response.body())
     expectJsonHeaders("put", response)
     expectSecurityHeaders("put", response)
@@ -120,11 +126,11 @@ class ShareRoutesTest {
       val response = share("GET", "/api/shares")
       assertEquals(200 to "{\"shares\":[]}\n", response.statusCode() to response.body())
       expectJsonHeaders("empty", response)
-      store.shares = listOf(Share("b", "two", sharedAt), Share("a", "<one>", sharedAt.minusSeconds(3600)))
+      store.shares = listOf(Share("b", "two", "Two", sharedAt), Share("a", "<one>", "<One>", sharedAt.minusSeconds(3600)))
       val two = share("GET", "/api/shares")
       assertEquals(
-        """{"shares":[{"id":"b","packId":"two","updatedAt":"2026-10-26T09:30:15.123Z"},""" +
-          """{"id":"a","packId":"\u003cone\u003e","updatedAt":"2026-10-26T08:30:15.123Z"}]}""" + "\n",
+        """{"shares":[{"id":"b","packId":"two","name":"Two","updatedAt":"2026-10-26T09:30:15.123Z"},""" +
+          """{"id":"a","packId":"\u003cone\u003e","name":"\u003cOne\u003e","updatedAt":"2026-10-26T08:30:15.123Z"}]}""" + "\n",
         two.body())
       assertEquals(TEST_OWNER, store.owner)
       val head = share("HEAD", "/api/shares")
@@ -144,7 +150,9 @@ class ShareRoutesTest {
 
   @Test fun sharedNotFound() = serve {
     for (target in listOf("/api/shared", "/api/shared?id=", "/api/shared?id=nope", "/api/shared?id=$A_SHARED_ID")) {
-      expectError(request("GET", target), 404, "sharedPackNotFound", target)
+      val response = request("GET", target)
+      expectError(response, 404, "sharedPackNotFound", target)
+      assertEquals("noindex", response.headers().firstValue("X-Robots-Tag").orElse(null), target)
     }
     // The store tells what is not a link (an id that is not a UUID included); the handler passes the id as it came.
     assertEquals(A_SHARED_ID, store.sharedId)
@@ -161,6 +169,7 @@ class ShareRoutesTest {
     assertEquals(listOf("no-store"), headers.allValues("Cache-Control"))
     assertFalse(headers.firstValue("Vary").isPresent, "Vary")
     expectSecurityHeaders("shared", response)
+    assertEquals("noindex", headers.firstValue("X-Robots-Tag").orElse(null), "X-Robots-Tag")
     assertEquals(A_SHARED_ID, store.sharedId)
   }
 
@@ -172,11 +181,16 @@ class ShareRoutesTest {
     val post = request("POST", "/api/shared?id=$A_SHARED_ID")
     expectError(post, 405, "methodNotAllowed")
     assertEquals("GET, HEAD", post.headers().firstValue("Allow").orElse(null))
+    assertEquals("noindex", post.headers().firstValue("X-Robots-Tag").orElse(null), "POST")
   }
 
   @Test fun sharedDown() {
     store.failure = IllegalStateException("down")
-    serve { expectError(request("GET", "/api/shared?id=$A_SHARED_ID"), 503, "databaseUnavailable") }
+    serve {
+      val down = request("GET", "/api/shared?id=$A_SHARED_ID")
+      expectError(down, 503, "databaseUnavailable")
+      assertEquals("noindex", down.headers().firstValue("X-Robots-Tag").orElse(null), "503")
+    }
   }
 
   // With a real database (TYPLE_TEST_DATABASE_URL, skipped without it): a saved pack is shared, listed, read by anyone
@@ -200,7 +214,7 @@ class ShareRoutesTest {
         val put = share("PUT", "/api/shares", """{"packId":"p"}""", owner)
         assertEquals(200, put.statusCode(), put.body())
         val id = put.body().substringAfter("\"id\":\"").substringBefore('"')
-        assertTrue(put.body().startsWith("""{"id":"$id","packId":"p","updatedAt":""""), put.body())
+        assertTrue(put.body().startsWith("""{"id":"$id","packId":"p","name":"P","updatedAt":""""), put.body())
         val again = share("PUT", "/api/shares", """{"packId":"p"}""", owner)
         assertEquals(id, again.body().substringAfter("\"id\":\"").substringBefore('"'), "same link")
         assertTrue(id in share("GET", "/api/shares", owner = owner).body())
