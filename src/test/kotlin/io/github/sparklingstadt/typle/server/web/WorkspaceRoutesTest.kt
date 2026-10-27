@@ -5,8 +5,12 @@ import io.github.sparklingstadt.typle.server.session.newSession
 import io.github.sparklingstadt.typle.server.store.ConflictException
 import io.github.sparklingstadt.typle.server.store.PgStore
 import io.github.sparklingstadt.typle.server.store.Saved
+import io.github.sparklingstadt.typle.server.workspace.DEFAULT_INTERESTS
 import io.github.sparklingstadt.typle.server.workspace.MAX_GROUP
+import io.github.sparklingstadt.typle.server.workspace.MAX_INTERESTS
+import io.github.sparklingstadt.typle.server.workspace.MAX_INTEREST_LENGTH
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
+import io.github.sparklingstadt.typle.server.workspace.encodeInterests
 import io.github.sparklingstadt.typle.server.workspace.levelsOf
 import java.net.http.HttpResponse
 import kotlin.random.Random
@@ -25,6 +29,9 @@ private const val A_PACK = """{"id":"p","name":"P","category":"C","createdAt":"2
 
 private const val PACKED_ONE =
   """{"id":"one","name":"One","packId":"p","createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[]}"""
+
+// The interests answered for an account that has saved none: every option.
+private val DEFAULTS = encodeInterests(DEFAULT_INTERESTS)
 
 private fun aList(id: String, name: String) = ONE_LIST.replace("\"one\"", "\"$id\"").replace("\"One\"", "\"$name\"")
 
@@ -81,7 +88,7 @@ class WorkspaceRoutesTest {
 
   @Test fun getEmpty() = serve {
     val response = get()
-    assertEquals(200 to """{"lists":[],"packs":null,"devices":[],"revision":0,"accountId":"$TEST_OWNER"}""" + "\n", response.statusCode() to response.body())
+    assertEquals(200 to """{"lists":[],"packs":null,"devices":[],"interests":$DEFAULTS,"revision":0,"accountId":"$TEST_OWNER"}""" + "\n", response.statusCode() to response.body())
     expectJsonHeaders("get", response)
   }
 
@@ -92,12 +99,12 @@ class WorkspaceRoutesTest {
       val response = get()
       assertEquals(
         """{"lists":[{"id":"a","name":"\u003cb\u003e"}],"packs":[{"id":"p","name":"\u003cP\u003e"}],""" +
-          """"devices":[{"id":"d","name":"\u0026"}],"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
+          """"devices":[{"id":"d","name":"\u0026"}],"interests":$DEFAULTS,"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
         response.body())
     }
     // Lists saved before packs existed have none: null.
     store.saved = Saved("[]", "[]", null, 5)
-    serve { assertEquals("""{"lists":[],"packs":null,"devices":[],"revision":5,"accountId":"$TEST_OWNER"}""" + "\n", get().body()) }
+    serve { assertEquals("""{"lists":[],"packs":null,"devices":[],"interests":$DEFAULTS,"revision":5,"accountId":"$TEST_OWNER"}""" + "\n", get().body()) }
   }
 
   @Test fun head() = serve {
@@ -237,14 +244,14 @@ class WorkspaceRoutesTest {
     val response = put(payload(TEST_OWNER, """"revision":3,"lists":[$list],"devices":[$device]"""))
     assertEquals(
       """{"lists":[{"id":"one","name":"One","createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[],"keep":1}],""" +
-        """"packs":null,"devices":[$device],"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
+        """"packs":null,"devices":[$device],"interests":$DEFAULTS,"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
       response.body())
     expectJsonHeaders("put", response)
     assertEquals(3L, store.revision)
     assertTrue(store.change!!.hasLists && store.change!!.hasDevices)
     // A part left out stays as saved.
     store.saved = Saved("[]", "[]", null, 4)
-    assertEquals("""{"lists":[],"packs":null,"devices":[],"revision":5,"accountId":"$TEST_OWNER"}""" + "\n",
+    assertEquals("""{"lists":[],"packs":null,"devices":[],"interests":$DEFAULTS,"revision":5,"accountId":"$TEST_OWNER"}""" + "\n",
       put(payload(TEST_OWNER, """"revision":4,"devices":[]""")).body())
     assertFalse(store.change!!.hasLists)
   }
@@ -279,7 +286,7 @@ class WorkspaceRoutesTest {
   // do: a list of a save with packs has no labels of its own, not even empty ones.
   @Test fun putPacks() = serve {
     val response = put(payload(TEST_OWNER, """"revision":1,"lists":[$PACKED_ONE],"packs":[$A_PACK]"""))
-    assertEquals("""{"lists":[$PACKED_ONE],"packs":[$A_PACK],"devices":[],"revision":2,"accountId":"$TEST_OWNER"}""" + "\n",
+    assertEquals("""{"lists":[$PACKED_ONE],"packs":[$A_PACK],"devices":[],"interests":$DEFAULTS,"revision":2,"accountId":"$TEST_OWNER"}""" + "\n",
       response.body())
     val change = store.change!!
     assertTrue(change.hasLists && change.hasPacks && change.packs.size == 1 && change.packs[0].category == "C", change.toString())
@@ -340,8 +347,62 @@ class WorkspaceRoutesTest {
     val list = PACKED_ONE.replace("\"One\"", "\" One \"")
     val pack = A_PACK.replace("\"P\"", "\"\u3000P \"")
     val response = put(payload(TEST_OWNER, """"revision":1,"lists":[$list],"packs":[$pack]"""))
-    assertEquals("""{"lists":[$PACKED_ONE],"packs":[$A_PACK],"devices":[],"revision":2,"accountId":"$TEST_OWNER"}""" + "\n",
+    assertEquals("""{"lists":[$PACKED_ONE],"packs":[$A_PACK],"devices":[],"interests":$DEFAULTS,"revision":2,"accountId":"$TEST_OWNER"}""" + "\n",
       response.body())
+  }
+
+  private fun interestsOf(response: HttpResponse<String>): String =
+    response.body().substringAfter("\"interests\":").substringBefore(",\"revision\":")
+
+  // interests are taken as decodeInterests (src/core/interests.ts) takes them, on their own or with the rest: left out,
+  // they stay as saved; null empties them, as the app reads it (Go's TestPutInterests).
+  @Test fun putInterests() = serve {
+    val response = put(payload(TEST_OWNER, """"revision":3,"interests":["language","language/zh"]"""))
+    assertEquals(200 to """["language","language/zh"]""", response.statusCode() to interestsOf(response), response.body())
+    var change = store.change!!
+    assertTrue(store.writes == 1 && store.revision == 3L && change.hasInterests && !change.hasLists && !change.hasDevices &&
+      change.interests == listOf("language", "language/zh"), change.toString())
+    // A body of an app that does not know interests leaves them out.
+    assertEquals(200, put(payload(TEST_OWNER, """"revision":4,"lists":[$ONE_LIST]""")).statusCode())
+    assertFalse(store.change!!.hasInterests)
+    assertEquals(200, put(payload(TEST_OWNER, """"revision":5,"interests":null""")).statusCode())
+    change = store.change!!
+    assertTrue(change.hasInterests && change.interests.isEmpty(), change.toString())
+    // With the other parts too.
+    assertEquals(200, put(payload(TEST_OWNER, """"revision":6,"lists":[$PACKED_ONE],"packs":[$A_PACK],"devices":[],"interests":["x/unknown"]""")).statusCode())
+    change = store.change!!
+    assertTrue(change.hasInterests && change.hasLists && change.hasPacks && change.interests == listOf("x/unknown"), change.toString())
+    val writes = store.writes
+    val many = (0..MAX_INTERESTS).joinToString(",", "[", "]") { "\"x/$it\"" }
+    val cases = mapOf(
+      "object" to "{}",
+      "string" to "\"language\"",
+      "number item" to """["a",1]""",
+      "null item" to "[null]",
+      "empty item" to """[""]""",
+      "duplicate" to """["a","a"]""",
+      "too long" to """["${"a".repeat(MAX_INTEREST_LENGTH + 1)}"]""",
+      "too many" to many,
+      "NUL" to """["a\u0000"]""",
+      "lone surrogate" to """["a\ud800"]""",
+    )
+    for ((name, interests) in cases) {
+      expectError(put(payload(TEST_OWNER, """"revision":7,"interests":$interests""")), 400, "invalidWorkspace", name)
+      expectError(put(payload(TEST_OWNER, """"revision":7,"lists":[$ONE_LIST],"interests":$interests""")), 400, "invalidWorkspace", "$name with lists")
+    }
+    assertEquals(writes, store.writes)
+    // Overlapping levels are told so before invalid interests, as validateWorkspaceRequest does.
+    fun leveled(id: String) = PACKED_ONE.replace("\"id\":\"one\",\"name\":\"One\"", "\"id\":\"$id\",\"name\":\"$id\",\"levels\":[\"初級\"]")
+    expectError(put(payload(TEST_OWNER, """"revision":7,"lists":[${leveled("a")},${leveled("b")}],"packs":[$A_PACK],"interests":[""]""")),
+      400, "levelsConflict")
+    // An answer from a store that has none to give is the default (every option), as the app reads none; saved [] is [].
+    store.saved = Saved("[]", "[]", null, 1)
+    assertEquals(DEFAULTS, interestsOf(get()))
+    store.saved = Saved("[]", "[]", null, 1, "[]")
+    assertEquals("[]", interestsOf(get()))
+    // The stored jsonb text is answered compact, with HTML characters escaped, as the other parts.
+    store.saved = Saved("[]", "[]", null, 1, """["a", "<&>"]""")
+    assertEquals("""["a","\u003c\u0026\u003e"]""", interestsOf(get()))
   }
 
   // The database tests run against TYPLE_TEST_DATABASE_URL, as PgStoreTest, and are skipped without it.
@@ -376,5 +437,24 @@ class WorkspaceRoutesTest {
     fun group(n: Int) = ONE_LIST.replace(""""records":[]""", """"records":[],"group":"${"g".repeat(n)}"""")
     expectError(put(payload(owner, """"revision":0,"lists":[${group(MAX_GROUP + 1)}]"""), cookie), 400, "invalidWorkspace")
     assertEquals(200, put(payload(owner, """"revision":0,"lists":[${group(MAX_GROUP)}]"""), cookie).statusCode())
+  }
+
+  // With the database: interests saved alone are answered and read back, and kept by saves that leave them out (Go's
+  // TestPutInterestsFlow).
+  @Test fun interestsFlowRealStore() = serveReal { owner ->
+    val cookie = sessionCookie(owner)
+    fun expectInterests(response: HttpResponse<String>, want: String) =
+      assertEquals(200 to want, response.statusCode() to interestsOf(response), response.body())
+    expectInterests(get(cookie), DEFAULTS)
+    expectInterests(put(payload(owner, """"revision":0,"interests":["language"]"""), cookie), """["language"]""")
+    expectInterests(get(cookie), """["language"]""")
+    expectInterests(put(payload(owner, """"revision":1,"lists":[$ONE_LIST],"devices":[]"""), cookie), """["language"]""")
+    expectInterests(put(payload(owner, """"revision":2,"interests":["language","language/ru"]"""), cookie), """["language","language/ru"]""")
+    expectInterests(put(payload(owner, """"revision":3,"devices":[]"""), cookie), """["language","language/ru"]""")
+    val read = get(cookie).body()
+    assertTrue(read.startsWith("""{"lists":[{"id":"one",""") && read.endsWith(""","revision":4,"accountId":"$owner"}""" + "\n"), read)
+    expectError(put(payload(owner, """"revision":4,"interests":["a","a"]"""), cookie), 400, "invalidWorkspace")
+    expectInterests(put(payload(owner, """"revision":4,"interests":null"""), cookie), "[]")
+    expectInterests(get(cookie), "[]")
   }
 }

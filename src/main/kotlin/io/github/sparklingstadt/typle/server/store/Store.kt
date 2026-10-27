@@ -12,10 +12,13 @@ import io.github.sparklingstadt.typle.server.workspace.Pack
 import io.github.sparklingstadt.typle.server.workspace.WordList
 import io.github.sparklingstadt.typle.server.workspace.Workspace
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
+import io.github.sparklingstadt.typle.server.workspace.checkInterests
 import io.github.sparklingstadt.typle.server.workspace.checkLimits
 import io.github.sparklingstadt.typle.server.workspace.decode
+import io.github.sparklingstadt.typle.server.workspace.decodeInterests
 import io.github.sparklingstadt.typle.server.workspace.encode
 import io.github.sparklingstadt.typle.server.workspace.encodeDevices
+import io.github.sparklingstadt.typle.server.workspace.encodeInterests
 import io.github.sparklingstadt.typle.server.workspace.encodePackFile
 import io.github.sparklingstadt.typle.server.workspace.encodePackFileAgain
 import io.github.sparklingstadt.typle.server.workspace.encodePacks
@@ -29,21 +32,23 @@ import java.time.OffsetDateTime
 import java.util.UUID
 
 /**
- * A workspace as stored: its lists, devices and packs columns as the database's own text of the jsonb, so object keys
- * may be in another order than they were written in, with the revision a later save must name. packs is null when the
- * column is NULL: the lists were saved before packs existed.
+ * A workspace as stored: its lists, devices, packs and interests columns as the database's own text of the jsonb, so
+ * object keys may be in another order than they were written in, with the revision a later save must name. packs is
+ * null when the column is NULL: the lists were saved before packs existed. interests is null when its column is NULL:
+ * none have been saved.
  */
-data class Saved(val lists: String, val devices: String, val packs: String?, val revision: Long)
+data class Saved(val lists: String, val devices: String, val packs: String?, val revision: Long, val interests: String? = null)
 
 /**
- * What a save sets. A part that is not set (hasLists, hasDevices, hasPacks) stays as it is. Packs are set only with the
- * lists they hold, which are then written without labels (encode). Lists set without packs come from an app that does
+ * What a save sets. A part that is not set (hasLists, hasDevices, hasPacks, hasInterests) stays as it is. Interests
+ * are only the app's (Go's /api/v1 leaves them as they are). Packs are set only with the lists they hold, which are then written without labels (encode). Lists set without packs come from an app that does
  * not know packs: they are written as it sent them, labels and all (encodeWithLabels), for the app to settle with the
  * saved packs when it reads them.
  */
 data class Change(
   val lists: List<WordList>, val devices: List<Device>, val hasLists: Boolean, val hasDevices: Boolean,
   val packs: List<Pack> = emptyList(), val hasPacks: Boolean = false,
+  val interests: List<String> = emptyList(), val hasInterests: Boolean = false,
 )
 
 /**
@@ -109,13 +114,13 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
   override fun close() = dataSource.close()
 
   /**
-   * The owner's saved workspace with its revision, or null when nothing has been saved. The row is checked with decode,
-   * so saved data that cannot be read is an error, but it is answered as stored.
+   * The owner's saved workspace with its revision, or null when nothing has been saved. The row is checked with decode
+   * and decodeInterests, so saved data that cannot be read is an error, but it is answered as stored.
    */
   override fun readRevision(owner: String): Saved? {
-    val saved = query("SELECT lists::text, packs::text, devices::text, revision FROM typle_workspaces WHERE owner_id = ?", owner)
-      ?: return null
+    val saved = query("SELECT $SAVED_COLUMNS FROM typle_workspaces WHERE owner_id = ?", owner) ?: return null
     decode(saved.lists, saved.devices, saved.packs)
+    decodeInterests(saved.interests)
     return saved
   }
 
@@ -123,11 +128,12 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
    * Saves change over the workspace at revision: revision 0 creates the row, any other revision replaces what is saved
    * only if it is still that revision (else ConflictException). Lists may be more than MAX_LISTS in saved data merged
    * from removed profiles; a save may keep or lower that number, never raise it. A save with packs deletes, in the same
-   * transaction, the owner's links to packs that are no longer among them. So does a save of lists without packs, against
+   * transaction, the owner's links to packs that are no longer among them. Interests left out are kept as saved. So does a save of lists without packs, against
    * the packs the row then has (derived from the lists when it has none); devices alone leave the links as they are.
    *
    * Throws ConflictException for a stale revision, WorkspaceError for lists past the limits or packs without lists
-   * (invalidWorkspace) or more lists than allowed (listLimit), InvalidWorkspaceException for a change decode would
+   * (invalidWorkspace), interests the app would refuse (invalidWorkspace) or more lists than allowed (listLimit),
+   * InvalidWorkspaceException for a change decode would
    * refuse, and any other exception when the change cannot be written. Whether packs hold their lists (checkLibrary) is
    * the handler's to check, on what was sent. All of this, apart from the conflict and the saved number of lists, is
    * checked before the database is touched.
@@ -137,6 +143,7 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     var lists: String? = null
     var packs: String? = null
     var devices: String? = null
+    var interests: String? = null
     if (change.hasPacks && !change.hasLists) throw WorkspaceError("invalidWorkspace")
     if (change.hasLists) {
       checkLimits(change.lists)
@@ -148,10 +155,19 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
       }
     }
     if (change.hasDevices) devices = encodeDevices(change.devices)
+    if (change.hasInterests) {
+      // Interests the app would refuse are refused as the request would be.
+      try {
+        checkInterests(change.interests)
+      } catch (_: InvalidWorkspaceException) {
+        throw WorkspaceError("invalidWorkspace")
+      }
+      interests = encodeInterests(change.interests)
+    }
     // A part left out is saved as it is, so only the other one can be refused; it is read with an empty one.
     decode(lists ?: "[]", devices ?: "[]", packs)
     return transaction { db ->
-      val saved = writeRevision(db, owner, revision, change, lists, packs, devices)
+      val saved = writeRevision(db, owner, revision, change, lists, packs, devices, interests)
       if (change.hasPacks) {
         deleteRemovedShares(db, owner, change.packs.map { it.id })
       } else if (change.hasLists) {
@@ -168,16 +184,16 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
 
   // The database part of writeRevision, in the transaction of db.
   private fun writeRevision(db: Connection, owner: String, revision: Long, change: Change, lists: String?, packs: String?,
-    devices: String?): Saved {
+    devices: String?, interests: String?): Saved {
     if (revision == 0L) {
       if (change.lists.size > MAX_LISTS) throw WorkspaceError("listLimit")
       // The links Go's PutShare made from the initial packs are seen by deleteRemovedShares (see lockOwner).
       lockOwner(db, owner)
       // Unique owner makes the existence check and the insert one atomic operation. Lists created without packs are
-      // lists saved before packs existed: packs NULL.
-      return query(db, """INSERT INTO typle_workspaces (owner_id, lists, packs, devices) VALUES (?, ?::jsonb, ?::jsonb, ?::jsonb)
-        ON CONFLICT (owner_id) DO NOTHING RETURNING lists::text, packs::text, devices::text, revision""",
-        owner, lists ?: "[]", packs, devices ?: "[]")
+      // lists saved before packs existed: packs NULL. Interests left out are none saved: NULL.
+      return query(db, """INSERT INTO typle_workspaces (owner_id, lists, packs, devices, interests)
+        VALUES (?, ?::jsonb, ?::jsonb, ?::jsonb, ?::jsonb) ON CONFLICT (owner_id) DO NOTHING RETURNING $SAVED_COLUMNS""",
+        owner, lists ?: "[]", packs, devices ?: "[]", interests)
         ?: throw ConflictException()
     }
     val (savedRevision, savedLists) =
@@ -189,8 +205,9 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     if (change.lists.size > MAX_LISTS && change.lists.size > savedLists) throw WorkspaceError("listLimit")
     // Matching the revision in the UPDATE itself makes the comparison and the write one atomic operation.
     return query(db, """UPDATE typle_workspaces SET lists = COALESCE(?::jsonb, lists), packs = COALESCE(?::jsonb, packs),
-      devices = COALESCE(?::jsonb, devices), revision = revision + 1, updated_at = now() WHERE owner_id = ? AND revision = ?
-      RETURNING lists::text, packs::text, devices::text, revision""", lists, packs, devices, owner, revision)
+      devices = COALESCE(?::jsonb, devices), interests = COALESCE(?::jsonb, interests), revision = revision + 1,
+      updated_at = now() WHERE owner_id = ? AND revision = ? RETURNING $SAVED_COLUMNS""",
+      lists, packs, devices, interests, owner, revision)
       ?: throw ConflictException()
   }
 
@@ -208,7 +225,7 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
   override fun putShare(owner: String, packId: String): Share = transaction { db ->
     lockOwner(db, owner)
     val saved = db.prepareStatement(
-      "SELECT lists::text, packs::text, devices::text, revision FROM typle_workspaces WHERE owner_id = ? FOR UPDATE",
+      "SELECT $SAVED_COLUMNS FROM typle_workspaces WHERE owner_id = ? FOR UPDATE",
     ).use { q ->
       q.setString(1, owner)
       q.executeQuery().use { r -> if (r.next()) saved(r) else null }
@@ -316,7 +333,7 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     }
   }
 
-  // Runs a statement that returns at most one row of lists, packs, devices and revision.
+  // Runs a statement that returns at most one row of SAVED_COLUMNS.
   private fun query(sql: String, vararg arguments: Any?): Saved? = dataSource.connection.use { db -> query(db, sql, *arguments) }
 
   private fun query(db: Connection, sql: String, vararg arguments: Any?): Saved? = db.prepareStatement(sql).use { q ->
@@ -334,8 +351,12 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     }
   }
 
-  private fun saved(r: ResultSet) = Saved(r.getString(1), r.getString(3), r.getString(2), r.getLong(4))
+  private fun saved(r: ResultSet) = Saved(r.getString(1), r.getString(3), r.getString(2), r.getLong(5), r.getString(4))
 }
+
+// The columns saved reads, as Go's savedColumns. Interests not saved (NULL) are read as null.
+private const val SAVED_COLUMNS = "lists::text, packs::text, devices::text, interests::text, revision"
+
 
 /** Whether id is a UUID as the links are written: 8-4-4-4-12 hexadecimal digits, of either case (Go's isUUID). */
 internal fun isUuid(id: String): Boolean = id.length == 36 && id.withIndex().all { (i, c) ->
