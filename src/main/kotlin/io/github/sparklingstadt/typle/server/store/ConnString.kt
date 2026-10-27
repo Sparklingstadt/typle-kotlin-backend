@@ -6,7 +6,9 @@ import java.net.URLDecoder
 /**
  * The database URL with the server certificate kept verified, as Go's store.ConnString makes it: sslmode=prefer,
  * require and verify-ca become verify-full, and uselibpqcompat=true (libpq's meaning of those modes) keeps the mode
- * and is only dropped. The query is written as Go's url.Values.Encode writes it, sorted by name.
+ * and is only dropped. A URL without sslmode (or with an empty one) is verify-full too, unless every host it names is
+ * this machine (localHosts): the driver's default, prefer, neither checks the certificate nor insists on TLS at all.
+ * The query is written as Go's url.Values.Encode writes it, sorted by name.
  */
 fun connString(connection: String): String {
   val scheme = connection.substringBefore("://", "")
@@ -17,11 +19,32 @@ fun connString(connection: String): String {
   val query = parseQuery(connection.substringAfter('?', ""))
   val libpq = query["uselibpqcompat"]?.firstOrNull() == "true"
   query.remove("uselibpqcompat")
-  if (!libpq && query["sslmode"]?.firstOrNull() in setOf("prefer", "require", "verify-ca")) {
+  val mode = query["sslmode"]?.firstOrNull().orEmpty()
+  if (!libpq && (mode in setOf("prefer", "require", "verify-ca") || (mode.isEmpty() && !localHosts(base, query)))) {
     query["sslmode"] = mutableListOf("verify-full")
   }
   val encoded = query.toSortedMap().flatMap { (name, values) -> values.map { escape(name) + "=" + escape(it) } }
   return if (encoded.isEmpty()) base else base + "?" + encoded.joinToString("&")
+}
+
+private val loopbackIpv4 = Regex("127\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}")
+
+/**
+ * Whether every host the URL connects to is this machine, as Go's localHosts: localhost, 127.0.0.0/8, ::1, a Unix
+ * socket directory, or no host at all. The host query parameter wins over the URL's, and either may list several
+ * hosts separated by commas.
+ */
+private fun localHosts(base: String, query: Map<String, List<String>>): Boolean {
+  val hosts = query["host"]?.firstOrNull().orEmpty()
+    .ifEmpty { base.substringAfter("://").substringBefore('/').substringAfterLast('@') }
+  return hosts.split(',').all { entry ->
+    val host = when {
+      entry.startsWith("[") -> entry.substring(1).substringBefore(']')
+      entry.count { it == ':' } == 1 -> entry.substringBefore(':')
+      else -> entry
+    }.lowercase()
+    entry.startsWith("/") || host.isEmpty() || host == "localhost" || host == "::1" || loopbackIpv4.matches(host)
+  }
 }
 
 /** Where the JDBC driver connects, and as whom. */

@@ -39,6 +39,20 @@ class RequestTest {
     for ((raw, want) in cases) assertEquals(want, unstorable(JsonValue.parse(raw)), raw)
   }
 
+  // As deep as the parser lets a body nest, on a thread with a small stack, which recursion would overflow.
+  @Test fun unstorableDeeplyNested() {
+    val results = arrayOfNulls<Boolean>(4)
+    val thread = Thread(null, {
+      results[0] = unstorable(JsonValue.parse("[".repeat(10000) + "]".repeat(10000)))
+      results[1] = unstorable(JsonValue.parse("[".repeat(9999) + "\"\\u0000\"" + "]".repeat(9999)))
+      results[2] = unstorable(JsonValue.parse("{\"a\":".repeat(9999) + "\"\\ud800\"" + "}".repeat(9999)))
+      results[3] = unstorable(JsonValue.parse("{\"a\":".repeat(9999) + "\"ok\"" + "}".repeat(9999)))
+    }, "small-stack", 128L * 1024)
+    thread.start()
+    thread.join()
+    assertEquals(listOf<Boolean?>(false, true, true, false), results.toList())
+  }
+
   @Test fun safeInteger() {
     for ((raw, want) in mapOf("0" to 0L, "1" to 1L, "1.0" to 1L, "1e2" to 100L, "-0" to 0L, "9007199254740991" to 9007199254740991L)) {
       assertEquals(want, safeInteger(JsonValue.parse(raw)), raw)

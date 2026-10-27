@@ -8,7 +8,24 @@ class ConnStringTest {
   // The cases of TestConnString in server/internal/store/store_test.go.
   @Test fun keepsCertificatesVerifiedAsGo() {
     val cases = mapOf(
-      "postgres://u:p@h/db" to "postgres://u:p@h/db",
+      "postgres://u:p@h/db" to "postgres://u:p@h/db?sslmode=verify-full",
+      "postgresql://u:p@h/db?sslmode=" to "postgresql://u:p@h/db?sslmode=verify-full",
+      "postgresql://u:p@db.example:6543/db?channel_binding=require" to
+        "postgresql://u:p@db.example:6543/db?channel_binding=require&sslmode=verify-full",
+      "postgresql://u:p@10.0.0.5/db" to "postgresql://u:p@10.0.0.5/db?sslmode=verify-full",
+      "postgresql://localhost.example/db" to "postgresql://localhost.example/db?sslmode=verify-full",
+      "postgresql://u:p@localhost,db.example/db" to "postgresql://u:p@localhost,db.example/db?sslmode=verify-full",
+      "postgresql:///db?host=db.example" to "postgresql:///db?host=db.example&sslmode=verify-full",
+      "postgresql://u:p@h/db?uselibpqcompat=true" to "postgresql://u:p@h/db",
+      // This machine needs no TLS.
+      "postgresql://u:p@localhost:5432/db" to "postgresql://u:p@localhost:5432/db",
+      "postgresql://u:p@LOCALHOST/db" to "postgresql://u:p@LOCALHOST/db",
+      "postgresql://u:p@127.0.0.1:5432/db" to "postgresql://u:p@127.0.0.1:5432/db",
+      "postgresql://u@127.1.2.3/db" to "postgresql://u@127.1.2.3/db",
+      "postgresql://u@[::1]:5432/db" to "postgresql://u@[::1]:5432/db",
+      "postgresql://u@localhost,127.0.0.1:5433/db" to "postgresql://u@localhost,127.0.0.1:5433/db",
+      "postgresql:///db" to "postgresql:///db",
+      "postgresql:///db?host=%2Fvar%2Frun%2Fpostgresql" to "postgresql:///db?host=%2Fvar%2Frun%2Fpostgresql",
       "postgresql://u:p@h/db?sslmode=require" to "postgresql://u:p@h/db?sslmode=verify-full",
       "postgresql://u:p@h/db?sslmode=prefer" to "postgresql://u:p@h/db?sslmode=verify-full",
       "postgresql://u:p@h/db?sslmode=verify-ca" to "postgresql://u:p@h/db?sslmode=verify-full",
