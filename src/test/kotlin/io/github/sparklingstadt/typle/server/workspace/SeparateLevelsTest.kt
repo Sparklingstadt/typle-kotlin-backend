@@ -7,8 +7,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertSame
 
 // The fixtures are copies of typle-r's tests/fixtures/packs that have packs (data already in packs) and whose expected
-// result needs no repair but separateLevels, which is all Kotlin does to a saved row (see readSaved): the app
-// (tests/wordPacks.test.cjs) and Go (TestPackFixtures) read them into the same lists and packs.
+// result needs no repair but separateLevels, which is all Kotlin does to a saved row before it follows the official
+// catalog (readNormalized): the app (tests/wordPacks.test.cjs) and Go (TestPackFixtures, which reads them without
+// following the catalog too) read them into the same lists and packs.
 private val fixtures = listOf(
   "duplicate-in-pack.json", "levels-equal.json", "levels-long.json", "levels-name.json", "levels-prefix.json", "levels-repeated.json", "levels-repeated-overlap.json",
   "levels-repeated-step.json", "levels-repeated-trim.json", "levels-second-collision.json", "levels-collapse.json",
@@ -34,13 +35,13 @@ class SeparateLevelsTest {
   @Test fun readsTheFixtures() {
     for (name in fixtures) {
       val f = packsFixture(name)
-      val w = readSaved(f.lists, "[]", f.packs)
+      val w = readNormalized(f.lists, "[]", f.packs)
       val lists = encode(w.lists)
       assertEquals(f.expectedLists, JsonValue.parse(lists), "$name lists")
       assertEquals(f.expectedPacks, JsonValue.parse(encodePacks(w.packs)), "$name packs")
       // The result is what a save may send, and reading it again changes nothing.
       checkLibrary(JsonValue.parse(lists), JsonValue.parse(encodePacks(w.packs)))
-      assertEquals(lists, encode(readSaved(lists, "[]", encodePacks(w.packs)).lists), "$name again")
+      assertEquals(lists, encode(readNormalized(lists, "[]", encodePacks(w.packs)).lists), "$name again")
     }
   }
 

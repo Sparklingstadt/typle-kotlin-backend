@@ -11,7 +11,9 @@ import io.github.sparklingstadt.typle.server.store.Change
 import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
 import io.github.sparklingstadt.typle.server.workspace.separateLevels
+import io.github.sparklingstadt.typle.server.workspace.catalog
 import io.github.sparklingstadt.typle.server.workspace.checkLibrary
+import io.github.sparklingstadt.typle.server.workspace.followOfficial
 import io.github.sparklingstadt.typle.server.workspace.decodeInterests
 import io.github.sparklingstadt.typle.server.workspace.decodeValues
 import io.github.sparklingstadt.typle.server.workspace.trimJS
@@ -104,10 +106,13 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   }
   // Go repairs the library before it is saved, which leaves one that checkLibrary accepts as it is but for the names of
   // its packs and lists, trimmed (their trimmed lowercase is already unique), and the levels of lists sent with several
-  // (by an app before v0.97.0), joined into one and told apart (separateLevels).
-  return revision to Change(separateLevels(decoded.lists.map { it.copy(name = trimJS(it.name)) }), decoded.devices, hasLists = true,
-    hasDevices = devices != null, packs = decoded.packs.map { it.copy(name = trimJS(it.name)) }, hasPacks = true,
-    interests = interests, hasInterests = hasInterests)
+  // (by an app before v0.97.0), joined into one and told apart (separateLevels). Its Decode then follows the official
+  // catalog (followOfficial): copies of official packs from before v0.98.0 go with their lists and records, and followed
+  // packs are made equal to the catalog.
+  val (packsFollowed, listsFollowed) = followOfficial(decoded.packs.map { it.copy(name = trimJS(it.name)) },
+    separateLevels(decoded.lists.map { it.copy(name = trimJS(it.name)) }), catalog)
+  return revision to Change(listsFollowed, decoded.devices, hasLists = true, hasDevices = devices != null, packs = packsFollowed,
+    hasPacks = true, interests = interests, hasInterests = hasInterests)
 }
 
 /**

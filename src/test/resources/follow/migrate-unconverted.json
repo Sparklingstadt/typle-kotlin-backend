@@ -1,0 +1,161 @@
+{
+  "official": [
+    {
+      "catalogId": "pack-go-1",
+      "version": 1,
+      "pack": {
+        "id": "pack-go-1",
+        "name": "Go",
+        "origin": {
+          "catalogId": "pack-go-1",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "basic",
+          "name": "基本",
+          "packId": "pack-go-1",
+          "words": [
+            {
+              "display": "go run",
+              "input": "go run",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "library": {
+    "lists": [
+      {
+        "id": "go-1",
+        "name": "a",
+        "group": "Go",
+        "words": [
+          {
+            "display": "go run",
+            "input": "go run",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1000,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "mine-1",
+        "name": "b",
+        "group": "Kotlin",
+        "words": [
+          {
+            "display": "val",
+            "input": "val",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 700,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "go-2",
+        "name": "c",
+        "group": "Go",
+        "words": [
+          {
+            "display": "go build",
+            "input": "go build",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "solo",
+        "name": "Solo",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "packs": null
+  },
+  "expected": {
+    "packs": [
+      {
+        "id": "pack-mine-1",
+        "name": "Kotlin",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "pack-solo",
+        "name": "Solo",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "mine-1",
+        "name": "b",
+        "words": [
+          {
+            "display": "val",
+            "input": "val",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 700,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "pack-mine-1"
+      },
+      {
+        "id": "solo",
+        "name": "Solo",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "pack-solo"
+      }
+    ]
+  }
+}

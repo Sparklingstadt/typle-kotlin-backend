@@ -172,7 +172,7 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
         deleteRemovedShares(db, owner, change.packs.map { it.id })
       } else if (change.hasLists) {
         val w = try {
-          decode(saved.lists, saved.devices, saved.packs)
+          readSaved(saved.lists, saved.devices, saved.packs)
         } catch (e: InvalidWorkspaceException) {
           throw IllegalStateException("saved workspace of $owner: ${e.message}", e)
         }
@@ -291,7 +291,7 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
   }
 
   // The packs a row has once its lists are saved without packs, as the ids Go's Decode leaves: a saved pack some list is
-  // in, and "pack-<id>" for each list that is in none (a row without packs: for every list, a superset of the packs Go's
+  // in, once the row follows the official catalog (readSaved: copies of official packs from before v0.98.0 are gone), and "pack-<id>" for each list that is in none (a row without packs: for every list, a superset of the packs Go's
   // conversion makes, so no link of Go's is deleted that Go keeps). Kotlin does not repair the packs themselves, so only
   // their ids are known, and ids are all deleteRemovedShares needs.
   private fun packsAfterLists(w: Workspace): List<String> {

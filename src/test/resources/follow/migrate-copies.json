@@ -1,0 +1,267 @@
+{
+  "official": [
+    {
+      "catalogId": "go",
+      "version": 1,
+      "pack": {
+        "id": "go",
+        "name": "Go",
+        "description": "Go tools",
+        "category": "プログラミング",
+        "tags": [
+          "Go",
+          "CLI"
+        ],
+        "origin": {
+          "catalogId": "go",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "basic",
+          "name": "基本",
+          "levels": [
+            "基本"
+          ],
+          "packId": "go",
+          "words": [
+            {
+              "display": "go run",
+              "input": "go run",
+              "annotation": ""
+            },
+            {
+              "display": "go build",
+              "input": "go build",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "catalogId": "kotlin",
+      "version": 1,
+      "pack": {
+        "id": "kotlin",
+        "name": "Kotlin",
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "basic",
+          "name": "基本",
+          "packId": "kotlin",
+          "words": [
+            {
+              "display": "val",
+              "input": "val",
+              "annotation": ""
+            },
+            {
+              "display": "var",
+              "input": "var",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "library": {
+    "packs": [
+      {
+        "id": "p-old",
+        "name": "Go",
+        "description": "edited",
+        "origin": {
+          "catalogId": "go",
+          "version": 1
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "go",
+        "name": "Go (initial)",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "mine",
+        "name": "Mine",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "x",
+        "name": "Imported",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p-old2",
+        "name": "Kotlin",
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l-old",
+        "name": "基本",
+        "packId": "p-old",
+        "words": [
+          {
+            "display": "edited",
+            "input": "edited",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1200,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "l-mine",
+        "name": "Mine list",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 900,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "l-go",
+        "name": "基本",
+        "packId": "go",
+        "words": [
+          {
+            "display": "go run",
+            "input": "go run",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 800,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "l-x",
+        "name": "X list",
+        "packId": "x",
+        "words": [
+          {
+            "display": "x",
+            "input": "x",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "l-old2",
+        "name": "基本",
+        "packId": "p-old2",
+        "words": [
+          {
+            "display": "val",
+            "input": "val",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ]
+  },
+  "expected": {
+    "packs": [
+      {
+        "id": "mine",
+        "name": "Mine",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "x",
+        "name": "Imported",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l-mine",
+        "name": "Mine list",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 900,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "l-x",
+        "name": "X list",
+        "packId": "x",
+        "words": [
+          {
+            "display": "x",
+            "input": "x",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ]
+  }
+}

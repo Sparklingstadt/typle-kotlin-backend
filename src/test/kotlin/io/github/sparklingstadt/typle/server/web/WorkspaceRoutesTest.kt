@@ -7,6 +7,8 @@ import io.github.sparklingstadt.typle.server.store.PgStore
 import io.github.sparklingstadt.typle.server.store.Saved
 import io.github.sparklingstadt.typle.server.workspace.DEFAULT_INTERESTS
 import io.github.sparklingstadt.typle.server.workspace.MAX_GROUP
+import io.github.sparklingstadt.typle.server.workspace.Origin
+import io.github.sparklingstadt.typle.server.workspace.catalog
 import io.github.sparklingstadt.typle.server.workspace.MAX_INTERESTS
 import io.github.sparklingstadt.typle.server.workspace.MAX_INTEREST_LENGTH
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
@@ -405,6 +407,39 @@ class WorkspaceRoutesTest {
     assertEquals("""["a","\u003c\u0026\u003e"]""", interestsOf(get()))
   }
 
+  // A save with packs follows the official catalog before it is stored, as Go's Decode makes it (followOfficial): copies
+  // of official packs from before v0.98.0 go with their lists and records, and a followed pack is made equal to the
+  // catalog, keeping its name and the records of its lists.
+  private fun followBody(owner: String, revision: Int): String {
+    val first = catalog[0]
+    fun list(id: String, packId: String, extra: String = "") =
+      """{"id":"$id","name":"$id","packId":"$packId",$extra"createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],""" +
+        """"records":[{"time":1,"date":"2026-10-02T00:00:00.000Z"}]}"""
+    val packs = """{"id":"copy","name":"Copy","origin":{"catalogId":"${first.catalogId}","version":1},"createdAt":"2026-09-06"},""" +
+      """{"id":"${first.catalogId}","name":"Old","createdAt":"2026-09-06"},""" +
+      """{"id":"f","name":"Mine","origin":{"catalogId":"${first.catalogId}","version":1,"followed":true},"createdAt":"2026-09-06"},""" +
+      """{"id":"p","name":"P","createdAt":"2026-09-06"}"""
+    val lists = listOf(list("c1", "copy"), list("o1", first.catalogId), list("mine", "p"),
+      list("f1", "f", """"origin":{"listId":"${first.lists[0].id}"},"""))
+    return payload(owner, """"revision":$revision,"lists":[${lists.joinToString(",")}],"packs":[$packs]""")
+  }
+
+  @Test fun putFollowsTheCatalog() = serve {
+    val response = put(followBody(TEST_OWNER, 1))
+    assertEquals(200, response.statusCode(), response.body())
+    val change = store.change!!
+    val first = catalog[0]
+    assertEquals(listOf("f", "p"), change.packs.map { it.id })
+    assertEquals(Origin(first.catalogId, 1.0, followed = true), change.packs[0].origin)
+    assertEquals("Mine" to first.pack.category, change.packs[0].name to change.packs[0].category)
+    // The followed pack's lists take the place of its first list.
+    assertEquals(listOf("mine", "f1") + first.lists.drop(1).map { "f:" + it.id }, change.lists.map { it.id })
+    val synced = change.lists[1]
+    assertEquals(Triple(first.lists[0].name, first.lists[0].words, 1), Triple(synced.name, synced.words, synced.records.size))
+    assertTrue(""""followed":true""" in response.body(), response.body())
+    assertFalse(""""id":"c1"""" in response.body() || """"id":"copy"""" in response.body(), response.body())
+  }
+
   // The database tests run against TYPLE_TEST_DATABASE_URL, as PgStoreTest, and are skipped without it.
   private fun <T> serveReal(block: TestServer.(owner: String) -> T): T {
     val connection = System.getenv("TYPLE_TEST_DATABASE_URL").orEmpty()
@@ -441,6 +476,16 @@ class WorkspaceRoutesTest {
 
   // With the database: interests saved alone are answered and read back, and kept by saves that leave them out (Go's
   // TestPutInterestsFlow).
+  // With the database: the copies are gone from what is stored and read back (typle-r's e2e packs-migration.spec.ts).
+  @Test fun followFlowRealStore() = serveReal { owner ->
+    val cookie = sessionCookie(owner)
+    val saved = put(followBody(owner, 0), cookie)
+    assertEquals(200, saved.statusCode(), saved.body())
+    val read = get(cookie)
+    assertEquals(saved.body(), read.body())
+    assertTrue(""""id":"f",""" in packsOf(read) && """"id":"p",""" in packsOf(read) && """"id":"copy"""" !in packsOf(read), read.body())
+  }
+
   @Test fun interestsFlowRealStore() = serveReal { owner ->
     val cookie = sessionCookie(owner)
     fun expectInterests(response: HttpResponse<String>, want: String) =

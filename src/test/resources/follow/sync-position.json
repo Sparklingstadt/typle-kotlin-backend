@@ -1,0 +1,355 @@
+{
+  "official": [
+    {
+      "catalogId": "go",
+      "version": 1,
+      "pack": {
+        "id": "go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "a",
+          "name": "Alpha",
+          "packId": "go",
+          "words": [
+            {
+              "display": "a",
+              "input": "a",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "id": "b",
+          "name": "Beta",
+          "packId": "go",
+          "words": [
+            {
+              "display": "b",
+              "input": "b",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "id": "c",
+          "name": "Gamma",
+          "packId": "go",
+          "words": [
+            {
+              "display": "c",
+              "input": "c",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "catalogId": "kotlin",
+      "version": 1,
+      "pack": {
+        "id": "kotlin",
+        "name": "Kotlin",
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "basic",
+          "name": "Basics",
+          "packId": "kotlin",
+          "words": [
+            {
+              "display": "val",
+              "input": "val",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "library": {
+    "packs": [
+      {
+        "id": "mine",
+        "name": "Mine",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p-go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p-kt",
+        "name": "Kotlin",
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "m1",
+        "name": "M1",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "g1",
+        "name": "Alpha",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "a",
+            "input": "a",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "a"
+        }
+      },
+      {
+        "id": "m2",
+        "name": "M2",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "g2",
+        "name": "Beta",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "b",
+            "input": "b",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "b"
+        }
+      },
+      {
+        "id": "k1",
+        "name": "Basics",
+        "packId": "p-kt",
+        "words": [
+          {
+            "display": "val",
+            "input": "val",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "basic"
+        }
+      },
+      {
+        "id": "m3",
+        "name": "M3",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ]
+  },
+  "expected": {
+    "packs": [
+      {
+        "id": "mine",
+        "name": "Mine",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p-go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p-kt",
+        "name": "Kotlin",
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "m1",
+        "name": "M1",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "g1",
+        "name": "Alpha",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "a",
+            "input": "a",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "a"
+        }
+      },
+      {
+        "id": "g2",
+        "name": "Beta",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "b",
+            "input": "b",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "b"
+        }
+      },
+      {
+        "id": "p-go:c",
+        "name": "Gamma",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "c",
+            "input": "c",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "origin": {
+          "listId": "c"
+        }
+      },
+      {
+        "id": "m2",
+        "name": "M2",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "k1",
+        "name": "Basics",
+        "packId": "p-kt",
+        "words": [
+          {
+            "display": "val",
+            "input": "val",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "basic"
+        }
+      },
+      {
+        "id": "m3",
+        "name": "M3",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ]
+  }
+}
