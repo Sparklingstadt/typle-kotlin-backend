@@ -135,11 +135,22 @@ private fun interests(sent: JsonValue?): List<String>? {
  * parser reads \u0000 and \ud800 as those units, and valid JSON can write them no other way, so this is the Go
  * backend's scan of the raw text.
  */
-fun unstorable(value: JsonValue): Boolean = when (value) {
-  is JsonString -> unstorable(value.value)
-  is JsonArray -> value.items.any(::unstorable)
-  is JsonObject -> value.members.any { (name, member) -> unstorable(name) || unstorable(member) }
-  else -> false
+fun unstorable(value: JsonValue): Boolean {
+  // Iterative, with the values to look at on a stack of its own, as the parser is: a body may nest 10000 levels.
+  val pending = ArrayDeque<JsonValue>()
+  pending.addLast(value)
+  while (pending.isNotEmpty()) {
+    when (val next = pending.removeLast()) {
+      is JsonString -> if (unstorable(next.value)) return true
+      is JsonArray -> pending.addAll(next.items)
+      is JsonObject -> for ((name, member) in next.members) {
+        if (unstorable(name)) return true
+        pending.addLast(member)
+      }
+      else -> {}
+    }
+  }
+  return false
 }
 
 private fun unstorable(text: String): Boolean {

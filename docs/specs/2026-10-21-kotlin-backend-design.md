@@ -111,7 +111,7 @@ Go の `server/internal/*` と 1 対 1 に対応させ、移すときに比べ�
 
 ### DB（`store/`）
 
-- `DATABASE_URL`（なければ `POSTGRES_URL`）を Go の `ConnString` と同じ規則で直す（`sslmode` の `prefer`・`require`・`verify-ca` は `verify-full`、`uselibpqcompat=true` なら直さずに取り除く）。そのあと JDBC の URL（`jdbc:postgresql://host:port/db`）とユーザー・パスワードに分ける。
+- `DATABASE_URL`（なければ `POSTGRES_URL`）を Go の `ConnString` と同じ規則で直す（`sslmode` の `prefer`・`require`・`verify-ca` は `verify-full`、`uselibpqcompat=true` なら直さずに取り除く。`sslmode` のない URL も、接続先がどれもこの機械（`localhost`・`127.0.0.0/8`・`::1`・Unix ソケット）でなければ `verify-full`）。そのあと JDBC の URL（`jdbc:postgresql://host:port/db`）とユーザー・パスワードに分ける。
 - `sslmode=verify-full` のときは `sslfactory=org.postgresql.ssl.DefaultJavaSSLFactory` で JVM の信頼するルート証明書を使う（pgjdbc の既定は `~/.postgresql/root.crt` を探すため）。
 - `Ping` は `SELECT 1`（5 秒で打ち切り）。
 
