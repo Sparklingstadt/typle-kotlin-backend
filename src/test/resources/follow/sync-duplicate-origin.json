@@ -1,0 +1,140 @@
+{
+  "official": [
+    {
+      "catalogId": "go",
+      "version": 1,
+      "pack": {
+        "id": "go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "a",
+          "name": "Alpha",
+          "packId": "go",
+          "words": [
+            {
+              "display": "a",
+              "input": "a",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "library": {
+    "packs": [
+      {
+        "id": "p-go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l1",
+        "name": "Alpha",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "a",
+            "input": "a",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "a"
+        }
+      },
+      {
+        "id": "l2",
+        "name": "Alpha copy",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "a",
+            "input": "a",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 2,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "a"
+        }
+      }
+    ]
+  },
+  "expected": {
+    "packs": [
+      {
+        "id": "p-go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l1",
+        "name": "Alpha",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "a",
+            "input": "a",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "a"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "official": [
+    {
+      "catalogId": "go",
+      "version": 1,
+      "pack": {
+        "id": "go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "a",
+          "name": "Alpha",
+          "packId": "go",
+          "words": [
+            {
+              "display": "a",
+              "input": "a",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        },
+        {
+          "id": "n",
+          "name": "New",
+          "levels": [
+            "新"
+          ],
+          "packId": "go",
+          "words": [
+            {
+              "display": "n",
+              "input": "n",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "library": {
+    "packs": [
+      {
+        "id": "p-go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "mine",
+        "name": "Mine",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l-gone",
+        "name": "Gone",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "z",
+            "input": "z",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 9,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "zz"
+        }
+      },
+      {
+        "id": "l-a",
+        "name": "Alpha",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "a",
+            "input": "a",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "a"
+        }
+      },
+      {
+        "id": "l-own",
+        "name": "Own",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "own",
+            "input": "own",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 5,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "l-mine",
+        "name": "Mine list",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ]
+  },
+  "expected": {
+    "packs": [
+      {
+        "id": "p-go",
+        "name": "Go",
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "mine",
+        "name": "Mine",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l-a",
+        "name": "Alpha",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "a",
+            "input": "a",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "a"
+        }
+      },
+      {
+        "id": "p-go:n",
+        "name": "New",
+        "levels": [
+          "新"
+        ],
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "n",
+            "input": "n",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-01-01T00:00:00.000Z",
+        "origin": {
+          "listId": "n"
+        }
+      },
+      {
+        "id": "l-mine",
+        "name": "Mine list",
+        "packId": "mine",
+        "words": [
+          {
+            "display": "m",
+            "input": "m",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "official": [
+    {
+      "catalogId": "go",
+      "version": 1,
+      "pack": {
+        "id": "go",
+        "name": "Go",
+        "description": "Go tools",
+        "category": "プログラミング",
+        "tags": [
+          "Go",
+          "CLI"
+        ],
+        "origin": {
+          "catalogId": "go",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "basic",
+          "name": "基本",
+          "levels": [
+            "基本"
+          ],
+          "packId": "go",
+          "words": [
+            {
+              "display": "go run",
+              "input": "go run",
+              "annotation": ""
+            },
+            {
+              "display": "go build",
+              "input": "go build",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "catalogId": "kotlin",
+      "version": 1,
+      "pack": {
+        "id": "kotlin",
+        "name": "Kotlin",
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1
+        },
+        "createdAt": "2026-01-01T00:00:00.000Z"
+      },
+      "lists": [
+        {
+          "id": "basic",
+          "name": "基本",
+          "packId": "kotlin",
+          "words": [
+            {
+              "display": "val",
+              "input": "val",
+              "annotation": ""
+            },
+            {
+              "display": "var",
+              "input": "var",
+              "annotation": ""
+            }
+          ],
+          "records": [],
+          "createdAt": "2026-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "library": {
+    "packs": [
+      {
+        "id": "p-go",
+        "name": "Go",
+        "description": "old",
+        "category": "old",
+        "tags": [
+          "x"
+        ],
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p-kt",
+        "name": "Kotlin",
+        "description": "old",
+        "category": "old",
+        "tags": [
+          "x"
+        ],
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l1",
+        "name": "旧",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "old",
+            "input": "old",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1500,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "basic"
+        },
+        "levels": [
+          "入門"
+        ]
+      },
+      {
+        "id": "l2",
+        "name": "旧",
+        "packId": "p-kt",
+        "words": [
+          {
+            "display": "old",
+            "input": "old",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 500,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "basic"
+        },
+        "levels": [
+          "入門"
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "packs": [
+      {
+        "id": "p-go",
+        "name": "Go",
+        "description": "Go tools",
+        "category": "プログラミング",
+        "tags": [
+          "Go",
+          "CLI"
+        ],
+        "origin": {
+          "catalogId": "go",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p-kt",
+        "name": "Kotlin",
+        "origin": {
+          "catalogId": "kotlin",
+          "version": 1,
+          "followed": true
+        },
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "l1",
+        "name": "基本",
+        "packId": "p-go",
+        "words": [
+          {
+            "display": "go run",
+            "input": "go run",
+            "annotation": ""
+          },
+          {
+            "display": "go build",
+            "input": "go build",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 1500,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "basic"
+        },
+        "levels": [
+          "基本"
+        ]
+      },
+      {
+        "id": "l2",
+        "name": "基本",
+        "packId": "p-kt",
+        "words": [
+          {
+            "display": "val",
+            "input": "val",
+            "annotation": ""
+          },
+          {
+            "display": "var",
+            "input": "var",
+            "annotation": ""
+          }
+        ],
+        "records": [
+          {
+            "time": 500,
+            "date": "2026-10-02T00:00:00.000Z",
+            "mistakes": 1,
+            "accuracy": 95,
+            "wordCount": 2
+          }
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "origin": {
+          "listId": "basic"
+        }
+      }
+    ]
+  }
+}

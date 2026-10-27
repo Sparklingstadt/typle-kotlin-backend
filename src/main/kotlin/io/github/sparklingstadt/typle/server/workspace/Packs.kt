@@ -28,7 +28,7 @@ const val MAX_SAVED_LEVELS = 5
  */
 fun lowerCase(value: String): String = value.lowercase()
 
-private fun nameKey(name: String) = lowerCase(trimJS(name))
+internal fun nameKey(name: String) = lowerCase(trimJS(name))
 
 /**
  * validateLibrary (src/core/wordPacks.ts), as Go's CheckPacks: refuses packs and lists that are not in the saved shape,
@@ -155,12 +155,16 @@ fun separateLevels(given: List<WordList>): List<WordList> {
   }
 }
 
-// list with levels in place of its own, which Kotlin keeps with the fields Typle does not know (extra, which then has
-// levels).
-private fun withLevels(list: WordList, levels: List<String>): WordList {
-  val members = LinkedHashMap((JsonValue.parse(list.extra) as JsonObject).members)
-  if (levels.isEmpty()) members.remove("levels") else members["levels"] = JsonArray(levels.map(::JsonString))
-  return list.copy(extra = unknown(JsonObject(members)))
+// list with levels in place of its own (none when empty), which Kotlin keeps with the fields Typle does not know (extra,
+// which then has levels).
+internal fun withLevels(list: WordList, levels: List<String>): WordList =
+  list.copy(extra = withMember(list.extra, "levels", levels.ifEmpty { null }?.let { JsonArray(it.map(::JsonString)) }))
+
+// extra (the fields Typle does not know, see unknown) with the member name set to value, or without it when value is null.
+internal fun withMember(extra: String, name: String, value: JsonValue?): String {
+  val members = if (extra.isEmpty()) LinkedHashMap() else LinkedHashMap((JsonValue.parse(extra) as JsonObject).members)
+  if (value == null) members.remove(name) else members[name] = value
+  return unknown(JsonObject(members))
 }
 
 /**

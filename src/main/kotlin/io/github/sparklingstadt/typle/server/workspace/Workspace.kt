@@ -7,10 +7,12 @@
 // into one (collapseLevels) and the separation of lists of a pack whose levels are equal (separateLevels) are made, on rows that have packs, where the server builds something from a saved row
 // rather than answering it as stored: the snapshot of a shared link (readSaved, used by PutShare). A save with packs is
 // still checked as it was sent, so overlaps there are refused (levelsConflict); a list sent with up to 5 levels is stored joined
-// into one (separateLevels) and rows saved with up to 5 levels are still read.
+// into one (separateLevels) and rows saved with up to 5 levels are still read. Like Go's Decode, a save with packs and a
+// saved row read by readSaved then follow the official catalog (followOfficial in Follow.kt).
 package io.github.sparklingstadt.typle.server.workspace
 
 import io.github.sparklingstadt.typle.server.json.JsonArray
+import io.github.sparklingstadt.typle.server.json.JsonBool
 import io.github.sparklingstadt.typle.server.json.JsonNull
 import io.github.sparklingstadt.typle.server.json.JsonNumber
 import io.github.sparklingstadt.typle.server.json.JsonObject
@@ -48,8 +50,11 @@ data class WordList(
   val tags: List<String> = emptyList(),
 )
 
-/** Origin is set on a pack added from the official catalog. */
-data class Origin(val catalogId: String, val version: Double)
+/**
+ * Origin is set on a pack that came from the official catalog. Without followed it is a copy from before typle-r v0.98.0,
+ * which followOfficial removes (Go's Origin).
+ */
+data class Origin(val catalogId: String, val version: Double, val followed: Boolean = false)
 
 /** A word pack. description and category are "" and tags empty when it has none, which is how they are stored: left out. */
 data class Pack(
@@ -72,10 +77,19 @@ fun decode(lists: String, devices: String, packs: String? = null): Workspace =
 /**
  * A saved row as the server reads it to build an answer or new data from it, such as the snapshot of a shared link:
  * decode, with the lists of a row that has packs separated as Go's Decode separates them when it repairs saved packs
- * (separateLevels), so it reads them as Go does. A row without packs (packs null) is read as decode reads it, as Kotlin
- * does not make its packs. /api/workspace answers the row as stored and does not use this.
+ * (separateLevels) and the library following the official catalog as Go's Decode makes it (followOfficial), so it reads
+ * them as Go does. A row without packs (packs null) is read as decode reads it, as Kotlin does not make its packs.
+ * /api/workspace answers the row as stored and does not use this.
  */
 fun readSaved(lists: String, devices: String, packs: String?): Workspace {
+  val w = readNormalized(lists, devices, packs)
+  if (packs == null) return w
+  val (followedPacks, followedLists) = followOfficial(w.packs, w.lists, catalog)
+  return w.copy(lists = followedLists, packs = followedPacks)
+}
+
+/** readSaved before it follows the official catalog, as Go's normalized: decode, with the lists of a row with packs separated. */
+internal fun readNormalized(lists: String, devices: String, packs: String?): Workspace {
   val w = decode(lists, devices, packs)
   return if (packs == null) w else w.copy(lists = separateLevels(w.lists))
 }
@@ -124,8 +138,15 @@ private fun decodePack(raw: JsonValue): Pack {
     is JsonObject -> {
       val catalogId = optionalString(value, "catalogId")
       val version = optionalFloat(value, "version")
+      // followed is true or left out (null): false is refused, as Go's decodePacks does.
+      val followed = when (val flag = value.members["followed"]) {
+        null, JsonNull -> false
+        JsonBool(true) -> true
+        is JsonBool -> invalid("is invalid")
+        else -> invalid("origin.followed must be a boolean")
+      }
       if (catalogId == null || version == null) invalid("is invalid")
-      Origin(catalogId, version)
+      Origin(catalogId, version, followed)
     }
     else -> invalid("origin must be an object")
   }
@@ -185,9 +206,14 @@ private fun decodeList(raw: JsonValue): WordList {
       invalid("record ${index + 1}: ${e.message}")
     }
   }
-  // The labels are optional; decodeLists checks only that they are a string and strings.
+  // The labels are optional; decodeLists checks only that they are a string and strings. The origin of a list of a followed
+  // pack is kept (with the fields Typle does not know, in extra) when it is an object with a string listId, and any
+  // other origin is dropped, as Go's originOf.
+  val origin = fields.members["origin"]
+  val keptOrigin = origin is JsonObject && origin.members["listId"] is JsonString
   return WordList(id, name, decodedWords, decodedRecords, createdAt,
-    unknown(fields, "id", "name", "category", "tags", "group", "packId", "createdAt", "words", "records", "shared", "shareId"),
+    unknown(fields, "id", "name", "category", "tags", "group", "packId", "createdAt", "words", "records", "shared", "shareId",
+      *(if (keptOrigin) emptyArray() else arrayOf("origin"))),
     packId = optionalString(fields, "packId") ?: "", group = optionalString(fields, "group") ?: "",
     category = optionalString(fields, "category") ?: "", tags = optionalStrings(fields, "tags"))
 }

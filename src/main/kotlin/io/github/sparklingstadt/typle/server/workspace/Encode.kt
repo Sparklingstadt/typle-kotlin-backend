@@ -76,7 +76,9 @@ fun encodePacks(packs: List<Pack>): String = packs.joinToString(",", "[", "]") {
   object_(pack.extra,
     "id" to str(pack.id), "name" to str(pack.name), "description" to pack.description.ifEmpty { null }?.let(::str),
     "category" to pack.category.ifEmpty { null }?.let(::str), "tags" to pack.tags.ifEmpty { null }?.let(::strings),
-    "origin" to pack.origin?.let { object_("", "catalogId" to str(it.catalogId), "version" to GoJson.number(it.version)) },
+    "origin" to pack.origin?.let {
+      object_("", "catalogId" to str(it.catalogId), "version" to GoJson.number(it.version), "followed" to (if (it.followed) "true" else null))
+    },
     "createdAt" to str(pack.createdAt),
   )
 }
