@@ -12,6 +12,7 @@ import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
 import io.github.sparklingstadt.typle.server.workspace.separateLevels
 import io.github.sparklingstadt.typle.server.workspace.checkLibrary
+import io.github.sparklingstadt.typle.server.workspace.decodeInterests
 import io.github.sparklingstadt.typle.server.workspace.decodeValues
 import io.github.sparklingstadt.typle.server.workspace.trimJS
 import java.io.InputStream
@@ -51,8 +52,9 @@ fun parseObject(body: String): JsonObject = try {
 
 /**
  * Reads a save, as validateWorkspaceRequest does and in its order: the revision, then the legacy profile
- * (LegacyRequestException), then the lists, packs and devices (InvalidRequestException). The limits of the lists and
- * the number of them are checked by the store, before it touches the database.
+ * (LegacyRequestException), then the lists, packs and devices (InvalidRequestException), then the interests
+ * (InvalidRequestException), which may be all a save sets. The limits of the lists and the number of them are checked
+ * by the store, before it touches the database.
  */
 fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   val members = fields.members
@@ -64,7 +66,16 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   val devices = members["devices"]
   // Packs only make sense with the lists that belong to them.
   if (packs != null && lists == null) throw InvalidRequestException()
-  if (lists == null && devices == null) return revision to Change(emptyList(), emptyList(), hasLists = false, hasDevices = false)
+  // Interests may be all a save sets. They are judged after the other parts, as in validateWorkspaceRequest, so that
+  // lists whose levels overlap are told so first. Left out, they stay as saved; sent null, they are none. interests is
+  // null for interests to refuse.
+  val sentInterests = members["interests"]
+  val hasInterests = sentInterests != null
+  val interests = interests(sentInterests)
+  if (lists == null && devices == null) {
+    return revision to Change(emptyList(), emptyList(), hasLists = false, hasDevices = false,
+      interests = interests ?: throw InvalidRequestException(), hasInterests = hasInterests)
+  }
   // null is not a left-out part: the app refuses it.
   if (lists == JsonNull || packs == JsonNull || devices == JsonNull) throw InvalidRequestException()
   if (listOfNotNull(lists, packs, devices).any(::unstorable)) throw InvalidRequestException()
@@ -85,15 +96,32 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   } catch (_: InvalidWorkspaceException) {
     throw InvalidRequestException()
   }
+  if (interests == null) throw InvalidRequestException()
   if (packs == null) {
     // An app that does not know packs sends its lists with their labels, which are saved as it sent them.
-    return revision to Change(decoded.lists, decoded.devices, hasLists = lists != null, hasDevices = devices != null)
+    return revision to Change(decoded.lists, decoded.devices, hasLists = lists != null, hasDevices = devices != null,
+      interests = interests, hasInterests = hasInterests)
   }
   // Go repairs the library before it is saved, which leaves one that checkLibrary accepts as it is but for the names of
   // its packs and lists, trimmed (their trimmed lowercase is already unique), and the levels of lists sent with several
   // (by an app before v0.97.0), joined into one and told apart (separateLevels).
   return revision to Change(separateLevels(decoded.lists.map { it.copy(name = trimJS(it.name)) }), decoded.devices, hasLists = true,
-    hasDevices = devices != null, packs = decoded.packs.map { it.copy(name = trimJS(it.name)) }, hasPacks = true)
+    hasDevices = devices != null, packs = decoded.packs.map { it.copy(name = trimJS(it.name)) }, hasPacks = true,
+    interests = interests, hasInterests = hasInterests)
+}
+
+/**
+ * The interests of a save, as Go's decodeInterests (and decodeInterests in src/core/interests.ts) reads them: left out
+ * (sent is null) or JSON null, none. The result is null for interests to refuse, which the caller does in its turn.
+ */
+private fun interests(sent: JsonValue?): List<String>? {
+  if (sent == null) return emptyList()
+  if (unstorable(sent)) return null
+  return try {
+    decodeInterests(sent)
+  } catch (_: InvalidWorkspaceException) {
+    null
+  }
 }
 
 /**

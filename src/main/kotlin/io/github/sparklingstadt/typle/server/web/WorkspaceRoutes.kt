@@ -6,7 +6,9 @@ import io.github.sparklingstadt.typle.server.session.Session
 import io.github.sparklingstadt.typle.server.session.cookieName
 import io.github.sparklingstadt.typle.server.store.ConflictException
 import io.github.sparklingstadt.typle.server.store.Saved
+import io.github.sparklingstadt.typle.server.workspace.DEFAULT_INTERESTS
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
+import io.github.sparklingstadt.typle.server.workspace.encodeInterests
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
@@ -75,13 +77,15 @@ suspend fun ApplicationCall.workspace(config: Config) {
   if (request.httpMethod == HttpMethod.Put) writeWorkspace(config) else readWorkspace(config)
 }
 
-// The answer of GET and PUT, in the order of Go's saved: the lists, packs and devices as the database stores them, with
-// the fields Typle does not know. Packs are null for lists saved before packs existed, and for an account that has
-// saved nothing.
+// The answer of GET and PUT, in the order of Go's saved: the lists, packs, devices and interests as the database stores
+// them, with the fields Typle does not know. Packs are null for lists saved before packs existed, and for an account
+// that has saved nothing. Interests are DEFAULT_INTERESTS (every option) when none have been saved, as the app reads
+// them; saved [] is [].
 private suspend fun ApplicationCall.answer(saved: Saved, owner: String) = reply(HttpStatusCode.OK,
   "{\"lists\":" + GoJson.compact(saved.lists, escapeHtml = true) +
     ",\"packs\":" + (saved.packs?.let { GoJson.compact(it, escapeHtml = true) } ?: "null") +
     ",\"devices\":" + GoJson.compact(saved.devices, escapeHtml = true) +
+    ",\"interests\":" + GoJson.compact(saved.interests.orEmpty().ifEmpty { encodeInterests(DEFAULT_INTERESTS) }, escapeHtml = true) +
     ",\"revision\":" + saved.revision + ",\"accountId\":" + GoJson.string(owner, escapeHtml = true) + "}")
 
 private suspend fun ApplicationCall.readWorkspace(config: Config) {

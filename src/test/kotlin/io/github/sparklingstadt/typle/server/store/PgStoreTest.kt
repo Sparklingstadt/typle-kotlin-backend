@@ -2,11 +2,13 @@ package io.github.sparklingstadt.typle.server.store
 
 import io.github.sparklingstadt.typle.server.workspace.Device
 import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
+import io.github.sparklingstadt.typle.server.workspace.MAX_INTEREST_LENGTH
 import io.github.sparklingstadt.typle.server.workspace.Pack
 import io.github.sparklingstadt.typle.server.workspace.Word
 import io.github.sparklingstadt.typle.server.workspace.WordList
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
 import io.github.sparklingstadt.typle.server.workspace.decode
+import io.github.sparklingstadt.typle.server.workspace.decodeInterests
 import java.sql.DriverManager
 import java.util.concurrent.Callable
 import java.util.concurrent.CyclicBarrier
@@ -267,6 +269,62 @@ class PgStoreTest {
     val id = owner()
     sql().use { db ->
       db.prepareStatement("INSERT INTO typle_workspaces (owner_id, lists, packs) VALUES (?, '[]'::jsonb, '[{\"id\": \"\"}]'::jsonb)").use { q ->
+        q.setString(1, id)
+        q.executeUpdate()
+      }
+    }
+    assertFailsWith<InvalidWorkspaceException> { store.readRevision(id) }
+  }
+
+  // The interests have a column of their own: saved with a change that sets them, kept by one that leaves them out, and
+  // null (NULL) for a row without them, which the app reads as the default (Go's TestWriteRevisionInterests; Kotlin has
+  // no /api/v1 Modify).
+  @Test fun writeRevisionInterests() {
+    val id = owner()
+    var saved = store.writeRevision(id, 0, lists(1))
+    assertNull(saved.interests, "interests of a new row")
+    val chosen = listOf("language", "language/zh", "x/unknown")
+    saved = store.writeRevision(id, 1, Change(emptyList(), emptyList(), hasLists = false, hasDevices = false, interests = chosen, hasInterests = true))
+    assertEquals(2L, saved.revision)
+    assertEquals(chosen, decodeInterests(saved.interests))
+    assertEquals(1, decode(saved.lists, saved.devices).lists.size)
+    assertEquals(chosen, decodeInterests(store.readRevision(id)!!.interests))
+    // Lists or devices alone leave the interests as they are.
+    store.writeRevision(id, 2, lists(2))
+    saved = store.writeRevision(id, 3, Change(emptyList(), devices, hasLists = false, hasDevices = true))
+    assertEquals(chosen, decodeInterests(saved.interests))
+    assertEquals(2, decode(saved.lists, saved.devices).lists.size)
+    // They can be emptied.
+    saved = store.writeRevision(id, 4, Change(emptyList(), emptyList(), hasLists = false, hasDevices = false, hasInterests = true))
+    assertEquals("[]", saved.interests)
+    assertEquals(saved, store.readRevision(id))
+  }
+
+  @Test fun createWithInterests() {
+    val saved = store.writeRevision(owner(), 0,
+      Change(emptyList(), emptyList(), hasLists = false, hasDevices = false, interests = listOf("programming"), hasInterests = true))
+    assertEquals(1L, saved.revision)
+    assertEquals(listOf("programming"), decodeInterests(saved.interests))
+    assertEquals(0, decode(saved.lists, saved.devices).lists.size)
+  }
+
+  // Interests the app would refuse are never saved: the change is refused as an invalid workspace, before the database.
+  @Test fun invalidInterestsAreRefused() {
+    val fresh = owner()
+    for (invalid in listOf(listOf("language", "language"), listOf(""), listOf("a".repeat(MAX_INTEREST_LENGTH + 1)))) {
+      val error = assertFailsWith<WorkspaceError>(invalid.toString()) {
+        store.writeRevision(fresh, 0, Change(emptyList(), emptyList(), hasLists = false, hasDevices = false, interests = invalid, hasInterests = true))
+      }
+      assertEquals("invalidWorkspace", error.key)
+    }
+    assertNull(store.readRevision(fresh))
+  }
+
+  // A row whose interests the app would refuse is refused when read, as its lists would be.
+  @Test fun unreadableSavedInterestsAreAnError() {
+    val id = owner()
+    sql().use { db ->
+      db.prepareStatement("INSERT INTO typle_workspaces (owner_id, lists, devices, interests) VALUES (?, '[]', '[]', '[\"a\",\"a\"]')").use { q ->
         q.setString(1, id)
         q.executeUpdate()
       }

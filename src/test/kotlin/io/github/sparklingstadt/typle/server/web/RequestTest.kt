@@ -64,6 +64,13 @@ class RequestTest {
     assertEquals("l", lists.lists.single().id)
     val devices = decodeFields(fields("""{"revision":1,"devices":[{"id":"d","name":" n ","layout":""}]}""")).second
     assertEquals(Change(emptyList(), listOf(Device("d", "n", "")), hasLists = false, hasDevices = true), devices)
+    // Interests may be all a save sets; null is none.
+    assertEquals(2L to Change(emptyList(), emptyList(), hasLists = false, hasDevices = false, interests = listOf("language"), hasInterests = true),
+      decodeFields(fields("""{"revision":2,"interests":["language"]}""")))
+    assertEquals(Change(emptyList(), emptyList(), hasLists = false, hasDevices = false, hasInterests = true),
+      decodeFields(fields("""{"revision":2,"interests":null}""")).second)
+    val both = decodeFields(fields("""{"revision":1,"lists":$WORDS,"interests":["a"]}""")).second
+    assertEquals(listOf("a") to true, both.interests to both.hasInterests)
   }
 
   // The revision is judged before the legacy profile, and that before the lists, as in validateWorkspaceRequest.

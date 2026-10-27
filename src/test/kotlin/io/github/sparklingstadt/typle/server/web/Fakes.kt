@@ -11,6 +11,7 @@ import io.github.sparklingstadt.typle.server.store.Share
 import io.github.sparklingstadt.typle.server.store.Store
 import io.github.sparklingstadt.typle.server.workspace.encode
 import io.github.sparklingstadt.typle.server.workspace.encodeDevices
+import io.github.sparklingstadt.typle.server.workspace.encodeInterests
 import io.github.sparklingstadt.typle.server.workspace.encodePacks
 import io.github.sparklingstadt.typle.server.workspace.encodeWithLabels
 import io.ktor.server.application.Application
@@ -73,7 +74,9 @@ class FakeStore(
     }
     val packs = if (change.hasPacks) encodePacks(change.packs) else saved?.packs
     val devices = if (change.hasDevices) encodeDevices(change.devices) else saved?.devices ?: "[]"
-    return Saved(lists, devices, packs, revision + 1).also { saved = it }
+    // Interests left out stay as saved, as the store keeps them.
+    val interests = if (change.hasInterests) encodeInterests(change.interests) else saved?.interests
+    return Saved(lists, devices, packs, revision + 1, interests).also { saved = it }
   }
 
   override fun putShare(owner: String, packId: String): Share {
