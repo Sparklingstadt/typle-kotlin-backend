@@ -29,14 +29,14 @@ typle-r の `scripts/dev.cjs` が先にこのリポジトリを `gradlew install
 AUTH_SECRET=… AUTH_URL=http://127.0.0.1:3000 DATABASE_URL=… build/install/typle-web/bin/typle-web -addr 127.0.0.1:8081
 ```
 
-- ログインの設定（`AUTH_SECRET`・`AUTH_URL`）がなければ、理由を出して起動しません。
-- DB につながらなくても起動し、その間 `/api/health`・`/api/workspace`・`/api/shares`・`/api/shared` は `503 databaseUnavailable` を返し、次のリクエストでつなぎ直します（失敗から 1 秒はつなぎ直しません）。`/api/auth/*` は DB なしで動きます。
+- ログインの設定（`AUTH_SECRET`・`AUTH_URL`）がなければ、理由を出して起動しません。GitHub（`AUTH_GITHUB_ID`・`AUTH_GITHUB_SECRET`）と FFPF ID（`FFPF_ID_ISSUER`・`FFPF_ID_CLIENT_ID`・`FFPF_ID_CLIENT_SECRET`）は Go と同じく任意で、ないほうのログインだけが `503 authUnavailable` になります。
+- DB につながらなくても起動し、その間 `/api/health`・`/api/workspace`・`/api/shares`・`/api/shared`・`/api/admin/*` は `503 databaseUnavailable` を返し、次のリクエストでつなぎ直します（失敗から 1 秒はつなぎ直しません）。`/api/auth/*` は DB なしで動きます（すべての端末からのログアウトと、管理者ダッシュボードへのログインの最後の確かめだけ DB を開きます）。
 - SIGINT・SIGTERM では、処理中のリクエストを最大 5 秒待ってから止まります。
 
 ## Go との互換
 
 - パス・メソッド・ステータス・エラーのキー・ヘッダー（`Cache-Control`・`Vary`・4 つのセキュリティヘッダー）・Cookie の書き方は Go と同じです。
-- 同じ `AUTH_SECRET` なら、Go が発行したセッションの Cookie・アプリ（iPad・Android）のトークンを Kotlin が開け、その逆もできます。JSON の項目の順とエスケープまで Go の `encoding/json` と同じに書きます（`GoJson`）。
+- 同じ `AUTH_SECRET` なら、Go が発行したセッションの Cookie・アプリ（iPad・Android）のトークン・管理者の Cookie を Kotlin が開け、その逆もできます。JSON の項目の順とエスケープまで Go の `encoding/json` と同じに書きます（`GoJson`）。
 - 同じ DB（`typle_workspaces`）を同じ SQL で読み書きするので、Go と Kotlin を入れ替えてもデータの形は変わりません。
 - 保存の検証（`workspace`）は Go の `workspace.Decode` と同じ規則です。JSON は Go の `encoding/json` と同じ厳しさで読む専用のパーサー（`json/JsonValue.kt`）で読みます。
 - 単語パック（typle-r v0.91.0）: `/api/workspace` の GET・PUT は Go と同じく `packs` 列を読み書きします（応答の項目の順は `lists`・`packs`・`devices`・`revision`・`accountId`、行がなければ `"packs":null`）。`lists` と `packs` を一緒に送る保存は Go の `CheckLibrary` と同じ検証をします。保存する前と、サーバーが保存済みの行から新しいデータを作るところ（共有のスナップショット・記録の追加と削除）では、Go の `Decode` と同じく読みます（`workspace.readSaved`）: パックのないリストに自分のパック（`pack-<id>`、リストの名前）を作り、リストのラベルをパックに移し、名前の重なりを（2）…で分ける `repairLibrary`、難易度の補正（`separateLevels`）、公式のカタログに合わせる `followOfficial` の順です。GET は Go と同じく保存されたままを返します。
@@ -52,6 +52,8 @@ AUTH_SECRET=… AUTH_URL=http://127.0.0.1:3000 DATABASE_URL=… build/install/ty
 - 単語の入力の種類（typle-r v0.108.0）: 単語の `input_type`（`command`・`code`・`word`）を Go と同じく読み書きし、保存・共有のファイルに残します。あれば 3 つのどれかでなければならず、`null` や `""` も拒否します（なければ省略として扱います）。
 - ログインの期限と、すべての端末からのログアウト（typle-r v0.107.0）: セッションは使っていても延ばさず、ログインから 30 日で切れます（`/api/auth/session` は新しいトークンや Cookie を返しません）。`POST /api/auth/signout?everywhere=1` は Go と同じく、その時点までのログインのセッションとアプリのトークンをすべて取り消します（`typle_session_revocations`）。アプリはトークンだけで（Origin なしで）送れます。取り消されたセッションは `/api/workspace`・`/api/workspace/records`・`/api/shares` で `401 loginRequired`（ブラウザーには Cookie を消します）、`/api/auth/session` では `user` が `null` です。取り消しを読めないときはデータを返さず `503 databaseUnavailable` です。`/api/auth/*` は Go と同じく DB を待たずに動き、取り消しを読むときだけ DB を開きます（`Backend` の `login`）。`/api/auth/session` の応答には Go と同じく `providers`（GitHub の OAuth App があれば `["github"]`）が入ります。
 - 練習記録の別テーブル（typle-r v1.3.0）と記録の追加・削除（v1.2.0・v1.4.0）: 記録は Go と同じく `typle_records` に1件ずつ保存し、`lists` 列のリストには入れません（`records_split`）。`lists` を含む保存は、そのリストの記録を `typle_records` にそのまま写し（id のない記録や同じ id の2件目には Go の `legacyID` と同じ id を付けます）、読むときは記録をリストに戻して返します（そのリストのオブジェクトはキーを並べ替えて書き直します。Go の `withRecords` と同じです）。`records_split` が `false` の行は次の保存で記録を移します。`POST`・`DELETE /api/workspace/records` は Go と同じ本文・ステータス・エラーのキーで、行を `FOR UPDATE` で読んでから1件ずつ変えます（`Store.modify`）。typle-r の `tests/fixtures/records`・`tests/fixtures/record-operations` の写しを `src/test/resources` に置いて、Go と同じ結果になることを確かめます。
+- FFPF ID のログイン（typle-r v0.105.0）: `/api/auth/signin?provider=ffpf` と `/api/auth/callback/ffpf` は Go の `auth.FFPF` と同じ OpenID Connect（認可コードと PKCE、`nonce`）です。エンドポイントは `FFPF_ID_ISSUER` から作り（末尾の `/` は除きます）、クライアントの秘密は token エンドポイントにだけ Basic 認証で送ります。ID トークンは Go と同じく、ポータルの JWKS（10 分キャッシュし、知らない `kid` なら 1 回だけ取り直します。P-256 の EC 鍵で、点が曲線の上にあるものだけ使います）の鍵による ES256 の署名と、`iss`・`aud`・`exp`（60 秒の猶予）・`nonce`・`email_verified`・`sub`（`[a-z0-9]{1,64}`）を確かめます。token エンドポイントの 4xx と受け付けない ID トークンは「拒否」、つながらない・5xx・3xx・JWKS が取れないは「到達できない」で、どちらも元のページ（アプリのログインは `typle-r://login?error=loginFailed`）に戻ります。アカウントは `ffpf:<sub>`、名前が空ならメールの `@` の前です。OAuth の Cookie は Go と同じく `provider`・`nonce`（と `admin`）を GitHub のときは書かず、GitHub のログインの Cookie のバイト列は変わりません。片方のプロバイダーが始めたログインは、もう片方の callback では終わりません。`/api/auth/session` の `providers` は設定のあるものを `"github"`・`"ffpf"` の順に返します。
+- 管理者ダッシュボード（typle-r v0.102.0〜v0.105.0）: `/api/auth/signin?admin=1` は `provider` に関わらず FFPF ID を通り、必ず `/admin` に戻ります（アプリの `client` は受け付けません）。callback は `typle_admins` にメール（小文字）があり、`ffpf_sub` が空か同じアカウントだけを通して（最初のログインで `sub` を結び付け、`last_seen_at` を記録します）、セッションの Cookie ではなく管理者の Cookie（`typle-admin`、HTTPS では `__Host-typle-admin`、`SameSite=Strict`、12 時間で延ばしません）を出します。管理者でなければ `/admin?error=adminForbidden`、`typle_admins` に聞けなければ `/admin?error=adminUnavailable`、GitHub の callback に戻った管理者のログインは `adminForbidden` です。`GET`・`HEAD /api/admin/dashboard`（概要の数・最近の共有 20 件・管理者の一覧）と `/api/admin/users?page=`（0 から 10000 まで、1 ページ 50 件。それ以外は `400 invalidPage`）は、Cookie がなければ `401 adminRequired`、毎回 `typle_admins` を確かめて通らなければ Cookie を消して `403 adminForbidden` です。集計は Go と同じく読み取り専用の REPEATABLE READ のトランザクションで読みます。`POST /api/auth/admin/signout` は自分のオリジンからだけ受け付けます。時刻は Go の `time.Time` と同じ RFC 3339（小数の末尾の 0 を除く）で、Vercel と同じく UTC で書きます。
 - JSON のオブジェクトのキーは、Go（`encoding/json`）が大文字と小文字を区別せずに照合するのに対し、Kotlin は完全に一致するものだけを読みます。そのため大文字と小文字だけが違うキー（例: `"Category"`）を持つ保存は、Go と Kotlin で受け付けるかどうかが変わることがあります。アプリはそのようなキーを送りません。
 
 ## 構成
@@ -63,8 +65,8 @@ Go の `server/internal/*` と 1 対 1 に対応します。Go を変えたら�
 | `Main.kt`・`Backend.kt` | `server/cmd/typle-web`・`server/vercel` |
 | `web/` | `server/internal/web` |
 | `session/` | `server/internal/session` |
-| `auth/` | `server/internal/auth`（`OAuth` と `GitHub.User`） |
-| `store/` | `server/internal/store`（`ConnString`・`Ping`・`ReadRevision`・`WriteRevision`・`Modify`・`PutShare`・`DeleteShare`・`ListShares`・`SharedPack`・`RevokeSessions`・`SessionsRevokedAt`、`records.go`） |
+| `auth/` | `server/internal/auth`（`OAuth`・`GitHub.User`・`FFPF`） |
+| `store/` | `server/internal/store`（`ConnString`・`Ping`・`ReadRevision`・`WriteRevision`・`Modify`・`PutShare`・`DeleteShare`・`ListShares`・`SharedPack`・`RevokeSessions`・`SessionsRevokedAt`、`records.go`、`admin.go`） |
 | `workspace/` | `server/internal/workspace`（`Decode`・`DecodeInterests`・`CheckInterests`・`EncodeInterests`・`DefaultInterests`・`Encode`・`EncodePacks`・`CheckLimits`・`CheckPacks`・`CheckLibrary`・`EncodePackFile`・`PackFile.Encode`・`DecodePackFile`（共有の読み直しに要る分）・`separateLevels`・`repairLibrary`・`followOfficial`・`WithoutFollowedWords`・`OfficialPacks`・`convertLibrary`（カタログを作るため）・`AddRecord`・`DeleteRecord`・`DecodeRecord`・`fit`・`ParseTime`・`trimJS`・`trimEndJS`） |
 | `json/` | Go の `encoding/json` の書き方と読み方 |
 
@@ -80,4 +82,4 @@ TYPLE_TEST_DATABASE_URL=postgresql://… ./gradlew test    # DB のテストは 
 
 ## 範囲外
 
-`/api/v1`（`server/cmd/typle-api`）、管理者ダッシュボード（`/api/admin/*`・`/api/auth/admin/signout`、typle-r v0.102.0〜v0.103.0）と FFPF ID のログイン（v0.105.0。`providers` に `"ffpf"` は入りません）、Sentry への送信（失敗はログに出すだけ）、本番への配置、Vercel の関数の入口。
+`/api/v1`（`server/cmd/typle-api`）、Sentry への送信（失敗はログに出すだけ）、本番への配置、Vercel の関数の入口。

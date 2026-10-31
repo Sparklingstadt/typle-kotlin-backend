@@ -5,6 +5,7 @@ import java.security.MessageDigest
 import java.util.Base64
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
+import io.github.sparklingstadt.typle.server.json.JsonBool
 import io.github.sparklingstadt.typle.server.json.JsonNull
 import io.github.sparklingstadt.typle.server.json.JsonNumber
 import io.github.sparklingstadt.typle.server.json.JsonObject
@@ -12,8 +13,12 @@ import io.github.sparklingstadt.typle.server.json.JsonString
 import io.github.sparklingstadt.typle.server.json.JsonSyntaxException
 import io.github.sparklingstadt.typle.server.json.JsonValue
 
-// The only subject accepted: the numeric GitHub user id. ASCII digits only, as Go's \d.
-private val accountSub = Regex("github:[0-9]+")
+// The only subject accepted: a GitHub account (the numeric user id; ASCII digits only, as Go's \d) or an FFPF ID
+// account (its lowercase alphanumeric sub). The prefix keeps the two id spaces from ever colliding.
+private val accountSub = Regex("github:[0-9]+|ffpf:[a-z0-9]{1,64}")
+
+// An FFPF ID sub as it stands, without the prefix: what the administrator's session names.
+private val ffpfSub = Regex("[a-z0-9]{1,64}")
 
 private val encoder = Base64.getUrlEncoder().withoutPadding()
 
@@ -26,6 +31,7 @@ class Keys private constructor(
   private val oauth: ByteArray,
   private val app: ByteArray,
   private val code: ByteArray,
+  private val admin: ByteArray,
 ) {
   companion object {
     /** Derives the keys from AUTH_SECRET. An empty secret would make every cookie forgeable, so it is refused. */
@@ -35,13 +41,16 @@ class Keys private constructor(
       return Keys(
         hkdf(bytes, "typle session v1"), hkdf(bytes, "typle oauth v1"),
         hkdf(bytes, "typle app session v1"), hkdf(bytes, "typle app code v1"),
+        // v2 since the administrator signs in with FFPF ID instead of GitHub: the new key keeps an administrator's
+        // cookie of a GitHub sign-in from ever opening, whatever its JSON says.
+        hkdf(bytes, "typle admin v2"),
       )
     }
   }
 
   fun seal(s: Session): String = seal(session, sessionJson(s))
 
-  /** The session in value if it is ours, unexpired and for a GitHub account. */
+  /** The session in value if it is ours, unexpired and for a GitHub or FFPF ID account. */
   fun open(value: String, nowMillis: Long): Session? = openSession(session, value, nowMillis)
 
   /** Seals s as an app's token, which it sends as a bearer token instead of the cookie. */
@@ -50,10 +59,14 @@ class Keys private constructor(
   fun openApp(value: String, nowMillis: Long): Session? = openSession(app, value, nowMillis)
 
   fun sealOAuth(o: OAuthState): String {
-    // The challenge is left out of the web app's login, whose cookie thus stays as it was.
+    // The challenge and admin are left out of the web app's login, whose cookie thus stays as it was, and the provider
+    // and nonce likewise for GitHub, after them so that the bytes before them do not move.
     val challenge = if (o.challenge.isEmpty()) "" else ",\"challenge\":" + str(o.challenge)
+    val admin = if (o.admin) ",\"admin\":true" else ""
+    val provider = if (o.provider.isEmpty()) "" else ",\"provider\":" + str(o.provider)
+    val nonce = if (o.nonce.isEmpty()) "" else ",\"nonce\":" + str(o.nonce)
     return seal(oauth, "{\"state\":${str(o.state)},\"verifier\":${str(o.verifier)},\"returnTo\":${str(o.returnTo)}," +
-      "\"exp\":${o.expires}$challenge}")
+      "\"exp\":${o.expires}$challenge$admin$provider$nonce}")
   }
 
   /** The login state in value if it is ours and unexpired. */
@@ -62,15 +75,35 @@ class Keys private constructor(
     val o = OAuthState(
       text(fields, "state") ?: return null, text(fields, "verifier") ?: return null,
       text(fields, "returnTo") ?: return null, text(fields, "challenge") ?: return null,
-      integer(fields, "exp") ?: return null,
+      integer(fields, "exp") ?: return null, flag(fields, "admin") ?: return null,
+      text(fields, "provider") ?: return null, text(fields, "nonce") ?: return null,
     )
     return if (nowMillis < o.expires * 1000) o else null
+  }
+
+  fun sealAdmin(a: Admin): String =
+    seal(admin, "{\"email\":${str(a.email)},\"sub\":${str(a.sub)},\"iat\":${a.issuedAt},\"exp\":${a.expires}}")
+
+  /**
+   * The administrator's session in value if it is ours, unexpired and names an FFPF ID account: an email and a sub.
+   * Whether that account is still an administrator is for the caller to check.
+   */
+  fun openAdmin(value: String, nowMillis: Long): Admin? {
+    val fields = open(admin, value) ?: return null
+    val a = Admin(
+      text(fields, "email") ?: return null, text(fields, "sub") ?: return null,
+      integer(fields, "iat") ?: return null, integer(fields, "exp") ?: return null,
+    )
+    return if (nowMillis < a.expires * 1000 && a.email.isNotEmpty() && ffpfSub.matches(a.sub)) a else null
   }
 
   fun sealCode(c: AppCode): String = seal(code,
     "{\"sub\":${str(c.sub)},\"name\":${str(c.name)},\"image\":${str(c.image)},\"challenge\":${str(c.challenge)},\"exp\":${c.expires}}")
 
-  /** The code in value if it is ours, unexpired, for a GitHub account and with a challenge to check the verifier by. */
+  /**
+   * The code in value if it is ours, unexpired, for a GitHub or FFPF ID account and with a challenge to check the
+   * verifier by.
+   */
   fun openCode(value: String, nowMillis: Long): AppCode? {
     val fields = open(code, value) ?: return null
     val c = AppCode(
@@ -81,6 +114,8 @@ class Keys private constructor(
   }
 
   internal fun signSession(payload: String): ByteArray = sign(session, payload)
+
+  internal fun signOAuth(payload: String): ByteArray = sign(oauth, payload)
 
   private fun openSession(key: ByteArray, value: String, nowMillis: Long): Session? {
     val fields = open(key, value) ?: return null
@@ -147,7 +182,8 @@ private fun hkdf(secret: ByteArray, info: String): ByteArray {
 }
 
 // Go's json.Unmarshal into the wire structs: a string field takes a string, and null or a missing field leaves it "";
-// an integer field takes an integer, and null or missing leaves it 0. Anything else does not open.
+// an integer field takes an integer, and null or missing leaves it 0; a boolean field takes a boolean, and null or
+// missing leaves it false. Anything else does not open.
 private fun text(fields: JsonObject, name: String): String? = when (val v = fields.members[name]) {
   null, JsonNull -> ""
   is JsonString -> v.value
@@ -157,5 +193,11 @@ private fun text(fields: JsonObject, name: String): String? = when (val v = fiel
 private fun integer(fields: JsonObject, name: String): Long? = when (val v = fields.members[name]) {
   null, JsonNull -> 0
   is JsonNumber -> v.literal.toLongOrNull()
+  else -> null
+}
+
+private fun flag(fields: JsonObject, name: String): Boolean? = when (val v = fields.members[name]) {
+  null, JsonNull -> false
+  is JsonBool -> v.value
   else -> null
 }

@@ -1,12 +1,15 @@
 // Package web is the app's backend as one Ktor module, as the Go backend's server/internal/web: /api/health,
-// /api/workspace and /api/auth/*.
+// /api/workspace, /api/admin/* and /api/auth/*.
 package io.github.sparklingstadt.typle.server.web
 
+import io.github.sparklingstadt.typle.server.auth.FFPF
+import io.github.sparklingstadt.typle.server.auth.FFPFLogin
 import io.github.sparklingstadt.typle.server.auth.GitHubOAuth
 import io.github.sparklingstadt.typle.server.auth.GitHubUsers
 import io.github.sparklingstadt.typle.server.auth.OAuthClient
 import io.github.sparklingstadt.typle.server.auth.UserSource
 import io.github.sparklingstadt.typle.server.session.Keys
+import io.github.sparklingstadt.typle.server.store.AdminSource
 import io.github.sparklingstadt.typle.server.store.SessionSource
 import io.github.sparklingstadt.typle.server.store.Store
 import java.net.URI
@@ -49,6 +52,16 @@ data class Config(
    * database, open the database for this one question only (see Backend).
    */
   val sessions: SessionSource? = null,
+  /**
+   * The login through FFPF ID, and the only way in to the administrator's dashboard: without it, signin with
+   * provider=ffpf or admin=1 and its callback answer 503.
+   */
+  val ffpf: FFPFLogin? = null,
+  /**
+   * Asked, at the end of a login to the dashboard, whether the FFPF ID account is an administrator; when null, store
+   * is (Go's Config.Admins). As with sessions, it lets the /api/auth part open the database for this one question.
+   */
+  val admins: AdminSource? = null,
 )
 
 private val logTime = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
@@ -60,9 +73,12 @@ fun logLine(message: String) {
 
 /**
  * Reads the login settings from the environment, as Go's web.FromEnv: AUTH_SECRET and AUTH_URL (an http or https URL,
- * of which only the origin is used) are required, and AUTH_GITHUB_ID and AUTH_GITHUB_SECRET optional. When a required
- * one is missing or unusable the error names each of them. Without both GitHub ones, oauth and gitHub are null, one
- * warning is logged, and only signin and callback answer 503. The store is left to the caller.
+ * of which only the origin is used) are required, and AUTH_GITHUB_ID and AUTH_GITHUB_SECRET, and FFPF_ID_ISSUER,
+ * FFPF_ID_CLIENT_ID and FFPF_ID_CLIENT_SECRET, optional. When a required one is missing or unusable the error names
+ * each of them. Without both GitHub ones, oauth and gitHub are null, one warning is logged, and only signin and
+ * callback answer 503. FFPF ID is the same: unless all three of its settings are set ffpf is null, and when only some
+ * are set one warning is logged, as that is a mistake to fix; when none is set nothing is said. The store is left to
+ * the caller.
  *
  * local is for the typle-web command: only then may localLogin be turned on, under the conditions of
  * localDevelopmentEnabled (src/lib/localDevelopment.ts) except NODE_ENV.
@@ -81,10 +97,16 @@ fun fromEnv(getenv: (String) -> String?, local: Boolean, log: (String) -> Unit =
   val clientSecret = getenv("AUTH_GITHUB_SECRET").orEmpty()
   val github = id.isNotEmpty() && clientSecret.isNotEmpty()
   if (!github) log("AUTH_GITHUB_ID and AUTH_GITHUB_SECRET are not both set: signing in with GitHub is unavailable")
+  val ffpfSettings = listOf("FFPF_ID_ISSUER", "FFPF_ID_CLIENT_ID", "FFPF_ID_CLIENT_SECRET").map { getenv(it).orEmpty() }
+  val ffpf = ffpfSettings.all(String::isNotEmpty)
+  if (!ffpf && ffpfSettings.any(String::isNotEmpty)) {
+    log("FFPF_ID_ISSUER, FFPF_ID_CLIENT_ID and FFPF_ID_CLIENT_SECRET are not all set: signing in with FFPF ID is unavailable")
+  }
   return Config(
     store = null, keys = Keys.create(secret), baseUrl = base,
     oauth = if (github) GitHubOAuth(id, clientSecret) else null, gitHub = if (github) GitHubUsers() else null,
     localLogin = local && localLoginAllowed(getenv, base),
+    ffpf = if (ffpf) FFPF(ffpfSettings[0], ffpfSettings[1], ffpfSettings[2]) else null,
   )
 }
 

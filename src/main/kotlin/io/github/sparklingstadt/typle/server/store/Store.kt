@@ -1,8 +1,9 @@
 // Package store reads and writes accounts' workspaces in the app's database (the typle_workspaces table, and their
 // practice records in typle_records: see Records.kt and prisma/schema.prisma) with a revision, the packs they share by
-// link (typle_shared_packs), and when each account signed out of every device (typle_session_revocations), as the Go
-// backend's server/internal/store (ReadRevision, WriteRevision, Modify, PutShare, DeleteShare, ListShares, SharedPack,
-// RevokeSessions and SessionsRevokedAt).
+// link (typle_shared_packs), when each account signed out of every device (typle_session_revocations), and the
+// administrators of /admin (typle_admins: see Admin.kt), as the Go backend's server/internal/store (ReadRevision,
+// WriteRevision, Modify, PutShare, DeleteShare, ListShares, SharedPack, RevokeSessions, SessionsRevokedAt, Admin,
+// Overview and Users).
 package io.github.sparklingstadt.typle.server.store
 
 import com.zaxxer.hikari.HikariConfig
@@ -76,7 +77,7 @@ interface SessionSource {
 }
 
 /** What the handlers need of the database. */
-interface Store : SessionSource {
+interface Store : SessionSource, AdminSource {
   fun ping()
 
   fun readRevision(owner: String): Saved?
@@ -96,6 +97,12 @@ interface Store : SessionSource {
    * holds the row (Go's Modify). change returns the workspace and whether it changed; nothing is written when it did not.
    */
   fun modify(owner: String, change: (Workspace) -> Pair<Workspace, Boolean>): Workspace
+
+  /** The dashboard's figures (Go's Overview). */
+  fun overview(): AdminOverview
+
+  /** Page (from 0) of the user list (Go's Users). */
+  fun users(page: Int): AdminUsers
 }
 
 class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
@@ -130,6 +137,12 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
   }
 
   override fun close() = dataSource.close()
+
+  override fun admin(email: String, sub: String): Boolean = admin(dataSource, email, sub)
+
+  override fun overview(): AdminOverview = overview(dataSource)
+
+  override fun users(page: Int): AdminUsers = users(dataSource, page)
 
   /**
    * The owner's saved workspace with its revision, or null when nothing has been saved. The row is checked with decode

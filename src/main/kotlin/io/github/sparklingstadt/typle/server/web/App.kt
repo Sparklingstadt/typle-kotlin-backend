@@ -36,6 +36,8 @@ suspend fun ApplicationCall.serve(config: Config) {
     "/api/workspace/records" -> records(config)
     "/api/shares" -> shares(config)
     "/api/shared" -> shared(config)
+    "/api/admin/dashboard" -> adminDashboard(config)
+    "/api/admin/users" -> adminUsers(config)
     else -> if (!auth(config, path)) refuse(HttpStatusCode.NotFound, "notFound")
   }
 }

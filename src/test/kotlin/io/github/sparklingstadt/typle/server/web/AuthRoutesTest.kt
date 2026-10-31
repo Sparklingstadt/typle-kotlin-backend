@@ -2,8 +2,6 @@ package io.github.sparklingstadt.typle.server.web
 
 import io.github.sparklingstadt.typle.server.session.Keys
 import io.github.sparklingstadt.typle.server.session.newSession
-import java.net.URI
-import java.net.URLDecoder
 import java.net.URLEncoder
 import java.net.http.HttpResponse
 import kotlin.test.Test
@@ -15,14 +13,6 @@ import kotlin.test.assertTrue
 private const val NOW = 1700000000_000L
 private const val VERIFIER = "the-app-verifier-of-at-least-forty-three-characters"
 
-private fun HttpResponse<String>.location(): String = headers().firstValue("Location").orElse("")
-
-private fun HttpResponse<String>.cookies(): List<String> = headers().allValues("Set-Cookie")
-
-private fun HttpResponse<String>.cookie(name: String): String? = cookies().firstOrNull { it.startsWith("$name=") }
-
-private fun query(url: String): Map<String, String> = URI(url).rawQuery.orEmpty().split('&').filter { it.isNotEmpty() }
-  .associate { URLDecoder.decode(it.substringBefore('='), Charsets.UTF_8) to URLDecoder.decode(it.substringAfter('='), Charsets.UTF_8) }
 
 // The cases of server/internal/web/auth_test.go.
 class AuthRoutesTest {
