@@ -1,0 +1,232 @@
+{
+  "id": "go-syntax-intermediate",
+  "name": "Go構文（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "Go"
+  ],
+  "group": "Go構文",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": "import (\n  \"fmt\";\n  \"errors\"\n)",
+      "input": "import ( \"fmt\"; \"errors\" )",
+      "annotation": "import (...)：複数パッケージを読み込む",
+      "input_type": "code"
+    },
+    {
+      "display": "/* 複数行の コメント */",
+      "input": "/* 複数行の コメント */",
+      "annotation": "/* ... */：複数行コメント",
+      "input_type": "code"
+    },
+    {
+      "display": "if true {\n  fmt.Println(\"OK\")\n}",
+      "input": "if true { fmt.Println(\"OK\") }",
+      "annotation": "{ ... }：ブロック（通常は行末のセミコロンを省略。開始の{はifやfuncなどと同じ行）",
+      "input_type": "code"
+    },
+    {
+      "display": "name, age := \"Pomo\", 20",
+      "input": "name, age := \"Pomo\", 20",
+      "annotation": "複数の短い変数宣言：複数変数を宣言",
+      "input_type": "code"
+    },
+    {
+      "display": "f := float64(age)",
+      "input": "f := float64(age)",
+      "annotation": "型(値)：明示的な型変換（数値型間でも通常は暗黙に変換しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "s := strconv.Itoa(age)",
+      "input": "s := strconv.Itoa(age)",
+      "annotation": "strconv.Itoa：整数の文字列表現を得る（strconvのimportが必要。string(age)は整数の10進文字列化ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "var count int64 = 100",
+      "input": "var count int64 = 100",
+      "annotation": "int / int64：符号付き整数（ゼロ値0。intの幅は実装に依存）",
+      "input_type": "code"
+    },
+    {
+      "display": "var count uint64 = 100",
+      "input": "var count uint64 = 100",
+      "annotation": "uint / uint64：符号なし整数（ゼロ値0）",
+      "input_type": "code"
+    },
+    {
+      "display": "var rate float64 = 0.5",
+      "input": "var rate float64 = 0.5",
+      "annotation": "float32 / float64：浮動小数点数（ゼロ値0）",
+      "input_type": "code"
+    },
+    {
+      "display": "remainder := 10 % 3",
+      "input": "remainder := 10 % 3",
+      "annotation": "+ - * / %：加減乗除・余り（%は整数。整数同士の除算は小数部を切り捨て）",
+      "input_type": "code"
+    },
+    {
+      "display": "adult := age >= 20",
+      "input": "adult := age >= 20",
+      "annotation": "< <= > >=：大小比較（順序比較可能な型で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "ok := enabled && !blocked",
+      "input": "ok := enabled && !blocked",
+      "annotation": "&& || !：論理演算",
+      "input_type": "code"
+    },
+    {
+      "display": "masked := flags & 3",
+      "input": "masked := flags & 3",
+      "annotation": "& | ^ &^：ビット演算（整数型で使用。&は文脈によってアドレス取得）",
+      "input_type": "code"
+    },
+    {
+      "display": "for count < 5 {\n  count++\n}",
+      "input": "for count < 5 { count++ }",
+      "annotation": "for 条件：条件ループ",
+      "input_type": "code"
+    },
+    {
+      "display": "if skip {\n  continue\n}",
+      "input": "if skip { continue }",
+      "annotation": "continue：次の繰り返しへ（ループ内で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "total := sum(values...)",
+      "input": "total := sum(values...)",
+      "annotation": "引数...：スライスを可変長引数へ展開（valuesは[]int）",
+      "input_type": "code"
+    },
+    {
+      "display": "a := [3]int{ 1, 2, 3 }",
+      "input": "a := [3]int{1, 2, 3}",
+      "annotation": "[長さ]型{...}：固定長配列（長さは型の一部）",
+      "input_type": "code"
+    },
+    {
+      "display": "s := []int{ 1, 2, 3 }",
+      "input": "s := []int{1, 2, 3}",
+      "annotation": "[]型{...}：スライス",
+      "input_type": "code"
+    },
+    {
+      "display": "s := make([]int, 3)",
+      "input": "s := make([]int, 3)",
+      "annotation": "make([]型, 長さ)：指定長のスライス（要素はゼロ値）",
+      "input_type": "code"
+    },
+    {
+      "display": "s := make([]int, 0, 10)",
+      "input": "s := make([]int, 0, 10)",
+      "annotation": "make([]型, 長さ, 容量)：長さ・容量を指定",
+      "input_type": "code"
+    },
+    {
+      "display": "s = append(s, 4)",
+      "input": "s = append(s, 4)",
+      "annotation": "append：スライスに追加（返り値を受け取る）",
+      "input_type": "code"
+    },
+    {
+      "display": "capacity := cap(s)",
+      "input": "capacity := cap(s)",
+      "annotation": "cap：スライスの容量",
+      "input_type": "code"
+    },
+    {
+      "display": "m := make(map[string]int)",
+      "input": "m := make(map[string]int)",
+      "annotation": "make(map[キー型]値型)：空のmapを作成",
+      "input_type": "code"
+    },
+    {
+      "display": "m[\"apple\"] = 120",
+      "input": "m[\"apple\"] = 120",
+      "annotation": "m[key] = value：追加・更新（nilのmapへの書き込みはpanic）",
+      "input_type": "code"
+    },
+    {
+      "display": "v, ok := m[\"apple\"]",
+      "input": "v, ok := m[\"apple\"]",
+      "annotation": "v, ok := m[key]：値と存在有無を取得（存在しない場合vは値型のゼロ値）",
+      "input_type": "code"
+    },
+    {
+      "display": "delete(m, \"apple\")",
+      "input": "delete(m, \"apple\")",
+      "annotation": "delete：キーを削除（存在しないキーでもエラーにならない）",
+      "input_type": "code"
+    },
+    {
+      "display": "var v any = \"hello\"",
+      "input": "var v any = \"hello\"",
+      "annotation": "any：任意の型を保持（interface{}の別名）",
+      "input_type": "code"
+    },
+    {
+      "display": "s := v.(string)",
+      "input": "s := v.(string)",
+      "annotation": "v.(型)：型アサーション（型が異なるとpanic）",
+      "input_type": "code"
+    },
+    {
+      "display": "s, ok := v.(string)",
+      "input": "s, ok := v.(string)",
+      "annotation": "v, ok := x.(型)：安全な型アサーション（型が異なる場合ok=false）",
+      "input_type": "code"
+    },
+    {
+      "display": "panic(\"想定外の状態\")",
+      "input": "panic(\"想定外の状態\")",
+      "annotation": "panic：スタックを巻き戻して通常処理を中断（通常の失敗はerrorで扱う）",
+      "input_type": "code"
+    },
+    {
+      "display": "n, ok := First([]int{ 10, 20 })",
+      "input": "n, ok := First([]int{10, 20})",
+      "annotation": "型引数の推論：型引数を省略（推論できる場合のみ）",
+      "input_type": "code"
+    },
+    {
+      "display": "ch := make(chan int)",
+      "input": "ch := make(chan int)",
+      "annotation": "make(chan 型)：バッファなしchannel（送受信に相手が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "ch := make(chan int, 10)",
+      "input": "ch := make(chan int, 10)",
+      "annotation": "make(chan 型, 容量)：バッファ付きchannel（満杯の送信・空の受信は待つ）",
+      "input_type": "code"
+    },
+    {
+      "display": "value, ok := <-ch",
+      "input": "value, ok := <-ch",
+      "annotation": "受信値と状態（閉じてバッファが空ならok=false）",
+      "input_type": "code"
+    },
+    {
+      "display": "func Exported() {\n}",
+      "input": "func Exported() {}",
+      "annotation": "大文字開始の名前：パッケージ外へ公開（外側の型・パッケージ等のアクセス条件も関係）",
+      "input_type": "code"
+    },
+    {
+      "display": "n := len(\"あ\")",
+      "input": "n := len(\"あ\")",
+      "annotation": "len(文字列)：文字列のバイト数（UTF-8で3。Unicodeコードポイント数ならutf8.RuneCountInString等）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

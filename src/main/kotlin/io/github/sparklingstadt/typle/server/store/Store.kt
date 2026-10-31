@@ -1,6 +1,8 @@
-// Package store reads and writes accounts' workspaces in the app's database (the typle_workspaces table, see
-// prisma/schema.prisma) with a revision, and the packs they share by link (typle_shared_packs), as the Go backend's
-// server/internal/store (ReadRevision, WriteRevision, PutShare, DeleteShare, ListShares and SharedPack).
+// Package store reads and writes accounts' workspaces in the app's database (the typle_workspaces table, and their
+// practice records in typle_records: see Records.kt and prisma/schema.prisma) with a revision, the packs they share by
+// link (typle_shared_packs), and when each account signed out of every device (typle_session_revocations), as the Go
+// backend's server/internal/store (ReadRevision, WriteRevision, Modify, PutShare, DeleteShare, ListShares, SharedPack,
+// RevokeSessions and SessionsRevokedAt).
 package io.github.sparklingstadt.typle.server.store
 
 import com.zaxxer.hikari.HikariConfig
@@ -22,8 +24,10 @@ import io.github.sparklingstadt.typle.server.workspace.encodeInterests
 import io.github.sparklingstadt.typle.server.workspace.encodePackFile
 import io.github.sparklingstadt.typle.server.workspace.encodePackFileAgain
 import io.github.sparklingstadt.typle.server.workspace.encodePacks
-import io.github.sparklingstadt.typle.server.workspace.encodeWithLabels
 import io.github.sparklingstadt.typle.server.workspace.readSaved
+import io.github.sparklingstadt.typle.server.workspace.repaired
+import io.github.sparklingstadt.typle.server.workspace.withoutFollowedWords
+import io.github.sparklingstadt.typle.server.workspace.decodeRecordText
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -41,9 +45,8 @@ data class Saved(val lists: String, val devices: String, val packs: String?, val
 
 /**
  * What a save sets. A part that is not set (hasLists, hasDevices, hasPacks, hasInterests) stays as it is. Interests
- * are only the app's (Go's /api/v1 leaves them as they are). Packs are set only with the lists they hold, which are then written without labels (encode). Lists set without packs come from an app that does
- * not know packs: they are written as it sent them, labels and all (encodeWithLabels), for the app to settle with the
- * saved packs when it reads them.
+ * are only the app's (Go's /api/v1 leaves them as they are). Packs are set only with their lists, which are written
+ * without labels (encode); lists set without packs are each put in a pack of their own (typle-r v2.0.0).
  */
 data class Change(
   val lists: List<WordList>, val devices: List<Device>, val hasLists: Boolean, val hasDevices: Boolean,
@@ -63,8 +66,17 @@ const val MAX_SHARED_PACK_BYTES = 1 shl 20
 /** A link to one of the owner's packs; name is the pack's name in the snapshot, or "" when it has none. */
 data class Share(val id: String, val packId: String, val name: String, val updatedAt: Instant)
 
+/** When each account last signed out of every device (Go's web.SessionSource). */
+interface SessionSource {
+  /** Signs the owner out of every device: every session and app token of a login until now (Go's RevokeSessions). */
+  fun revokeSessions(owner: String)
+
+  /** When the owner last signed out of every device, or null when they never did (Go's SessionsRevokedAt). */
+  fun sessionsRevokedAt(owner: String): Instant?
+}
+
 /** What the handlers need of the database. */
-interface Store {
+interface Store : SessionSource {
   fun ping()
 
   fun readRevision(owner: String): Saved?
@@ -78,6 +90,12 @@ interface Store {
   fun listShares(owner: String): List<Share>
 
   fun sharedPack(id: String): String?
+
+  /**
+   * Changes the owner's workspace, read as Go's Decode reads it with its records, and saves it in one transaction that
+   * holds the row (Go's Modify). change returns the workspace and whether it changed; nothing is written when it did not.
+   */
+  fun modify(owner: String, change: (Workspace) -> Pair<Workspace, Boolean>): Workspace
 }
 
 class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
@@ -118,8 +136,8 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
    * and decodeInterests, so saved data that cannot be read is an error, but it is answered as stored.
    */
   override fun readRevision(owner: String): Saved? {
-    val saved = query("SELECT $SAVED_COLUMNS FROM typle_workspaces WHERE owner_id = ?", owner) ?: return null
-    decode(saved.lists, saved.devices, saved.packs)
+    val saved = dataSource.connection.use { db -> readSaved(db, owner) } ?: return null
+    readSaved(saved.lists, saved.devices, saved.packs)
     decodeInterests(saved.interests)
     return saved
   }
@@ -139,62 +157,71 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
    * checked before the database is touched.
    */
   override fun writeRevision(owner: String, revision: Long, change: Change): Saved {
-    // null is a part left out: NULL in the queries below.
+    // null is a part left out: NULL in the queries below. full is the lists with their records, as the app sent them;
+    // lists, as the column keeps them, have none: rows are their records, for typle_records.
     var lists: String? = null
+    var full: String? = null
     var packs: String? = null
     var devices: String? = null
     var interests: String? = null
+    var rows: List<RecordRow> = emptyList()
     if (change.hasPacks && !change.hasLists) throw WorkspaceError("invalidWorkspace")
-    if (change.hasLists) {
+    var saving = change
+    // Lists sent without packs are each put in a pack of their own, as Go's Decode repairs lists without one.
+    if (change.hasLists && !change.hasPacks) {
       checkLimits(change.lists)
-      if (change.hasPacks) {
-        packs = encodePacks(change.packs)
-        lists = encode(change.lists)
-      } else {
-        lists = encodeWithLabels(change.lists)
-      }
+      val w = repaired(Workspace(change.lists, emptyList(), emptyList()))
+      saving = change.copy(lists = w.lists, packs = w.packs, hasPacks = true)
     }
-    if (change.hasDevices) devices = encodeDevices(change.devices)
-    if (change.hasInterests) {
+    if (saving.hasLists) {
+      checkLimits(saving.lists)
+      packs = encodePacks(saving.packs)
+      val (identified, recordRows) = recordRows(saving.lists)
+      rows = recordRows
+      // Followed packs' lists are saved without their words, which the catalog has.
+      val slim = withoutFollowedWords(saving.packs, identified)
+      full = encode(slim)
+      lists = encode(withoutRecords(slim))
+    }
+    if (saving.hasDevices) devices = encodeDevices(saving.devices)
+    if (saving.hasInterests) {
       // Interests the app would refuse are refused as the request would be.
       try {
-        checkInterests(change.interests)
+        checkInterests(saving.interests)
       } catch (_: InvalidWorkspaceException) {
         throw WorkspaceError("invalidWorkspace")
       }
-      interests = encodeInterests(change.interests)
+      interests = encodeInterests(saving.interests)
     }
     // A part left out is saved as it is, so only the other one can be refused; it is read with an empty one.
-    decode(lists ?: "[]", devices ?: "[]", packs)
+    readSaved(full ?: "[]", devices ?: "[]", packs ?: "[]")
     return transaction { db ->
-      val saved = writeRevision(db, owner, revision, change, lists, packs, devices, interests)
-      if (change.hasPacks) {
-        deleteRemovedShares(db, owner, change.packs.map { it.id })
-      } else if (change.hasLists) {
-        val w = try {
-          readSaved(saved.lists, saved.devices, saved.packs)
-        } catch (e: InvalidWorkspaceException) {
-          throw IllegalStateException("saved workspace of $owner: ${e.message}", e)
-        }
-        deleteRemovedShares(db, owner, packsAfterLists(w))
-      }
+      writeRevision(db, owner, revision, saving, lists, packs, devices, interests)
+      // Lists saved bring their records: the owner's rows become exactly theirs.
+      if (saving.hasLists) syncRecords(db, owner, null, rows)
+      val saved = readSaved(db, owner) ?: throw ConflictException()
+      if (saving.hasPacks) deleteRemovedShares(db, owner, saving.packs.map { it.id })
       saved
     }
   }
 
-  // The database part of writeRevision, in the transaction of db.
+  // The database part of writeRevision, in the transaction of db. Lists written have their records in typle_records
+  // (records_split), which the caller then writes.
   private fun writeRevision(db: Connection, owner: String, revision: Long, change: Change, lists: String?, packs: String?,
-    devices: String?, interests: String?): Saved {
+    devices: String?, interests: String?) {
     if (revision == 0L) {
       if (change.lists.size > MAX_LISTS) throw WorkspaceError("listLimit")
       // The links Go's PutShare made from the initial packs are seen by deleteRemovedShares (see lockOwner).
       lockOwner(db, owner)
-      // Unique owner makes the existence check and the insert one atomic operation. Lists created without packs are
-      // lists saved before packs existed: packs NULL. Interests left out are none saved: NULL.
-      return query(db, """INSERT INTO typle_workspaces (owner_id, lists, packs, devices, interests)
-        VALUES (?, ?::jsonb, ?::jsonb, ?::jsonb, ?::jsonb) ON CONFLICT (owner_id) DO NOTHING RETURNING $SAVED_COLUMNS""",
-        owner, lists ?: "[]", packs, devices ?: "[]", interests)
-        ?: throw ConflictException()
+      // Unique owner makes the existence check and the insert one atomic operation. Interests left out are none saved: NULL.
+      val created = db.prepareStatement("""INSERT INTO typle_workspaces (owner_id, lists, packs, devices, interests, records_split)
+        VALUES (?, ?::jsonb, ?::jsonb, ?::jsonb, ?::jsonb, true) ON CONFLICT (owner_id) DO NOTHING RETURNING revision""").use { q ->
+        bind(q, arrayOf(owner, lists ?: "[]", packs, devices ?: "[]", interests))
+        q.executeQuery().use { it.next() }
+      }
+      if (!created) throw ConflictException()
+      forgetRecords(db, owner)
+      return
     }
     val (savedRevision, savedLists) =
       db.prepareStatement("SELECT revision, jsonb_array_length(lists) FROM typle_workspaces WHERE owner_id = ?").use { q ->
@@ -204,12 +231,120 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     if (savedRevision != revision) throw ConflictException()
     if (change.lists.size > MAX_LISTS && change.lists.size > savedLists) throw WorkspaceError("listLimit")
     // Matching the revision in the UPDATE itself makes the comparison and the write one atomic operation.
-    return query(db, """UPDATE typle_workspaces SET lists = COALESCE(?::jsonb, lists), packs = COALESCE(?::jsonb, packs),
-      devices = COALESCE(?::jsonb, devices), interests = COALESCE(?::jsonb, interests), revision = revision + 1,
-      updated_at = now() WHERE owner_id = ? AND revision = ? RETURNING $SAVED_COLUMNS""",
-      lists, packs, devices, interests, owner, revision)
-      ?: throw ConflictException()
+    val updated = db.prepareStatement("""UPDATE typle_workspaces SET lists = COALESCE(?::jsonb, lists), packs = COALESCE(?::jsonb, packs),
+      devices = COALESCE(?::jsonb, devices), interests = COALESCE(?::jsonb, interests),
+      records_split = records_split OR ?::jsonb IS NOT NULL, revision = revision + 1, updated_at = now()
+      WHERE owner_id = ? AND revision = ? RETURNING revision""").use { q ->
+      bind(q, arrayOf(lists, packs, devices, interests, lists, owner, revision))
+      q.executeQuery().use { it.next() }
+    }
+    if (!updated) throw ConflictException()
   }
+
+  /**
+   * Changes the owner's workspace and saves it, in one transaction that holds the row locked, as Go's Modify. An account
+   * that has saved nothing starts from the initial workspace (empty). When change reports nothing changed, nothing is
+   * written. Lists that grow past MAX_LISTS_BYTES are refused (workspaceTooLarge), and the links to packs the change
+   * removed are deleted with it.
+   */
+  override fun modify(owner: String, change: (Workspace) -> Pair<Workspace, Boolean>): Workspace = transaction { db ->
+    val (w, before) = lock(db, owner)
+    val beforeSize = encode(withoutFollowedWords(w.packs, w.lists)).toByteArray().size + encodePacks(w.packs).toByteArray().size
+    val (changed, isChanged) = change(w)
+    if (!isChanged) return@transaction changed
+    // Records are given ids before anything is encoded, so the workspace returned and the rows agree.
+    val (identified, rows) = recordRows(changed.lists)
+    val result = changed.copy(lists = identified)
+    val after = encode(withoutFollowedWords(result.packs, result.lists))
+    val afterPacks = encodePacks(result.packs)
+    val afterSize = after.toByteArray().size + afterPacks.toByteArray().size
+    if (afterSize > MAX_LISTS_BYTES && afterSize > beforeSize) throw WorkspaceError("workspaceTooLarge")
+    val devices = encodeDevices(result.devices)
+    // A workspace that would not be read back is never saved: the account would no longer load, here or in the app.
+    try {
+      readSaved(after, devices, afterPacks)
+    } catch (e: InvalidWorkspaceException) {
+      throw IllegalStateException("changed workspace of $owner: ${e.message}", e)
+    }
+    db.prepareStatement("""UPDATE typle_workspaces SET lists = ?::jsonb, packs = ?::jsonb, devices = ?::jsonb,
+      records_split = true, revision = revision + 1, updated_at = now() WHERE owner_id = ?""").use { q ->
+      bind(q, arrayOf(encode(withoutRecords(withoutFollowedWords(result.packs, result.lists))), afterPacks, devices, owner))
+      q.executeUpdate()
+    }
+    syncRecords(db, owner, before, rows)
+    deleteRemovedShares(db, owner, result.packs.map { it.id })
+    result
+  }
+
+  // Reads the owner's row FOR UPDATE, first inserting one with the initial (empty) workspace when there is none, as Go's
+  // lock. The records are read after the row is locked: before is them as rows, or null when the workspace's records
+  // have not moved to typle_records yet.
+  private fun lock(db: Connection, owner: String): Pair<Workspace, Map<RecordKey, RecordRow>?> {
+    var inserted = false
+    while (true) {
+      val row = db.prepareStatement("""SELECT lists::text, packs::text, devices::text, records_split FROM typle_workspaces
+        WHERE owner_id = ? FOR UPDATE""").use { q ->
+        q.setString(1, owner)
+        q.executeQuery().use { r -> if (r.next()) listOf(r.getString(1), r.getString(2), r.getString(3), r.getBoolean(4).toString()) else null }
+      }
+      if (row != null) {
+        var lists = row[0]!!
+        var before: Map<RecordKey, RecordRow>? = null
+        if (row[3] == "true") {
+          val stored = readRecords(db, owner)
+          lists = withRecords(lists, stored.groupBy({ it.listId }, { io.github.sparklingstadt.typle.server.json.JsonValue.parse(it.data) }))
+          // Each row as recordRows writes it, so that it compares with the record encoded here, not the database's text.
+          before = stored.associate { RecordKey(it.listId, it.recordId) to it.copy(data = decodeRecordText(it.data)) }
+        }
+        val w = try {
+          readSaved(lists, row[2]!!, row[1])
+        } catch (e: InvalidWorkspaceException) {
+          throw IllegalStateException("saved workspace of $owner: ${e.message}", e)
+        }
+        return w to before
+      }
+      if (inserted) throw IllegalStateException("workspace of $owner was not created")
+      inserted = true
+      // As the first save does (see lockOwner), so that the links PutShare made are seen.
+      lockOwner(db, owner)
+      val created = db.prepareStatement("""INSERT INTO typle_workspaces (owner_id, lists, packs, devices, records_split)
+        VALUES (?, '[]'::jsonb, '[]'::jsonb, '[]'::jsonb, true) ON CONFLICT (owner_id) DO NOTHING""").use { q ->
+        q.setString(1, owner)
+        q.executeUpdate()
+      }
+      if (created == 1) forgetRecords(db, owner)
+    }
+  }
+
+  override fun revokeSessions(owner: String) {
+    dataSource.connection.use { db ->
+      db.prepareStatement("""INSERT INTO typle_session_revocations (owner_id, revoked_at) VALUES (?, now())
+        ON CONFLICT (owner_id) DO UPDATE SET revoked_at = EXCLUDED.revoked_at""").use { q ->
+        q.setString(1, owner)
+        q.executeUpdate()
+      }
+    }
+  }
+
+  override fun sessionsRevokedAt(owner: String): Instant? = dataSource.connection.use { db ->
+    db.prepareStatement("SELECT revoked_at FROM typle_session_revocations WHERE owner_id = ?").use { q ->
+      q.setString(1, owner)
+      q.executeQuery().use { r -> if (r.next()) r.getObject(1, OffsetDateTime::class.java).toInstant() else null }
+    }
+  }
+
+  // The owner's row as stored, with its records put back in its lists (see withRecords), in one statement, as Go's
+  // readSaved; null when there is none.
+  private fun readSaved(db: Connection, owner: String): Saved? =
+    db.prepareStatement("SELECT $SAVED_COLUMNS, $RECORDS_COLUMN FROM typle_workspaces WHERE owner_id = ?").use { q ->
+      q.setString(1, owner)
+      q.executeQuery().use { r ->
+        if (!r.next()) return null
+        val saved = saved(r)
+        val records = r.getString(6) ?: return saved
+        saved.copy(lists = withRecords(saved.lists, decodeColumn(records)))
+      }
+    }
 
   /**
    * Shares the owner's pack packId as it is saved, or copies it again when it is already shared, keeping the link (Go's
@@ -290,18 +425,6 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     }
   }
 
-  // The packs a row has once its lists are saved without packs, as the ids Go's Decode leaves: a saved pack some list is
-  // in, once the row follows the official catalog (readSaved: copies of official packs from before v0.98.0 are gone), and "pack-<id>" for each list that is in none (a row without packs: for every list, a superset of the packs Go's
-  // conversion makes, so no link of Go's is deleted that Go keeps). Kotlin does not repair the packs themselves, so only
-  // their ids are known, and ids are all deleteRemovedShares needs.
-  private fun packsAfterLists(w: Workspace): List<String> {
-    val ids = w.packs.map { it.id }
-    val saved = ids.toSet()
-    val used = w.lists.map { it.packId }.toSet()
-    val own = w.lists.filter { it.packId.isEmpty() || it.packId !in saved }.map { "pack-" + it.id }
-    return ids.filter { it in used } + own
-  }
-
   // Deletes, in the transaction of a save, the owner's links to packs that are no longer among the packs saved.
   private fun deleteRemovedShares(db: Connection, owner: String, packIds: Collection<String>) {
     db.prepareStatement("DELETE FROM typle_shared_packs WHERE owner_id = ? AND NOT (pack_id = ANY(?::text[]))").use { q ->
@@ -333,19 +456,12 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
     }
   }
 
-  // Runs a statement that returns at most one row of SAVED_COLUMNS.
-  private fun query(sql: String, vararg arguments: Any?): Saved? = dataSource.connection.use { db -> query(db, sql, *arguments) }
-
-  private fun query(db: Connection, sql: String, vararg arguments: Any?): Saved? = db.prepareStatement(sql).use { q ->
-    bind(q, arguments)
-    q.executeQuery().use { r -> if (r.next()) saved(r) else null }
-  }
-
   private fun bind(q: PreparedStatement, arguments: Array<out Any?>) {
     arguments.forEachIndexed { i, value ->
       when (value) {
         null, is String -> q.setString(i + 1, value as String?)
         is Long -> q.setLong(i + 1, value)
+        is Int -> q.setInt(i + 1, value)
         else -> error("unexpected argument ${value::class}")
       }
     }
@@ -354,7 +470,10 @@ class PgStore(private val dataSource: HikariDataSource) : Store, AutoCloseable {
   private fun saved(r: ResultSet) = Saved(r.getString(1), r.getString(3), r.getString(2), r.getLong(5), r.getString(4))
 }
 
-// The columns saved reads, as Go's savedColumns. Interests not saved (NULL) are read as null.
+// The largest the lists and packs may grow to in a change (Go's MaxListsBytes), in bytes.
+private const val MAX_LISTS_BYTES = 896 shl 10
+
+// The columns saved reads. Interests not saved (NULL) are read as null.
 private const val SAVED_COLUMNS = "lists::text, packs::text, devices::text, interests::text, revision"
 
 

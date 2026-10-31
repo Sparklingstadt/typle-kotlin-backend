@@ -1,0 +1,221 @@
+{
+  "id": "jest-syntax-beginner",
+  "name": "Jest構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Jest",
+    "テスト"
+  ],
+  "group": "Jest構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "// Jest 30 / JavaScript・TypeScript",
+      "input": "// Jest 30 / JavaScript・TypeScript",
+      "annotation": "対象環境：例の前提（TypeScriptの実行には適切な変換設定が必要。型検査は別途実施。断片中の対象関数・変数は実装または準備する）",
+      "input_type": "code"
+    },
+    {
+      "display": "test.skip('未対応', () => {});",
+      "input": "test.skip('未対応', () => {});",
+      "annotation": "test.skip：一時的に実行対象外（放置しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "test.only('調査中', () => {});",
+      "input": "test.only('調査中', () => {});",
+      "annotation": "test.only：このテストに限定（コミット前に解除。CIでは禁止設定等を検討）",
+      "input_type": "code"
+    },
+    {
+      "display": "test.todo('負数を扱う');",
+      "input": "test.todo('負数を扱う');",
+      "annotation": "test.todo：未実装のテストを記録（テストを実装・検証したことにはならない）",
+      "input_type": "code"
+    },
+    {
+      "display": "beforeEach(() => {\n  jest.clearAllMocks();\n});",
+      "input": "beforeEach(() => { jest.clearAllMocks(); });",
+      "annotation": "beforeEach：各テスト前に初期化（スコープ内の各テストが対象）",
+      "input_type": "code"
+    },
+    {
+      "display": "afterEach(() => {\n  jest.restoreAllMocks();\n});",
+      "input": "afterEach(() => { jest.restoreAllMocks(); });",
+      "annotation": "afterEach：各テスト後に後片付け（spyOn等で差し替えたものを復元）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect(1 + 2).toBe(3);",
+      "input": "expect(1 + 2).toBe(3);",
+      "annotation": "toBe：Object.is相当の比較（オブジェクト内容の比較はtoEqual等）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect([1, 2]).toStrictEqual([1, 2]);",
+      "input": "expect([1, 2]).toStrictEqual([1, 2]);",
+      "annotation": "toStrictEqual：型等も含めた厳密な深い比較",
+      "input_type": "code"
+    },
+    {
+      "display": "expect(1).not.toBe(2);",
+      "input": "expect(1).not.toBe(2);",
+      "annotation": "not：否定",
+      "input_type": "code"
+    },
+    {
+      "display": "expect('value').toBeDefined();",
+      "input": "expect('value').toBeDefined();",
+      "annotation": "toBeDefined：undefinedでないこと（nullは通る）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect('hello').toBeTruthy();\nexpect(0).toBeFalsy();",
+      "input": "expect('hello').toBeTruthy(); expect(0).toBeFalsy();",
+      "annotation": "toBeTruthy / toBeFalsy：真偽値変換後の判定（true/false自体を検証するならtoBe）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect(0.1 + 0.2).toBeCloseTo(0.3, 5);",
+      "input": "expect(0.1 + 0.2).toBeCloseTo(0.3, 5);",
+      "annotation": "toBeCloseTo：浮動小数点の近似比較（第2引数は小数桁精度）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect('Hello Pomo').toMatch(/Pomo/);",
+      "input": "expect('Hello Pomo').toMatch(/Pomo/);",
+      "annotation": "toMatch：文字列・正規表現",
+      "input_type": "code"
+    },
+    {
+      "display": "expect(['A', 'B']).toContain('A');",
+      "input": "expect(['A', 'B']).toContain('A');",
+      "annotation": "toContain：要素を含む（要素の同一性比較）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect([{ id: 1 }]).toContainEqual({ id: 1 });",
+      "input": "expect([{ id: 1 }]).toContainEqual({ id: 1 });",
+      "annotation": "toContainEqual：内容が等しい要素を含む",
+      "input_type": "code"
+    },
+    {
+      "display": "expect([1, 2]).toHaveLength(2);",
+      "input": "expect([1, 2]).toHaveLength(2);",
+      "annotation": "toHaveLength：長さ",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(Promise.resolve(42)).resolves.toBe(42);",
+      "input": "await expect(Promise.resolve(42)).resolves.toBe(42);",
+      "annotation": "resolves：Promise成功値を検証（必ずawaitまたはreturn）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect.hasAssertions();\nexpect(true).toBe(true);",
+      "input": "expect.hasAssertions(); expect(true).toBe(true);",
+      "annotation": "expect.hasAssertions：最低1回の検証を要求",
+      "input_type": "code"
+    },
+    {
+      "display": "expect({ id: 1, name: 'Pomo' }).toMatchSnapshot();",
+      "input": "expect({ id: 1, name: 'Pomo' }).toMatchSnapshot();",
+      "annotation": "toMatchSnapshot：保存済み結果と比較（生成・更新した差分をレビュー。意図的な期待値の代わりに乱用しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "expect('hello').toMatchInlineSnapshot('\"hello\"');",
+      "input": "expect('hello').toMatchInlineSnapshot('\"hello\"');",
+      "annotation": "toMatchInlineSnapshot：期待値をソース内に保存（変更時は差分を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "const fn = jest.fn();",
+      "input": "const fn = jest.fn();",
+      "annotation": "jest.fn：モック関数を作成",
+      "input_type": "code"
+    },
+    {
+      "display": "const fn = jest.fn((n: number) => n * 2);",
+      "input": "const fn = jest.fn((n: number) => n * 2);",
+      "annotation": "mockImplementation：実装を置き換える（TypeScriptの例）",
+      "input_type": "code"
+    },
+    {
+      "display": "jest.clearAllMocks();",
+      "input": "jest.clearAllMocks();",
+      "annotation": "mockClear / clearAllMocks：呼出履歴をクリア（設定したモック実装は残る）",
+      "input_type": "code"
+    },
+    {
+      "display": "jest.resetAllMocks();",
+      "input": "jest.resetAllMocks();",
+      "annotation": "mockReset / resetAllMocks：履歴と実装をリセット（戻り値等の実装も消える）",
+      "input_type": "code"
+    },
+    {
+      "display": "jest.restoreAllMocks();",
+      "input": "jest.restoreAllMocks();",
+      "annotation": "mockRestore / restoreAllMocks：元の実装を復元（主にspyOn等。任意のjest.fn代入を自動復元するものではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const mockedApi = jest.mocked(api);",
+      "input": "const mockedApi = jest.mocked(api);",
+      "annotation": "jest.mocked：モック型として扱う（型補助。実装自体をモック化する処理ではない。apiを準備する）",
+      "input_type": "code"
+    },
+    {
+      "display": "await jest.advanceTimersByTimeAsync(1000);",
+      "input": "await jest.advanceTimersByTimeAsync(1000);",
+      "annotation": "advanceTimersByTimeAsync：Promise処理も考慮して時間を進める（modern fake timers有効時。legacy fake timersでは利用不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "jest.runOnlyPendingTimers();",
+      "input": "jest.runOnlyPendingTimers();",
+      "annotation": "runOnlyPendingTimers：現在の保留タイマーを実行（fake timers有効時。再帰タイマーのrunAllTimers等には注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "export default { testEnvironment: 'jsdom' };",
+      "input": "export default { testEnvironment: 'jsdom' };",
+      "annotation": "jsdom：DOMに近いテスト環境（jest-environment-jsdomを別途導入。実ブラウザーではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "npx jest",
+      "input": "npx jest",
+      "annotation": "jest CLI：テスト実行（ターミナルで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx jest --watch",
+      "input": "npx jest --watch",
+      "annotation": "--watch / --coverage：監視実行・カバレッジ（カバレッジ率だけでテストの質は判断しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx jest --coverage",
+      "input": "npx jest --coverage",
+      "annotation": "--watch / --coverage：監視実行・カバレッジ（カバレッジ率だけでテストの質は判断しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx jest --runInBand",
+      "input": "npx jest --runInBand",
+      "annotation": "--runInBand / -t：直列実行・名前で絞る",
+      "input_type": "command"
+    },
+    {
+      "display": "npx jest -t '足し算'",
+      "input": "npx jest -t '足し算'",
+      "annotation": "--runInBand / -t：直列実行・名前で絞る",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

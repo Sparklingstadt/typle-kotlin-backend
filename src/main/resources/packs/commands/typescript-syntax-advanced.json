@@ -1,0 +1,124 @@
+{
+  "id": "typescript-syntax-advanced",
+  "name": "TypeScript構文（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "TypeScript"
+  ],
+  "group": "TypeScript構文",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "const value: unknown = JSON.parse('{\"id\":1}');\nif (typeof value === 'object' && value !== null) {\n  console.log(value)\n}",
+      "input": "const value:unknown=JSON.parse('{\"id\":1}'); if(typeof value==='object'&&value!==null){console.log(value)}",
+      "annotation": "unknown / any：未確定の型（unknownは絞り込みが必要。anyは型検査を回避するため乱用しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const nums: number[] = [1, 2];\nconst pair: [string, number] = ['Pomo', 20];\nconst fixed: readonly number[] = [1, 2];",
+      "input": "const nums:number[]=[1,2]; const pair:[string,number]=['Pomo',20]; const fixed:readonly number[]=[1,2];",
+      "annotation": "Array / tuple / ReadonlyArray：配列・固定構造（通常の配列アクセスでundefinedを扱うにはnoUncheckedIndexedAccess等）",
+      "input_type": "code"
+    },
+    {
+      "display": "function greet(name = 'Guest', suffix?: string) {\n  return name + (suffix ?? '')\n}\nfunction sum(...nums: number[]) {\n  return nums.reduce((a, b) => a + b, 0)\n}",
+      "input": "function greet(name='Guest',suffix?:string){return name+(suffix??'')} function sum(...nums:number[]){return nums.reduce((a,b)=>a+b,0)}",
+      "annotation": "既定・任意・rest：引数の柔軟な指定（任意引数は通常undefinedを含む）",
+      "input_type": "code"
+    },
+    {
+      "display": "function label(value: string): string;\nfunction label(value: number): string;\nfunction label(value: string | number): string { return String(value) }",
+      "input": "function label(value:string):string; function label(value:number):string; function label(value:string|number):string {return String(value)}",
+      "annotation": "オーバーロード：複数の呼出シグネチャ（実装シグネチャがそのまま公開されるわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "type User = {\n  id: number\n};\nfunction isUser(v: unknown): v is User {\n  return typeof v === 'object' && v !== null && 'id' in v && typeof v.id === 'number';\n}",
+      "input": "type User={id:number}; function isUser(v:unknown):v is User { return typeof v==='object'&&v!==null&&'id' in v&&typeof v.id==='number'; }",
+      "annotation": "ユーザー定義型ガード：unknownを検証（型述語の正しさは実装者が保証。抜けた検証を型が自動補完しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "type Result = {\n  ok: true;\n  value: string\n} | {\n  ok: false;\n  error: string\n};\nfunction show(r: Result) {\n  return r.ok ? r.value : r.error\n}",
+      "input": "type Result={ok:true;value:string}|{ok:false;error:string}; function show(r:Result){return r.ok?r.value:r.error}",
+      "annotation": "判別可能union：状態に応じて型を絞る",
+      "input_type": "code"
+    },
+    {
+      "display": "type State = 'todo' | 'done';\nfunction label(s: State): string {\n  switch (s) {\n    case 'todo': return '未完';\n    case 'done': return '完了';\n    default:\n      const neverValue: never = s;\n      return neverValue;\n  }\n}",
+      "input": "type State='todo'|'done'; function label(s:State):string { switch(s){case 'todo':return '未完';case 'done':return '完了';default:const neverValue:never=s;return neverValue;} }",
+      "annotation": "neverで網羅確認：分岐漏れを検出（新たなState追加時に検出しやすい）",
+      "input_type": "code"
+    },
+    {
+      "display": "type User = {\n  id: number;\n  name?: string\n};\ntype Patch = Partial<User>;\ntype Full = Required<User>;\ntype Fixed = Readonly<User>;",
+      "input": "type User={id:number;name?:string}; type Patch=Partial<User>; type Full=Required<User>; type Fixed=Readonly<User>;",
+      "annotation": "Partial / Required / Readonly：プロパティ修飾（基本的に浅い型変換）",
+      "input_type": "code"
+    },
+    {
+      "display": "type User = {\n  id: number;\n  name: string;\n  secret: string\n};\ntype PublicUser = Omit<User, 'secret'>;\ntype IdOnly = Pick<User, 'id'>;",
+      "input": "type User={id:number;name:string;secret:string}; type PublicUser=Omit<User,'secret'>; type IdOnly=Pick<User,'id'>;",
+      "annotation": "Pick / Omit：プロパティを選ぶ・除く（実データから値を除去する処理ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "function add(a: number, b: number) {\n  return a + b\n}\ntype R = ReturnType<typeof add>;\ntype P = Parameters<typeof add>;\ntype V = Awaited<Promise<number>>;",
+      "input": "function add(a:number,b:number){return a+b} type R=ReturnType<typeof add>; type P=Parameters<typeof add>; type V=Awaited<Promise<number>>;",
+      "annotation": "ReturnType / Parameters / Awaited：関数・Promiseから型を得る",
+      "input_type": "code"
+    },
+    {
+      "display": "class User {\n  constructor(public readonly id: number, public name: string) {}\n  greet() {\n    return `Hello, ${this.name}`\n  }\n}",
+      "input": "class User { constructor(public readonly id:number,public name:string){} greet(){return `Hello, ${this.name}`} }",
+      "annotation": "class / constructor：クラスとプロパティ（TypeScriptのパラメータープロパティはJSへ変換が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "interface Greet {\n  greet(): string\n}\nclass Base {\n  greet() {\n    return 'Hello'\n  }\n}\nclass User extends Base implements Greet {\n  override greet() {\n    return super.greet() + '!'\n  }\n}",
+      "input": "interface Greet{greet():string} class Base{greet(){return 'Hello'}} class User extends Base implements Greet{override greet(){return super.greet()+'!'}}",
+      "annotation": "extends / implements / override：継承・契約（implementsは実装を生成しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "async function answer(): Promise<number> { return 42 }\nasync function run() {\n  const n = await answer();\n  console.log(n)\n}",
+      "input": "async function answer():Promise<number>{return 42} async function run(){const n=await answer();console.log(n)}",
+      "annotation": "async / await / Promise：非同期処理（Promiseの失敗・ライフサイクルを扱う）",
+      "input_type": "code"
+    },
+    {
+      "display": "try {\n  throw new Error('失敗')\n}\ncatch (e) {\n  const message = e instanceof Error ? e.message : String(e);\n  console.error(message);\n}",
+      "input": "try{throw new Error('失敗')}catch(e){ const message=e instanceof Error?e.message:String(e); console.error(message); }",
+      "annotation": "try catch / unknown：失敗処理（strict環境ではcatch値をunknownとして扱う）",
+      "input_type": "code"
+    },
+    {
+      "display": "export type User = {\n  id: number\n};\nexport const answer = 42;\n/* 別ファイル: import type {User} from './user.js'; */",
+      "input": "export type User={id:number}; export const answer=42; /* 別ファイル: import type {User} from './user.js'; */",
+      "annotation": "export / import type：値と型の分離（拡張子・ESM/CJSはmoduleResolutionと実行環境に合わせる）",
+      "input_type": "code"
+    },
+    {
+      "display": "const user = { id: 1, name: 'Pomo' };\nconst { name } = user;\nconst updated = { ...user, name: 'New' };\nconst doubled = [1, 2, 3].map(n => n * 2);",
+      "input": "const user={id:1,name:'Pomo'}; const {name}=user; const updated={...user,name:'New'}; const doubled=[1,2,3].map(n=>n*2);",
+      "annotation": "分割代入 / spread / map：JSの基本データ操作（オブジェクトspreadは浅いコピー）",
+      "input_type": "code"
+    },
+    {
+      "display": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2022\",\n    \"module\": \"NodeNext\",\n    \"moduleResolution\": \"NodeNext\",\n    \"strict\": true,\n    \"noUncheckedIndexedAccess\": true,\n    \"noEmit\": true\n  }\n}",
+      "input": "{ \"compilerOptions\":{ \"target\":\"ES2022\", \"module\":\"NodeNext\", \"moduleResolution\":\"NodeNext\", \"strict\":true, \"noUncheckedIndexedAccess\":true, \"noEmit\":true } }",
+      "annotation": "tsconfig strict / noEmit：型検査設定（Node向け例。フレームワーク・bundlerでは適切な設定へ変更）",
+      "input_type": "code"
+    },
+    {
+      "display": "const raw: unknown = JSON.parse('{\"id\":1}');\nif (!isUser(raw))\n  throw new Error('invalid user');\nconsole.log(raw.id);",
+      "input": "const raw:unknown=JSON.parse('{\"id\":1}'); if(!isUser(raw)) throw new Error('invalid user'); console.log(raw.id);",
+      "annotation": "satisfiesと実行時検証：外部データを扱う（isUserを定義。as・satisfies・型引数だけでJSONを検証したことにはならない）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

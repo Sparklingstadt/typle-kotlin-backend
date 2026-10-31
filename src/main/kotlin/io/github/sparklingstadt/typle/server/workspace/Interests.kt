@@ -18,7 +18,7 @@ const val MAX_INTEREST_LENGTH = 50
  * typle-r's tests/fixtures/default-interests.json.
  */
 val DEFAULT_INTERESTS: List<String> = listOf(
-  "language", "language/zh", "language/ru", "language/ko", "language/en", "language/es", "language/fr", "language/de",
+  "language", "language/zh", "language/ru", "language/ko", "language/en", "language/es", "language/fr", "language/de", "language/cs",
   "programming", "programming/go", "programming/kotlin", "programming/java", "programming/typescript", "programming/php",
   "programming/ruby", "programming/sql", "programming/linux", "programming/vim", "programming/test", "programming/node",
   "programming/shell", "programming/cloud",

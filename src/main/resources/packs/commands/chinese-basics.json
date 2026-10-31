@@ -1,0 +1,492 @@
+{
+  "id": "chinese-basics",
+  "name": "中国語：基礎単語・基礎構文",
+  "words": [
+    {
+      "display": "我是学生。",
+      "input": "Wǒ shì xuésheng.",
+      "annotation": "Wǒ shì xuésheng. / 私は学生です。",
+      "input_type": "word"
+    },
+    {
+      "display": "这是一本书。",
+      "input": "Zhè shì yì běn shū.",
+      "annotation": "Zhè shì yì běn shū. / これは本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "这不是我的书。",
+      "input": "Zhè bú shì wǒ de shū.",
+      "annotation": "Zhè bú shì wǒ de shū. / これは私の本ではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "这是谁？",
+      "input": "Zhè shì shéi?",
+      "annotation": "Zhè shì shéi? / これは誰ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "这是什么？",
+      "input": "Zhè shì shénme?",
+      "annotation": "Zhè shì shénme? / これは何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "洗手间在哪里？",
+      "input": "Xǐshǒujiān zài nǎli?",
+      "annotation": "Xǐshǒujiān zài nǎli? / トイレはどこですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "您叫什么名字？",
+      "input": "Nín jiào shénme míngzi?",
+      "annotation": "Nín jiào shénme míngzi? / お名前は何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "我叫安娜。",
+      "input": "Wǒ jiào Ānnà.",
+      "annotation": "Wǒ jiào Ānnà. / 私の名前はアンナです。",
+      "input_type": "word"
+    },
+    {
+      "display": "我来自日本。",
+      "input": "Wǒ láizì Rìběn.",
+      "annotation": "Wǒ láizì Rìběn. / 私は日本出身です。",
+      "input_type": "word"
+    },
+    {
+      "display": "我有一个问题。",
+      "input": "Wǒ yǒu yí ge wèntí.",
+      "annotation": "Wǒ yǒu yí ge wèntí. / 質問があります。",
+      "input_type": "word"
+    },
+    {
+      "display": "我没有时间。",
+      "input": "Wǒ méiyǒu shíjiān.",
+      "annotation": "Wǒ méiyǒu shíjiān. / 時間がありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "我想喝水。",
+      "input": "Wǒ xiǎng hē shuǐ.",
+      "annotation": "Wǒ xiǎng hē shuǐ. / 水を飲みたいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "我得走了。",
+      "input": "Wǒ děi zǒu le.",
+      "annotation": "Wǒ děi zǒu le. / 私はもう行かなければなりません。",
+      "input_type": "word"
+    },
+    {
+      "display": "我喜欢音乐。",
+      "input": "Wǒ xǐhuan yīnyuè.",
+      "annotation": "Wǒ xǐhuan yīnyuè. / 私は音楽が好きです。",
+      "input_type": "word"
+    },
+    {
+      "display": "我可以帮你。",
+      "input": "Wǒ kěyǐ bāng nǐ.",
+      "annotation": "Wǒ kěyǐ bāng nǐ. / あなたを手伝えます。",
+      "input_type": "word"
+    },
+    {
+      "display": "我可以进来吗？",
+      "input": "Wǒ kěyǐ jìnlai ma?",
+      "annotation": "Wǒ kěyǐ jìnlai ma? / 入ってもいいですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "请给我一杯水。",
+      "input": "Qǐng gěi wǒ yì bēi shuǐ.",
+      "annotation": "Qǐng gěi wǒ yì bēi shuǐ. / 水を一杯ください。",
+      "input_type": "word"
+    },
+    {
+      "display": "这个多少钱？",
+      "input": "Zhège duōshao qián?",
+      "annotation": "Zhège duōshao qián? / これはいくらですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "我不明白。",
+      "input": "Wǒ bù míngbai.",
+      "annotation": "Wǒ bù míngbai. / 理解できません。",
+      "input_type": "word"
+    },
+    {
+      "display": "请再说一遍。",
+      "input": "Qǐng zài shuō yí biàn.",
+      "annotation": "Qǐng zài shuō yí biàn. / もう一度言ってください。",
+      "input_type": "word"
+    },
+    {
+      "display": "我",
+      "input": "wǒ",
+      "annotation": "wǒ / 私",
+      "input_type": "word"
+    },
+    {
+      "display": "你",
+      "input": "nǐ",
+      "annotation": "nǐ / あなた",
+      "input_type": "word"
+    },
+    {
+      "display": "您",
+      "input": "nín",
+      "annotation": "nín / あなた（丁寧）",
+      "input_type": "word"
+    },
+    {
+      "display": "他",
+      "input": "tā",
+      "annotation": "tā / 彼",
+      "input_type": "word"
+    },
+    {
+      "display": "她",
+      "input": "tā",
+      "annotation": "tā / 彼女",
+      "input_type": "word"
+    },
+    {
+      "display": "我们",
+      "input": "wǒmen",
+      "annotation": "wǒmen / 私たち",
+      "input_type": "word"
+    },
+    {
+      "display": "他们",
+      "input": "tāmen",
+      "annotation": "tāmen / 彼ら、男性を含む彼ら・彼女ら",
+      "input_type": "word"
+    },
+    {
+      "display": "这",
+      "input": "zhè",
+      "annotation": "zhè / これ、この",
+      "input_type": "word"
+    },
+    {
+      "display": "谁",
+      "input": "shéi",
+      "annotation": "shéi / 誰",
+      "input_type": "word"
+    },
+    {
+      "display": "什么",
+      "input": "shénme",
+      "annotation": "shénme / 何",
+      "input_type": "word"
+    },
+    {
+      "display": "哪里",
+      "input": "nǎli",
+      "annotation": "nǎli / どこ",
+      "input_type": "word"
+    },
+    {
+      "display": "什么时候",
+      "input": "shénme shíhou",
+      "annotation": "shénme shíhou / いつ",
+      "input_type": "word"
+    },
+    {
+      "display": "为什么",
+      "input": "wèishénme",
+      "annotation": "wèishénme / なぜ",
+      "input_type": "word"
+    },
+    {
+      "display": "怎么",
+      "input": "zěnme",
+      "annotation": "zěnme / どのように、どう",
+      "input_type": "word"
+    },
+    {
+      "display": "多少",
+      "input": "duōshao",
+      "annotation": "duōshao / いくつ、いくら",
+      "input_type": "word"
+    },
+    {
+      "display": "几",
+      "input": "jǐ",
+      "annotation": "jǐ / いくつ（主に少ない数を尋ねる）",
+      "input_type": "word"
+    },
+    {
+      "display": "是",
+      "input": "shì",
+      "annotation": "shì / ～である",
+      "input_type": "word"
+    },
+    {
+      "display": "不是",
+      "input": "bú shì",
+      "annotation": "bú shì / ～ではない",
+      "input_type": "word"
+    },
+    {
+      "display": "不",
+      "input": "bù",
+      "annotation": "bù / ～しない、～ではない",
+      "input_type": "word"
+    },
+    {
+      "display": "和",
+      "input": "hé",
+      "annotation": "hé / ～と（主に名詞を結ぶ）",
+      "input_type": "word"
+    },
+    {
+      "display": "但是",
+      "input": "dànshì",
+      "annotation": "dànshì / しかし",
+      "input_type": "word"
+    },
+    {
+      "display": "或者",
+      "input": "huòzhě",
+      "annotation": "huòzhě / または（主に平叙文で使う）",
+      "input_type": "word"
+    },
+    {
+      "display": "你好",
+      "input": "nǐ hǎo",
+      "annotation": "nǐ hǎo / こんにちは",
+      "input_type": "word"
+    },
+    {
+      "display": "早上好",
+      "input": "zǎoshang hǎo",
+      "annotation": "zǎoshang hǎo / おはようございます",
+      "input_type": "word"
+    },
+    {
+      "display": "谢谢",
+      "input": "xièxie",
+      "annotation": "xièxie / ありがとう",
+      "input_type": "word"
+    },
+    {
+      "display": "请",
+      "input": "qǐng",
+      "annotation": "qǐng / どうぞ、～してください",
+      "input_type": "word"
+    },
+    {
+      "display": "对不起",
+      "input": "duìbuqǐ",
+      "annotation": "duìbuqǐ / ごめんなさい",
+      "input_type": "word"
+    },
+    {
+      "display": "再见",
+      "input": "zàijiàn",
+      "annotation": "zàijiàn / さようなら",
+      "input_type": "word"
+    },
+    {
+      "display": "好",
+      "input": "hǎo",
+      "annotation": "hǎo / 良い、よいです",
+      "input_type": "word"
+    },
+    {
+      "display": "很",
+      "input": "hěn",
+      "annotation": "hěn / とても（形容詞の前で意味が弱まることもある）",
+      "input_type": "word"
+    },
+    {
+      "display": "人",
+      "input": "rén",
+      "annotation": "rén / 人",
+      "input_type": "word"
+    },
+    {
+      "display": "朋友",
+      "input": "péngyou",
+      "annotation": "péngyou / 友達",
+      "input_type": "word"
+    },
+    {
+      "display": "孩子",
+      "input": "háizi",
+      "annotation": "háizi / 子ども",
+      "input_type": "word"
+    },
+    {
+      "display": "家",
+      "input": "jiā",
+      "annotation": "jiā / 家、家庭",
+      "input_type": "word"
+    },
+    {
+      "display": "房子",
+      "input": "fángzi",
+      "annotation": "fángzi / 家屋、住宅",
+      "input_type": "word"
+    },
+    {
+      "display": "学校",
+      "input": "xuéxiào",
+      "annotation": "xuéxiào / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "工作",
+      "input": "gōngzuò",
+      "annotation": "gōngzuò / 仕事、働く",
+      "input_type": "word"
+    },
+    {
+      "display": "商店",
+      "input": "shāngdiàn",
+      "annotation": "shāngdiàn / 店",
+      "input_type": "word"
+    },
+    {
+      "display": "书",
+      "input": "shū",
+      "annotation": "shū / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "水",
+      "input": "shuǐ",
+      "annotation": "shuǐ / 水",
+      "input_type": "word"
+    },
+    {
+      "display": "面包",
+      "input": "miànbāo",
+      "annotation": "miànbāo / パン",
+      "input_type": "word"
+    },
+    {
+      "display": "食物",
+      "input": "shíwù",
+      "annotation": "shíwù / 食べ物",
+      "input_type": "word"
+    },
+    {
+      "display": "时间",
+      "input": "shíjiān",
+      "annotation": "shíjiān / 時間",
+      "input_type": "word"
+    },
+    {
+      "display": "钱",
+      "input": "qián",
+      "annotation": "qián / お金",
+      "input_type": "word"
+    },
+    {
+      "display": "今天",
+      "input": "jīntiān",
+      "annotation": "jīntiān / 今日",
+      "input_type": "word"
+    },
+    {
+      "display": "明天",
+      "input": "míngtiān",
+      "annotation": "míngtiān / 明日",
+      "input_type": "word"
+    },
+    {
+      "display": "昨天",
+      "input": "zuótiān",
+      "annotation": "zuótiān / 昨日",
+      "input_type": "word"
+    },
+    {
+      "display": "现在",
+      "input": "xiànzài",
+      "annotation": "xiànzài / 今",
+      "input_type": "word"
+    },
+    {
+      "display": "大",
+      "input": "dà",
+      "annotation": "dà / 大きい",
+      "input_type": "word"
+    },
+    {
+      "display": "小",
+      "input": "xiǎo",
+      "annotation": "xiǎo / 小さい",
+      "input_type": "word"
+    },
+    {
+      "display": "多",
+      "input": "duō",
+      "annotation": "duō / 多い",
+      "input_type": "word"
+    },
+    {
+      "display": "新",
+      "input": "xīn",
+      "annotation": "xīn / 新しい",
+      "input_type": "word"
+    },
+    {
+      "display": "有",
+      "input": "yǒu",
+      "annotation": "yǒu / ある、持っている",
+      "input_type": "word"
+    },
+    {
+      "display": "做",
+      "input": "zuò",
+      "annotation": "zuò / する、作る",
+      "input_type": "word"
+    },
+    {
+      "display": "去",
+      "input": "qù",
+      "annotation": "qù / 行く",
+      "input_type": "word"
+    },
+    {
+      "display": "说",
+      "input": "shuō",
+      "annotation": "shuō / 話す、言う",
+      "input_type": "word"
+    },
+    {
+      "display": "明白",
+      "input": "míngbai",
+      "annotation": "míngbai / 理解する、明らかである",
+      "input_type": "word"
+    },
+    {
+      "display": "知道",
+      "input": "zhīdào",
+      "annotation": "zhīdào / 知っている",
+      "input_type": "word"
+    },
+    {
+      "display": "想",
+      "input": "xiǎng",
+      "annotation": "xiǎng / ～したい、思う",
+      "input_type": "word"
+    },
+    {
+      "display": "能",
+      "input": "néng",
+      "annotation": "néng / ～できる（能力・条件がある）",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-28T13:45:45.845Z",
+  "category": "語学",
+  "tags": [
+    "中国語"
+  ]
+}

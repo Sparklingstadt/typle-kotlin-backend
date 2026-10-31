@@ -29,8 +29,7 @@
         "name": "初級1",
         "packId": "pack-k",
         "levels": [
-          "初級",
-          "1"
+          "初級1"
         ],
         "extra": {
           "nested": true
@@ -79,8 +78,7 @@
         "name": "初級2",
         "packId": "pack-k",
         "levels": [
-          "初級",
-          "2"
+          "初級2"
         ],
         "words": [
           {
@@ -104,5 +102,5 @@
     ]
   },
   "packId": "pack-k",
-  "file": "{\n  \"format\": \"typle-pack\",\n  \"version\": 1,\n  \"pack\": {\n    \"name\": \"Kotlin 構文\",\n    \"description\": \"\\\"引用\\\" と <tag> & \\\\ / の\\t説明\",\n    \"category\": \"プログラミング\",\n    \"tags\": [\n      \"Kotlin\",\n      \"JVM\"\n    ]\n  },\n  \"lists\": [\n    {\n      \"name\": \"初級1\",\n      \"levels\": [\n        \"初級\",\n        \"1\"\n      ],\n      \"words\": [\n        {\n          \"display\": \"val x = 1\",\n          \"input\": \"val x = 1\",\n          \"annotation\": \"変数 宣言\"\n        },\n        {\n          \"display\": \"fun f() {}\",\n          \"input\": \"fun f() {}\",\n          \"annotation\": \"\"\n        }\n      ]\n    },\n    {\n      \"name\": \"初級2\",\n      \"levels\": [\n        \"初級\",\n        \"2\"\n      ],\n      \"words\": [\n        {\n          \"display\": \"when (x) {}\",\n          \"input\": \"when (x) {}\",\n          \"annotation\": \"é ü 😀\"\n        }\n      ]\n    }\n  ]\n}\n"
+  "file": "{\n  \"format\": \"typle-pack\",\n  \"version\": 1,\n  \"pack\": {\n    \"name\": \"Kotlin 構文\",\n    \"description\": \"\\\"引用\\\" と <tag> & \\\\ / の\\t説明\",\n    \"category\": \"プログラミング\",\n    \"tags\": [\n      \"Kotlin\",\n      \"JVM\"\n    ]\n  },\n  \"lists\": [\n    {\n      \"name\": \"初級1\",\n      \"levels\": [\n        \"初級1\"\n      ],\n      \"words\": [\n        {\n          \"display\": \"val x = 1\",\n          \"input\": \"val x = 1\",\n          \"annotation\": \"変数 宣言\"\n        },\n        {\n          \"display\": \"fun f() {}\",\n          \"input\": \"fun f() {}\",\n          \"annotation\": \"\"\n        }\n      ]\n    },\n    {\n      \"name\": \"初級2\",\n      \"levels\": [\n        \"初級2\"\n      ],\n      \"words\": [\n        {\n          \"display\": \"when (x) {}\",\n          \"input\": \"when (x) {}\",\n          \"annotation\": \"é ü 😀\"\n        }\n      ]\n    }\n  ]\n}\n"
 }

@@ -1,0 +1,256 @@
+{
+  "id": "russian-intermediate-words",
+  "name": "ロシア語（中級単語）",
+  "category": "語学",
+  "tags": [
+    "ロシア語"
+  ],
+  "group": "ロシア語：基礎・中級",
+  "levels": [
+    "中級単語"
+  ],
+  "words": [
+    {
+      "display": "опыт",
+      "input": "опыт",
+      "annotation": "опыт / 経験",
+      "input_type": "word"
+    },
+    {
+      "display": "мнение",
+      "input": "мнение",
+      "annotation": "мнение / 意見",
+      "input_type": "word"
+    },
+    {
+      "display": "решение",
+      "input": "решение",
+      "annotation": "решение / 決定、解決",
+      "input_type": "word"
+    },
+    {
+      "display": "окружающая среда",
+      "input": "окружающая среда",
+      "annotation": "окружающая среда / 環境",
+      "input_type": "word"
+    },
+    {
+      "display": "правительство",
+      "input": "правительство",
+      "annotation": "правительство / 政府",
+      "input_type": "word"
+    },
+    {
+      "display": "знание",
+      "input": "знание",
+      "annotation": "знание / 知識",
+      "input_type": "word"
+    },
+    {
+      "display": "отношения",
+      "input": "отношения",
+      "annotation": "отношения / 関係",
+      "input_type": "word"
+    },
+    {
+      "display": "возможность",
+      "input": "возможность",
+      "annotation": "возможность / 可能性、機会",
+      "input_type": "word"
+    },
+    {
+      "display": "ответственность",
+      "input": "ответственность",
+      "annotation": "ответственность / 責任",
+      "input_type": "word"
+    },
+    {
+      "display": "преимущество",
+      "input": "преимущество",
+      "annotation": "преимущество / 利点",
+      "input_type": "word"
+    },
+    {
+      "display": "задача",
+      "input": "задача",
+      "annotation": "задача / 課題",
+      "input_type": "word"
+    },
+    {
+      "display": "причина",
+      "input": "причина",
+      "annotation": "причина / 理由、原因",
+      "input_type": "word"
+    },
+    {
+      "display": "цель",
+      "input": "цель",
+      "annotation": "цель / 目的",
+      "input_type": "word"
+    },
+    {
+      "display": "влияние",
+      "input": "влияние",
+      "annotation": "влияние / 影響",
+      "input_type": "word"
+    },
+    {
+      "display": "качество",
+      "input": "качество",
+      "annotation": "качество / 質",
+      "input_type": "word"
+    },
+    {
+      "display": "поведение",
+      "input": "поведение",
+      "annotation": "поведение / 振る舞い、行動",
+      "input_type": "word"
+    },
+    {
+      "display": "общество",
+      "input": "общество",
+      "annotation": "общество / 社会",
+      "input_type": "word"
+    },
+    {
+      "display": "развитие",
+      "input": "развитие",
+      "annotation": "развитие / 発展",
+      "input_type": "word"
+    },
+    {
+      "display": "событие",
+      "input": "событие",
+      "annotation": "событие / 出来事",
+      "input_type": "word"
+    },
+    {
+      "display": "достигать",
+      "input": "достигать",
+      "annotation": "достигать / 達成する",
+      "input_type": "word"
+    },
+    {
+      "display": "улучшать",
+      "input": "улучшать",
+      "annotation": "улучшать / 改善する",
+      "input_type": "word"
+    },
+    {
+      "display": "рассматривать",
+      "input": "рассматривать",
+      "annotation": "рассматривать / 検討する",
+      "input_type": "word"
+    },
+    {
+      "display": "предлагать",
+      "input": "предлагать",
+      "annotation": "предлагать / 提案する",
+      "input_type": "word"
+    },
+    {
+      "display": "требовать",
+      "input": "требовать",
+      "annotation": "требовать / 要求する",
+      "input_type": "word"
+    },
+    {
+      "display": "уменьшать",
+      "input": "уменьшать",
+      "annotation": "уменьшать / 減らす",
+      "input_type": "word"
+    },
+    {
+      "display": "увеличивать",
+      "input": "увеличивать",
+      "annotation": "увеличивать / 増やす",
+      "input_type": "word"
+    },
+    {
+      "display": "сравнивать",
+      "input": "сравнивать",
+      "annotation": "сравнивать / 比べる",
+      "input_type": "word"
+    },
+    {
+      "display": "избегать",
+      "input": "избегать",
+      "annotation": "избегать / 避ける",
+      "input_type": "word"
+    },
+    {
+      "display": "объяснять",
+      "input": "объяснять",
+      "annotation": "объяснять / 説明する",
+      "input_type": "word"
+    },
+    {
+      "display": "предпочитать",
+      "input": "предпочитать",
+      "annotation": "предпочитать / ～の方を好む",
+      "input_type": "word"
+    },
+    {
+      "display": "доступный",
+      "input": "доступный",
+      "annotation": "доступный / 利用できる、手ごろな",
+      "input_type": "word"
+    },
+    {
+      "display": "необходимый",
+      "input": "необходимый",
+      "annotation": "необходимый / 必要な",
+      "input_type": "word"
+    },
+    {
+      "display": "удобный",
+      "input": "удобный",
+      "annotation": "удобный / 便利な",
+      "input_type": "word"
+    },
+    {
+      "display": "серьёзный",
+      "input": "серьёзный",
+      "annotation": "серьёзный / 深刻な、まじめな",
+      "input_type": "word"
+    },
+    {
+      "display": "знакомый",
+      "input": "знакомый",
+      "annotation": "знакомый / 知っている、なじみのある",
+      "input_type": "word"
+    },
+    {
+      "display": "надёжный",
+      "input": "надёжный",
+      "annotation": "надёжный / 信頼できる",
+      "input_type": "word"
+    },
+    {
+      "display": "очевидный",
+      "input": "очевидный",
+      "annotation": "очевидный / 明らかな",
+      "input_type": "word"
+    },
+    {
+      "display": "недавно",
+      "input": "недавно",
+      "annotation": "недавно / 最近",
+      "input_type": "word"
+    },
+    {
+      "display": "наконец",
+      "input": "наконец",
+      "annotation": "наконец / ついに、最後に",
+      "input_type": "word"
+    },
+    {
+      "display": "поэтому",
+      "input": "поэтому",
+      "annotation": "поэтому / だから",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

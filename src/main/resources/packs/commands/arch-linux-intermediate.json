@@ -1,0 +1,210 @@
+{
+  "id": "arch-linux-intermediate",
+  "name": "Arch Linuxコマンド（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "Arch Linux",
+    "Linux",
+    "シェル"
+  ],
+  "group": "Arch Linuxコマンド",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": "cd ~/Downloads",
+      "input": "cd ~/Downloads",
+      "annotation": "cd：フォルダを移動",
+      "input_type": "command"
+    },
+    {
+      "display": "mkdir -p project/src",
+      "input": "mkdir -p project/src",
+      "annotation": "mkdir -p：階層ごとフォルダを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "cp -r src backup",
+      "input": "cp -r src backup",
+      "annotation": "cp -r：フォルダをコピー",
+      "input_type": "command"
+    },
+    {
+      "display": "mv old.txt new.txt",
+      "input": "mv old.txt new.txt",
+      "annotation": "mv：移動・名前変更（移動先を上書きする場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -i memo.txt",
+      "input": "rm -i memo.txt",
+      "annotation": "rm -i：確認しながら削除（ゴミ箱を経由しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -r old-folder",
+      "input": "rm -r old-folder",
+      "annotation": "rm -r：フォルダと中身を削除（ゴミ箱を経由しない。対象を確認する）",
+      "input_type": "command"
+    },
+    {
+      "display": "xdg-open report.pdf",
+      "input": "xdg-open report.pdf",
+      "annotation": "xdg-open：既定アプリで開く（xdg-utilsが必要。主にデスクトップ環境向け）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Syu",
+      "input": "sudo pacman -Syu",
+      "annotation": "DB更新とシステム全体の更新（部分更新は非サポート。-Syだけ実行して一部を導入しない） / sudo：管理者権限で実行（sudoの導入と権限設定が必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -S git",
+      "input": "sudo pacman -S git",
+      "annotation": "sudo pacman -S パッケージ名：公式パッケージを導入（DBだけ更新して古いシステムに導入しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Syu git",
+      "input": "sudo pacman -Syu git",
+      "annotation": "sudo pacman -Syu パッケージ名：全体更新と導入をまとめて実行",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Ss firefox",
+      "input": "pacman -Ss firefox",
+      "annotation": "pacman -Ss キーワード：公式リポジトリを検索",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Si git",
+      "input": "pacman -Si git",
+      "annotation": "pacman -Si パッケージ名：リポジトリ上の情報を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qs python",
+      "input": "pacman -Qs python",
+      "annotation": "pacman -Qs キーワード：導入済みパッケージを検索",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qi git",
+      "input": "pacman -Qi git",
+      "annotation": "pacman -Qi パッケージ名：導入済みパッケージの詳細",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Ql git",
+      "input": "pacman -Ql git",
+      "annotation": "pacman -Ql パッケージ名：配置したファイルの一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo paccache -r",
+      "input": "sudo paccache -r",
+      "annotation": "古いパッケージキャッシュを削除（pacman-contribが必要。標準では各パッケージの最新3世代を残す）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Fy",
+      "input": "sudo pacman -Fy",
+      "annotation": "ファイル検索用DBを更新（パッケージ更新用DBとは別）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -F bin/rg",
+      "input": "pacman -F bin/rg",
+      "annotation": "pacman -F ファイル名：ファイルの提供元パッケージを検索（未導入パッケージも対象。事前にファイルDBを更新）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qk bash",
+      "input": "pacman -Qk bash",
+      "annotation": "pacman -Qk パッケージ名：配置ファイルの存在を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl status sshd",
+      "input": "systemctl status sshd",
+      "annotation": "systemctl status サービス：サービスの状態を確認（例はopenssh導入時）",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl --failed",
+      "input": "systemctl --failed",
+      "annotation": "失敗したユニットを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -b -1",
+      "input": "journalctl -b -1",
+      "annotation": "前回起動のログ（前回分が保存されている場合のみ）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -u sshd",
+      "input": "journalctl -u sshd",
+      "annotation": "journalctl -u サービス：指定サービスのログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -k -b",
+      "input": "journalctl -k -b",
+      "annotation": "今回起動のカーネルログ",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo ss -tulpn",
+      "input": "sudo ss -tulpn",
+      "annotation": "待受ポートとプロセス",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh user@hostname",
+      "input": "ssh user@hostname",
+      "annotation": "SSH接続（opensshと接続先の認証が必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "nmcli device status",
+      "input": "nmcli device status",
+      "annotation": "ネットワーク機器の管理状態（NetworkManager利用時）",
+      "input_type": "command"
+    },
+    {
+      "display": "pgrep -af node",
+      "input": "pgrep -af node",
+      "annotation": "pgrep -af：コマンド名・引数でプロセス検索",
+      "input_type": "command"
+    },
+    {
+      "display": "du -sh ~/Downloads",
+      "input": "du -sh ~/Downloads",
+      "annotation": "du -sh パス：フォルダの使用容量",
+      "input_type": "command"
+    },
+    {
+      "display": "chmod u+x script.sh",
+      "input": "chmod u+x script.sh",
+      "annotation": "chmod：アクセス権を変更（例は所有者に実行権限を追加）",
+      "input_type": "command"
+    },
+    {
+      "display": "command -v python",
+      "input": "command -v python",
+      "annotation": "command -v：コマンドの場所等を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman --help",
+      "input": "pacman --help",
+      "annotation": "コマンド --help：ヘルプを表示",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

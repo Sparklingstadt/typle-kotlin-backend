@@ -6,23 +6,18 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertSame
 
-// The fixtures are copies of typle-r's tests/fixtures/packs that have packs (data already in packs) and whose expected
-// result needs no repair but separateLevels, which is all Kotlin does to a saved row before it follows the official
-// catalog (readNormalized): the app (tests/wordPacks.test.cjs) and Go (TestPackFixtures, which reads them without
-// following the catalog too) read them into the same lists and packs.
-private val fixtures = listOf(
-  "duplicate-in-pack.json", "levels-equal.json", "levels-long.json", "levels-name.json", "levels-prefix.json", "levels-repeated.json", "levels-repeated-overlap.json",
-  "levels-repeated-step.json", "levels-repeated-trim.json", "levels-second-collision.json", "levels-collapse.json",
-  "levels-collapse-collision.json", "levels-collapse-long.json",
-  "long-name-emoji.json", "pack-fields-kept.json",
-)
+// The fixtures are copies of typle-r's tests/fixtures/packs: the app (tests/wordPacks.test.cjs) and Go (TestPackFixtures,
+// which reads them without following the catalog too) read them into the same lists and packs (Go's normalized:
+// repairLibrary, which ends with separateLevels).
+private val fixtures = java.io.File(SeparateLevelsTest::class.java.getResource("/packs")!!.toURI()).list()!!
+  .filter { it.endsWith(".json") }.sorted()
 
-private class PacksFixture(val lists: String, val packs: String, val expectedLists: JsonValue, val expectedPacks: JsonValue)
+private class PacksFixture(val lists: String, val packs: String?, val expectedLists: JsonValue, val expectedPacks: JsonValue)
 
 private fun packsFixture(name: String): PacksFixture {
   val top = JsonValue.parse(SeparateLevelsTest::class.java.getResource("/packs/$name")!!.readText()) as JsonObject
   val expected = top.members.getValue("expected") as JsonObject
-  return PacksFixture(top.members.getValue("lists").toJson(), top.members.getValue("packs").toJson(),
+  return PacksFixture(top.members.getValue("lists").toJson(), top.members.getValue("packs").takeIf { it != io.github.sparklingstadt.typle.server.json.JsonNull }?.toJson(),
     expected.members.getValue("lists"), expected.members.getValue("packs"))
 }
 
@@ -30,18 +25,26 @@ private fun leveled(id: String, packId: String, levels: List<String>, name: Stri
   WordList(id, name, listOf(Word("ls", "ls", "")), emptyList(), "x", packId = packId,
     extra = if (levels.isEmpty()) "" else levels.joinToString(",", """{"levels":[""", "]}") { "\"$it\"" })
 
+// Go's normalized: the row decoded and its library repaired (repairLibrary, which separates the levels), before it
+// follows the catalog.
+private fun normalized(lists: String, devices: String, packs: String?): Workspace {
+  val w = decode(lists, devices, packs)
+  val (repairedPacks, repairedLists) = repairLibrary(w.packs, w.lists)
+  return w.copy(lists = repairedLists, packs = repairedPacks)
+}
+
 class SeparateLevelsTest {
   // The cases of Go's TestPackFixtures for a row with packs.
   @Test fun readsTheFixtures() {
     for (name in fixtures) {
       val f = packsFixture(name)
-      val w = readNormalized(f.lists, "[]", f.packs)
+      val w = normalized(f.lists, "[]", f.packs)
       val lists = encode(w.lists)
       assertEquals(f.expectedLists, JsonValue.parse(lists), "$name lists")
       assertEquals(f.expectedPacks, JsonValue.parse(encodePacks(w.packs)), "$name packs")
       // The result is what a save may send, and reading it again changes nothing.
       checkLibrary(JsonValue.parse(lists), JsonValue.parse(encodePacks(w.packs)))
-      assertEquals(lists, encode(readNormalized(lists, "[]", encodePacks(w.packs)).lists), "$name again")
+      assertEquals(lists, encode(normalized(lists, "[]", encodePacks(w.packs)).lists), "$name again")
     }
   }
 
@@ -98,10 +101,12 @@ class SeparateLevelsTest {
     assertEquals(apart, separateLevels(apart))
   }
 
-  // A row without packs (lists saved before packs existed) is read as it is: Kotlin does not make its packs.
-  @Test fun leavesRowsWithoutPacks() {
+  // A row without packs is no longer converted by its groups (typle-r v2.0.0): each list gets a pack of its own.
+  @Test fun givesRowsWithoutPacksAPackEach() {
     val lists = """[{"id":"a","name":"a","group":"G","levels":["初級"],"createdAt":"x","words":[{"display":"a","input":"a","annotation":""}],"records":[]},""" +
       """{"id":"b","name":"b","group":"G","levels":["初級"],"createdAt":"x","words":[{"display":"a","input":"a","annotation":""}],"records":[]}]"""
-    assertEquals(decode(lists, "[]"), readSaved(lists, "[]", null))
+    val w = readSaved(lists, "[]", null)
+    assertEquals(listOf("pack-a" to "a", "pack-b" to "b"), w.packs.map { it.id to it.name })
+    assertEquals(listOf(listOf("初級"), listOf("初級")), w.lists.map(::levelsOf))
   }
 }

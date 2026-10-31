@@ -1,0 +1,889 @@
+{
+  "id": "78aaf407-fd11-4b12-92bd-2f0bffaf3779",
+  "name": "Linuxコマンド：オプション",
+  "category": "プログラミング",
+  "tags": [
+    "Linux",
+    "シェル"
+  ],
+  "words": [
+    {
+      "display": "ls -l",
+      "input": "ls -l",
+      "annotation": "詳細表示（権限、所有者、サイズなど）",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -a",
+      "input": "ls -a",
+      "annotation": "隠しファイルも表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -h",
+      "input": "ls -h",
+      "annotation": "サイズをKB、MBなどで読みやすく表示（通常-lと併用）",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -t",
+      "input": "ls -t",
+      "annotation": "更新時刻順に並べる",
+      "input_type": "command"
+    },
+    {
+      "display": "mkdir -p",
+      "input": "mkdir -p",
+      "annotation": "親ディレクトリもまとめて作成",
+      "input_type": "command"
+    },
+    {
+      "display": "cp -r",
+      "input": "cp -r",
+      "annotation": "ディレクトリを再帰的にコピー",
+      "input_type": "command"
+    },
+    {
+      "display": "cp -i",
+      "input": "cp -i",
+      "annotation": "上書き前に確認",
+      "input_type": "command"
+    },
+    {
+      "display": "cp -a",
+      "input": "cp -a",
+      "annotation": "属性を保持してコピー",
+      "input_type": "command"
+    },
+    {
+      "display": "mv -i",
+      "input": "mv -i",
+      "annotation": "上書き前に確認",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -r",
+      "input": "rm -r",
+      "annotation": "ディレクトリ内部も再帰的に削除",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -f",
+      "input": "rm -f",
+      "annotation": "確認なしで強制削除",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -i",
+      "input": "rm -i",
+      "annotation": "削除前に確認",
+      "input_type": "command"
+    },
+    {
+      "display": "ln -s",
+      "input": "ln -s",
+      "annotation": "シンボリックリンクを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "find -name",
+      "input": "find -name",
+      "annotation": "名前で検索（大文字小文字を区別）",
+      "input_type": "command"
+    },
+    {
+      "display": "find -type f",
+      "input": "find -type f",
+      "annotation": "通常ファイルのみ検索",
+      "input_type": "command"
+    },
+    {
+      "display": "find -type d",
+      "input": "find -type d",
+      "annotation": "ディレクトリのみ検索",
+      "input_type": "command"
+    },
+    {
+      "display": "head -n 10",
+      "input": "head -n 10",
+      "annotation": "先頭10行を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tail -n 50",
+      "input": "tail -n 50",
+      "annotation": "末尾50行を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tail -f",
+      "input": "tail -f",
+      "annotation": "ファイル末尾を継続監視",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -i",
+      "input": "grep -i",
+      "annotation": "大文字・小文字を区別しない",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -n",
+      "input": "grep -n",
+      "annotation": "行番号を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -r",
+      "input": "grep -r",
+      "annotation": "ディレクトリを再帰検索",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -v",
+      "input": "grep -v",
+      "annotation": "一致しなかった行を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -E",
+      "input": "grep -E",
+      "annotation": "拡張正規表現を使用",
+      "input_type": "command"
+    },
+    {
+      "display": "sed -n",
+      "input": "sed -n",
+      "annotation": "自動出力を抑制",
+      "input_type": "command"
+    },
+    {
+      "display": "sed -i",
+      "input": "sed -i",
+      "annotation": "ファイルを直接編集",
+      "input_type": "command"
+    },
+    {
+      "display": "sort -n",
+      "input": "sort -n",
+      "annotation": "数値として並び替える",
+      "input_type": "command"
+    },
+    {
+      "display": "sort -r",
+      "input": "sort -r",
+      "annotation": "逆順に並び替える",
+      "input_type": "command"
+    },
+    {
+      "display": "uniq -c",
+      "input": "uniq -c",
+      "annotation": "隣接する同一行の出現回数を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "wc -l",
+      "input": "wc -l",
+      "annotation": "行数を数える",
+      "input_type": "command"
+    },
+    {
+      "display": "wc -w",
+      "input": "wc -w",
+      "annotation": "単語数を数える",
+      "input_type": "command"
+    },
+    {
+      "display": "cut -d",
+      "input": "cut -d",
+      "annotation": "区切り文字を指定",
+      "input_type": "command"
+    },
+    {
+      "display": "cut -f",
+      "input": "cut -f",
+      "annotation": "抽出するフィールド番号を指定",
+      "input_type": "command"
+    },
+    {
+      "display": "diff -u",
+      "input": "diff -u",
+      "annotation": "Unified形式で差分を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo -u username",
+      "input": "sudo -u username",
+      "annotation": "指定ユーザーとして実行",
+      "input_type": "command"
+    },
+    {
+      "display": "su -",
+      "input": "su -",
+      "annotation": "ログインシェルとして切り替え",
+      "input_type": "command"
+    },
+    {
+      "display": "chmod -R",
+      "input": "chmod -R",
+      "annotation": "ディレクトリ以下も再帰的に変更",
+      "input_type": "command"
+    },
+    {
+      "display": "chown -R",
+      "input": "chown -R",
+      "annotation": "所有者を再帰的に変更",
+      "input_type": "command"
+    },
+    {
+      "display": "useradd -m",
+      "input": "useradd -m",
+      "annotation": "ホームディレクトリも作成",
+      "input_type": "command"
+    },
+    {
+      "display": "usermod -aG",
+      "input": "usermod -aG",
+      "annotation": "補助グループに追加",
+      "input_type": "command"
+    },
+    {
+      "display": "userdel -r",
+      "input": "userdel -r",
+      "annotation": "ホームディレクトリなども削除",
+      "input_type": "command"
+    },
+    {
+      "display": "passwd -l",
+      "input": "passwd -l",
+      "annotation": "パスワードをロック",
+      "input_type": "command"
+    },
+    {
+      "display": "ps aux",
+      "input": "ps aux",
+      "annotation": "全ユーザーのプロセスを詳細表示（BSD形式）",
+      "input_type": "command"
+    },
+    {
+      "display": "ps -ef",
+      "input": "ps -ef",
+      "annotation": "全プロセスを表示（UNIX形式）",
+      "input_type": "command"
+    },
+    {
+      "display": "kill -15",
+      "input": "kill -15",
+      "annotation": "SIGTERM：正常終了を要求（デフォルト）",
+      "input_type": "command"
+    },
+    {
+      "display": "kill -9",
+      "input": "kill -9",
+      "annotation": "SIGKILL：強制終了",
+      "input_type": "command"
+    },
+    {
+      "display": "free -h",
+      "input": "free -h",
+      "annotation": "メモリ量を読みやすく表示",
+      "input_type": "command"
+    },
+    {
+      "display": "df -h",
+      "input": "df -h",
+      "annotation": "容量を読みやすく表示",
+      "input_type": "command"
+    },
+    {
+      "display": "du -s",
+      "input": "du -s",
+      "annotation": "合計サイズのみ表示",
+      "input_type": "command"
+    },
+    {
+      "display": "du -h",
+      "input": "du -h",
+      "annotation": "容量を読みやすく表示",
+      "input_type": "command"
+    },
+    {
+      "display": "uname -a",
+      "input": "uname -a",
+      "annotation": "全情報を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "uname -r",
+      "input": "uname -r",
+      "annotation": "カーネルリリースを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl --now",
+      "input": "systemctl --now",
+      "annotation": "enable/disableと同時に起動/停止",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -u",
+      "input": "journalctl -u",
+      "annotation": "サービス単位でログを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -f",
+      "input": "journalctl -f",
+      "annotation": "ログを継続監視",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -b",
+      "input": "journalctl -b",
+      "annotation": "現在の起動以降のログを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ping -c 4",
+      "input": "ping -c 4",
+      "annotation": "4回送信して終了",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -I",
+      "input": "curl -I",
+      "annotation": "HTTPヘッダーのみ取得",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -X POST",
+      "input": "curl -X POST",
+      "annotation": "HTTPメソッドを指定",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -H",
+      "input": "curl -H",
+      "annotation": "HTTPリクエストヘッダーを追加",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -d",
+      "input": "curl -d",
+      "annotation": "リクエストボディを送信",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -L",
+      "input": "curl -L",
+      "annotation": "リダイレクトを追跡",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -v",
+      "input": "curl -v",
+      "annotation": "詳細な通信情報を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "wget -O",
+      "input": "wget -O",
+      "annotation": "保存先ファイル名を指定",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh -p",
+      "input": "ssh -p",
+      "annotation": "接続ポート指定",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh -i",
+      "input": "ssh -i",
+      "annotation": "秘密鍵ファイル指定",
+      "input_type": "command"
+    },
+    {
+      "display": "scp -r",
+      "input": "scp -r",
+      "annotation": "ディレクトリを再帰コピー",
+      "input_type": "command"
+    },
+    {
+      "display": "rsync -a",
+      "input": "rsync -a",
+      "annotation": "属性を維持しながら再帰的に同期",
+      "input_type": "command"
+    },
+    {
+      "display": "rsync -v",
+      "input": "rsync -v",
+      "annotation": "詳細表示",
+      "input_type": "command"
+    },
+    {
+      "display": "rsync --delete",
+      "input": "rsync --delete",
+      "annotation": "送信元にない宛先のファイルを削除",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -t",
+      "input": "ss -t",
+      "annotation": "TCPソケット",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -u",
+      "input": "ss -u",
+      "annotation": "UDPソケット",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -l",
+      "input": "ss -l",
+      "annotation": "待ち受け中のみ",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -n",
+      "input": "ss -n",
+      "annotation": "数値表示（名前解決しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -p",
+      "input": "ss -p",
+      "annotation": "関連プロセス表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -c",
+      "input": "tar -c",
+      "annotation": "Create：アーカイブ作成",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -x",
+      "input": "tar -x",
+      "annotation": "Extract：アーカイブ展開",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -t",
+      "input": "tar -t",
+      "annotation": "List：内容一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -v",
+      "input": "tar -v",
+      "annotation": "Verbose：処理詳細表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -f",
+      "input": "tar -f",
+      "annotation": "File：アーカイブファイル指定",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -z",
+      "input": "tar -z",
+      "annotation": "Gzip：gzip形式で圧縮・展開",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -J",
+      "input": "tar -J",
+      "annotation": "XZ：xz形式で圧縮・展開",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -C",
+      "input": "tar -C",
+      "annotation": "Directory変更：指定ディレクトリに移動して処理",
+      "input_type": "command"
+    },
+    {
+      "display": "-a",
+      "input": "-a",
+      "annotation": "All：全て表示",
+      "input_type": "word"
+    },
+    {
+      "display": "-l",
+      "input": "-l",
+      "annotation": "Long：詳細表示",
+      "input_type": "word"
+    },
+    {
+      "display": "-h",
+      "input": "-h",
+      "annotation": "Human-readable / Help：読みやすい形式 / ヘルプ",
+      "input_type": "word"
+    },
+    {
+      "display": "-r",
+      "input": "-r",
+      "annotation": "Recursive / Reverse：再帰 / 逆順",
+      "input_type": "word"
+    },
+    {
+      "display": "-R",
+      "input": "-R",
+      "annotation": "Recursive：再帰処理",
+      "input_type": "word"
+    },
+    {
+      "display": "-f",
+      "input": "-f",
+      "annotation": "Force / File：強制 / ファイル指定",
+      "input_type": "word"
+    },
+    {
+      "display": "-i",
+      "input": "-i",
+      "annotation": "Interactive / Ignore case：対話的確認 / 大文字小文字無視",
+      "input_type": "word"
+    },
+    {
+      "display": "-v",
+      "input": "-v",
+      "annotation": "Verbose / Invert：詳細表示 / 反転検索",
+      "input_type": "word"
+    },
+    {
+      "display": "-n",
+      "input": "-n",
+      "annotation": "Number / Numeric：行番号 / 件数 / 数値扱い",
+      "input_type": "word"
+    },
+    {
+      "display": "-p",
+      "input": "-p",
+      "annotation": "Parents / Port：親ディレクトリ / ポートなど",
+      "input_type": "word"
+    },
+    {
+      "display": "-u",
+      "input": "-u",
+      "annotation": "User：ユーザーなど",
+      "input_type": "word"
+    },
+    {
+      "display": "-s",
+      "input": "-s",
+      "annotation": "Silent / Summarize：静音 / 要約",
+      "input_type": "word"
+    },
+    {
+      "display": "lscpu -e",
+      "input": "lscpu -e",
+      "annotation": "CPUごとの情報を表形式で表示",
+      "input_type": "command"
+    },
+    {
+      "display": "lshw -short",
+      "input": "lshw -short",
+      "annotation": "簡潔に表示",
+      "input_type": "command"
+    },
+    {
+      "display": "vmstat -s",
+      "input": "vmstat -s",
+      "annotation": "統計を項目ごとに表示",
+      "input_type": "command"
+    },
+    {
+      "display": "mpstat -P ALL",
+      "input": "mpstat -P ALL",
+      "annotation": "全CPUコアの統計を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "sar -u",
+      "input": "sar -u",
+      "annotation": "CPU使用率",
+      "input_type": "command"
+    },
+    {
+      "display": "sar -r",
+      "input": "sar -r",
+      "annotation": "メモリ使用状況",
+      "input_type": "command"
+    },
+    {
+      "display": "dmesg -T",
+      "input": "dmesg -T",
+      "annotation": "時刻を読みやすく表示",
+      "input_type": "command"
+    },
+    {
+      "display": "dmesg -w",
+      "input": "dmesg -w",
+      "annotation": "新しいカーネルメッセージを監視",
+      "input_type": "command"
+    },
+    {
+      "display": "tcpdump -i",
+      "input": "tcpdump -i",
+      "annotation": "インターフェース指定",
+      "input_type": "command"
+    },
+    {
+      "display": "tcpdump -n",
+      "input": "tcpdump -n",
+      "annotation": "名前解決を無効化",
+      "input_type": "command"
+    },
+    {
+      "display": "tcpdump -w",
+      "input": "tcpdump -w",
+      "annotation": "キャプチャ結果をファイル保存",
+      "input_type": "command"
+    },
+    {
+      "display": "nmap -p",
+      "input": "nmap -p",
+      "annotation": "ポート指定",
+      "input_type": "command"
+    },
+    {
+      "display": "nmap -sT",
+      "input": "nmap -sT",
+      "annotation": "TCP Connectスキャン",
+      "input_type": "command"
+    },
+    {
+      "display": "nc -z",
+      "input": "nc -z",
+      "annotation": "データ送受信なしでポート確認",
+      "input_type": "command"
+    },
+    {
+      "display": "nc -v",
+      "input": "nc -v",
+      "annotation": "詳細表示",
+      "input_type": "command"
+    },
+    {
+      "display": "mtr -r",
+      "input": "mtr -r",
+      "annotation": "レポート形式で表示",
+      "input_type": "command"
+    },
+    {
+      "display": "pgrep -a",
+      "input": "pgrep -a",
+      "annotation": "PIDとコマンドラインを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "pgrep -f",
+      "input": "pgrep -f",
+      "annotation": "コマンドライン全体を検索",
+      "input_type": "command"
+    },
+    {
+      "display": "pstree -p",
+      "input": "pstree -p",
+      "annotation": "PIDを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "lsof -i",
+      "input": "lsof -i",
+      "annotation": "ネットワーク関連ファイルを検索",
+      "input_type": "command"
+    },
+    {
+      "display": "strace -p",
+      "input": "strace -p",
+      "annotation": "PIDを指定して追跡",
+      "input_type": "command"
+    },
+    {
+      "display": "strace -e trace=network",
+      "input": "strace -e trace=network",
+      "annotation": "ネットワーク関連システムコールを追跡",
+      "input_type": "command"
+    },
+    {
+      "display": "nice -n",
+      "input": "nice -n",
+      "annotation": "nice値を指定",
+      "input_type": "command"
+    },
+    {
+      "display": "watch -n",
+      "input": "watch -n",
+      "annotation": "実行間隔を秒単位で指定",
+      "input_type": "command"
+    },
+    {
+      "display": "watch -d",
+      "input": "watch -d",
+      "annotation": "変更箇所を強調表示",
+      "input_type": "command"
+    },
+    {
+      "display": "set -e",
+      "input": "set -e",
+      "annotation": "単純な失敗時にシェル終了（例外あり）",
+      "input_type": "command"
+    },
+    {
+      "display": "set -u",
+      "input": "set -u",
+      "annotation": "未定義変数の参照をエラーにする",
+      "input_type": "command"
+    },
+    {
+      "display": "set -x",
+      "input": "set -x",
+      "annotation": "実行するコマンドをトレース表示",
+      "input_type": "command"
+    },
+    {
+      "display": "set -o pipefail",
+      "input": "set -o pipefail",
+      "annotation": "パイプライン途中の失敗を終了ステータスに反映",
+      "input_type": "command"
+    },
+    {
+      "display": "bash -n script.sh",
+      "input": "bash -n script.sh",
+      "annotation": "スクリプトの構文チェック",
+      "input_type": "command"
+    },
+    {
+      "display": "bash -x script.sh",
+      "input": "bash -x script.sh",
+      "annotation": "スクリプト実行をトレース",
+      "input_type": "command"
+    },
+    {
+      "display": "ipcs -m",
+      "input": "ipcs -m",
+      "annotation": "共有メモリを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ipcs -s",
+      "input": "ipcs -s",
+      "annotation": "セマフォを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ipcs -q",
+      "input": "ipcs -q",
+      "annotation": "メッセージキューを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ipcrm -m",
+      "input": "ipcrm -m",
+      "annotation": "共有メモリIDを指定して削除",
+      "input_type": "command"
+    },
+    {
+      "display": "flock -n",
+      "input": "flock -n",
+      "annotation": "ロック取得を待たない",
+      "input_type": "command"
+    },
+    {
+      "display": "flock -w 10",
+      "input": "flock -w 10",
+      "annotation": "最大10秒待つ",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -x",
+      "input": "ss -x",
+      "annotation": "Unixソケットを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "sysctl -a",
+      "input": "sysctl -a",
+      "annotation": "カーネルパラメータ一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "sysctl -n",
+      "input": "sysctl -n",
+      "annotation": "値だけ表示",
+      "input_type": "command"
+    },
+    {
+      "display": "sysctl -w",
+      "input": "sysctl -w",
+      "annotation": "パラメータ変更",
+      "input_type": "command"
+    },
+    {
+      "display": "sysctl -p",
+      "input": "sysctl -p",
+      "annotation": "指定設定ファイルの内容を反映",
+      "input_type": "command"
+    },
+    {
+      "display": "sysctl --system",
+      "input": "sysctl --system",
+      "annotation": "システムのsysctl設定ファイルをまとめて反映",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -a",
+      "input": "ulimit -a",
+      "annotation": "全制限値を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -n",
+      "input": "ulimit -n",
+      "annotation": "開けるファイルディスクリプタ数",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -u",
+      "input": "ulimit -u",
+      "annotation": "ユーザーのプロセス数などの制限",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -s",
+      "input": "ulimit -s",
+      "annotation": "スタックサイズ",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -c",
+      "input": "ulimit -c",
+      "annotation": "コアダンプファイルの最大サイズ",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -v",
+      "input": "ulimit -v",
+      "annotation": "仮想メモリサイズ制限",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -H",
+      "input": "ulimit -H",
+      "annotation": "ハード制限",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -S",
+      "input": "ulimit -S",
+      "annotation": "ソフト制限",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:09:16.243Z"
+}

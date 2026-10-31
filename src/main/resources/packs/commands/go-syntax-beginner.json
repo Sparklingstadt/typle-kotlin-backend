@@ -1,0 +1,238 @@
+{
+  "id": "go-syntax-beginner",
+  "name": "Go構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Go"
+  ],
+  "group": "Go構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "package main",
+      "input": "package main",
+      "annotation": "package：所属パッケージを宣言（mainパッケージのmain関数が実行開始点）",
+      "input_type": "code"
+    },
+    {
+      "display": "import \"fmt\"",
+      "input": "import \"fmt\"",
+      "annotation": "import：パッケージを読み込む（未使用importはコンパイルエラー）",
+      "input_type": "code"
+    },
+    {
+      "display": "// コメント",
+      "input": "// コメント",
+      "annotation": "//：1行コメント",
+      "input_type": "code"
+    },
+    {
+      "display": "var age int",
+      "input": "var age int",
+      "annotation": "var 名前 型：ゼロ値で宣言（intのゼロ値は0）",
+      "input_type": "code"
+    },
+    {
+      "display": "var age int = 20",
+      "input": "var age int = 20",
+      "annotation": "var 名前 型 = 値：型と初期値を指定",
+      "input_type": "code"
+    },
+    {
+      "display": "var age = 20",
+      "input": "var age = 20",
+      "annotation": "var 名前 = 値：型推論で宣言",
+      "input_type": "code"
+    },
+    {
+      "display": "age := 20",
+      "input": "age := 20",
+      "annotation": "名前 := 値：短い変数宣言（関数内のみ。同じブロックでは左辺に少なくとも1つ新しい変数が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "age = 21",
+      "input": "age = 21",
+      "annotation": "名前 = 値：既存変数への代入（ageは宣言済みであること）",
+      "input_type": "code"
+    },
+    {
+      "display": "const Max = 100",
+      "input": "const Max = 100",
+      "annotation": "const：定数",
+      "input_type": "code"
+    },
+    {
+      "display": "_ = age",
+      "input": "_ = age",
+      "annotation": "_：値を捨てる（ブランク識別子）",
+      "input_type": "code"
+    },
+    {
+      "display": "var enabled bool",
+      "input": "var enabled bool",
+      "annotation": "bool：真偽値（ゼロ値false）",
+      "input_type": "code"
+    },
+    {
+      "display": "name := \"Pomo\"",
+      "input": "name := \"Pomo\"",
+      "annotation": "string：文字列（ゼロ値は空文字。文字列は不変）",
+      "input_type": "code"
+    },
+    {
+      "display": "var b byte = 'A'",
+      "input": "var b byte = 'A'",
+      "annotation": "byte：uint8の別名",
+      "input_type": "code"
+    },
+    {
+      "display": "var r rune = 'あ'",
+      "input": "var r rune = 'あ'",
+      "annotation": "rune：int32の別名（Unicodeコードポイントなどに使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "same := a == b",
+      "input": "same := a == b",
+      "annotation": "== / !=：等値・不等値比較（比較できない型もある）",
+      "input_type": "code"
+    },
+    {
+      "display": "count += 2",
+      "input": "count += 2",
+      "annotation": "+= -= *= /=：複合代入",
+      "input_type": "code"
+    },
+    {
+      "display": "count++",
+      "input": "count++",
+      "annotation": "++ / --：1増減（式ではなく文。x := count++は不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "n := 1 << 3",
+      "input": "n := 1 << 3",
+      "annotation": "<< / >>：ビットシフト",
+      "input_type": "code"
+    },
+    {
+      "display": "for {\n  break\n}",
+      "input": "for { break }",
+      "annotation": "for：無限ループ",
+      "input_type": "code"
+    },
+    {
+      "display": "if done {\n  break\n}",
+      "input": "if done { break }",
+      "annotation": "break：ループを抜ける（break可能な構文内で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "return result",
+      "input": "return result",
+      "annotation": "return：関数から戻る",
+      "input_type": "code"
+    },
+    {
+      "display": "first := s[0]",
+      "input": "first := s[0]",
+      "annotation": "s[i]：要素へアクセス（範囲外はpanic）",
+      "input_type": "code"
+    },
+    {
+      "display": "part := s[1:3]",
+      "input": "part := s[1:3]",
+      "annotation": "s[low:high]：部分範囲（low以上high未満。元の配列を共有する場合がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "n := len(s)",
+      "input": "n := len(s)",
+      "annotation": "len：長さ（文字列ではバイト数）",
+      "input_type": "code"
+    },
+    {
+      "display": "name := u.Name",
+      "input": "name := u.Name",
+      "annotation": "値.フィールド：フィールド参照",
+      "input_type": "code"
+    },
+    {
+      "display": "p := &u",
+      "input": "p := &u",
+      "annotation": "&値：アドレス取得",
+      "input_type": "code"
+    },
+    {
+      "display": "var p *User",
+      "input": "var p *User",
+      "annotation": "*型：ポインタ型（ゼロ値はnil）",
+      "input_type": "code"
+    },
+    {
+      "display": "copyOfUser := *p",
+      "input": "copyOfUser := *p",
+      "annotation": "*ポインタ：参照先の値（nilの参照外しはpanic）",
+      "input_type": "code"
+    },
+    {
+      "display": "u.Birthday()",
+      "input": "u.Birthday()",
+      "annotation": "値.メソッド()：メソッド呼び出し（必要な条件下でアドレス取得等が自動的に補われる）",
+      "input_type": "code"
+    },
+    {
+      "display": "defer f.Close()",
+      "input": "defer f.Close()",
+      "annotation": "defer：関数終了時の処理を登録（ファイルを正常に開いた後に登録。後入れ先出し。引数は登録時に評価）",
+      "input_type": "code"
+    },
+    {
+      "display": "go work()",
+      "input": "go work()",
+      "annotation": "go f()：goroutineで実行（mainの終了時に他のgoroutineを自動で待たない）",
+      "input_type": "code"
+    },
+    {
+      "display": "ch <- 10",
+      "input": "ch <- 10",
+      "annotation": "ch <- value：channelへ送信（閉じたchannelへの送信はpanic）",
+      "input_type": "code"
+    },
+    {
+      "display": "value := <-ch",
+      "input": "value := <-ch",
+      "annotation": "channelから受信",
+      "input_type": "code"
+    },
+    {
+      "display": "close(ch)",
+      "input": "close(ch)",
+      "annotation": "channelを閉じる（通常は送信側が所有権を持って閉じる。二重closeはpanic）",
+      "input_type": "code"
+    },
+    {
+      "display": "_ = value",
+      "input": "_ = value",
+      "annotation": "未使用ローカル変数・import：コンパイル時の検査（未使用のローカル変数やimportは通常エラー）",
+      "input_type": "code"
+    },
+    {
+      "display": "var p *User = nil",
+      "input": "var p *User = nil",
+      "annotation": "nil：参照を持たない値（ポインタ・スライス・map・channel・関数・インターフェース等で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "gofmt -w main.go",
+      "input": "gofmt -w main.go",
+      "annotation": "gofmt：標準書式で整形（Go構文ではなくターミナルのコマンド。ファイルを上書き）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -85,7 +85,12 @@ private fun decodePackFile(data: String): PackFile {
       val words = fields.members["words"] as? JsonArray ?: unreadable()
       PackFileList(name, strings(fields, "levels"), words.items.map { raw ->
         val word = raw as? JsonObject ?: unreadable()
-        Word(string(word, "display"), string(word, "input"), string(word, "annotation"))
+        val inputType = try {
+          inputTypeOf(word)
+        } catch (_: InvalidWorkspaceException) {
+          unreadable()
+        }
+        Word(string(word, "display"), string(word, "input"), string(word, "annotation"), inputType = inputType)
       })
     })
 }
@@ -114,8 +119,8 @@ private fun writePackFile(file: PackFile): String {
       "name" to Text(str(list.name)),
       strings(list.levels)?.let { "levels" to it },
       "words" to Arr(list.words.map { word ->
-        Obj(listOf("display" to Text(str(word.display)), "input" to Text(str(word.input)),
-          "annotation" to Text(str(word.annotation))))
+        Obj(listOfNotNull("display" to Text(str(word.display)), "input" to Text(str(word.input)),
+          "annotation" to Text(str(word.annotation)), word.inputType.ifEmpty { null }?.let { "input_type" to Text(str(it)) }))
       }),
     ))
   })

@@ -1,0 +1,245 @@
+{
+  "id": "un-member-states-chinese-193-lowercase-advanced-2",
+  "name": "国名：中国語・国連加盟国（小文字・上級2）",
+  "category": "語学",
+  "tags": [
+    "中国語",
+    "国名"
+  ],
+  "group": "国名：中国語・国連加盟国（小文字）",
+  "levels": [
+    "上級2"
+  ],
+  "words": [
+    {
+      "display": "安提瓜和巴布达",
+      "input": "antigua he babuda",
+      "annotation": "Āntíguā hé Bābùdá / アンティグア・バーブーダ",
+      "input_type": "word"
+    },
+    {
+      "display": "多民族玻利维亚国",
+      "input": "duominzu boliweiya guo",
+      "annotation": "Duōmínzú Bōlìwéiyà Guó / ボリビア",
+      "input_type": "word"
+    },
+    {
+      "display": "波斯尼亚和黑塞哥维那",
+      "input": "bosiniya he heisaigeweina",
+      "annotation": "Bōsīníyà hé Hēisàigēwéinà / ボスニア・ヘルツェゴビナ",
+      "input_type": "word"
+    },
+    {
+      "display": "文莱达鲁萨兰国",
+      "input": "wenlai dalusalan guo",
+      "annotation": "Wénlái Dálǔsàlán Guó / ブルネイ",
+      "input_type": "word"
+    },
+    {
+      "display": "中非共和国",
+      "input": "zhongfei gongheguo",
+      "annotation": "Zhōngfēi Gònghéguó / 中央アフリカ共和国",
+      "input_type": "word"
+    },
+    {
+      "display": "朝鲜民主主义人民共和国",
+      "input": "chaoxian minzhuzhuyi renmin gongheguo",
+      "annotation": "Cháoxiǎn Mínzhǔzhǔyì Rénmín Gònghéguó / 北朝鮮",
+      "input_type": "word"
+    },
+    {
+      "display": "刚果民主共和国",
+      "input": "gangguo minzhu gongheguo",
+      "annotation": "Gāngguǒ Mínzhǔ Gònghéguó / コンゴ民主共和国",
+      "input_type": "word"
+    },
+    {
+      "display": "多米尼加共和国",
+      "input": "duominijia gongheguo",
+      "annotation": "Duōmǐníjiā Gònghéguó / ドミニカ共和国",
+      "input_type": "word"
+    },
+    {
+      "display": "赤道几内亚",
+      "input": "chidao jineiya",
+      "annotation": "Chìdào Jǐnèiyà / 赤道ギニア",
+      "input_type": "word"
+    },
+    {
+      "display": "几内亚比绍",
+      "input": "jineiya bishao",
+      "annotation": "Jǐnèiyà Bǐshào / ギニアビサウ",
+      "input_type": "word"
+    },
+    {
+      "display": "伊朗伊斯兰共和国",
+      "input": "yilang yisilan gongheguo",
+      "annotation": "Yīlǎng Yīsīlán Gònghéguó / イラン",
+      "input_type": "word"
+    },
+    {
+      "display": "吉尔吉斯斯坦",
+      "input": "jierjisisitan",
+      "annotation": "Jí'ěrjísīsītǎn / キルギス",
+      "input_type": "word"
+    },
+    {
+      "display": "老挝人民民主共和国",
+      "input": "laowo renmin minzhu gongheguo",
+      "annotation": "Lǎowō Rénmín Mínzhǔ Gònghéguó / ラオス",
+      "input_type": "word"
+    },
+    {
+      "display": "列支敦士登",
+      "input": "liezhidunshideng",
+      "annotation": "Lièzhīdūnshìdēng / リヒテンシュタイン",
+      "input_type": "word"
+    },
+    {
+      "display": "马达加斯加",
+      "input": "madajiasijia",
+      "annotation": "Mǎdájiāsījiā / マダガスカル",
+      "input_type": "word"
+    },
+    {
+      "display": "马绍尔群岛",
+      "input": "mashaoer qundao",
+      "annotation": "Mǎshào'ěr Qúndǎo / マーシャル諸島",
+      "input_type": "word"
+    },
+    {
+      "display": "密克罗尼西亚联邦",
+      "input": "mikeluonixiya lianbang",
+      "annotation": "Mìkèluóníxīyà Liánbāng / ミクロネシア連邦",
+      "input_type": "word"
+    },
+    {
+      "display": "摩尔多瓦共和国",
+      "input": "moerduowa gongheguo",
+      "annotation": "Mó'ěrduōwǎ Gònghéguó / モルドバ",
+      "input_type": "word"
+    },
+    {
+      "display": "荷兰王国",
+      "input": "helan wangguo",
+      "annotation": "Hélán Wángguó / オランダ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴布亚新几内亚",
+      "input": "babuya xin jineiya",
+      "annotation": "Bābùyà Xīn Jǐnèiyà / パプアニューギニア",
+      "input_type": "word"
+    },
+    {
+      "display": "大韩民国",
+      "input": "dahan minguo",
+      "annotation": "Dàhán Mínguó / 韓国",
+      "input_type": "word"
+    },
+    {
+      "display": "俄罗斯联邦",
+      "input": "eluosi lianbang",
+      "annotation": "Éluósī Liánbāng / ロシア",
+      "input_type": "word"
+    },
+    {
+      "display": "圣基茨和尼维斯",
+      "input": "sheng jici he niweisi",
+      "annotation": "Shèng Jīcí hé Níwéisī / セントクリストファー・ネービス",
+      "input_type": "word"
+    },
+    {
+      "display": "圣卢西亚",
+      "input": "sheng luxiya",
+      "annotation": "Shèng Lúxīyà / セントルシア",
+      "input_type": "word"
+    },
+    {
+      "display": "圣文森特和格林纳丁斯",
+      "input": "sheng wensente he gelinnadingsi",
+      "annotation": "Shèng Wénsēntè hé Gélínnàdīngsī / セントビンセントおよびグレナディーン諸島",
+      "input_type": "word"
+    },
+    {
+      "display": "圣马力诺",
+      "input": "sheng malinuo",
+      "annotation": "Shèng Mǎlìnuò / サンマリノ",
+      "input_type": "word"
+    },
+    {
+      "display": "圣多美和普林西比",
+      "input": "sheng duomei he pulinxibi",
+      "annotation": "Shèng Duōměi hé Pǔlínxībǐ / サントメ・プリンシペ",
+      "input_type": "word"
+    },
+    {
+      "display": "斯洛文尼亚",
+      "input": "siluowenniya",
+      "annotation": "Sīluòwénníyà / スロベニア",
+      "input_type": "word"
+    },
+    {
+      "display": "所罗门群岛",
+      "input": "suoluomen qundao",
+      "annotation": "Suǒluómén Qúndǎo / ソロモン諸島",
+      "input_type": "word"
+    },
+    {
+      "display": "阿拉伯叙利亚共和国",
+      "input": "alabo xuliya gongheguo",
+      "annotation": "Ālābó Xùlìyà Gònghéguó / シリア",
+      "input_type": "word"
+    },
+    {
+      "display": "特立尼达和多巴哥",
+      "input": "telinida he duobage",
+      "annotation": "Tèlìnídá hé Duōbāgē / トリニダード・トバゴ",
+      "input_type": "word"
+    },
+    {
+      "display": "土库曼斯坦",
+      "input": "tukumansitan",
+      "annotation": "Tǔkùmànsītǎn / トルクメニスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "阿拉伯联合酋长国",
+      "input": "alabo lianhe qiuzhangguo",
+      "annotation": "Ālābó Liánhé Qiúzhǎngguó / アラブ首長国連邦",
+      "input_type": "word"
+    },
+    {
+      "display": "大不列颠及北爱尔兰联合王国",
+      "input": "da buliedian ji bei aierlan lianhe wangguo",
+      "annotation": "Dà Bùlièdiān jí Běi Ài'ěrlán Liánhé Wángguó / 英国",
+      "input_type": "word"
+    },
+    {
+      "display": "坦桑尼亚联合共和国",
+      "input": "tansangniya lianhe gongheguo",
+      "annotation": "Tǎnsāngníyà Liánhé Gònghéguó / タンザニア",
+      "input_type": "word"
+    },
+    {
+      "display": "美利坚合众国",
+      "input": "meilijian hezhongguo",
+      "annotation": "Měilìjiān Hézhòngguó / アメリカ合衆国",
+      "input_type": "word"
+    },
+    {
+      "display": "乌兹别克斯坦",
+      "input": "wuzibiekesitan",
+      "annotation": "Wūzībiékèsītǎn / ウズベキスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "委内瑞拉玻利瓦尔共和国",
+      "input": "weineiruila boliwaer gongheguo",
+      "annotation": "Wěinèiruìlā Bōlìwǎ'ěr Gònghéguó / ベネズエラ",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

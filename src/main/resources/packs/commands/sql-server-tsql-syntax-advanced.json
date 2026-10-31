@@ -1,0 +1,108 @@
+{
+  "id": "sql-server-tsql-syntax-advanced",
+  "name": "SQL Server T-SQL構文（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "SQL Server",
+    "T-SQL",
+    "SQL"
+  ],
+  "group": "SQL Server T-SQL構文",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "CREATE TABLE dbo.Users (\n  Id int IDENTITY(1, 1) PRIMARY KEY,\n  Name nvarchar(100) NOT NULL,\n  Email nvarchar(255) UNIQUE,\n  Age int NULL,\n  Active bit NOT NULL DEFAULT 1,\n  CreatedAt datetime2 NOT NULL DEFAULT SYSUTCDATETIME()\n);\nCREATE TABLE dbo.Orders (\n  Id int IDENTITY(1, 1) PRIMARY KEY,\n  UserId int REFERENCES dbo.Users(Id),\n  Amount decimal(12, 2) NOT NULL\n);",
+      "input": "CREATE TABLE dbo.Users (Id int IDENTITY(1,1) PRIMARY KEY, Name nvarchar(100) NOT NULL, Email nvarchar(255) UNIQUE, Age int NULL, Active bit NOT NULL DEFAULT 1, CreatedAt datetime2 NOT NULL DEFAULT SYSUTCDATETIME()); CREATE TABLE dbo.Orders (Id int IDENTITY(1,1) PRIMARY KEY, UserId int REFERENCES dbo.Users(Id), Amount decimal(12,2) NOT NULL);",
+      "annotation": "サンプル表：以下の例の基本表（検証用DB向け。同名表がある場合は失敗 SQL Serverの通常の単一列UNIQUEはNULLも通常1件まで。）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT u.Id, recent.Amount\nFROM dbo.Users u\nOUTER APPLY (\n  SELECT TOP (1) Amount\n  FROM dbo.Orders o\n  WHERE o.UserId = u.Id\n  ORDER BY o.Id DESC\n) recent;",
+      "input": "SELECT u.Id, recent.Amount FROM dbo.Users u OUTER APPLY (SELECT TOP (1) Amount FROM dbo.Orders o WHERE o.UserId=u.Id ORDER BY o.Id DESC) recent;",
+      "annotation": "OUTER APPLY：左行に依存する結果",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT COUNT(*) AS CountAll, SUM(Amount) AS Total, AVG(Amount) AS Average\nFROM dbo.Orders;",
+      "input": "SELECT COUNT(*) AS CountAll, SUM(Amount) AS Total, AVG(Amount) AS Average FROM dbo.Orders;",
+      "annotation": "COUNT / SUM / AVG：件数・合計・平均（COUNT(列)はNULLを除く）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT UserId, SUM(Amount) AS Total\nFROM dbo.Orders\nGROUP BY UserId\nHAVING SUM(Amount) >= 1000;",
+      "input": "SELECT UserId, SUM(Amount) AS Total FROM dbo.Orders GROUP BY UserId HAVING SUM(Amount) >= 1000;",
+      "annotation": "GROUP BY / HAVING：グループ集計",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT STRING_AGG(CAST(Name AS nvarchar(max)), N', ') WITHIN GROUP (\n  ORDER BY Id\n)\nFROM dbo.Users;",
+      "input": "SELECT STRING_AGG(CAST(Name AS nvarchar(max)), N', ') WITHIN GROUP (ORDER BY Id) FROM dbo.Users;",
+      "annotation": "STRING_AGG：文字列集約（長い結果は入力型の最大長に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": ";WITH Totals AS (\n  SELECT UserId, SUM(Amount) AS Total\n  FROM dbo.Orders\n  GROUP BY UserId\n)\nSELECT *\nFROM Totals;",
+      "input": ";WITH Totals AS (SELECT UserId, SUM(Amount) AS Total FROM dbo.Orders GROUP BY UserId) SELECT * FROM Totals;",
+      "annotation": "WITH：クエリに名前（前文を;で終える。CTEの直後の1文で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO dbo.Users (Name, Email) OUTPUT INSERTED.Id VALUES (N'Pomo', N'pomo@example.com');",
+      "input": "INSERT INTO dbo.Users (Name, Email) OUTPUT INSERTED.Id VALUES (N'Pomo', N'pomo@example.com');",
+      "annotation": "INSERT / OUTPUT：追加して結果を返す（INSERTEDは追加後。トリガー等でOUTPUTの制約あり）",
+      "input_type": "code"
+    },
+    {
+      "display": "UPDATE dbo.Users SET Age = 21 OUTPUT INSERTED.Id, DELETED.Age AS OldAge, INSERTED.Age AS NewAge\nWHERE Id = 1;",
+      "input": "UPDATE dbo.Users SET Age = 21 OUTPUT INSERTED.Id, DELETED.Age AS OldAge, INSERTED.Age AS NewAge WHERE Id = 1;",
+      "annotation": "UPDATE / OUTPUT：行更新（WHEREなしは全行更新）",
+      "input_type": "code"
+    },
+    {
+      "display": "UPDATE u SET Active = 1\nFROM dbo.Users u\nJOIN (\n  SELECT DISTINCT UserId\n  FROM dbo.Orders\n) o ON o.UserId = u.Id;",
+      "input": "UPDATE u SET Active = 1 FROM dbo.Users u JOIN (SELECT DISTINCT UserId FROM dbo.Orders) o ON o.UserId = u.Id;",
+      "annotation": "UPDATE ... FROM：結合して更新（各対象が複数行に一致する場合の不定性に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE @n decimal(12, 2) = 123.45, @ok bit = 1, @name nvarchar(100) = N'Pomo';\nSELECT @n, @ok, @name;",
+      "input": "DECLARE @n decimal(12,2)=123.45, @ok bit=1, @name nvarchar(100)=N'Pomo'; SELECT @n, @ok, @name;",
+      "annotation": "int / decimal / bit / nvarchar：主な型（金額等には正確なdecimalを検討）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT Name, COALESCE(Email, N'未登録'), CASE WHEN Age >= 20 THEN N'成人' ELSE N'その他' END\nFROM dbo.Users;",
+      "input": "SELECT Name, COALESCE(Email,N'未登録'), CASE WHEN Age>=20 THEN N'成人' ELSE N'その他' END FROM dbo.Users;",
+      "annotation": "CASE / COALESCE / NULLIF：条件値・NULL処理",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE @j nvarchar(max) = N'{\"name\":\"Pomo\",\"tags\":[\"sql\"]}';\nSELECT JSON_VALUE(@j, '$.name'), JSON_QUERY(@j, '$.tags');\nSELECT *\nFROM OPENJSON(@j, '$.tags');",
+      "input": "DECLARE @j nvarchar(max)=N'{\"name\":\"Pomo\",\"tags\":[\"sql\"]}'; SELECT JSON_VALUE(@j,'$.name'), JSON_QUERY(@j,'$.tags'); SELECT * FROM OPENJSON(@j,'$.tags');",
+      "annotation": "JSON_VALUE / JSON_QUERY / OPENJSON：JSONを読む（OPENJSONはDB互換性レベル130以降）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE OR ALTER PROCEDURE dbo.GetUser @Id int AS\nBEGIN\n  SET NOCOUNT ON;\n  SELECT *\n  FROM dbo.Users\n  WHERE Id = @Id;\nEND;",
+      "input": "CREATE OR ALTER PROCEDURE dbo.GetUser @Id int AS BEGIN SET NOCOUNT ON; SELECT * FROM dbo.Users WHERE Id=@Id; END;",
+      "annotation": "CREATE OR ALTER PROCEDURE：ストアドプロシージャ（専用バッチで実行。呼出はEXEC dbo.GetUser @Id=1）",
+      "input_type": "code"
+    },
+    {
+      "display": "SET XACT_ABORT ON;\nBEGIN TRY\n  BEGIN TRANSACTION;\n  UPDATE dbo.Users SET Active = 0\n  WHERE Id = 1;\n  COMMIT TRANSACTION;\nEND TRY\nBEGIN CATCH\n  IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;\n  THROW;\nEND CATCH;",
+      "input": "SET XACT_ABORT ON; BEGIN TRY BEGIN TRANSACTION; UPDATE dbo.Users SET Active=0 WHERE Id=1; COMMIT TRANSACTION; END TRY BEGIN CATCH IF XACT_STATE()<>0 ROLLBACK TRANSACTION; THROW; END CATCH;",
+      "annotation": "TRY CATCH / XACT_ABORT / TRANSACTION：取引と失敗処理（実データ変更。例外の種類・入れ子取引等により詳細が異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "SET STATISTICS IO ON;\nSET STATISTICS TIME ON;\nSELECT *\nFROM dbo.Users\nWHERE Id = 1;\nSET STATISTICS IO OFF;\nSET STATISTICS TIME OFF;",
+      "input": "SET STATISTICS IO ON; SET STATISTICS TIME ON; SELECT * FROM dbo.Users WHERE Id=1; SET STATISTICS IO OFF; SET STATISTICS TIME OFF;",
+      "annotation": "実行計画・統計：I/O・時間を確認（SELECTを実際に実行。SSMSの推定・実際プランも利用）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "php-syntax-beginner",
+  "name": "PHP構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "PHP"
+  ],
+  "group": "PHP構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "<?php declare(strict_types = 1);\necho \"Hello\\n\";",
+      "input": "<?php declare(strict_types=1); echo \"Hello\\n\";",
+      "annotation": "PHP 8.2以降：例の基準（コード断片には先頭タグを補う。strict_typesはファイル単位でスカラー引数等の変換に影響）",
+      "input_type": "code"
+    },
+    {
+      "display": "$age = 20;\nconst MAX_COUNT = 100;",
+      "input": "$age=20; const MAX_COUNT=100;",
+      "annotation": "$変数 / const：変数・定数（変数名は$から開始）",
+      "input_type": "code"
+    },
+    {
+      "display": "$name = 'Pomo';\n$enabled = true;\n$n = (int)'123';",
+      "input": "$name='Pomo'; $enabled=true; $n=(int)'123';",
+      "annotation": "型・型変換：スカラー等（キャストは入力検証の代わりではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "$name = 'Pomo';\necho 'Hello, ' . $name;\necho \"Hello, {$name}\";",
+      "input": "$name='Pomo'; echo 'Hello, '.$name; echo \"Hello, {$name}\";",
+      "annotation": ". / 文字列補間：文字列結合（シングルクォートとダブルクォートの解釈に差）",
+      "input_type": "code"
+    },
+    {
+      "display": "var_dump(1 === '1');\nvar_dump(1 == '1');",
+      "input": "var_dump(1==='1'); var_dump(1=='1');",
+      "annotation": "記法: === / == / !==：比較（通常は意図せぬ型変換を避けて厳密比較を検討）",
+      "input_type": "code"
+    },
+    {
+      "display": "$name = $_GET['name'] ?? 'Guest';\n$options['limit'] ??= 20;",
+      "input": "$name=$_GET['name']??'Guest'; $options['limit']??=20;",
+      "annotation": "?? / ??=：NULL等の既定値（未定義またはnullの場合）",
+      "input_type": "code"
+    },
+    {
+      "display": "$nums = [1, 2, 3];\n$user = ['name' => 'Pomo'];\n$nums[] = 4;",
+      "input": "$nums=[1,2,3]; $user=['name'=>'Pomo']; $nums[]=4;",
+      "annotation": "[] / 連想配列：順序付きマップ（PHP配列は順序付きマップ）",
+      "input_type": "code"
+    },
+    {
+      "display": "var_dump(isset($missing));\nvar_dump(empty('0'));",
+      "input": "var_dump(isset($missing)); var_dump(empty('0'));",
+      "annotation": "isset / empty：未設定等の判定（issetはnullにもfalse。emptyは文字列'0'にもtrue）",
+      "input_type": "code"
+    },
+    {
+      "display": "function add(int $a, int $b): int {\n  return $a + $b;\n}",
+      "input": "function add(int $a,int $b):int { return $a+$b; }",
+      "annotation": "function / return：関数定義",
+      "input_type": "code"
+    },
+    {
+      "display": "$user = null;\n$name = $user?->name;",
+      "input": "$user=null; $name=$user?->name;",
+      "annotation": "-> / ?->：メンバーアクセス（nullsafe演算子。代入先には使えない）",
+      "input_type": "code"
+    },
+    {
+      "display": "namespace App;\nuse DateTimeImmutable;\n$now = new DateTimeImmutable();",
+      "input": "namespace App; use DateTimeImmutable; $now=new DateTimeImmutable();",
+      "annotation": "namespace / use / require：名前空間・読込（実アプリではComposerのautoload等を設定）",
+      "input_type": "code"
+    },
+    {
+      "display": "php app.php",
+      "input": "php app.php",
+      "annotation": "実行・lint・開発サーバー：コマンドライン（組込みサーバーは開発向け）",
+      "input_type": "command"
+    },
+    {
+      "display": "php -l app.php",
+      "input": "php -l app.php",
+      "annotation": "実行・lint・開発サーバー：コマンドライン（組込みサーバーは開発向け）",
+      "input_type": "command"
+    },
+    {
+      "display": "php -S localhost:8000",
+      "input": "php -S localhost:8000",
+      "annotation": "実行・lint・開発サーバー：コマンドライン（組込みサーバーは開発向け）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

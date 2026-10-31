@@ -13,7 +13,8 @@ import io.github.sparklingstadt.typle.server.workspace.encode
 import io.github.sparklingstadt.typle.server.workspace.encodeDevices
 import io.github.sparklingstadt.typle.server.workspace.encodeInterests
 import io.github.sparklingstadt.typle.server.workspace.encodePacks
-import io.github.sparklingstadt.typle.server.workspace.encodeWithLabels
+import io.github.sparklingstadt.typle.server.workspace.Workspace
+import io.github.sparklingstadt.typle.server.workspace.readSaved
 import io.ktor.server.application.Application
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
@@ -66,12 +67,8 @@ class FakeStore(
     failure?.let { throw it }
     this.revision = revision
     this.change = change
-    // As the store does: lists sent without packs keep their labels, and the saved packs stay as they are.
-    val lists = when {
-      !change.hasLists -> saved?.lists ?: "[]"
-      change.hasPacks -> encode(change.lists)
-      else -> encodeWithLabels(change.lists)
-    }
+    // As the store does: lists are saved with their packs (decodeFields makes them for lists sent without).
+    val lists = if (change.hasLists) encode(change.lists) else saved?.lists ?: "[]"
     val packs = if (change.hasPacks) encodePacks(change.packs) else saved?.packs
     val devices = if (change.hasDevices) encodeDevices(change.devices) else saved?.devices ?: "[]"
     // Interests left out stay as saved, as the store keeps them.
@@ -99,6 +96,33 @@ class FakeStore(
     this.owner = owner
     failure?.let { throw it }
     return shares
+  }
+
+  /** When the owner signed out of every device; revokeSessions sets it. */
+  var revokedAt: java.time.Instant? = null
+  var revocationFailure: Exception? = null
+
+  override fun revokeSessions(owner: String) {
+    calls.add("revoke")
+    revocationFailure?.let { throw it }
+    revokedAt = java.time.Instant.now()
+  }
+
+  override fun sessionsRevokedAt(owner: String): java.time.Instant? {
+    revocationFailure?.let { throw it }
+    return revokedAt
+  }
+
+  // As the store does, on the saved row read as Go reads it, but without moving records to their own rows.
+  override fun modify(owner: String, change: (Workspace) -> Pair<Workspace, Boolean>): Workspace {
+    calls.add("modify")
+    failure?.let { throw it }
+    val current = saved?.let { readSaved(it.lists, it.devices, it.packs) } ?: Workspace(emptyList(), emptyList(), emptyList())
+    val (next, changed) = change(current)
+    if (changed) {
+      saved = Saved(encode(next.lists), encodeDevices(next.devices), encodePacks(next.packs), (saved?.revision ?: 0) + 1, saved?.interests)
+    }
+    return next
   }
 
   override fun sharedPack(id: String): String? {

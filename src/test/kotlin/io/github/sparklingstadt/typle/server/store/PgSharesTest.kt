@@ -124,31 +124,15 @@ class PgSharesTest {
     assertEquals(listOf(b.id), store.listShares(owner).map { it.id })
   }
 
-  // Lists saved without packs: the link of a pack none of the saved lists is in is deleted, though no packs are sent.
-  @Test fun listsOnlyDeletesSharesOfPacksWithoutLists() {
+  // Lists saved without packs are each put in a pack of their own (typle-r v2.0.0), so the links of the packs they were
+  // in are deleted, and those of their own packs (pack-<id>) stay while their lists do.
+  @Test fun listsOnlyPutsEachListInAPackOfItsOwn() {
     val owner = owner()
     twoPacks(owner)
-    val a = store.putShare(owner, "a")
-    store.putShare(owner, "b")
-    // Both packs still have a list: the links stay.
-    store.writeRevision(owner, 1, Change(listOf(list("1", "a"), list("2", "b")), emptyList(), hasLists = true, hasDevices = false))
-    assertEquals(2, store.listShares(owner).size)
-    // No list is in b any more.
-    store.writeRevision(owner, 2, Change(listOf(list("1", "a")), emptyList(), hasLists = true, hasDevices = false))
-    assertEquals(listOf(a.id), store.listShares(owner).map { it.id })
-    // A save that fails changes nothing.
-    assertFailsWith<ConflictException> {
-      store.writeRevision(owner, 2, Change(listOf(list("3", "c")), emptyList(), hasLists = true, hasDevices = false))
-    }
-    assertEquals(listOf(a.id), store.listShares(owner).map { it.id })
-  }
-
-  // A row whose packs are still derived from its lists (packs NULL): the links Go made to derived packs (pack-<id>)
-  // stay while their lists do.
-  @Test fun listsOnlyOnDerivedPacks() {
-    val owner = owner()
-    val saved = store.writeRevision(owner, 0, Change(listOf(list("1", ""), list("2", "")), emptyList(), hasLists = true, hasDevices = false))
-    assertNull(saved.packs)
+    store.putShare(owner, "a")
+    val saved = store.writeRevision(owner, 1, Change(listOf(list("1", "a"), list("2", "b")), emptyList(), hasLists = true, hasDevices = false))
+    assertEquals(listOf("pack-1", "pack-2"), decode(saved.lists, saved.devices, saved.packs).packs.map { it.id })
+    assertEquals(emptyList(), store.listShares(owner))
     sql().use { db ->
       for (pack in listOf("pack-1", "pack-2")) {
         db.prepareStatement("INSERT INTO typle_shared_packs (id, owner_id, pack_id, data) VALUES (gen_random_uuid(), ?, ?, '{}'::jsonb)").use {
@@ -156,9 +140,12 @@ class PgSharesTest {
         }
       }
     }
-    store.writeRevision(owner, 1, Change(listOf(list("1", ""), list("2", "")), emptyList(), hasLists = true, hasDevices = false))
-    assertEquals(setOf("pack-1", "pack-2"), store.listShares(owner).map { it.packId }.toSet())
     store.writeRevision(owner, 2, Change(listOf(list("1", "")), emptyList(), hasLists = true, hasDevices = false))
+    assertEquals(listOf("pack-1"), store.listShares(owner).map { it.packId })
+    // A save that fails changes nothing.
+    assertFailsWith<ConflictException> {
+      store.writeRevision(owner, 2, Change(listOf(list("3", "c")), emptyList(), hasLists = true, hasDevices = false))
+    }
     assertEquals(listOf("pack-1"), store.listShares(owner).map { it.packId })
   }
 

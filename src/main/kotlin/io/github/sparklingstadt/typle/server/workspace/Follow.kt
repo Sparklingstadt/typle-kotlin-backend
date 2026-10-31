@@ -26,9 +26,10 @@ private fun resource(name: String): JsonValue {
 
 /**
  * officialPacks (src/plugins/packs/catalog.ts), as Go's OfficialPacks: the packs made of the lists of
- * src/plugins/packs/{samples,countries,commands}.json (copied to src/main/resources/packs, as Go embeds them) as lists
- * saved before packs existed are (convertLibrary), each with its lists in the saved shape. Each pack's catalog id is its
- * own id, at version 1.
+ * src/plugins/packs (samples.json, countries.json and commands/, one file per list in the order of
+ * commands/manifest.json; copied to src/main/resources/packs from Go's server/internal/workspace/packs, as Go embeds
+ * them) as lists saved before packs existed are (convertLibrary), each with its lists in the saved shape. Each pack's
+ * catalog id is its own id, at version 1.
  */
 fun officialPacks(): List<OfficialPack> {
   val samples = (resource("samples.json") as JsonArray).items.mapIndexed { index, item ->
@@ -38,7 +39,7 @@ fun officialPacks(): List<OfficialPack> {
     })
   }
   val countries = (resource("countries.json") as JsonArray).items
-  val commands = (resource("commands.json") as JsonArray).items
+  val commands = (resource("commands/manifest.json") as JsonArray).items.map { resource("commands/" + (it as JsonString).value) }
   val lists = decodeLists(JsonArray(samples + countries + commands))
   val (packs, converted) = convertLibrary(lists)
   return packs.map { pack ->
@@ -76,6 +77,68 @@ internal fun convertLibrary(lists: List<WordList>): Pair<List<Pack>, List<WordLi
     converted.add(list.copy(group = "", category = "", tags = emptyList(), packId = packs[at].id))
   }
   return packs to separateLevels(converted)
+}
+
+/**
+ * repairLibrary (src/core/wordPacks.ts), as Go's repairLibrary, which keeps the rules of ownership for data an older app
+ * saved, or lists saved without their packs: every list in one pack, no empty packs, no repeated names. A list without a
+ * pack it is in gets one of its own ("pack-<id>", named after it), the labels a list still has move to its pack while the
+ * pack has none, and the lists of a pack are then told apart (separateLevels).
+ */
+fun repairLibrary(saved: List<Pack>, lists: List<WordList>): Pair<List<Pack>, List<WordList>> {
+  val packs = ArrayList(saved)
+  val byId = HashMap<String, Int>()
+  saved.forEachIndexed { i, pack -> byId[pack.id] = i }
+  val placed = lists.map { list ->
+    if (list.packId != "" && list.packId in byId) return@map list
+    val id = "pack-${list.id}"
+    if (id !in byId) {
+      byId[id] = packs.size
+      packs.add(Pack(id, trimJS(list.name), createdAt = list.createdAt))
+    }
+    list.copy(packId = id)
+  }.map { list ->
+    val at = byId.getValue(list.packId)
+    val pack = packs[at]
+    if (pack.category == "" && pack.tags.isEmpty()) {
+      val (category, tags) = normalizeLabels(list.category, list.tags)
+      packs[at] = pack.copy(category = category, tags = tags)
+    }
+    list.copy(group = "", category = "", tags = emptyList())
+  }
+  val used = placed.map { it.packId }.toSet()
+  val names = HashSet<String>()
+  val kept = packs.filter { it.id in used }.map { pack ->
+    val name = trimJS(pack.name)
+    pack.copy(name = unique(names, name) { fit(name, "（$it）", MAX_LIST_NAME) })
+  }
+  val listNames = HashMap<String, MutableSet<String>>()
+  val named = placed.map { list ->
+    val name = trimJS(list.name)
+    list.copy(name = unique(listNames.getOrPut(list.packId) { HashSet() }, name) { fit(name, "（$it）", MAX_LIST_NAME) })
+  }
+  return kept to separateLevels(named)
+}
+
+/**
+ * The lists as they are saved since typle-r v2.1.0, as Go's WithoutFollowedWords: those of a followed pack without their
+ * words, which the catalog has and followOfficial puts back when they are read.
+ */
+fun withoutFollowedWords(packs: List<Pack>, lists: List<WordList>): List<WordList> {
+  val followed = packs.filter { it.origin?.followed == true }.map { it.id }.toSet()
+  return lists.map { if (it.packId in followed && listOriginId(it) != null) it.copy(words = emptyList()) else it }
+}
+
+// normalizeLabels (src/core/wordLists.ts), as Go's normalizeLabels: labelsOf without the limit on the number of tags.
+private fun normalizeLabels(category: String, tags: List<String>): Pair<String, List<String>> {
+  val kept = ArrayList<String>()
+  val seen = HashSet<String>()
+  for (tag in tags) {
+    val value = trimJS(tag)
+    if (value == "" || !seen.add(lowerCase(value))) continue
+    kept.add(value)
+  }
+  return trimJS(category) to kept
 }
 
 // unique (src/core/workspaceDocument.ts), as Go's unique: wanted, or the first variant whose lowercase is not taken.

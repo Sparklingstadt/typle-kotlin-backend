@@ -1,0 +1,99 @@
+{
+  "lists": [
+    {
+      "id": "a",
+      "name": "a",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p1",
+      "tags": [
+        "y"
+      ]
+    },
+    {
+      "id": "b",
+      "name": "b",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p2",
+      "category": "Z"
+    }
+  ],
+  "packs": [
+    {
+      "id": "p1",
+      "name": "A",
+      "tags": [
+        "x"
+      ],
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "p2",
+      "name": "B",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "expected": {
+    "packs": [
+      {
+        "id": "p1",
+        "name": "A",
+        "tags": [
+          "x"
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "p2",
+        "name": "B",
+        "category": "Z",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "a",
+        "name": "a",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p1"
+      },
+      {
+        "id": "b",
+        "name": "b",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p2"
+      }
+    ]
+  }
+}

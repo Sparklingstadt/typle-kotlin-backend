@@ -4,7 +4,10 @@
 package io.github.sparklingstadt.typle.server.session
 
 object SessionTimes {
-  /** How long a session is valid after it is issued, in seconds. */
+  /**
+   * How long a session is valid after its login, in seconds. It is not renewed, however active the user is, so a cookie
+   * or an app token that is stolen stops working at most this long after the login it came from (typle-r v0.107.0).
+   */
   const val MAX_AGE = 30L * 24 * 3600
 
   /** How long a login may take between leaving for GitHub and coming back, in seconds. */
@@ -12,9 +15,6 @@ object SessionTimes {
 
   /** How long an app has to trade the code of its login for a token, in seconds. */
   const val APP_CODE_MAX_AGE = 120L
-
-  /** A session is sealed again once it is this old, so an active user stays signed in. */
-  const val RENEW_AFTER = 24L * 3600
 }
 
 /** The name of the OAuth state cookie. */
@@ -35,7 +35,13 @@ fun newSession(sub: String, name: String, image: String, nowMillis: Long): Sessi
   return Session(sub, name, image, now, now + SessionTimes.MAX_AGE)
 }
 
-fun Session.needsRenewal(nowMillis: Long): Boolean = nowMillis - issuedAt * 1000 >= SessionTimes.RENEW_AFTER * 1000
+/**
+ * Whether the account's sessions revoked at revokedAt (Store.revokeSessions) include this one, as Go's RevokedBy: those
+ * of a login no later than revokedAt. issuedAt is in whole seconds, so a login in the very second of the revocation
+ * counts as revoked too; that errs on the side of signing someone out.
+ */
+fun Session.revokedBy(revokedAt: java.time.Instant?): Boolean =
+  revokedAt != null && !java.time.Instant.ofEpochSecond(issuedAt).isAfter(revokedAt)
 
 /**
  * __Host- over HTTPS, which makes the browser insist on Secure, Path=/ and no Domain; plain HTTP (local development)

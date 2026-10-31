@@ -1,0 +1,492 @@
+{
+  "id": "spanish-basics",
+  "name": "スペイン語：基礎単語・基礎構文",
+  "words": [
+    {
+      "display": "Soy estudiante.",
+      "input": "Soy estudiante.",
+      "annotation": "Soy estudiante. / 私は学生です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Esto es un libro.",
+      "input": "Esto es un libro.",
+      "annotation": "Esto es un libro. / これは本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Este no es mi libro.",
+      "input": "Este no es mi libro.",
+      "annotation": "Este no es mi libro. / これは私の本ではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "¿Quién es?",
+      "input": "¿Quién es?",
+      "annotation": "¿Quién es? / 誰ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "¿Qué es esto?",
+      "input": "¿Qué es esto?",
+      "annotation": "¿Qué es esto? / これは何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "¿Dónde está el baño?",
+      "input": "¿Dónde está el baño?",
+      "annotation": "¿Dónde está el baño? / トイレはどこですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "¿Cómo se llama usted?",
+      "input": "¿Cómo se llama usted?",
+      "annotation": "¿Cómo se llama usted? / お名前は何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Me llamo Ana.",
+      "input": "Me llamo Ana.",
+      "annotation": "Me llamo Ana. / 私の名前はアナです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Soy de Japón.",
+      "input": "Soy de Japón.",
+      "annotation": "Soy de Japón. / 私は日本出身です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Tengo una pregunta.",
+      "input": "Tengo una pregunta.",
+      "annotation": "Tengo una pregunta. / 質問があります。",
+      "input_type": "word"
+    },
+    {
+      "display": "No tengo tiempo.",
+      "input": "No tengo tiempo.",
+      "annotation": "No tengo tiempo. / 時間がありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Quiero beber agua.",
+      "input": "Quiero beber agua.",
+      "annotation": "Quiero beber agua. / 水を飲みたいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Tengo que irme.",
+      "input": "Tengo que irme.",
+      "annotation": "Tengo que irme. / 私は行かなければなりません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Me gusta la música.",
+      "input": "Me gusta la música.",
+      "annotation": "Me gusta la música. / 私は音楽が好きです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Puedo ayudarle.",
+      "input": "Puedo ayudarle.",
+      "annotation": "Puedo ayudarle. / あなたを手伝えます。",
+      "input_type": "word"
+    },
+    {
+      "display": "¿Puedo entrar?",
+      "input": "¿Puedo entrar?",
+      "annotation": "¿Puedo entrar? / 入ってもいいですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Agua, por favor.",
+      "input": "Agua, por favor.",
+      "annotation": "Agua, por favor. / 水をお願いします。",
+      "input_type": "word"
+    },
+    {
+      "display": "¿Cuánto cuesta esto?",
+      "input": "¿Cuánto cuesta esto?",
+      "annotation": "¿Cuánto cuesta esto? / これはいくらですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "No entiendo.",
+      "input": "No entiendo.",
+      "annotation": "No entiendo. / 理解できません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Repita, por favor.",
+      "input": "Repita, por favor.",
+      "annotation": "Repita, por favor. / もう一度言ってください。",
+      "input_type": "word"
+    },
+    {
+      "display": "yo",
+      "input": "yo",
+      "annotation": "yo / 私",
+      "input_type": "word"
+    },
+    {
+      "display": "tú",
+      "input": "tú",
+      "annotation": "tú / 君、あなた（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "usted",
+      "input": "usted",
+      "annotation": "usted / あなた（丁寧）",
+      "input_type": "word"
+    },
+    {
+      "display": "él",
+      "input": "él",
+      "annotation": "él / 彼",
+      "input_type": "word"
+    },
+    {
+      "display": "ella",
+      "input": "ella",
+      "annotation": "ella / 彼女",
+      "input_type": "word"
+    },
+    {
+      "display": "nosotros / nosotras",
+      "input": "nosotros / nosotras",
+      "annotation": "nosotros / nosotras / 私たち（男性を含む／女性のみ）",
+      "input_type": "word"
+    },
+    {
+      "display": "ellos / ellas",
+      "input": "ellos / ellas",
+      "annotation": "ellos / ellas / 彼ら／彼女ら",
+      "input_type": "word"
+    },
+    {
+      "display": "esto",
+      "input": "esto",
+      "annotation": "esto / これ",
+      "input_type": "word"
+    },
+    {
+      "display": "quién",
+      "input": "quién",
+      "annotation": "quién / 誰",
+      "input_type": "word"
+    },
+    {
+      "display": "qué",
+      "input": "qué",
+      "annotation": "qué / 何",
+      "input_type": "word"
+    },
+    {
+      "display": "dónde",
+      "input": "dónde",
+      "annotation": "dónde / どこで、どこに",
+      "input_type": "word"
+    },
+    {
+      "display": "adónde",
+      "input": "adónde",
+      "annotation": "adónde / どこへ",
+      "input_type": "word"
+    },
+    {
+      "display": "cuándo",
+      "input": "cuándo",
+      "annotation": "cuándo / いつ",
+      "input_type": "word"
+    },
+    {
+      "display": "por qué",
+      "input": "por qué",
+      "annotation": "por qué / なぜ",
+      "input_type": "word"
+    },
+    {
+      "display": "cómo",
+      "input": "cómo",
+      "annotation": "cómo / どのように、どう",
+      "input_type": "word"
+    },
+    {
+      "display": "cuánto",
+      "input": "cuánto",
+      "annotation": "cuánto / いくら、どのくらい",
+      "input_type": "word"
+    },
+    {
+      "display": "sí",
+      "input": "sí",
+      "annotation": "sí / はい",
+      "input_type": "word"
+    },
+    {
+      "display": "no",
+      "input": "no",
+      "annotation": "no / いいえ、～ではない、～しない",
+      "input_type": "word"
+    },
+    {
+      "display": "y",
+      "input": "y",
+      "annotation": "y / ～と、そして",
+      "input_type": "word"
+    },
+    {
+      "display": "pero",
+      "input": "pero",
+      "annotation": "pero / しかし",
+      "input_type": "word"
+    },
+    {
+      "display": "o",
+      "input": "o",
+      "annotation": "o / または",
+      "input_type": "word"
+    },
+    {
+      "display": "aquí",
+      "input": "aquí",
+      "annotation": "aquí / ここで、ここに",
+      "input_type": "word"
+    },
+    {
+      "display": "buenos días",
+      "input": "buenos días",
+      "annotation": "buenos días / おはようございます",
+      "input_type": "word"
+    },
+    {
+      "display": "hola",
+      "input": "hola",
+      "annotation": "hola / こんにちは、やあ",
+      "input_type": "word"
+    },
+    {
+      "display": "gracias",
+      "input": "gracias",
+      "annotation": "gracias / ありがとう",
+      "input_type": "word"
+    },
+    {
+      "display": "por favor",
+      "input": "por favor",
+      "annotation": "por favor / お願いします",
+      "input_type": "word"
+    },
+    {
+      "display": "perdón",
+      "input": "perdón",
+      "annotation": "perdón / すみません、ごめんなさい",
+      "input_type": "word"
+    },
+    {
+      "display": "adiós",
+      "input": "adiós",
+      "annotation": "adiós / さようなら",
+      "input_type": "word"
+    },
+    {
+      "display": "bien",
+      "input": "bien",
+      "annotation": "bien / よく、うまく",
+      "input_type": "word"
+    },
+    {
+      "display": "mal",
+      "input": "mal",
+      "annotation": "mal / 悪く、うまくいかず",
+      "input_type": "word"
+    },
+    {
+      "display": "la persona",
+      "input": "la persona",
+      "annotation": "la persona / 人",
+      "input_type": "word"
+    },
+    {
+      "display": "el amigo / la amiga",
+      "input": "el amigo / la amiga",
+      "annotation": "el amigo / la amiga / 友達（男性／女性）",
+      "input_type": "word"
+    },
+    {
+      "display": "el niño / la niña",
+      "input": "el niño / la niña",
+      "annotation": "el niño / la niña / 子ども、男の子／女の子",
+      "input_type": "word"
+    },
+    {
+      "display": "la familia",
+      "input": "la familia",
+      "annotation": "la familia / 家族",
+      "input_type": "word"
+    },
+    {
+      "display": "la casa",
+      "input": "la casa",
+      "annotation": "la casa / 家",
+      "input_type": "word"
+    },
+    {
+      "display": "la escuela",
+      "input": "la escuela",
+      "annotation": "la escuela / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "el trabajo",
+      "input": "el trabajo",
+      "annotation": "el trabajo / 仕事",
+      "input_type": "word"
+    },
+    {
+      "display": "la tienda",
+      "input": "la tienda",
+      "annotation": "la tienda / 店",
+      "input_type": "word"
+    },
+    {
+      "display": "el libro",
+      "input": "el libro",
+      "annotation": "el libro / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "el agua",
+      "input": "el agua",
+      "annotation": "el agua / 水（女性名詞。単数形では el を使う）",
+      "input_type": "word"
+    },
+    {
+      "display": "el pan",
+      "input": "el pan",
+      "annotation": "el pan / パン",
+      "input_type": "word"
+    },
+    {
+      "display": "la comida",
+      "input": "la comida",
+      "annotation": "la comida / 食べ物、食事",
+      "input_type": "word"
+    },
+    {
+      "display": "el tiempo",
+      "input": "el tiempo",
+      "annotation": "el tiempo / 時間、天気",
+      "input_type": "word"
+    },
+    {
+      "display": "el dinero",
+      "input": "el dinero",
+      "annotation": "el dinero / お金",
+      "input_type": "word"
+    },
+    {
+      "display": "hoy",
+      "input": "hoy",
+      "annotation": "hoy / 今日",
+      "input_type": "word"
+    },
+    {
+      "display": "mañana",
+      "input": "mañana",
+      "annotation": "mañana / 明日、朝",
+      "input_type": "word"
+    },
+    {
+      "display": "ayer",
+      "input": "ayer",
+      "annotation": "ayer / 昨日",
+      "input_type": "word"
+    },
+    {
+      "display": "ahora",
+      "input": "ahora",
+      "annotation": "ahora / 今",
+      "input_type": "word"
+    },
+    {
+      "display": "grande",
+      "input": "grande",
+      "annotation": "grande / 大きい",
+      "input_type": "word"
+    },
+    {
+      "display": "pequeño",
+      "input": "pequeño",
+      "annotation": "pequeño / 小さい（男性単数形）",
+      "input_type": "word"
+    },
+    {
+      "display": "bueno",
+      "input": "bueno",
+      "annotation": "bueno / 良い（男性単数形）",
+      "input_type": "word"
+    },
+    {
+      "display": "nuevo",
+      "input": "nuevo",
+      "annotation": "nuevo / 新しい（男性単数形）",
+      "input_type": "word"
+    },
+    {
+      "display": "ser",
+      "input": "ser",
+      "annotation": "ser / ～である（身元・性質など）",
+      "input_type": "word"
+    },
+    {
+      "display": "hacer",
+      "input": "hacer",
+      "annotation": "hacer / する、作る",
+      "input_type": "word"
+    },
+    {
+      "display": "ir",
+      "input": "ir",
+      "annotation": "ir / 行く",
+      "input_type": "word"
+    },
+    {
+      "display": "hablar",
+      "input": "hablar",
+      "annotation": "hablar / 話す",
+      "input_type": "word"
+    },
+    {
+      "display": "entender",
+      "input": "entender",
+      "annotation": "entender / 理解する",
+      "input_type": "word"
+    },
+    {
+      "display": "saber",
+      "input": "saber",
+      "annotation": "saber / 知っている（事実・方法など）",
+      "input_type": "word"
+    },
+    {
+      "display": "querer",
+      "input": "querer",
+      "annotation": "querer / ～したい、欲しい",
+      "input_type": "word"
+    },
+    {
+      "display": "poder",
+      "input": "poder",
+      "annotation": "poder / ～できる",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-28T13:45:45.844Z",
+  "category": "語学",
+  "tags": [
+    "スペイン語"
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "id": "hono-methods-beginner",
+  "name": "Honoメソッド（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Hono",
+    "TypeScript"
+  ],
+  "group": "Honoメソッド",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "import { Hono } from 'hono';\nconst app = new Hono();",
+      "input": "import {Hono} from 'hono'; const app=new Hono();",
+      "annotation": "Hono / TypeScript：対象環境（現行公式APIで共通的な機能を中心に整理。実行環境・メジャー版・adapterを固定して利用）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.get('/', c => c.text('Hello, Hono!'));",
+      "input": "app.get('/',c=>c.text('Hello, Hono!'));",
+      "annotation": "GET / c.text：テキスト応答（必ずResponse等をreturn）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.post('/users', c => c.json({ id: 1 }, 201));",
+      "input": "app.post('/users',c=>c.json({id:1},201));",
+      "annotation": "c.json / status：JSONとステータス（実際の保存・認証認可・入力検証は別途）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.get('/page', c => c.html('<h1>Hello</h1>'));",
+      "input": "app.get('/page',c=>c.html('<h1>Hello</h1>'));",
+      "annotation": "c.html / c.body：HTML・本文（c.htmlへ未検証入力を直接連結しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.delete('/items/:id', c => c.body(null, 204));",
+      "input": "app.delete('/items/:id',c=>c.body(null,204));",
+      "annotation": "get/post/put/patch/delete：メソッド別ルート（実削除には認可等が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.get('/users/:id', c => c.json({ id: c.req.param('id') }));",
+      "input": "app.get('/users/:id',c=>c.json({id:c.req.param('id')}));",
+      "annotation": "c.req.param：パス引数（文字列。型・範囲を検証）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.get('/old', c => c.redirect('/new', 302));",
+      "input": "app.get('/old',c=>c.redirect('/new',302));",
+      "annotation": "c.redirect：転送（未検証の転送先を使わない）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.notFound(c => c.json({ error: 'not found' }, 404));",
+      "input": "app.notFound(c=>c.json({error:'not found'},404));",
+      "annotation": "c.notFound / app.notFound：404（特定ハンドラーからreturn c.notFound()も可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "export default app;",
+      "input": "export default app;",
+      "annotation": "Workers / Bun等：Fetch入口をexport（ランタイム・デプロイ設定に応じた入口。Nodeはadapter等が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "npm install hono @hono/node-server",
+      "input": "npm install hono @hono/node-server",
+      "annotation": "導入・実行：開発コマンド（Node.jsの例。型検査はtsc等で別途）",
+      "input_type": "command"
+    },
+    {
+      "display": "npm install -D typescript tsx @types/node",
+      "input": "npm install -D typescript tsx @types/node",
+      "annotation": "導入・実行：開発コマンド（Node.jsの例。型検査はtsc等で別途）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx tsx src/index.ts",
+      "input": "npx tsx src/index.ts",
+      "annotation": "導入・実行：開発コマンド（Node.jsの例。型検査はtsc等で別途）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

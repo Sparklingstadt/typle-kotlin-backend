@@ -1,0 +1,492 @@
+{
+  "id": "czech-basics",
+  "name": "チェコ語：基礎単語・基礎構文",
+  "words": [
+    {
+      "display": "Jsem student / studentka.",
+      "input": "Jsem student / studentka.",
+      "annotation": "Jsem student / studentka. / 私は学生です。（男性／女性）",
+      "input_type": "word"
+    },
+    {
+      "display": "To je kniha.",
+      "input": "To je kniha.",
+      "annotation": "To je kniha. / これは本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "To není moje kniha.",
+      "input": "To není moje kniha.",
+      "annotation": "To není moje kniha. / これは私の本ではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Kdo je to?",
+      "input": "Kdo je to?",
+      "annotation": "Kdo je to? / これは誰ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Co je to?",
+      "input": "Co je to?",
+      "annotation": "Co je to? / これは何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Kde je toaleta?",
+      "input": "Kde je toaleta?",
+      "annotation": "Kde je toaleta? / トイレはどこですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Jak se jmenujete?",
+      "input": "Jak se jmenujete?",
+      "annotation": "Jak se jmenujete? / お名前は何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Jmenuji se Anna.",
+      "input": "Jmenuji se Anna.",
+      "annotation": "Jmenuji se Anna. / 私の名前はアンナです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Jsem z Japonska.",
+      "input": "Jsem z Japonska.",
+      "annotation": "Jsem z Japonska. / 私は日本出身です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Mám otázku.",
+      "input": "Mám otázku.",
+      "annotation": "Mám otázku. / 質問があります。",
+      "input_type": "word"
+    },
+    {
+      "display": "Nemám čas.",
+      "input": "Nemám čas.",
+      "annotation": "Nemám čas. / 時間がありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Chci se napít vody.",
+      "input": "Chci se napít vody.",
+      "annotation": "Chci se napít vody. / 水を飲みたいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Musím jít.",
+      "input": "Musím jít.",
+      "annotation": "Musím jít. / 私は行かなければなりません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Mám rád / ráda hudbu.",
+      "input": "Mám rád / ráda hudbu.",
+      "annotation": "Mám rád / ráda hudbu. / 私は音楽が好きです。（話者が男性／女性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Mohu vám pomoci.",
+      "input": "Mohu vám pomoci.",
+      "annotation": "Mohu vám pomoci. / あなたを手伝えます。",
+      "input_type": "word"
+    },
+    {
+      "display": "Mohu vstoupit?",
+      "input": "Mohu vstoupit?",
+      "annotation": "Mohu vstoupit? / 入ってもいいですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Dejte mi prosím vodu.",
+      "input": "Dejte mi prosím vodu.",
+      "annotation": "Dejte mi prosím vodu. / 水をください。",
+      "input_type": "word"
+    },
+    {
+      "display": "Kolik to stojí?",
+      "input": "Kolik to stojí?",
+      "annotation": "Kolik to stojí? / これはいくらですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Nerozumím.",
+      "input": "Nerozumím.",
+      "annotation": "Nerozumím. / 理解できません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Zopakujte to prosím.",
+      "input": "Zopakujte to prosím.",
+      "annotation": "Zopakujte to prosím. / もう一度言ってください。",
+      "input_type": "word"
+    },
+    {
+      "display": "já",
+      "input": "já",
+      "annotation": "já / 私",
+      "input_type": "word"
+    },
+    {
+      "display": "ty",
+      "input": "ty",
+      "annotation": "ty / 君、あなた（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "vy",
+      "input": "vy",
+      "annotation": "vy / あなた（丁寧）、あなたたち",
+      "input_type": "word"
+    },
+    {
+      "display": "on",
+      "input": "on",
+      "annotation": "on / 彼",
+      "input_type": "word"
+    },
+    {
+      "display": "ona",
+      "input": "ona",
+      "annotation": "ona / 彼女",
+      "input_type": "word"
+    },
+    {
+      "display": "my",
+      "input": "my",
+      "annotation": "my / 私たち",
+      "input_type": "word"
+    },
+    {
+      "display": "oni",
+      "input": "oni",
+      "annotation": "oni / 彼ら（男性有生名詞の複数）",
+      "input_type": "word"
+    },
+    {
+      "display": "to",
+      "input": "to",
+      "annotation": "to / それ、これ",
+      "input_type": "word"
+    },
+    {
+      "display": "kdo",
+      "input": "kdo",
+      "annotation": "kdo / 誰",
+      "input_type": "word"
+    },
+    {
+      "display": "co",
+      "input": "co",
+      "annotation": "co / 何",
+      "input_type": "word"
+    },
+    {
+      "display": "kde",
+      "input": "kde",
+      "annotation": "kde / どこで、どこに",
+      "input_type": "word"
+    },
+    {
+      "display": "kam",
+      "input": "kam",
+      "annotation": "kam / どこへ",
+      "input_type": "word"
+    },
+    {
+      "display": "kdy",
+      "input": "kdy",
+      "annotation": "kdy / いつ",
+      "input_type": "word"
+    },
+    {
+      "display": "proč",
+      "input": "proč",
+      "annotation": "proč / なぜ",
+      "input_type": "word"
+    },
+    {
+      "display": "jak",
+      "input": "jak",
+      "annotation": "jak / どのように、どう",
+      "input_type": "word"
+    },
+    {
+      "display": "kolik",
+      "input": "kolik",
+      "annotation": "kolik / いくつ、いくら",
+      "input_type": "word"
+    },
+    {
+      "display": "ano",
+      "input": "ano",
+      "annotation": "ano / はい",
+      "input_type": "word"
+    },
+    {
+      "display": "ne",
+      "input": "ne",
+      "annotation": "ne / いいえ",
+      "input_type": "word"
+    },
+    {
+      "display": "a",
+      "input": "a",
+      "annotation": "a / ～と、そして",
+      "input_type": "word"
+    },
+    {
+      "display": "ale",
+      "input": "ale",
+      "annotation": "ale / しかし",
+      "input_type": "word"
+    },
+    {
+      "display": "nebo",
+      "input": "nebo",
+      "annotation": "nebo / または",
+      "input_type": "word"
+    },
+    {
+      "display": "tady",
+      "input": "tady",
+      "annotation": "tady / ここで、ここに",
+      "input_type": "word"
+    },
+    {
+      "display": "dobrý den",
+      "input": "dobrý den",
+      "annotation": "dobrý den / こんにちは（丁寧な挨拶）",
+      "input_type": "word"
+    },
+    {
+      "display": "ahoj",
+      "input": "ahoj",
+      "annotation": "ahoj / やあ、じゃあね（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "děkuji",
+      "input": "děkuji",
+      "annotation": "děkuji / ありがとう",
+      "input_type": "word"
+    },
+    {
+      "display": "prosím",
+      "input": "prosím",
+      "annotation": "prosím / お願いします、どうぞ、どういたしまして",
+      "input_type": "word"
+    },
+    {
+      "display": "promiňte",
+      "input": "promiňte",
+      "annotation": "promiňte / すみません、ごめんなさい（丁寧）",
+      "input_type": "word"
+    },
+    {
+      "display": "na shledanou",
+      "input": "na shledanou",
+      "annotation": "na shledanou / さようなら",
+      "input_type": "word"
+    },
+    {
+      "display": "dobře",
+      "input": "dobře",
+      "annotation": "dobře / よく、うまく",
+      "input_type": "word"
+    },
+    {
+      "display": "špatně",
+      "input": "špatně",
+      "annotation": "špatně / 悪く、うまくいかず",
+      "input_type": "word"
+    },
+    {
+      "display": "člověk",
+      "input": "člověk",
+      "annotation": "člověk / 人、人間",
+      "input_type": "word"
+    },
+    {
+      "display": "kamarád / kamarádka",
+      "input": "kamarád / kamarádka",
+      "annotation": "kamarád / kamarádka / 友達（男性／女性）",
+      "input_type": "word"
+    },
+    {
+      "display": "dítě",
+      "input": "dítě",
+      "annotation": "dítě / 子ども",
+      "input_type": "word"
+    },
+    {
+      "display": "rodina",
+      "input": "rodina",
+      "annotation": "rodina / 家族",
+      "input_type": "word"
+    },
+    {
+      "display": "dům",
+      "input": "dům",
+      "annotation": "dům / 家",
+      "input_type": "word"
+    },
+    {
+      "display": "škola",
+      "input": "škola",
+      "annotation": "škola / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "práce",
+      "input": "práce",
+      "annotation": "práce / 仕事",
+      "input_type": "word"
+    },
+    {
+      "display": "obchod",
+      "input": "obchod",
+      "annotation": "obchod / 店",
+      "input_type": "word"
+    },
+    {
+      "display": "kniha",
+      "input": "kniha",
+      "annotation": "kniha / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "voda",
+      "input": "voda",
+      "annotation": "voda / 水",
+      "input_type": "word"
+    },
+    {
+      "display": "chléb",
+      "input": "chléb",
+      "annotation": "chléb / パン",
+      "input_type": "word"
+    },
+    {
+      "display": "jídlo",
+      "input": "jídlo",
+      "annotation": "jídlo / 食べ物、食事",
+      "input_type": "word"
+    },
+    {
+      "display": "čas",
+      "input": "čas",
+      "annotation": "čas / 時間",
+      "input_type": "word"
+    },
+    {
+      "display": "peníze",
+      "input": "peníze",
+      "annotation": "peníze / お金",
+      "input_type": "word"
+    },
+    {
+      "display": "dnes",
+      "input": "dnes",
+      "annotation": "dnes / 今日",
+      "input_type": "word"
+    },
+    {
+      "display": "zítra",
+      "input": "zítra",
+      "annotation": "zítra / 明日",
+      "input_type": "word"
+    },
+    {
+      "display": "včera",
+      "input": "včera",
+      "annotation": "včera / 昨日",
+      "input_type": "word"
+    },
+    {
+      "display": "teď",
+      "input": "teď",
+      "annotation": "teď / 今",
+      "input_type": "word"
+    },
+    {
+      "display": "velký",
+      "input": "velký",
+      "annotation": "velký / 大きい",
+      "input_type": "word"
+    },
+    {
+      "display": "malý",
+      "input": "malý",
+      "annotation": "malý / 小さい",
+      "input_type": "word"
+    },
+    {
+      "display": "dobrý",
+      "input": "dobrý",
+      "annotation": "dobrý / 良い",
+      "input_type": "word"
+    },
+    {
+      "display": "nový",
+      "input": "nový",
+      "annotation": "nový / 新しい",
+      "input_type": "word"
+    },
+    {
+      "display": "být",
+      "input": "být",
+      "annotation": "být / ～である、いる、ある",
+      "input_type": "word"
+    },
+    {
+      "display": "dělat",
+      "input": "dělat",
+      "annotation": "dělat / する、作る",
+      "input_type": "word"
+    },
+    {
+      "display": "jít",
+      "input": "jít",
+      "annotation": "jít / 歩いて行く",
+      "input_type": "word"
+    },
+    {
+      "display": "mluvit",
+      "input": "mluvit",
+      "annotation": "mluvit / 話す",
+      "input_type": "word"
+    },
+    {
+      "display": "rozumět",
+      "input": "rozumět",
+      "annotation": "rozumět / 理解する",
+      "input_type": "word"
+    },
+    {
+      "display": "vědět",
+      "input": "vědět",
+      "annotation": "vědět / 知っている（事実など）",
+      "input_type": "word"
+    },
+    {
+      "display": "chtít",
+      "input": "chtít",
+      "annotation": "chtít / ～したい、欲しい",
+      "input_type": "word"
+    },
+    {
+      "display": "moci",
+      "input": "moci",
+      "annotation": "moci / ～できる",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-28T13:45:45.844Z",
+  "category": "語学",
+  "tags": [
+    "チェコ語"
+  ]
+}

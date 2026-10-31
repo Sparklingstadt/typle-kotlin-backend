@@ -1,0 +1,799 @@
+{
+  "id": "3099bf52-7790-49b0-841d-5230d7d3dd68",
+  "name": "Linuxコマンド：応用",
+  "category": "プログラミング",
+  "tags": [
+    "Linux",
+    "シェル"
+  ],
+  "words": [
+    {
+      "display": "lsblk -f",
+      "input": "lsblk -f",
+      "annotation": "lsblk（List Block Devices）：ディスクやパーティション一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo blkid",
+      "input": "sudo blkid",
+      "annotation": "blkid（Block ID）：UUIDやファイルシステム形式確認",
+      "input_type": "command"
+    },
+    {
+      "display": "mount /dev/sdb1 /mnt",
+      "input": "mount /dev/sdb1 /mnt",
+      "annotation": "mount（Mount）：ファイルシステムのマウント",
+      "input_type": "command"
+    },
+    {
+      "display": "umount /mnt",
+      "input": "umount /mnt",
+      "annotation": "umount（Unmount）：マウント解除",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo fdisk -l",
+      "input": "sudo fdisk -l",
+      "annotation": "fdisk（Fixed Disk）：パーティション操作",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo parted -l",
+      "input": "sudo parted -l",
+      "annotation": "parted（Partition Editor）：パーティション管理",
+      "input_type": "command"
+    },
+    {
+      "display": "mkfs.ext4 /dev/sdb1",
+      "input": "mkfs.ext4 /dev/sdb1",
+      "annotation": "mkfs（Make Filesystem）：ファイルシステム作成",
+      "input_type": "command"
+    },
+    {
+      "display": "fsck /dev/sdb1",
+      "input": "fsck /dev/sdb1",
+      "annotation": "fsck（Filesystem Check）：ファイルシステム検査",
+      "input_type": "command"
+    },
+    {
+      "display": "swapon --show",
+      "input": "swapon --show",
+      "annotation": "swapon（Swap On）：スワップ有効化",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo swapoff /swapfile",
+      "input": "sudo swapoff /swapfile",
+      "annotation": "swapoff（Swap Off）：スワップ無効化",
+      "input_type": "command"
+    },
+    {
+      "display": "iostat -xz 1",
+      "input": "iostat -xz 1",
+      "annotation": "iostat（I/O Statistics）：ディスク入出力性能確認",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo iotop",
+      "input": "sudo iotop",
+      "annotation": "iotop（I/O Top）：プロセス単位のI/O監視",
+      "input_type": "command"
+    },
+    {
+      "display": "lscpu",
+      "input": "lscpu",
+      "annotation": "List CPU：CPUの詳細情報",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo lshw -short",
+      "input": "sudo lshw -short",
+      "annotation": "lshw（List Hardware）：ハードウェア情報",
+      "input_type": "command"
+    },
+    {
+      "display": "lspci",
+      "input": "lspci",
+      "annotation": "List PCI：PCIデバイス一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "lsusb",
+      "input": "lsusb",
+      "annotation": "List USB：USBデバイス一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "lsmod",
+      "input": "lsmod",
+      "annotation": "List Modules：カーネルモジュール一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo modprobe overlay",
+      "input": "sudo modprobe overlay",
+      "annotation": "modprobe（Module Probe）：カーネルモジュール読み込み",
+      "input_type": "command"
+    },
+    {
+      "display": "vmstat 1",
+      "input": "vmstat 1",
+      "annotation": "vmstat（Virtual Memory Statistics）：メモリ・CPU・I/Oの統計",
+      "input_type": "command"
+    },
+    {
+      "display": "mpstat -P ALL 1",
+      "input": "mpstat -P ALL 1",
+      "annotation": "mpstat（Multiprocessor Statistics）：CPUコア別使用状況",
+      "input_type": "command"
+    },
+    {
+      "display": "sar -u 1 5",
+      "input": "sar -u 1 5",
+      "annotation": "sar（System Activity Reporter）：システム統計の収集・表示",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo dmesg -T",
+      "input": "sudo dmesg -T",
+      "annotation": "dmesg（Diagnostic Messages）：カーネルログの確認",
+      "input_type": "command"
+    },
+    {
+      "display": "sensors",
+      "input": "sensors",
+      "annotation": "Sensors：CPU温度などの監視",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo tcpdump -i eth0",
+      "input": "sudo tcpdump -i eth0",
+      "annotation": "tcpdump（TCP Dump）：ネットワークパケットを取得",
+      "input_type": "command"
+    },
+    {
+      "display": "nmap localhost",
+      "input": "nmap localhost",
+      "annotation": "nmap（Network Mapper）：ポート・ホスト調査",
+      "input_type": "command"
+    },
+    {
+      "display": "nc -vz localhost 5432",
+      "input": "nc -vz localhost 5432",
+      "annotation": "nc（Netcat）：TCP・UDP通信や接続確認",
+      "input_type": "command"
+    },
+    {
+      "display": "telnet localhost 80",
+      "input": "telnet localhost 80",
+      "annotation": "telnet（Teletype Network）：TCP接続テストなど",
+      "input_type": "command"
+    },
+    {
+      "display": "mtr example.com",
+      "input": "mtr example.com",
+      "annotation": "mtr（My Traceroute）：pingと経路調査を組み合わせる",
+      "input_type": "command"
+    },
+    {
+      "display": "ethtool eth0",
+      "input": "ethtool eth0",
+      "annotation": "ethtool（Ethernet Tool）：NICの速度・リンク情報",
+      "input_type": "command"
+    },
+    {
+      "display": "nmcli device status",
+      "input": "nmcli device status",
+      "annotation": "nmcli（NetworkManager CLI）：ネットワーク設定管理",
+      "input_type": "command"
+    },
+    {
+      "display": "resolvectl status",
+      "input": "resolvectl status",
+      "annotation": "resolvectl（Resolver Control）：DNS設定・名前解決確認",
+      "input_type": "command"
+    },
+    {
+      "display": "hostnamectl",
+      "input": "hostnamectl",
+      "annotation": "Hostname Control：ホスト名・OS情報管理",
+      "input_type": "command"
+    },
+    {
+      "display": "ipcalc 192.168.1.0/24",
+      "input": "ipcalc 192.168.1.0/24",
+      "annotation": "ipcalc（IP Calculator）：IPアドレスとサブネット計算",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl start nginx",
+      "input": "sudo systemctl start nginx",
+      "annotation": "systemctl start：サービス起動",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl stop nginx",
+      "input": "sudo systemctl stop nginx",
+      "annotation": "systemctl stop：サービス停止",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl restart nginx",
+      "input": "sudo systemctl restart nginx",
+      "annotation": "systemctl restart：サービス再起動",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl reload nginx",
+      "input": "sudo systemctl reload nginx",
+      "annotation": "systemctl reload：再起動せずに設定再読み込みを要求",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl enable nginx",
+      "input": "sudo systemctl enable nginx",
+      "annotation": "systemctl enable：起動時に自動開始するよう設定",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl disable nginx",
+      "input": "sudo systemctl disable nginx",
+      "annotation": "systemctl disable：自動起動を無効化",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl is-active nginx",
+      "input": "systemctl is-active nginx",
+      "annotation": "systemctl is-active：サービス稼働確認",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl is-enabled nginx",
+      "input": "systemctl is-enabled nginx",
+      "annotation": "systemctl is-enabled：自動起動設定確認",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl list-units --type=service",
+      "input": "systemctl list-units --type=service",
+      "annotation": "systemctl list-units：Unit一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl daemon-reload",
+      "input": "sudo systemctl daemon-reload",
+      "annotation": "systemctl daemon-reload：Unit定義を再読み込み",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl --since \"1 hour ago\"",
+      "input": "journalctl --since \"1 hour ago\"",
+      "annotation": "journalctl --since：指定日時以降のログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -p err -b",
+      "input": "journalctl -p err -b",
+      "annotation": "journalctl -p：優先度別ログ",
+      "input_type": "command"
+    },
+    {
+      "display": "pgrep -a node",
+      "input": "pgrep -a node",
+      "annotation": "pgrep（Process Grep）：名前などからPIDを検索",
+      "input_type": "command"
+    },
+    {
+      "display": "pstree -p",
+      "input": "pstree -p",
+      "annotation": "pstree（Process Tree）：プロセスをツリー表示",
+      "input_type": "command"
+    },
+    {
+      "display": "pidof nginx",
+      "input": "pidof nginx",
+      "annotation": "pidof（Process ID Of）：プログラムのPID確認",
+      "input_type": "command"
+    },
+    {
+      "display": "lsof -i :3000",
+      "input": "lsof -i :3000",
+      "annotation": "lsof（List Open Files）：プロセスが開くファイルやソケット確認",
+      "input_type": "command"
+    },
+    {
+      "display": "fuser -n tcp 3000",
+      "input": "fuser -n tcp 3000",
+      "annotation": "fuser（File User）：ファイル・ポート使用プロセス確認",
+      "input_type": "command"
+    },
+    {
+      "display": "strace -p 1234",
+      "input": "strace -p 1234",
+      "annotation": "strace（System Call Trace）：システムコール追跡",
+      "input_type": "command"
+    },
+    {
+      "display": "ltrace ./app",
+      "input": "ltrace ./app",
+      "annotation": "ltrace（Library Call Trace）：ライブラリ呼び出し追跡",
+      "input_type": "command"
+    },
+    {
+      "display": "nice -n 10 ./script.sh",
+      "input": "nice -n 10 ./script.sh",
+      "annotation": "nice（Nice）：優先度を指定して実行",
+      "input_type": "command"
+    },
+    {
+      "display": "renice 10 -p 1234",
+      "input": "renice 10 -p 1234",
+      "annotation": "renice（Re-nice）：実行中プロセスの優先度変更",
+      "input_type": "command"
+    },
+    {
+      "display": "timeout 30s command",
+      "input": "timeout 30s command",
+      "annotation": "timeout（Timeout）：指定時間でコマンドを終了させる",
+      "input_type": "command"
+    },
+    {
+      "display": "watch -n 2 free -h",
+      "input": "watch -n 2 free -h",
+      "annotation": "watch（Watch）：コマンドを定期実行",
+      "input_type": "command"
+    },
+    {
+      "display": "time npm run build",
+      "input": "time npm run build",
+      "annotation": "time（Time）：コマンド実行時間を測定",
+      "input_type": "command"
+    },
+    {
+      "display": "printenv PATH",
+      "input": "printenv PATH",
+      "annotation": "printenv（Print Environment）：環境変数を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "unset MY_VAR",
+      "input": "unset MY_VAR",
+      "annotation": "unset（Unset）：変数や関数を削除",
+      "input_type": "command"
+    },
+    {
+      "display": "set -e",
+      "input": "set -e",
+      "annotation": "set（Set）：シェルオプション・変数管理",
+      "input_type": "command"
+    },
+    {
+      "display": "source ~/.bashrc",
+      "input": "source ~/.bashrc",
+      "annotation": "source（Source）：現在のシェルでスクリプト実行",
+      "input_type": "command"
+    },
+    {
+      "display": "exec bash",
+      "input": "exec bash",
+      "annotation": "exec（Execute）：現在のプロセスをコマンドで置換",
+      "input_type": "command"
+    },
+    {
+      "display": "read -r name",
+      "input": "read -r name",
+      "annotation": "read（Read）：標準入力から値を読み取る",
+      "input_type": "command"
+    },
+    {
+      "display": "printf '%s\\n' hello",
+      "input": "printf '%s\\n' hello",
+      "annotation": "printf（Print Formatted）：書式指定出力",
+      "input_type": "command"
+    },
+    {
+      "display": "printf '%s\\n' a b | xargs echo",
+      "input": "printf '%s\\n' a b | xargs echo",
+      "annotation": "xargs（Extended Arguments）：標準入力をコマンド引数に変換",
+      "input_type": "command"
+    },
+    {
+      "display": "basename /app/file.txt",
+      "input": "basename /app/file.txt",
+      "annotation": "basename（Base Name）：パスの最後の構成要素を取得",
+      "input_type": "command"
+    },
+    {
+      "display": "dirname /app/file.txt",
+      "input": "dirname /app/file.txt",
+      "annotation": "dirname（Directory Name）：パスの親ディレクトリを取得",
+      "input_type": "command"
+    },
+    {
+      "display": "realpath ./src",
+      "input": "realpath ./src",
+      "annotation": "realpath（Real Path）：絶対パスの正規化",
+      "input_type": "command"
+    },
+    {
+      "display": "readlink -f ./link",
+      "input": "readlink -f ./link",
+      "annotation": "readlink（Read Link）：シンボリックリンクの参照先表示",
+      "input_type": "command"
+    },
+    {
+      "display": "seq 1 10",
+      "input": "seq 1 10",
+      "annotation": "seq（Sequence）：連番を生成",
+      "input_type": "command"
+    },
+    {
+      "display": "sleep 5",
+      "input": "sleep 5",
+      "annotation": "sleep（Sleep）：指定時間だけ待機",
+      "input_type": "command"
+    },
+    {
+      "display": "test -f package.json",
+      "input": "test -f package.json",
+      "annotation": "test（Test）：条件判定",
+      "input_type": "command"
+    },
+    {
+      "display": "crontab -e",
+      "input": "crontab -e",
+      "annotation": "crontab（Cron Table）：定期実行設定",
+      "input_type": "command"
+    },
+    {
+      "display": "at 23:00",
+      "input": "at 23:00",
+      "annotation": "at（At）：指定時刻に1回実行",
+      "input_type": "command"
+    },
+    {
+      "display": "atq",
+      "input": "atq",
+      "annotation": "At Queue：予約ジョブ一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "atrm 3",
+      "input": "atrm 3",
+      "annotation": "atrm（At Remove）：予約ジョブ削除",
+      "input_type": "command"
+    },
+    {
+      "display": "batch",
+      "input": "batch",
+      "annotation": "Batch：システム負荷を考慮してジョブ実行",
+      "input_type": "command"
+    },
+    {
+      "display": "systemd-run --on-active=5m /path/to/script",
+      "input": "systemd-run --on-active=5m /path/to/script",
+      "annotation": "systemd-run（Systemd Run）：一時的なUnitやタイマーを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo ufw status",
+      "input": "sudo ufw status",
+      "annotation": "ufw（Uncomplicated Firewall）：ファイアウォール管理",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo firewall-cmd --list-all",
+      "input": "sudo firewall-cmd --list-all",
+      "annotation": "firewall-cmd（Firewall Command）：firewalld操作",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo nft list ruleset",
+      "input": "sudo nft list ruleset",
+      "annotation": "nft（nftables）：パケットフィルタリング管理",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo iptables -L",
+      "input": "sudo iptables -L",
+      "annotation": "iptables（IP Tables）：従来型のファイアウォール管理",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh-keygen -t ed25519",
+      "input": "ssh-keygen -t ed25519",
+      "annotation": "ssh-keygen（SSH Key Generator）：SSH鍵ペア作成",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh-copy-id user@server",
+      "input": "ssh-copy-id user@server",
+      "annotation": "ssh-copy-id（SSH Copy ID）：公開鍵を接続先へ登録",
+      "input_type": "command"
+    },
+    {
+      "display": "openssl version",
+      "input": "openssl version",
+      "annotation": "openssl（OpenSSL）：証明書・暗号関連操作",
+      "input_type": "command"
+    },
+    {
+      "display": "sha256sum file.zip",
+      "input": "sha256sum file.zip",
+      "annotation": "sha256sum（SHA-256 Checksum）：ファイルのハッシュ算出",
+      "input_type": "command"
+    },
+    {
+      "display": "getfacl file",
+      "input": "getfacl file",
+      "annotation": "getfacl（Get File ACL）：詳細アクセス権を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "setfacl -m u:alice:r file",
+      "input": "setfacl -m u:alice:r file",
+      "annotation": "setfacl（Set File ACL）：詳細アクセス権を設定",
+      "input_type": "command"
+    },
+    {
+      "display": "docker ps",
+      "input": "docker ps",
+      "annotation": "実行中コンテナ一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "docker ps -a",
+      "input": "docker ps -a",
+      "annotation": "停止中を含めた一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "docker images",
+      "input": "docker images",
+      "annotation": "ローカルイメージ一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "docker build -t myapp .",
+      "input": "docker build -t myapp .",
+      "annotation": "docker build：イメージをビルド",
+      "input_type": "command"
+    },
+    {
+      "display": "docker run -d -p 3000:3000 myapp",
+      "input": "docker run -d -p 3000:3000 myapp",
+      "annotation": "docker run：コンテナ新規作成・起動",
+      "input_type": "command"
+    },
+    {
+      "display": "docker exec -it myapp sh",
+      "input": "docker exec -it myapp sh",
+      "annotation": "docker exec：起動中コンテナ内でコマンド実行",
+      "input_type": "command"
+    },
+    {
+      "display": "docker logs -f myapp",
+      "input": "docker logs -f myapp",
+      "annotation": "docker logs：コンテナログ確認",
+      "input_type": "command"
+    },
+    {
+      "display": "docker inspect myapp",
+      "input": "docker inspect myapp",
+      "annotation": "docker inspect：詳細設定・状態確認",
+      "input_type": "command"
+    },
+    {
+      "display": "docker stats",
+      "input": "docker stats",
+      "annotation": "リソース使用状況確認",
+      "input_type": "command"
+    },
+    {
+      "display": "docker stop myapp",
+      "input": "docker stop myapp",
+      "annotation": "docker stop：コンテナ停止",
+      "input_type": "command"
+    },
+    {
+      "display": "docker rm myapp",
+      "input": "docker rm myapp",
+      "annotation": "docker rm：コンテナ削除",
+      "input_type": "command"
+    },
+    {
+      "display": "docker compose up -d",
+      "input": "docker compose up -d",
+      "annotation": "docker compose up：Compose構成でコンテナ起動",
+      "input_type": "command"
+    },
+    {
+      "display": "docker compose down",
+      "input": "docker compose down",
+      "annotation": "Compose構成のコンテナなどを停止・削除",
+      "input_type": "command"
+    },
+    {
+      "display": "docker compose logs -f",
+      "input": "docker compose logs -f",
+      "annotation": "docker compose logs：Composeのログ確認",
+      "input_type": "command"
+    },
+    {
+      "display": "psql -U postgres -d mydb",
+      "input": "psql -U postgres -d mydb",
+      "annotation": "psql（PostgreSQL Interactive Terminal）：PostgreSQL接続・SQL実行",
+      "input_type": "command"
+    },
+    {
+      "display": "createdb mydb",
+      "input": "createdb mydb",
+      "annotation": "createdb（Create Database）：DB作成",
+      "input_type": "command"
+    },
+    {
+      "display": "dropdb mydb",
+      "input": "dropdb mydb",
+      "annotation": "dropdb（Drop Database）：DB削除",
+      "input_type": "command"
+    },
+    {
+      "display": "pg_dump -Fc mydb > backup.dump",
+      "input": "pg_dump -Fc mydb > backup.dump",
+      "annotation": "pg_dump（PostgreSQL Dump）：データベースバックアップ",
+      "input_type": "command"
+    },
+    {
+      "display": "pg_restore -d mydb backup.dump",
+      "input": "pg_restore -d mydb backup.dump",
+      "annotation": "pg_restore（PostgreSQL Restore）：バックアップから復元",
+      "input_type": "command"
+    },
+    {
+      "display": "pg_isready -h localhost -p 5432",
+      "input": "pg_isready -h localhost -p 5432",
+      "annotation": "pg_isready（PostgreSQL Is Ready）：DB接続可能状態の確認",
+      "input_type": "command"
+    },
+    {
+      "display": "mysql -u root -p",
+      "input": "mysql -u root -p",
+      "annotation": "mysql（MySQL Client）：MySQL接続",
+      "input_type": "command"
+    },
+    {
+      "display": "sqlite3 app.db",
+      "input": "sqlite3 app.db",
+      "annotation": "sqlite3（SQLite CLI）：SQLite操作",
+      "input_type": "command"
+    },
+    {
+      "display": "redis-cli ping",
+      "input": "redis-cli ping",
+      "annotation": "redis-cli（Redis CLI）：Redis操作",
+      "input_type": "command"
+    },
+    {
+      "display": "\\l",
+      "input": "\\l",
+      "annotation": "データベース一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "\\c",
+      "input": "\\c",
+      "annotation": "データベース切り替え",
+      "input_type": "command"
+    },
+    {
+      "display": "\\dt",
+      "input": "\\dt",
+      "annotation": "テーブル一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "\\d users",
+      "input": "\\d users",
+      "annotation": "テーブル構造確認",
+      "input_type": "command"
+    },
+    {
+      "display": "\\du",
+      "input": "\\du",
+      "annotation": "ロール一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "\\conninfo",
+      "input": "\\conninfo",
+      "annotation": "現在の接続情報",
+      "input_type": "command"
+    },
+    {
+      "display": "\\timing",
+      "input": "\\timing",
+      "annotation": "クエリ実行時間の表示切り替え",
+      "input_type": "command"
+    },
+    {
+      "display": "\\q",
+      "input": "\\q",
+      "annotation": "psql終了",
+      "input_type": "command"
+    },
+    {
+      "display": "tree -L 2",
+      "input": "tree -L 2",
+      "annotation": "tree（Tree）：ディレクトリ構造をツリー表示",
+      "input_type": "command"
+    },
+    {
+      "display": "rg \"TODO\" src/",
+      "input": "rg \"TODO\" src/",
+      "annotation": "rg（Ripgrep）：高速なテキスト検索",
+      "input_type": "command"
+    },
+    {
+      "display": "fd '\\.tsx$'",
+      "input": "fd '\\.tsx$'",
+      "annotation": "fd（Findの代替）：高速なファイル検索",
+      "input_type": "command"
+    },
+    {
+      "display": "jq '.name' package.json",
+      "input": "jq '.name' package.json",
+      "annotation": "jq（JSON Query）：JSONの整形・抽出",
+      "input_type": "command"
+    },
+    {
+      "display": "yq '.services' compose.yaml",
+      "input": "yq '.services' compose.yaml",
+      "annotation": "yq（YAML Query）：YAMLの抽出・加工",
+      "input_type": "command"
+    },
+    {
+      "display": "history | fzf",
+      "input": "history | fzf",
+      "annotation": "fzf（Fuzzy Finder）：対話的な曖昧検索",
+      "input_type": "command"
+    },
+    {
+      "display": "bat index.ts",
+      "input": "bat index.ts",
+      "annotation": "bat（catの拡張）：シンタックスハイライト付き表示",
+      "input_type": "command"
+    },
+    {
+      "display": "btop",
+      "input": "btop",
+      "annotation": "システム監視ツール：CPU・メモリ・プロセスの可視化",
+      "input_type": "command"
+    },
+    {
+      "display": "tldr tar",
+      "input": "tldr tar",
+      "annotation": "tldr（Too Long; Didn't Read）：コマンドの簡潔な使用例",
+      "input_type": "command"
+    },
+    {
+      "display": "shellcheck script.sh",
+      "input": "shellcheck script.sh",
+      "annotation": "shellcheck（Shell Check）：シェルスクリプトの静的解析",
+      "input_type": "command"
+    },
+    {
+      "display": "shfmt -w script.sh",
+      "input": "shfmt -w script.sh",
+      "annotation": "shfmt（Shell Format）：シェルスクリプト整形",
+      "input_type": "command"
+    },
+    {
+      "display": "hyperfine 'npm run build'",
+      "input": "hyperfine 'npm run build'",
+      "annotation": "hyperfine（ベンチマークツール）：コマンド実行速度比較",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:09:07.105Z"
+}

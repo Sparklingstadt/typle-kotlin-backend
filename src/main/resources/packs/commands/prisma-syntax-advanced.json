@@ -1,0 +1,209 @@
+{
+  "id": "prisma-syntax-advanced",
+  "name": "Prisma構文（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Prisma",
+    "TypeScript"
+  ],
+  "group": "Prisma構文",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  name      String?\n  age       Int?\n  active    Boolean  @default(true)\n  createdAt DateTime @default(now())\n  tags      String[]\n  profile   Json?\n  posts     Post[]\n}\n\nmodel Post {\n  id        Int     @id @default(autoincrement())\n  title     String\n  published Boolean @default(false)\n  authorId  Int\n  author    User    @relation(fields: [authorId], references: [id])\n}",
+      "input": "generator client { provider = \"prisma-client\" output = \"../src/generated/prisma\" } datasource db { provider = \"postgresql\" } model User { id Int @id @default(autoincrement()) email String @unique name String? age Int? active Boolean @default(true) createdAt DateTime @default(now()) tags String[] profile Json? posts Post[] } model Post { id Int @id @default(autoincrement()) title String published Boolean @default(false) authorId Int author User @relation(fields: [authorId], references: [id]) }",
+      "annotation": "サンプルschema.prisma：クエリ例に使うモデル（PostgreSQL向け。Client生成・マイグレーションが必要。コード例は独立した断片）",
+      "input_type": "code"
+    },
+    {
+      "display": "import \"dotenv/config\";\nimport { defineConfig, env } from \"prisma/config\";\nexport default defineConfig({\n  schema: \"prisma/schema.prisma\",\n  migrations: { path: \"prisma/migrations\" },\n  datasource: { url: env(\"DATABASE_URL\") }\n});",
+      "input": "import \"dotenv/config\"; import { defineConfig, env } from \"prisma/config\"; export default defineConfig({ schema: \"prisma/schema.prisma\", migrations: { path: \"prisma/migrations\" }, datasource: { url: env(\"DATABASE_URL\") } });",
+      "annotation": "prisma.config.ts：CLIの接続設定（Prisma 7の例。dotenv等の依存とDATABASE_URLが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "import \"dotenv/config\";\nimport { PrismaClient } from \"./generated/prisma/client\";\nimport { PrismaPg } from \"@prisma/adapter-pg\";\nconst connectionString = process.env.DATABASE_URL;\nif (!connectionString)\n  throw new Error(\"DATABASE_URL is required\");\nconst adapter = new PrismaPg({ connectionString });\nconst prisma = new PrismaClient({ adapter });",
+      "input": "import \"dotenv/config\"; import { PrismaClient } from \"./generated/prisma/client\"; import { PrismaPg } from \"@prisma/adapter-pg\"; const connectionString = process.env.DATABASE_URL; if (!connectionString) throw new Error(\"DATABASE_URL is required\"); const adapter = new PrismaPg({ connectionString }); const prisma = new PrismaClient({ adapter });",
+      "annotation": "PrismaClient / adapter：PostgreSQLに接続するClient（src/db.tsを想定。生成先・拡張子等は環境に合わせる。Prisma 7の通常の直接接続向け）",
+      "input_type": "code"
+    },
+    {
+      "display": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}",
+      "input": "generator client { provider = \"prisma-client\" output = \"../src/generated/prisma\" }",
+      "annotation": "generator：Client生成方法を指定（Prisma 7ではoutput指定が必要。schema.prismaに記述）",
+      "input_type": "code"
+    },
+    {
+      "display": "const user = await prisma.user.findUniqueOrThrow({ where: { id: 1 } });",
+      "input": "const user = await prisma.user.findUniqueOrThrow({ where: { id: 1 } });",
+      "annotation": "findUniqueOrThrow：なければ例外",
+      "input_type": "code"
+    },
+    {
+      "display": "const user = await prisma.user.findFirst({ where: { active: true }, orderBy: { id: 'asc' } });",
+      "input": "const user = await prisma.user.findFirst({ where: { active: true }, orderBy: { id: 'asc' } });",
+      "annotation": "findFirst：条件に合う先頭の1件（なければnull。順序が必要ならorderBy）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({\n  where: {\n    active: true,\n    OR: [{ age: { gte: 20 } },\n      { age: null }]\n  }\n});",
+      "input": "await prisma.user.findMany({ where: { active: true, OR: [{ age: { gte: 20 } }, { age: null }] } });",
+      "annotation": "AND / OR / NOT：条件の組合せ",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ where: { id: { in: [1, 2, 3] } } });",
+      "input": "await prisma.user.findMany({ where: { id: { in: [1, 2, 3] } } });",
+      "annotation": "in / notIn：候補で絞る（NULLの扱いに注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({\n  where: {\n    email: { contains: 'example.com', mode: 'insensitive' }\n  }\n});",
+      "input": "await prisma.user.findMany({ where: { email: { contains: 'example.com', mode: 'insensitive' } } });",
+      "annotation": "contains / mode：文字列部分一致（modeはPostgreSQL向け。DBによって対応が異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findUnique({ where: { id: 1 }, include: { posts: true } });",
+      "input": "await prisma.user.findUnique({ where: { id: 1 }, include: { posts: true } });",
+      "annotation": "include：関連データを取得（関連件数・クエリ負荷に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ where: { posts: { some: { published: true } } } });",
+      "input": "await prisma.user.findMany({ where: { posts: { some: { published: true } } } });",
+      "annotation": "relation some：関連行の存在条件（none・every等もある。everyは関連0件でも真）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ orderBy: [{ createdAt: 'desc' }, { id: 'desc' }] });",
+      "input": "await prisma.user.findMany({ orderBy: [{ createdAt: 'desc' }, { id: 'desc' }] });",
+      "annotation": "orderBy：並べ替え",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ orderBy: { id: 'asc' }, skip: 20, take: 10 });",
+      "input": "await prisma.user.findMany({ orderBy: { id: 'asc' }, skip: 20, take: 10 });",
+      "annotation": "skip / take：件数とオフセット（大きいskipの負荷に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({\n  cursor: { id: 100 },\n  skip: 1,\n  take: 10,\n  orderBy: { id: 'asc' }\n});",
+      "input": "await prisma.user.findMany({ cursor: { id: 100 }, skip: 1, take: 10, orderBy: { id: 'asc' } });",
+      "annotation": "cursor：カーソルページング（一意なカーソル等と順序を整合させる）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ distinct: ['name'], select: {\n    name: true\n  } });",
+      "input": "await prisma.user.findMany({ distinct: ['name'], select: { name: true } });",
+      "annotation": "distinct：重複を除いた結果（DB側のSELECT DISTINCTと同じ実装とは限らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.aggregate({ _avg: { age: true }, _max: { age: true } });",
+      "input": "await prisma.user.aggregate({ _avg: { age: true }, _max: { age: true } });",
+      "annotation": "aggregate：集計（対象なし・NULLでは集計値がnullの場合）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.post.groupBy({ by: ['authorId'], _count: { _all: true } });",
+      "input": "await prisma.post.groupBy({ by: ['authorId'], _count: { _all: true } });",
+      "annotation": "groupBy：グループ集計",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.create({\n  data: { email: 'pomo@example.com', name: 'Pomo', tags: [] }\n});",
+      "input": "await prisma.user.create({ data: { email: 'pomo@example.com', name: 'Pomo', tags: [] } });",
+      "annotation": "create：1件追加（一意制約競合で失敗し得る）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.createMany({\n  data: [{ email: 'a@example.com', tags: [] },\n    { email: 'b@example.com', tags: [] }],\n  skipDuplicates: true\n});",
+      "input": "await prisma.user.createMany({ data: [{ email: 'a@example.com', tags: [] }, { email: 'b@example.com', tags: [] }], skipDuplicates: true });",
+      "annotation": "createMany：複数件追加（skipDuplicatesは対応DBに依存。例はPostgreSQL）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.createManyAndReturn({ data: [{ email: 'c@example.com', tags: [] }] });",
+      "input": "await prisma.user.createManyAndReturn({ data: [{ email: 'c@example.com', tags: [] }] });",
+      "annotation": "createManyAndReturn：複数追加して行を返す（対応DB・バージョンに依存。このCSVはPrisma 7/PostgreSQL）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.update({ where: { id: 1 }, data: { name: 'New' } });",
+      "input": "await prisma.user.update({ where: { id: 1 }, data: { name: 'New' } });",
+      "annotation": "update：一意条件で更新（対象なしは例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.updateMany({ where: { active: false }, data: { name: null } });",
+      "input": "await prisma.user.updateMany({ where: { active: false }, data: { name: null } });",
+      "annotation": "updateMany：一致する複数行を更新（whereを省略すると全件）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.update({ where: { id: 1 }, data: { age: { increment: 1 } } });",
+      "input": "await prisma.user.update({ where: { id: 1 }, data: { age: { increment: 1 } } });",
+      "annotation": "increment：数値を原子的に加算（NULLのageは加算されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.upsert({\n  where: { email: 'pomo@example.com' },\n  update: { name: 'New' },\n  create: { email: 'pomo@example.com', tags: [] }\n});",
+      "input": "await prisma.user.upsert({ where: { email: 'pomo@example.com' }, update: { name: 'New' }, create: { email: 'pomo@example.com', tags: [] } });",
+      "annotation": "upsert：存在すれば更新・なければ追加（DBネイティブupsertになる条件等を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.create({\n  data: {\n    email: 'nested@example.com',\n    tags: [],\n    posts: { create: { title: 'Hello' } }\n  }\n});",
+      "input": "await prisma.user.create({ data: { email: 'nested@example.com', tags: [], posts: { create: { title: 'Hello' } } } });",
+      "annotation": "nested create：関連もまとめて作成（一連のネスト書き込みは原子的）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.post.create({\n  data: { title: 'Hello', author: { connect: { id: 1 } } }\n});",
+      "input": "await prisma.post.create({ data: { title: 'Hello', author: { connect: { id: 1 } } } });",
+      "annotation": "connect：既存行と関連付け（関連先が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ where: { tags: { has: 'sql' } } });\nawait prisma.user.update({ where: { id: 1 }, data: { tags: { push: 'go' } } });",
+      "input": "await prisma.user.findMany({ where: { tags: { has: 'sql' } } }); await prisma.user.update({ where: { id: 1 }, data: { tags: { push: 'go' } } });",
+      "annotation": "has / push：配列の検索・追記（スカラーリスト対応DB向け）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.$transaction([prisma.user.update({ where: { id: 1 }, data: { active: true } }), prisma.post.updateMany({ where: { authorId: 1 }, data: { published: true } })]);",
+      "input": "await prisma.$transaction([prisma.user.update({ where: { id: 1 }, data: { active: true } }), prisma.post.updateMany({ where: { authorId: 1 }, data: { published: true } })]);",
+      "annotation": "$transaction([])：クエリをまとめて確定（失敗時はDB書き込みをロールバック。既にawaitした結果は渡さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.$transaction(async (tx) => {\n  const user = await tx.user.create({ data: { email: 'tx@example.com', tags: [] } });\n  await tx.post.create({ data: { title: 'Hello', authorId: user.id } });\n});",
+      "input": "await prisma.$transaction(async (tx) => { const user = await tx.user.create({ data: { email: 'tx@example.com', tags: [] } }); await tx.post.create({ data: { title: 'Hello', authorId: user.id } }); });",
+      "annotation": "$transaction(callback)：処理を含むトランザクション（内部はtxを使う。外部通信等で長時間保持しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const id = 1;\nconst rows = await prisma.$queryRaw `SELECT id, email FROM \"User\" WHERE id = ${id}`;",
+      "input": "const id = 1; const rows = await prisma.$queryRaw`SELECT id, email FROM \"User\" WHERE id = ${id}`;",
+      "annotation": "$queryRaw：パラメーター付きSQL取得（タグ付きテンプレートを使用。識別子の動的置換には使えない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const id = 1;\nawait prisma.$executeRaw `UPDATE \"User\" SET active = false WHERE id = ${id}`;",
+      "input": "const id = 1; await prisma.$executeRaw`UPDATE \"User\" SET active = false WHERE id = ${id}`;",
+      "annotation": "$executeRaw：パラメーター付きSQL更新（実データを変更。文字列連結やUnsafe APIへ未検証入力を渡さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { Prisma } from './generated/prisma/client';\ntry {\n  await prisma.user.create({ data: { email: 'pomo@example.com', tags: [] } });\n}\ncatch (e) {\n  if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {\n    console.log('一意制約違反');\n  }\n  else {\n    throw e;\n  }\n}",
+      "input": "import { Prisma } from './generated/prisma/client'; try { await prisma.user.create({ data: { email: 'pomo@example.com', tags: [] } }); } catch (e) { if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') { console.log('一意制約違反'); } else { throw e; } }",
+      "annotation": "PrismaClientKnownRequestError：既知のDB操作エラーを判定（importパスはsrc内の例。再試行・ユーザー表示は用途に合わせる）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

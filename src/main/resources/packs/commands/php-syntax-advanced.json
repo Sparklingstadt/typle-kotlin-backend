@@ -1,0 +1,94 @@
+{
+  "id": "php-syntax-advanced",
+  "name": "PHP構文（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "PHP"
+  ],
+  "group": "PHP構文",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "if ($age >= 20) {\n  echo '成人';\n} elseif ($age >= 18) {\n  echo '18歳以上';\n} else {\n  echo 'その他';\n}",
+      "input": "if ($age>=20) { echo '成人'; } elseif ($age>=18) { echo '18歳以上'; } else { echo 'その他'; }",
+      "annotation": "if / elseif / else：条件分岐",
+      "input_type": "code"
+    },
+    {
+      "display": "$role = 'admin';\n$label = match ($role) {\n  'admin' => '管理者',\n  'member', 'guest' => '一般',\n  default => '不明'\n};",
+      "input": "$role='admin'; $label=match($role) { 'admin'=>'管理者', 'member','guest'=>'一般', default=>'不明' };",
+      "annotation": "match：厳密比較で値を返す（補足: ===比較。該当なし・defaultなしは例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "var_dump(in_array('1', [1, 2], true));\nvar_dump(array_key_exists('name', ['name' => null]));",
+      "input": "var_dump(in_array('1',[1,2],true)); var_dump(array_key_exists('name',['name'=>null]));",
+      "annotation": "in_array / array_key_exists：要素・キー存在（in_arrayの第3引数trueで厳密比較）",
+      "input_type": "code"
+    },
+    {
+      "display": "$factor = 2;\n$double = fn ($n) => $n * $factor;\n$f = function ($n) use ($factor) {\n  return $n * $factor;\n};",
+      "input": "$factor=2; $double=fn($n)=>$n*$factor; $f=function($n) use($factor) { return $n*$factor; };",
+      "annotation": "fn / use：クロージャ（arrow functionは外側変数を値で暗黙捕捉）",
+      "input_type": "code"
+    },
+    {
+      "display": "class User {\n  public function __construct(public string $name) {}\n  public function greet(): string {\n    return 'Hello, ' . $this->name;\n  }\n}\n$user = new User('Pomo');",
+      "input": "class User { public function __construct(public string $name) {} public function greet():string { return 'Hello, '.$this->name; } } $user=new User('Pomo');",
+      "annotation": "class / __construct：クラス初期化（コンストラクターのプロパティ昇格）",
+      "input_type": "code"
+    },
+    {
+      "display": "class Base {\n  public function greet(): string {\n    return 'Hello';\n  }\n}\nclass Child extends Base {\n  public function greet(): string {\n    return parent::greet() . '!';\n  }\n}",
+      "input": "class Base { public function greet():string { return 'Hello'; } } class Child extends Base { public function greet():string { return parent::greet().'!'; } }",
+      "annotation": "extends / parent：継承",
+      "input_type": "code"
+    },
+    {
+      "display": "interface Greeter {\n  public function greet(): string;\n}\nclass Bot implements Greeter {\n  public function greet(): string {\n    return 'Hi';\n  }\n}",
+      "input": "interface Greeter { public function greet():string; } class Bot implements Greeter { public function greet():string { return 'Hi'; } }",
+      "annotation": "interface / implements：共通契約",
+      "input_type": "code"
+    },
+    {
+      "display": "class MathUtil {\n  public static function twice(int $n): int {\n    return $n * 2;\n  }\n}\necho MathUtil::twice(2);",
+      "input": "class MathUtil { public static function twice(int $n):int { return $n*2; } } echo MathUtil::twice(2);",
+      "annotation": "static / ::：クラスに属するメンバー",
+      "input_type": "code"
+    },
+    {
+      "display": "try {\n  throw new RuntimeException('失敗');\n} catch (Throwable $e) {\n  echo $e->getMessage();\n} finally {\n  echo '終了';\n}",
+      "input": "try { throw new RuntimeException('失敗'); } catch(Throwable $e) { echo $e->getMessage(); } finally { echo '終了'; }",
+      "annotation": "try catch finally / throw：例外処理（ThrowableはErrorも含む。握りつぶさない）",
+      "input_type": "code"
+    },
+    {
+      "display": "$text = json_encode(['name' => 'Pomo'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);\n$data = json_decode($text, true, 512, JSON_THROW_ON_ERROR);",
+      "input": "$text=json_encode(['name'=>'Pomo'],JSON_THROW_ON_ERROR|JSON_UNESCAPED_UNICODE); $data=json_decode($text,true,512,JSON_THROW_ON_ERROR);",
+      "annotation": "json_encode / json_decode：JSON変換（型・内容は別途検証）",
+      "input_type": "code"
+    },
+    {
+      "display": "$stmt = $pdo->prepare('SELECT id,name FROM users WHERE id=:id');\n$stmt->execute(['id' => 1]);\n$row = $stmt->fetch(PDO::FETCH_ASSOC);",
+      "input": "$stmt=$pdo->prepare('SELECT id,name FROM users WHERE id=:id'); $stmt->execute(['id'=>1]); $row=$stmt->fetch(PDO::FETCH_ASSOC);",
+      "annotation": "PDO / prepare / execute：値をバインドしたSQL（設定済みPDOが必要。識別子は値としてバインド不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "$hash = password_hash('example-password', PASSWORD_DEFAULT);\n$ok = password_verify('example-password', $hash);",
+      "input": "$hash=password_hash('example-password',PASSWORD_DEFAULT); $ok=password_verify('example-password',$hash);",
+      "annotation": "password_hash / verify：パスワードハッシュ（平文を保存しない。例の文字列を実資格情報として使わない）",
+      "input_type": "code"
+    },
+    {
+      "display": "function numbers(): Generator {\n  for ($i = 0; $i < 3; $i++) {\n    yield $i;\n  }\n}\nforeach (numbers() as $n) {\n  echo $n;\n}",
+      "input": "function numbers():Generator { for($i=0;$i<3;$i++) { yield $i; } } foreach(numbers() as $n) { echo $n; }",
+      "annotation": "yield：遅延反復",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

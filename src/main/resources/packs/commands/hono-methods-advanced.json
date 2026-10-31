@@ -1,0 +1,89 @@
+{
+  "id": "hono-methods-advanced",
+  "name": "Honoメソッド（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Hono",
+    "TypeScript"
+  ],
+  "group": "Honoメソッド",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "app.post('/form', async c => {\n  const body = await c.req.parseBody();\n  return c.json({\n    name: typeof body.name === 'string' ? body.name : ''\n  });\n});",
+      "input": "app.post('/form',async c=>{ const body=await c.req.parseBody(); return c.json({name:typeof body.name==='string'?body.name:''}); });",
+      "annotation": "c.req.parseBody / formData：フォーム本文（Content-Type・File等の型を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { validator } from 'hono/validator';\napp.post('/users', validator('json', (value, c) => {\n  if (!value || typeof value.name !== 'string')\n    return c.json({ error: 'invalid name' }, 400);\n  return { name: value.name };\n}), c => c.json(c.req.valid('json'), 201));",
+      "input": "import {validator} from 'hono/validator'; app.post('/users',validator('json',(value,c)=>{ if(!value||typeof value.name!=='string') return c.json({error:'invalid name'},400); return {name:value.name}; }),c=>c.json(c.req.valid('json'),201));",
+      "annotation": "validator：組込みの薄い検証（JSONには適切なContent-Typeが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { z } from 'zod';\nimport { zValidator } from '@hono/zod-validator';\napp.post(\n  '/users',\n  zValidator('json', z.object({ name: z.string().min(1) })),\n  c => c.json(c.req.valid('json'), 201)\n);",
+      "input": "import {z} from 'zod'; import {zValidator} from '@hono/zod-validator'; app.post('/users',zValidator('json',z.object({name:z.string().min(1)})),c=>c.json(c.req.valid('json'),201));",
+      "annotation": "zValidator：Zodで検証（zod・@hono/zod-validatorを別途導入。版の互換性を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.use('*', async (c, next) => {\n  console.log(c.req.method, c.req.path);\n  await next();\n  c.header('X-App', 'sample');\n});",
+      "input": "app.use('*',async(c,next)=>{ console.log(c.req.method,c.req.path); await next(); c.header('X-App','sample'); });",
+      "annotation": "app.use / await next：前後処理（ルートより前に登録。nextをawait）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { createMiddleware } from 'hono/factory';\nconst log = createMiddleware(async (c, next) => {\n  console.log(c.req.path);\n  await next();\n});\napp.use('*', log);",
+      "input": "import {createMiddleware} from 'hono/factory'; const log=createMiddleware(async(c,next)=>{ console.log(c.req.path); await next(); }); app.use('*',log);",
+      "annotation": "createMiddleware：型付きの独立middleware",
+      "input_type": "code"
+    },
+    {
+      "display": "type Env = {\n  Variables: {\n    requestId: string\n  }\n};\nconst traced = new Hono<Env>();\ntraced.use('*', async (c, next) => {\n  c.set('requestId', crypto.randomUUID());\n  await next()\n});\ntraced.get('/', c => c.json({ id: c.get('requestId') }));",
+      "input": "type Env={Variables:{requestId:string}}; const traced=new Hono<Env>(); traced.use('*',async(c,next)=>{c.set('requestId',crypto.randomUUID());await next()}); traced.get('/',c=>c.json({id:c.get('requestId')}));",
+      "annotation": "c.set / c.get：リクエスト単位の値（対応middlewareを通ることは型宣言だけでは保証されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "type Env = {\n  Bindings: {\n    APP_NAME: string\n  }\n};\nconst worker = new Hono<Env>();\nworker.get('/', c => c.text(c.env.APP_NAME));",
+      "input": "type Env={Bindings:{APP_NAME:string}}; const worker=new Hono<Env>(); worker.get('/',c=>c.text(c.env.APP_NAME));",
+      "annotation": "c.env：環境固有のBindings（Cloudflare Workers等でBindingsを設定。Nodeのprocess.envとは同一でない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { HTTPException } from 'hono/http-exception';\napp.get('/private', () => {\n  throw new HTTPException(401, { message: 'Unauthorized' })\n});",
+      "input": "import {HTTPException} from 'hono/http-exception'; app.get('/private',()=>{throw new HTTPException(401,{message:'Unauthorized'})});",
+      "annotation": "HTTPException：HTTPエラーを投げる（例は常に拒否。実際の認証を別途実装）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.onError((err, c) => {\n  if (err instanceof HTTPException)\n    return err.getResponse();\n  console.error(err);\n  return c.json({ error: 'internal error' }, 500);\n});",
+      "input": "app.onError((err,c)=>{ if(err instanceof HTTPException) return err.getResponse(); console.error(err); return c.json({error:'internal error'},500); });",
+      "annotation": "app.onError：例外を応答へ変換（HTTPExceptionを別途import。機密情報を返さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { getCookie, setCookie, deleteCookie } from 'hono/cookie';\napp.post('/theme', c => {\n  setCookie(c, 'theme', 'dark', { httpOnly: true, sameSite: 'Lax', path: '/' });\n  return c.json({ ok: true })\n});",
+      "input": "import {getCookie,setCookie,deleteCookie} from 'hono/cookie'; app.post('/theme',c=>{setCookie(c,'theme','dark',{httpOnly:true,sameSite:'Lax',path:'/'});return c.json({ok:true})});",
+      "annotation": "getCookie / setCookie / deleteCookie：Cookie操作（本番HTTPSでsecure等を設定。認証CookieはCSRF・期限も設計）",
+      "input_type": "code"
+    },
+    {
+      "display": "const routes = app.get('/health', c => c.json({ ok: true }));\nexport type AppType = typeof routes;\n/* クライアント別ファイル: */ /* import {hc} from 'hono/client'; */\n/* const client=hc<AppType>('http://localhost:3000'); */",
+      "input": "const routes=app.get('/health',c=>c.json({ok:true})); export type AppType=typeof routes; /* クライアント別ファイル: */ /* import {hc} from 'hono/client'; */ /* const client=hc<AppType>('http://localhost:3000'); */",
+      "annotation": "hc / AppType：サーバーとクライアントの型共有（ルートを連結して推論を保持。型共有は認証や実行時検証を代替しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { serveStatic } from '@hono/node-server/serve-static';\napp.use('/static/*', serveStatic({ root: './' }));",
+      "input": "import {serveStatic} from '@hono/node-server/serve-static'; app.use('/static/*',serveStatic({root:'./'}));",
+      "annotation": "serveStatic：Nodeで静的配信（対応ファイルが必要。cwd基準。秘密ファイルを公開しない）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

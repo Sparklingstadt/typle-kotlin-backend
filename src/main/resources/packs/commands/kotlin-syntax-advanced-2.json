@@ -1,0 +1,208 @@
+{
+  "id": "kotlin-syntax-advanced-2",
+  "name": "Kotlin構文（上級2）",
+  "category": "プログラミング",
+  "tags": [
+    "Kotlin"
+  ],
+  "group": "Kotlin構文",
+  "levels": [
+    "上級2"
+  ],
+  "words": [
+    {
+      "display": "fun fail(): Nothing = throw IllegalStateException(\"失敗\")",
+      "input": "fun fail(): Nothing = throw IllegalStateException(\"失敗\")",
+      "annotation": "Nothing：正常に戻らない処理の型",
+      "input_type": "code"
+    },
+    {
+      "display": "val label = if (age >= 20) {\n  \"成人\"\n} else {\n  \"未成年\"\n}",
+      "input": "val label = if (age >= 20) { \"成人\" } else { \"未成年\" }",
+      "annotation": "if / else：条件分岐・値の選択（三項演算子はなくif式を使う）",
+      "input_type": "code"
+    },
+    {
+      "display": "val label = when (role) {\n  \"admin\" -> \"管理者\";\n  \"member\", \"guest\" -> \"一般利用者\";\n  else -> \"不明\"\n}",
+      "input": "val label = when (role) { \"admin\" -> \"管理者\"; \"member\", \"guest\" -> \"一般利用者\"; else -> \"不明\" }",
+      "annotation": "when (値)：値で分岐（式として使う場合は網羅が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = when {\n  score >= 80 -> \"優\";\n  score >= 60 -> \"良\";\n  else -> \"再挑戦\"\n}",
+      "input": "val result = when { score >= 80 -> \"優\"; score >= 60 -> \"良\"; else -> \"再挑戦\" }",
+      "annotation": "when { 条件 -> ... }：条件を順に判定",
+      "input_type": "code"
+    },
+    {
+      "display": "val label = when (n) {\n  in 1..10 -> \"範囲内\";\n  else -> \"範囲外\"\n}",
+      "input": "val label = when (n) { in 1..10 -> \"範囲内\"; else -> \"範囲外\" }",
+      "annotation": "when内のin：範囲で分岐",
+      "input_type": "code"
+    },
+    {
+      "display": "val label = when (value) {\n  is String -> \"文字列\";\n  else -> \"その他\"\n}",
+      "input": "val label = when (value) { is String -> \"文字列\"; else -> \"その他\" }",
+      "annotation": "when内のis：型で分岐",
+      "input_type": "code"
+    },
+    {
+      "display": "for ((index, value) in items.withIndex()) {\n  println(\"$index: $value\")\n}",
+      "input": "for ((index, value) in items.withIndex()) { println(\"$index: $value\") }",
+      "annotation": "withIndex()：添字と値",
+      "input_type": "code"
+    },
+    {
+      "display": "fun add(a: Int, b: Int): Int { return a + b }",
+      "input": "fun add(a: Int, b: Int): Int { return a + b }",
+      "annotation": "fun 名前(引数): 型：戻り値ありの関数",
+      "input_type": "code"
+    },
+    {
+      "display": "fun greet(name: String = \"Guest\") {\n  println(name)\n}",
+      "input": "fun greet(name: String = \"Guest\") { println(name) }",
+      "annotation": "デフォルト引数：省略時の値",
+      "input_type": "code"
+    },
+    {
+      "display": "fun sum(vararg values: Int): Int = values.sum()",
+      "input": "fun sum(vararg values: Int): Int = values.sum()",
+      "annotation": "vararg：可変長引数",
+      "input_type": "code"
+    },
+    {
+      "display": "val numbers = intArrayOf(1, 2);\nval total = sum( * numbers)",
+      "input": "val numbers = intArrayOf(1, 2); val total = sum(*numbers)",
+      "annotation": "*配列：可変長引数へ展開（スプレッド演算子）",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = names.find { it.startsWith(\"A\") }",
+      "input": "val result = names.find { it.startsWith(\"A\") }",
+      "annotation": "find：最初の一致（なければnull）",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = names.asSequence().filter { it.length >= 3 }.toList()",
+      "input": "val result = names.asSequence().filter { it.length >= 3 }.toList()",
+      "annotation": "asSequence：遅延処理するSequence",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = names.filter { it.length >= 3 }.map { it.uppercase() }",
+      "input": "val result = names.filter { it.length >= 3 }.map { it.uppercase() }",
+      "annotation": "処理の連結：絞り込みと変換",
+      "input_type": "code"
+    },
+    {
+      "display": "class User(val name: String, var age: Int) {\n  fun greet() = \"こんにちは、$name\";\n  fun birthday() {\n    age++\n  }\n}",
+      "input": "class User(val name: String, var age: Int) { fun greet() = \"こんにちは、$name\"; fun birthday() { age++ } }",
+      "annotation": "class / 主コンストラクター：クラス定義",
+      "input_type": "code"
+    },
+    {
+      "display": "class User(val age: Int) {\n  init {\n    require(age >= 0)\n  }\n}",
+      "input": "class User(val age: Int) { init { require(age >= 0) } }",
+      "annotation": "init：初期化処理",
+      "input_type": "code"
+    },
+    {
+      "display": "class User(val name: String) {\n  constructor(): this(\"Guest\")\n}",
+      "input": "class User(val name: String) { constructor() : this(\"Guest\") }",
+      "annotation": "constructor / this：副コンストラクター",
+      "input_type": "code"
+    },
+    {
+      "display": "var age: Int = 0 set(value) {\n  require(value >= 0);\n  field = value\n}",
+      "input": "var age: Int = 0 set(value) { require(value >= 0); field = value }",
+      "annotation": "set(value) / field：カスタムsetter（fieldはアクセサー内のバッキングフィールド）",
+      "input_type": "code"
+    },
+    {
+      "display": "class Dog: Animal() {\n  override fun speak() {\n    println(\"わん\")\n  }\n}",
+      "input": "class Dog : Animal() { override fun speak() { println(\"わん\") } }",
+      "annotation": "override fun：オーバーライド（親側に対応するopen等のメンバーが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "class User(val name: String) : Greeter {\n  override fun greet() = \"こんにちは、$name\"\n}",
+      "input": "class User(val name: String) : Greeter { override fun greet() = \"こんにちは、$name\" }",
+      "annotation": ": インターフェース：実装",
+      "input_type": "code"
+    },
+    {
+      "display": "data class User(val name: String, val age: Int)",
+      "input": "data class User(val name: String, val age: Int)",
+      "annotation": "data class：データ用クラス（equals・hashCode・toString・copy等を生成）",
+      "input_type": "code"
+    },
+    {
+      "display": "sealed interface Result {\n  data class Success(val value: String) : Result;\n  data class Failure(val message: String) : Result\n}",
+      "input": "sealed interface Result { data class Success(val value: String) : Result; data class Failure(val message: String) : Result }",
+      "annotation": "sealed interface：継承関係を制限した状態型（直接のサブタイプに同一パッケージ・モジュール等の制約）",
+      "input_type": "code"
+    },
+    {
+      "display": "class User {\n  companion object {\n    const val DEFAULT_NAME = \"Guest\"\n  }\n}",
+      "input": "class User { companion object { const val DEFAULT_NAME = \"Guest\" } }",
+      "annotation": "companion object：クラスに関連するメンバー（Javaのstaticと完全に同じ仕組みではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "val greeter = object: Greeter { override fun greet() = \"Hello\" }",
+      "input": "val greeter = object : Greeter { override fun greet() = \"Hello\" }",
+      "annotation": "object : 型：無名オブジェクト",
+      "input_type": "code"
+    },
+    {
+      "display": "fun <T> first(items: List<T>): T = items[0]",
+      "input": "fun <T> first(items: List<T>): T = items[0]",
+      "annotation": "fun <T>：型パラメーター付き関数（空Listでは例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "val names = mutableListOf<String>().apply { add(\"Pomo\") }",
+      "input": "val names = mutableListOf<String>().apply { add(\"Pomo\") }",
+      "annotation": "apply：設定して対象自身を返す（対象はthis）",
+      "input_type": "code"
+    },
+    {
+      "display": "val number = try {\n  text.toInt()\n} catch (e: NumberFormatException) {\n  0\n}",
+      "input": "val number = try { text.toInt() } catch (e: NumberFormatException) { 0 }",
+      "annotation": "try / catch：例外処理と値の選択（検査例外の捕捉・宣言は強制されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "try {\n  work()\n} finally {\n  println(\"後片付け\")\n}",
+      "input": "try { work() } finally { println(\"後片付け\") }",
+      "annotation": "finally：後片付け（プロセス強制終了等で実行されない場合もある）",
+      "input_type": "code"
+    },
+    {
+      "display": "suspend fun greet() {\n  delay(100);\n  println(\"Hello\")\n}",
+      "input": "suspend fun greet() { delay(100); println(\"Hello\") }",
+      "annotation": "suspend fun：中断可能な関数（suspendは言語構文。delayはkotlinx.coroutines。自動的に別スレッドにはならない）",
+      "input_type": "code"
+    },
+    {
+      "display": "suspend fun work() = coroutineScope {\n  launch {\n    delay(100)\n  }\n}",
+      "input": "suspend fun work() = coroutineScope { launch { delay(100) } }",
+      "annotation": "coroutineScope：子の完了を待つスコープ（kotlinx.coroutinesの依存・importが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "val text = withContext(Dispatchers.IO) {\n  \"完了\"\n}",
+      "input": "val text = withContext(Dispatchers.IO) { \"完了\" }",
+      "annotation": "withContext：コンテキストを切り替える（ブロッキングI/O等は適切なDispatcherで実行）",
+      "input_type": "code"
+    },
+    {
+      "display": "import kotlinx.coroutines.*;\nsuspend fun main() = coroutineScope {\n  val result = async {\n    delay(100);\n    \"完了\"\n  };\n  println(result.await())\n}",
+      "input": "import kotlinx.coroutines.*; suspend fun main() = coroutineScope { val result = async { delay(100); \"完了\" }; println(result.await()) }",
+      "annotation": "コルーチンの実行例：asyncの結果を待つ（kotlinx-coroutines-coreへの依存が必要）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -1,0 +1,256 @@
+{
+  "id": "chinese-hsk5-words-2",
+  "name": "中国語HSK5級（単語2）",
+  "category": "語学",
+  "tags": [
+    "中国語"
+  ],
+  "group": "中国語：HSK5級レベル単語",
+  "levels": [
+    "単語2"
+  ],
+  "words": [
+    {
+      "display": "经典",
+      "input": "jīngdiǎn",
+      "annotation": "jīngdiǎn / 古典、典型的な",
+      "input_type": "word"
+    },
+    {
+      "display": "具体",
+      "input": "jùtǐ",
+      "annotation": "jùtǐ / 具体的な",
+      "input_type": "word"
+    },
+    {
+      "display": "夸张",
+      "input": "kuāzhāng",
+      "annotation": "kuāzhāng / 大げさな",
+      "input_type": "word"
+    },
+    {
+      "display": "冷淡",
+      "input": "lěngdàn",
+      "annotation": "lěngdàn / 冷淡な",
+      "input_type": "word"
+    },
+    {
+      "display": "利用",
+      "input": "lìyòng",
+      "annotation": "lìyòng / 利用する",
+      "input_type": "word"
+    },
+    {
+      "display": "灵活",
+      "input": "línghuó",
+      "annotation": "línghuó / 柔軟な",
+      "input_type": "word"
+    },
+    {
+      "display": "逻辑",
+      "input": "luójí",
+      "annotation": "luójí / 論理",
+      "input_type": "word"
+    },
+    {
+      "display": "矛盾",
+      "input": "máodùn",
+      "annotation": "máodùn / 矛盾",
+      "input_type": "word"
+    },
+    {
+      "display": "面对",
+      "input": "miànduì",
+      "annotation": "miànduì / 直面する",
+      "input_type": "word"
+    },
+    {
+      "display": "明确",
+      "input": "míngquè",
+      "annotation": "míngquè / 明確な",
+      "input_type": "word"
+    },
+    {
+      "display": "目标",
+      "input": "mùbiāo",
+      "annotation": "mùbiāo / 目標",
+      "input_type": "word"
+    },
+    {
+      "display": "难免",
+      "input": "nánmiǎn",
+      "annotation": "nánmiǎn / 避けがたい",
+      "input_type": "word"
+    },
+    {
+      "display": "培养",
+      "input": "péiyǎng",
+      "annotation": "péiyǎng / 育てる、養成する",
+      "input_type": "word"
+    },
+    {
+      "display": "平衡",
+      "input": "pínghéng",
+      "annotation": "pínghéng / バランス",
+      "input_type": "word"
+    },
+    {
+      "display": "迫切",
+      "input": "pòqiè",
+      "annotation": "pòqiè / 切実な",
+      "input_type": "word"
+    },
+    {
+      "display": "启发",
+      "input": "qǐfā",
+      "annotation": "qǐfā / 啓発する、ヒント",
+      "input_type": "word"
+    },
+    {
+      "display": "谦虚",
+      "input": "qiānxū",
+      "annotation": "qiānxū / 謙虚な",
+      "input_type": "word"
+    },
+    {
+      "display": "强调",
+      "input": "qiángdiào",
+      "annotation": "qiángdiào / 強調する",
+      "input_type": "word"
+    },
+    {
+      "display": "情绪",
+      "input": "qíngxù",
+      "annotation": "qíngxù / 気分、感情",
+      "input_type": "word"
+    },
+    {
+      "display": "确定",
+      "input": "quèdìng",
+      "annotation": "quèdìng / 確定する",
+      "input_type": "word"
+    },
+    {
+      "display": "善良",
+      "input": "shànliáng",
+      "annotation": "shànliáng / 善良な",
+      "input_type": "word"
+    },
+    {
+      "display": "实践",
+      "input": "shíjiàn",
+      "annotation": "shíjiàn / 実践",
+      "input_type": "word"
+    },
+    {
+      "display": "适当",
+      "input": "shìdàng",
+      "annotation": "shìdàng / 適切な",
+      "input_type": "word"
+    },
+    {
+      "display": "思考",
+      "input": "sīkǎo",
+      "annotation": "sīkǎo / 思考する",
+      "input_type": "word"
+    },
+    {
+      "display": "缩短",
+      "input": "suōduǎn",
+      "annotation": "suōduǎn / 短縮する",
+      "input_type": "word"
+    },
+    {
+      "display": "特殊",
+      "input": "tèshū",
+      "annotation": "tèshū / 特殊な",
+      "input_type": "word"
+    },
+    {
+      "display": "挑战",
+      "input": "tiǎozhàn",
+      "annotation": "tiǎozhàn / 挑戦",
+      "input_type": "word"
+    },
+    {
+      "display": "突出",
+      "input": "tūchū",
+      "annotation": "tūchū / 際立った",
+      "input_type": "word"
+    },
+    {
+      "display": "唯一",
+      "input": "wéiyī",
+      "annotation": "wéiyī / 唯一の",
+      "input_type": "word"
+    },
+    {
+      "display": "稳定",
+      "input": "wěndìng",
+      "annotation": "wěndìng / 安定した",
+      "input_type": "word"
+    },
+    {
+      "display": "吸收",
+      "input": "xīshōu",
+      "annotation": "xīshōu / 吸収する",
+      "input_type": "word"
+    },
+    {
+      "display": "显得",
+      "input": "xiǎnde",
+      "annotation": "xiǎnde / ～に見える",
+      "input_type": "word"
+    },
+    {
+      "display": "相关",
+      "input": "xiāngguān",
+      "annotation": "xiāngguān / 関連する",
+      "input_type": "word"
+    },
+    {
+      "display": "形成",
+      "input": "xíngchéng",
+      "annotation": "xíngchéng / 形成する",
+      "input_type": "word"
+    },
+    {
+      "display": "依然",
+      "input": "yīrán",
+      "annotation": "yīrán / 依然として",
+      "input_type": "word"
+    },
+    {
+      "display": "意义",
+      "input": "yìyì",
+      "annotation": "yìyì / 意義",
+      "input_type": "word"
+    },
+    {
+      "display": "优势",
+      "input": "yōushì",
+      "annotation": "yōushì / 優位、強み",
+      "input_type": "word"
+    },
+    {
+      "display": "争取",
+      "input": "zhēngqǔ",
+      "annotation": "zhēngqǔ / 勝ち取る、努力する",
+      "input_type": "word"
+    },
+    {
+      "display": "珍惜",
+      "input": "zhēnxī",
+      "annotation": "zhēnxī / 大切にする",
+      "input_type": "word"
+    },
+    {
+      "display": "主动",
+      "input": "zhǔdòng",
+      "annotation": "zhǔdòng / 自発的な",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

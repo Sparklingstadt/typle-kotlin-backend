@@ -7,6 +7,7 @@ import io.github.sparklingstadt.typle.server.auth.GitHubUsers
 import io.github.sparklingstadt.typle.server.auth.OAuthClient
 import io.github.sparklingstadt.typle.server.auth.UserSource
 import io.github.sparklingstadt.typle.server.session.Keys
+import io.github.sparklingstadt.typle.server.store.SessionSource
 import io.github.sparklingstadt.typle.server.store.Store
 import java.net.URI
 import java.net.URISyntaxException
@@ -42,6 +43,12 @@ data class Config(
   val gitHub: UserSource?,
   /** Turns on POST /api/auth/local, which signs in as a made-up local account for development. Off, the path does not exist. */
   val localLogin: Boolean,
+  /**
+   * Asked whether a session has been revoked (signed out of every device), and told when one is; when null, store is
+   * (Go's Config.Sessions). It lets the /api/auth part, which has no store so that the login never waits for the
+   * database, open the database for this one question only (see Backend).
+   */
+  val sessions: SessionSource? = null,
 )
 
 private val logTime = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")

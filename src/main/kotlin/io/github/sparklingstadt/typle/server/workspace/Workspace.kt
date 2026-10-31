@@ -2,13 +2,12 @@
 // the typle_workspaces table. The checks are those of the Go backend's server/internal/workspace (Decode), which follow
 // the app's decodeLists, decodePacks and decodeDevices, so data the app would read is read here and data it would
 // refuse is refused. As in Go, null in an optional field reads as the field left out. Unlike Go, lists saved before
-// packs existed are not turned into packs here, nor are saved packs repaired: the app does that when it reads them, and
-// /api/workspace answers what is stored (as Go's GET does). Of Go's repairs, only the joining of several levels of a list
-// into one (collapseLevels) and the separation of lists of a pack whose levels are equal (separateLevels) are made, on rows that have packs, where the server builds something from a saved row
-// rather than answering it as stored: the snapshot of a shared link (readSaved, used by PutShare). A save with packs is
-// still checked as it was sent, so overlaps there are refused (levelsConflict); a list sent with up to 5 levels is stored joined
-// into one (separateLevels) and rows saved with up to 5 levels are still read. Like Go's Decode, a save with packs and a
-// saved row read by readSaved then follow the official catalog (followOfficial in Follow.kt).
+// /api/workspace answers what is stored (as Go's GET does). Where the server builds something from saved data or from a
+// save, it reads it as Go's Decode does (readSaved): every list is put in a pack (repairLibrary, which gives a list
+// without one a pack of its own, as Go does since typle-r v2.0.0), several levels of a list are joined into one and
+// lists of a pack whose levels are equal told apart (separateLevels), and the library follows the official catalog
+// (followOfficial in Follow.kt), which also puts back the words of followed packs' lists, saved without them since
+// typle-r v2.1.0. A save with packs is still checked as it was sent, so overlaps there are refused (levelsConflict).
 package io.github.sparklingstadt.typle.server.workspace
 
 import io.github.sparklingstadt.typle.server.json.JsonArray
@@ -29,7 +28,11 @@ const val DEFAULT_DEVICE_ID = "default"
 // Each stored shape keeps the fields Typle does not know in extra: one JSON object with sorted names and compact
 // values (see Encode.kt), or "" when there are none.
 
-data class Word(val display: String, val input: String, val annotation: String, val extra: String = "")
+/** inputType is command, code or word (typle-r v0.108.0), or "" when the word has none, which is how it is stored: left out. */
+data class Word(val display: String, val input: String, val annotation: String, val extra: String = "", val inputType: String = "")
+
+/** Whether value is an input type a word may have, "" (none) included (Go's validInputType). */
+fun validInputType(value: String) = value == "" || value == "command" || value == "code" || value == "word"
 
 data class Device(val id: String, val name: String, val layout: String, val extra: String = "")
 
@@ -75,23 +78,18 @@ fun decode(lists: String, devices: String, packs: String? = null): Workspace =
   decodeValues(parse(lists, "lists"), parse(devices, "devices"), packs?.let { parse(it, "packs") })
 
 /**
- * A saved row as the server reads it to build an answer or new data from it, such as the snapshot of a shared link:
- * decode, with the lists of a row that has packs separated as Go's Decode separates them when it repairs saved packs
- * (separateLevels) and the library following the official catalog as Go's Decode makes it (followOfficial), so it reads
- * them as Go does. A row without packs (packs null) is read as decode reads it, as Kotlin does not make its packs.
- * /api/workspace answers the row as stored and does not use this.
+ * A saved row, or a save, as the server reads it to build an answer or new data from it, such as the snapshot of a shared
+ * link or a change of a record: decode, then Go's Decode: the library repaired (repairLibrary, which also separates the
+ * levels of a pack's lists) and following the official catalog (followOfficial). packs null (NULL) is a row without
+ * packs, whose lists each get a pack of their own. /api/workspace's GET answers the row as stored and does not use this.
  */
-fun readSaved(lists: String, devices: String, packs: String?): Workspace {
-  val w = readNormalized(lists, devices, packs)
-  if (packs == null) return w
-  val (followedPacks, followedLists) = followOfficial(w.packs, w.lists, catalog)
-  return w.copy(lists = followedLists, packs = followedPacks)
-}
+fun readSaved(lists: String, devices: String, packs: String?): Workspace = repaired(decode(lists, devices, packs))
 
-/** readSaved before it follows the official catalog, as Go's normalized: decode, with the lists of a row with packs separated. */
-internal fun readNormalized(lists: String, devices: String, packs: String?): Workspace {
-  val w = decode(lists, devices, packs)
-  return if (packs == null) w else w.copy(lists = separateLevels(w.lists))
+/** readSaved for parts already decoded. */
+fun repaired(w: Workspace): Workspace {
+  val (repairedPacks, repairedLists) = repairLibrary(w.packs, w.lists)
+  val (followedPacks, followedLists) = followOfficial(repairedPacks, repairedLists, catalog)
+  return w.copy(lists = followedLists, packs = followedPacks)
 }
 
 /** decode for lists, devices and packs already read as JSON, such as the parts of a save. */
@@ -187,7 +185,8 @@ private fun decodeList(raw: JsonValue): WordList {
   }
   // validateList: a name, at least one word, and no word without text to show or type.
   if (trimJS(name) == "") invalid("name is empty")
-  if (words.isEmpty()) invalid("words are empty")
+  // A list of a followed pack (with an origin) is saved without its words, which followOfficial takes from the catalog.
+  if (words.isEmpty() && "origin" !in fields.members) invalid("words are empty")
   val decodedWords = words.mapIndexed { index, item ->
     val word = fieldsOf(item)
     val display = word?.let { optionalString(it, "display") }
@@ -197,7 +196,7 @@ private fun decodeList(raw: JsonValue): WordList {
       invalid("word ${index + 1}: display, input and annotation are required")
     }
     if (trimJS(display) == "" || trimJS(input) == "") invalid("word ${index + 1}: display and input must not be empty")
-    Word(display, input, annotation, unknown(word, "display", "input", "annotation"))
+    Word(display, input, annotation, unknown(word, "display", "input", "annotation", "input_type"), inputTypeOf(word))
   }
   val decodedRecords = records.mapIndexed { index, item ->
     try {
@@ -217,6 +216,12 @@ private fun decodeList(raw: JsonValue): WordList {
     packId = optionalString(fields, "packId") ?: "", group = optionalString(fields, "group") ?: "",
     category = optionalString(fields, "category") ?: "", tags = optionalStrings(fields, "tags"))
 }
+
+/**
+ * One record as a list's records array holds it (a row of typle_records), read with the checks of decode and written
+ * again as encode writes it (Go's DecodeRecord and json.Marshal), so that it compares with a record encoded here.
+ */
+fun decodeRecordText(text: String): String = encodeRecord(decodeRecord(parse(text, "record")))
 
 private fun decodeRecord(raw: JsonValue): Record {
   val fields = fieldsOf(raw)
@@ -249,7 +254,7 @@ private fun recordDevice(raw: JsonValue): Device {
   return Device(plain("id"), plain("name"), plain("layout"), unknown(raw, "id", "name", "layout"))
 }
 
-private fun isDevice(device: Device) =
+internal fun isDevice(device: Device) =
   device.id != "" && utf16Length(device.id) <= MAX_DEVICE_ID &&
     trimJS(device.name) != "" && utf16Length(device.name) <= MAX_DEVICE_NAME &&
     utf16Length(device.layout) <= MAX_DEVICE_LAYOUT
@@ -310,4 +315,14 @@ private fun optionalInteger(fields: JsonObject, name: String): Long? = when (val
   null, JsonNull -> null
   is JsonNumber -> value.literal.toLongOrNull() ?: invalid("$name must be an integer")
   else -> invalid("$name must be a number")
+}
+
+/**
+ * The input_type of a word, as Go's readInputType: optional, but when it is there it must be one of the three exact
+ * strings; null and "" are refused, unlike a field left out.
+ */
+internal fun inputTypeOf(word: JsonObject): String = when (val value = word.members["input_type"]) {
+  null -> ""
+  is JsonString -> value.value.takeIf { it != "" && validInputType(it) } ?: invalid("input_type must be command, code or word")
+  else -> invalid("input_type must be command, code or word")
 }

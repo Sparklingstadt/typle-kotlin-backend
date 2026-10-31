@@ -1,0 +1,256 @@
+{
+  "id": "czech-intermediate-words",
+  "name": "チェコ語（中級単語）",
+  "category": "語学",
+  "tags": [
+    "チェコ語"
+  ],
+  "group": "チェコ語：中級",
+  "levels": [
+    "中級単語"
+  ],
+  "words": [
+    {
+      "display": "zkušenost",
+      "input": "zkušenost",
+      "annotation": "zkušenost / 経験",
+      "input_type": "word"
+    },
+    {
+      "display": "názor",
+      "input": "názor",
+      "annotation": "názor / 意見",
+      "input_type": "word"
+    },
+    {
+      "display": "rozhodnutí",
+      "input": "rozhodnutí",
+      "annotation": "rozhodnutí / 決定、決心",
+      "input_type": "word"
+    },
+    {
+      "display": "životní prostředí",
+      "input": "životní prostředí",
+      "annotation": "životní prostředí / 環境",
+      "input_type": "word"
+    },
+    {
+      "display": "vláda",
+      "input": "vláda",
+      "annotation": "vláda / 政府",
+      "input_type": "word"
+    },
+    {
+      "display": "znalost",
+      "input": "znalost",
+      "annotation": "znalost / 知識",
+      "input_type": "word"
+    },
+    {
+      "display": "vztah",
+      "input": "vztah",
+      "annotation": "vztah / 関係",
+      "input_type": "word"
+    },
+    {
+      "display": "příležitost",
+      "input": "příležitost",
+      "annotation": "příležitost / 機会",
+      "input_type": "word"
+    },
+    {
+      "display": "odpovědnost",
+      "input": "odpovědnost",
+      "annotation": "odpovědnost / 責任",
+      "input_type": "word"
+    },
+    {
+      "display": "výhoda",
+      "input": "výhoda",
+      "annotation": "výhoda / 利点",
+      "input_type": "word"
+    },
+    {
+      "display": "nevýhoda",
+      "input": "nevýhoda",
+      "annotation": "nevýhoda / 欠点",
+      "input_type": "word"
+    },
+    {
+      "display": "řešení",
+      "input": "řešení",
+      "annotation": "řešení / 解決策",
+      "input_type": "word"
+    },
+    {
+      "display": "důvod",
+      "input": "důvod",
+      "annotation": "důvod / 理由",
+      "input_type": "word"
+    },
+    {
+      "display": "cíl",
+      "input": "cíl",
+      "annotation": "cíl / 目的、目標",
+      "input_type": "word"
+    },
+    {
+      "display": "vliv",
+      "input": "vliv",
+      "annotation": "vliv / 影響",
+      "input_type": "word"
+    },
+    {
+      "display": "kvalita",
+      "input": "kvalita",
+      "annotation": "kvalita / 質",
+      "input_type": "word"
+    },
+    {
+      "display": "chování",
+      "input": "chování",
+      "annotation": "chování / 振る舞い、行動",
+      "input_type": "word"
+    },
+    {
+      "display": "společnost",
+      "input": "společnost",
+      "annotation": "společnost / 社会、会社",
+      "input_type": "word"
+    },
+    {
+      "display": "vývoj",
+      "input": "vývoj",
+      "annotation": "vývoj / 発展、開発",
+      "input_type": "word"
+    },
+    {
+      "display": "událost",
+      "input": "událost",
+      "annotation": "událost / 出来事",
+      "input_type": "word"
+    },
+    {
+      "display": "dosáhnout",
+      "input": "dosáhnout",
+      "annotation": "dosáhnout / 達成する",
+      "input_type": "word"
+    },
+    {
+      "display": "zlepšit",
+      "input": "zlepšit",
+      "annotation": "zlepšit / 改善する",
+      "input_type": "word"
+    },
+    {
+      "display": "zvážit",
+      "input": "zvážit",
+      "annotation": "zvážit / 検討する",
+      "input_type": "word"
+    },
+    {
+      "display": "navrhnout",
+      "input": "navrhnout",
+      "annotation": "navrhnout / 提案する",
+      "input_type": "word"
+    },
+    {
+      "display": "vyžadovat",
+      "input": "vyžadovat",
+      "annotation": "vyžadovat / 必要とする、要求する",
+      "input_type": "word"
+    },
+    {
+      "display": "snížit",
+      "input": "snížit",
+      "annotation": "snížit / 減らす",
+      "input_type": "word"
+    },
+    {
+      "display": "zvýšit",
+      "input": "zvýšit",
+      "annotation": "zvýšit / 増やす、上げる",
+      "input_type": "word"
+    },
+    {
+      "display": "porovnat",
+      "input": "porovnat",
+      "annotation": "porovnat / 比べる",
+      "input_type": "word"
+    },
+    {
+      "display": "vyhnout se",
+      "input": "vyhnout se",
+      "annotation": "vyhnout se / 避ける",
+      "input_type": "word"
+    },
+    {
+      "display": "vysvětlit",
+      "input": "vysvětlit",
+      "annotation": "vysvětlit / 説明する",
+      "input_type": "word"
+    },
+    {
+      "display": "dávat přednost",
+      "input": "dávat přednost",
+      "annotation": "dávat přednost / ～の方を好む",
+      "input_type": "word"
+    },
+    {
+      "display": "dostupný",
+      "input": "dostupný",
+      "annotation": "dostupný / 利用できる、手ごろな",
+      "input_type": "word"
+    },
+    {
+      "display": "nezbytný",
+      "input": "nezbytný",
+      "annotation": "nezbytný / 不可欠な",
+      "input_type": "word"
+    },
+    {
+      "display": "pohodlný",
+      "input": "pohodlný",
+      "annotation": "pohodlný / 快適な",
+      "input_type": "word"
+    },
+    {
+      "display": "vážný",
+      "input": "vážný",
+      "annotation": "vážný / 深刻な、まじめな",
+      "input_type": "word"
+    },
+    {
+      "display": "spolehlivý",
+      "input": "spolehlivý",
+      "annotation": "spolehlivý / 信頼できる",
+      "input_type": "word"
+    },
+    {
+      "display": "zřejmý",
+      "input": "zřejmý",
+      "annotation": "zřejmý / 明らかな",
+      "input_type": "word"
+    },
+    {
+      "display": "nedávno",
+      "input": "nedávno",
+      "annotation": "nedávno / 最近",
+      "input_type": "word"
+    },
+    {
+      "display": "nakonec",
+      "input": "nakonec",
+      "annotation": "nakonec / 最後に、結局",
+      "input_type": "word"
+    },
+    {
+      "display": "proto",
+      "input": "proto",
+      "annotation": "proto / だから",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

@@ -1,0 +1,256 @@
+{
+  "id": "english-basic-words",
+  "name": "英語（基礎単語）",
+  "category": "語学",
+  "tags": [
+    "英語"
+  ],
+  "group": "英語：基礎・中級",
+  "levels": [
+    "基礎単語"
+  ],
+  "words": [
+    {
+      "display": "apple",
+      "input": "apple",
+      "annotation": "apple / りんご",
+      "input_type": "word"
+    },
+    {
+      "display": "water",
+      "input": "water",
+      "annotation": "water / 水",
+      "input_type": "word"
+    },
+    {
+      "display": "book",
+      "input": "book",
+      "annotation": "book / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "house",
+      "input": "house",
+      "annotation": "house / 家",
+      "input_type": "word"
+    },
+    {
+      "display": "school",
+      "input": "school",
+      "annotation": "school / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "friend",
+      "input": "friend",
+      "annotation": "friend / 友達",
+      "input_type": "word"
+    },
+    {
+      "display": "family",
+      "input": "family",
+      "annotation": "family / 家族",
+      "input_type": "word"
+    },
+    {
+      "display": "dog",
+      "input": "dog",
+      "annotation": "dog / 犬",
+      "input_type": "word"
+    },
+    {
+      "display": "cat",
+      "input": "cat",
+      "annotation": "cat / 猫",
+      "input_type": "word"
+    },
+    {
+      "display": "car",
+      "input": "car",
+      "annotation": "car / 車",
+      "input_type": "word"
+    },
+    {
+      "display": "train",
+      "input": "train",
+      "annotation": "train / 電車",
+      "input_type": "word"
+    },
+    {
+      "display": "money",
+      "input": "money",
+      "annotation": "money / お金",
+      "input_type": "word"
+    },
+    {
+      "display": "time",
+      "input": "time",
+      "annotation": "time / 時間",
+      "input_type": "word"
+    },
+    {
+      "display": "day",
+      "input": "day",
+      "annotation": "day / 日",
+      "input_type": "word"
+    },
+    {
+      "display": "night",
+      "input": "night",
+      "annotation": "night / 夜",
+      "input_type": "word"
+    },
+    {
+      "display": "morning",
+      "input": "morning",
+      "annotation": "morning / 朝",
+      "input_type": "word"
+    },
+    {
+      "display": "food",
+      "input": "food",
+      "annotation": "food / 食べ物",
+      "input_type": "word"
+    },
+    {
+      "display": "name",
+      "input": "name",
+      "annotation": "name / 名前",
+      "input_type": "word"
+    },
+    {
+      "display": "city",
+      "input": "city",
+      "annotation": "city / 都市、市",
+      "input_type": "word"
+    },
+    {
+      "display": "country",
+      "input": "country",
+      "annotation": "country / 国",
+      "input_type": "word"
+    },
+    {
+      "display": "go",
+      "input": "go",
+      "annotation": "go / 行く",
+      "input_type": "word"
+    },
+    {
+      "display": "come",
+      "input": "come",
+      "annotation": "come / 来る",
+      "input_type": "word"
+    },
+    {
+      "display": "eat",
+      "input": "eat",
+      "annotation": "eat / 食べる",
+      "input_type": "word"
+    },
+    {
+      "display": "drink",
+      "input": "drink",
+      "annotation": "drink / 飲む",
+      "input_type": "word"
+    },
+    {
+      "display": "see",
+      "input": "see",
+      "annotation": "see / 見る",
+      "input_type": "word"
+    },
+    {
+      "display": "read",
+      "input": "read",
+      "annotation": "read / 読む",
+      "input_type": "word"
+    },
+    {
+      "display": "write",
+      "input": "write",
+      "annotation": "write / 書く",
+      "input_type": "word"
+    },
+    {
+      "display": "speak",
+      "input": "speak",
+      "annotation": "speak / 話す",
+      "input_type": "word"
+    },
+    {
+      "display": "like",
+      "input": "like",
+      "annotation": "like / 好きである",
+      "input_type": "word"
+    },
+    {
+      "display": "want",
+      "input": "want",
+      "annotation": "want / 欲しい、～したい",
+      "input_type": "word"
+    },
+    {
+      "display": "big",
+      "input": "big",
+      "annotation": "big / 大きい",
+      "input_type": "word"
+    },
+    {
+      "display": "small",
+      "input": "small",
+      "annotation": "small / 小さい",
+      "input_type": "word"
+    },
+    {
+      "display": "new",
+      "input": "new",
+      "annotation": "new / 新しい",
+      "input_type": "word"
+    },
+    {
+      "display": "old",
+      "input": "old",
+      "annotation": "old / 古い、年をとった",
+      "input_type": "word"
+    },
+    {
+      "display": "good",
+      "input": "good",
+      "annotation": "good / 良い",
+      "input_type": "word"
+    },
+    {
+      "display": "bad",
+      "input": "bad",
+      "annotation": "bad / 悪い",
+      "input_type": "word"
+    },
+    {
+      "display": "hot",
+      "input": "hot",
+      "annotation": "hot / 暑い、熱い",
+      "input_type": "word"
+    },
+    {
+      "display": "cold",
+      "input": "cold",
+      "annotation": "cold / 寒い、冷たい",
+      "input_type": "word"
+    },
+    {
+      "display": "happy",
+      "input": "happy",
+      "annotation": "happy / うれしい、幸せな",
+      "input_type": "word"
+    },
+    {
+      "display": "today",
+      "input": "today",
+      "annotation": "today / 今日",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

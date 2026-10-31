@@ -1,0 +1,49 @@
+{
+  "lists": [
+    {
+      "id": "x",
+      "name": "x",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "packs": [
+    {
+      "id": "pack-x",
+      "name": "X",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "expected": {
+    "packs": [
+      {
+        "id": "pack-x",
+        "name": "X",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "x",
+        "name": "x",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "pack-x"
+      }
+    ]
+  }
+}

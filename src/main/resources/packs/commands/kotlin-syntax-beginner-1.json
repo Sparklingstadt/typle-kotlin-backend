@@ -1,0 +1,214 @@
+{
+  "id": "kotlin-syntax-beginner-1",
+  "name": "Kotlin構文（初級1）",
+  "category": "プログラミング",
+  "tags": [
+    "Kotlin"
+  ],
+  "group": "Kotlin構文",
+  "levels": [
+    "初級1"
+  ],
+  "words": [
+    {
+      "display": "fun main() {\n  println(\"Hello, Kotlin!\")\n}",
+      "input": "fun main() { println(\"Hello, Kotlin!\") }",
+      "annotation": "fun main()：実行開始の関数（関数をトップレベルに定義可能） / コード例の利用：断片を適切な場所へ配置（多くの例は関数内の断片。未定義の変数・型・関数・import等を補って利用）",
+      "input_type": "code"
+    },
+    {
+      "display": "fun greet() {\n}",
+      "input": "fun greet() {}",
+      "annotation": "fun：関数定義",
+      "input_type": "code"
+    },
+    {
+      "display": "println(\"Hello\")",
+      "input": "println(\"Hello\")",
+      "annotation": "println：表示して改行（標準ライブラリ）",
+      "input_type": "code"
+    },
+    {
+      "display": "package example.app",
+      "input": "package example.app",
+      "annotation": "package：パッケージ宣言",
+      "input_type": "code"
+    },
+    {
+      "display": "// コメント",
+      "input": "// コメント",
+      "annotation": "//：1行コメント",
+      "input_type": "code"
+    },
+    {
+      "display": "/* コメント */",
+      "input": "/* コメント */",
+      "annotation": "/* ... */：複数行コメント（入れ子にできる）",
+      "input_type": "code"
+    },
+    {
+      "display": "val age = 20",
+      "input": "val age = 20",
+      "annotation": "val：再代入できない変数（参照先の内部まで変更不可になるわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "var count = 0",
+      "input": "var count = 0",
+      "annotation": "var：再代入できる変数",
+      "input_type": "code"
+    },
+    {
+      "display": "val age: Int = 20",
+      "input": "val age: Int = 20",
+      "annotation": "名前: 型：型を明示",
+      "input_type": "code"
+    },
+    {
+      "display": "count = 1",
+      "input": "count = 1",
+      "annotation": "=：代入（countはvarで宣言済み）",
+      "input_type": "code"
+    },
+    {
+      "display": "const val MAX = 100",
+      "input": "const val MAX = 100",
+      "annotation": "const val：コンパイル時定数（トップレベル・object・companion object内等。型と初期値に制約）",
+      "input_type": "code"
+    },
+    {
+      "display": "val n: Long = 100L",
+      "input": "val n: Long = 100L",
+      "annotation": "Byte / Short / Int / Long：整数",
+      "input_type": "code"
+    },
+    {
+      "display": "val c: Char = 'A'",
+      "input": "val c: Char = 'A'",
+      "annotation": "Char：UTF-16コード単位（すべてのUnicode文字が1つのCharで表せるわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "val value: Any = 1",
+      "input": "val value: Any = 1",
+      "annotation": "Any：非null型の共通の上位型（nullも扱うならAny?）",
+      "input_type": "code"
+    },
+    {
+      "display": "count += 2",
+      "input": "count += 2",
+      "annotation": "+= / -=：計算と代入（型によって代入演算子関数として処理）",
+      "input_type": "code"
+    },
+    {
+      "display": "count++",
+      "input": "count++",
+      "annotation": "++ / --：1増減",
+      "input_type": "code"
+    },
+    {
+      "display": "else -> \"不明\"",
+      "input": "else -> \"不明\"",
+      "annotation": "else ->：その他の場合（whenブロック内で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "if (done) break",
+      "input": "if (done) break",
+      "annotation": "break：ループを抜ける（ループ内）",
+      "input_type": "code"
+    },
+    {
+      "display": "if (skip) continue",
+      "input": "if (skip) continue",
+      "annotation": "continue：次の反復へ（ループ内）",
+      "input_type": "code"
+    },
+    {
+      "display": "return result",
+      "input": "return result",
+      "annotation": "return 値：値を返して終了",
+      "input_type": "code"
+    },
+    {
+      "display": "val first = items[0]",
+      "input": "val first = items[0]",
+      "annotation": "items[i]：要素アクセス（範囲外では例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "val n = items.size",
+      "input": "val n = items.size",
+      "annotation": "size：要素数",
+      "input_type": "code"
+    },
+    {
+      "display": "names.add(\"C\")",
+      "input": "names.add(\"C\")",
+      "annotation": "add：要素追加（MutableList等）",
+      "input_type": "code"
+    },
+    {
+      "display": "names[0] = \"New\"",
+      "input": "names[0] = \"New\"",
+      "annotation": "添字への代入：要素更新（MutableList・配列等）",
+      "input_type": "code"
+    },
+    {
+      "display": "this.name = name",
+      "input": "this.name = name",
+      "annotation": "this：現在のインスタンス（代入先はvar等の変更可能なプロパティ）",
+      "input_type": "code"
+    },
+    {
+      "display": "open class Animal",
+      "input": "open class Animal",
+      "annotation": "open class：継承可能なクラス（通常のクラスは既定でfinal）",
+      "input_type": "code"
+    },
+    {
+      "display": "class Dog: Animal()",
+      "input": "class Dog : Animal()",
+      "annotation": ": 親クラス()：クラス継承",
+      "input_type": "code"
+    },
+    {
+      "display": "super.speak()",
+      "input": "super.speak()",
+      "annotation": "super：親の実装を呼ぶ（対応する実装があるメンバー内）",
+      "input_type": "code"
+    },
+    {
+      "display": "public class User",
+      "input": "public class User",
+      "annotation": "public：公開（通常の既定値）",
+      "input_type": "code"
+    },
+    {
+      "display": "internal class Helper",
+      "input": "internal class Helper",
+      "annotation": "internal：同一モジュール内で公開",
+      "input_type": "code"
+    },
+    {
+      "display": "require(age >= 0)",
+      "input": "require(age >= 0)",
+      "annotation": "require：引数等の前提条件（不成立ならIllegalArgumentException）",
+      "input_type": "code"
+    },
+    {
+      "display": "check(ready)",
+      "input": "check(ready)",
+      "annotation": "check：状態の前提条件（不成立ならIllegalStateException）",
+      "input_type": "code"
+    },
+    {
+      "display": "delay(100)",
+      "input": "delay(100)",
+      "annotation": "delay：スレッドを占有せず待機（中断可能なコンテキストで使用）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

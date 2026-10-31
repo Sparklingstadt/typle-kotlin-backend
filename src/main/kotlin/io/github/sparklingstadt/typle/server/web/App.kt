@@ -33,6 +33,7 @@ suspend fun ApplicationCall.serve(config: Config) {
   when (val path = request.path()) {
     "/api/health" -> health(config)
     "/api/workspace" -> workspace(config)
+    "/api/workspace/records" -> records(config)
     "/api/shares" -> shares(config)
     "/api/shared" -> shared(config)
     else -> if (!auth(config, path)) refuse(HttpStatusCode.NotFound, "notFound")

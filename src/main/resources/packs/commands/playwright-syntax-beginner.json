@@ -1,0 +1,227 @@
+{
+  "id": "playwright-syntax-beginner",
+  "name": "Playwright構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Playwright",
+    "テスト"
+  ],
+  "group": "Playwright構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "// Playwright Test / TypeScript",
+      "input": "// Playwright Test / TypeScript",
+      "annotation": "対象環境：例の前提（@playwright/testを使用。Webアプリ・画面文言・APIパス等はサンプル。相対URLはbaseURL設定が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { test, expect } from '@playwright/test';",
+      "input": "import { test, expect } from '@playwright/test';",
+      "annotation": "import：テストAPIをimport（Jestのexpectとは別）",
+      "input_type": "code"
+    },
+    {
+      "display": "test.only('調査中', async ({ page }) => {});",
+      "input": "test.only('調査中', async ({ page }) => {});",
+      "annotation": "test.only：実行対象を限定（コミット前に解除。CIではforbidOnlyを推奨）",
+      "input_type": "code"
+    },
+    {
+      "display": "test.use({ viewport: { width: 1280, height: 720 } });",
+      "input": "test.use({ viewport: { width: 1280, height: 720 } });",
+      "annotation": "test.use：グループ等のfixture設定（テスト本体の外で設定）",
+      "input_type": "code"
+    },
+    {
+      "display": "await page.goto('/login');",
+      "input": "await page.goto('/login');",
+      "annotation": "page.goto：ページへ移動（相対URLはbaseURLが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "const email = page.getByLabel('メール', { exact: true });",
+      "input": "const email = page.getByLabel('メール', { exact: true });",
+      "annotation": "getByLabel：ラベルで入力欄を探す",
+      "input_type": "code"
+    },
+    {
+      "display": "const search = page.getByPlaceholder('検索');",
+      "input": "const search = page.getByPlaceholder('検索');",
+      "annotation": "getByPlaceholder：プレースホルダーで探す",
+      "input_type": "code"
+    },
+    {
+      "display": "const message = page.getByText('保存しました', { exact: true });",
+      "input": "const message = page.getByText('保存しました', { exact: true });",
+      "annotation": "getByText：テキストで探す（複数一致に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "const card = page.getByTestId('user-card');",
+      "input": "const card = page.getByTestId('user-card');",
+      "annotation": "getByTestId：テストIDで探す（既定はdata-testid）",
+      "input_type": "code"
+    },
+    {
+      "display": "const logo = page.getByAltText('ロゴ');",
+      "input": "const logo = page.getByAltText('ロゴ');",
+      "annotation": "getByAltText：画像等の代替テキスト",
+      "input_type": "code"
+    },
+    {
+      "display": "const form = page.locator('form#login');",
+      "input": "const form = page.locator('form#login');",
+      "annotation": "locator：CSS等で探す（壊れやすいDOM構造依存を避ける）",
+      "input_type": "code"
+    },
+    {
+      "display": "const second = page.getByRole('listitem').nth(1);",
+      "input": "const second = page.getByRole('listitem').nth(1);",
+      "annotation": "nth / first / last：位置で選ぶ（0始まり。曖昧さを位置で隠さず意味で絞る）",
+      "input_type": "code"
+    },
+    {
+      "display": "await page.getByRole('button', { name: '保存' }).click();",
+      "input": "await page.getByRole('button', { name: '保存' }).click();",
+      "annotation": "click：クリック（Locatorは操作可能性を自動待機）",
+      "input_type": "code"
+    },
+    {
+      "display": "await page.getByLabel('メール').fill('pomo@example.com');",
+      "input": "await page.getByLabel('メール').fill('pomo@example.com');",
+      "annotation": "fill：入力値を置き換える",
+      "input_type": "code"
+    },
+    {
+      "display": "await page.getByLabel('言語').selectOption('ja');",
+      "input": "await page.getByLabel('言語').selectOption('ja');",
+      "annotation": "selectOption：selectの選択肢を選ぶ（HTML select向け。独自ドロップダウンとは別）",
+      "input_type": "code"
+    },
+    {
+      "display": "await page.getByRole('button', { name: 'メニュー' }).hover();",
+      "input": "await page.getByRole('button', { name: 'メニュー' }).hover();",
+      "annotation": "hover：マウスを乗せる",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(page.getByTestId('loading')).toBeHidden();",
+      "input": "await expect(page.getByTestId('loading')).toBeHidden();",
+      "annotation": "toBeHidden：非表示または未接続を検証",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(page.getByTestId('status')).toHaveText('保存済み');",
+      "input": "await expect(page.getByTestId('status')).toHaveText('保存済み');",
+      "annotation": "toHaveText：テキスト一致",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(page.getByTestId('message')).toContainText('完了');",
+      "input": "await expect(page.getByTestId('message')).toContainText('完了');",
+      "annotation": "toContainText：テキストを含む",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(page.getByRole('listitem')).toHaveCount(3);",
+      "input": "await expect(page.getByRole('listitem')).toHaveCount(3);",
+      "annotation": "toHaveCount：一致する要素数（即時取得したcountへの汎用expectより安定）",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(page.getByTestId('error')).not.toBeVisible();",
+      "input": "await expect(page.getByTestId('error')).not.toBeVisible();",
+      "annotation": "not：否定",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(page).toHaveScreenshot('home.png');",
+      "input": "await expect(page).toHaveScreenshot('home.png');",
+      "annotation": "toHaveScreenshot：画像比較（初回基準画像と更新差分をレビュー。OS・フォント等の環境をそろえる）",
+      "input_type": "code"
+    },
+    {
+      "display": "await expect(page.getByTestId('loaded')).toBeVisible();",
+      "input": "await expect(page.getByTestId('loaded')).toBeVisible();",
+      "annotation": "待機の基本：状態を待つ（固定のwaitForTimeoutやnetworkidleを万能な完了条件にしない）",
+      "input_type": "code"
+    },
+    {
+      "display": "await page.route('**/api/users', route => route.abort());",
+      "input": "await page.route('**/api/users', route => route.abort());",
+      "annotation": "route.abort：通信を失敗させる（異常系の検証）",
+      "input_type": "code"
+    },
+    {
+      "display": "await page.route('**/api/users', route => route.continue());",
+      "input": "await page.route('**/api/users', route => route.continue());",
+      "annotation": "route.continue：通信を続行（登録したroute内）",
+      "input_type": "code"
+    },
+    {
+      "display": "test.use({ storageState: 'playwright/.auth/user.json' });",
+      "input": "test.use({ storageState: 'playwright/.auth/user.json' });",
+      "annotation": "test.use({ storageState })：認証状態を再利用（事前に生成。セッション期限・サーバー側状態に依存）",
+      "input_type": "code"
+    },
+    {
+      "display": "npx playwright install",
+      "input": "npx playwright install",
+      "annotation": "playwright install：ブラウザーを導入（ターミナル。CI等では--with-depsを検討）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright test",
+      "input": "npx playwright test",
+      "annotation": "playwright test：テスト実行（ターミナル）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright test --ui",
+      "input": "npx playwright test --ui",
+      "annotation": "--ui / --headed / --debug：UI・画面表示・デバッグ（ターミナル）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright test --headed",
+      "input": "npx playwright test --headed",
+      "annotation": "--ui / --headed / --debug：UI・画面表示・デバッグ（ターミナル）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright test --debug",
+      "input": "npx playwright test --debug",
+      "annotation": "--ui / --headed / --debug：UI・画面表示・デバッグ（ターミナル）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright test --project=chromium",
+      "input": "npx playwright test --project=chromium",
+      "annotation": "--project / -g：プロジェクト・テスト名で絞る（プロジェクト名は設定と一致）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright test -g 'ログイン'",
+      "input": "npx playwright test -g 'ログイン'",
+      "annotation": "--project / -g：プロジェクト・テスト名で絞る（プロジェクト名は設定と一致）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright show-report",
+      "input": "npx playwright show-report",
+      "annotation": "show-report / codegen：レポート・操作からコード生成（生成コードもLocator・アサーション・機密情報をレビュー）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx playwright codegen http://localhost:3000",
+      "input": "npx playwright codegen http://localhost:3000",
+      "annotation": "show-report / codegen：レポート・操作からコード生成（生成コードもLocator・アサーション・機密情報をレビュー）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

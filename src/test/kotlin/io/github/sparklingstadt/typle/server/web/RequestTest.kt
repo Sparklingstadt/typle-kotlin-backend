@@ -70,12 +70,14 @@ class RequestTest {
 
   @Test fun decodesSaves() {
     assertEquals(3L to Change(emptyList(), emptyList(), hasLists = false, hasDevices = false), decodeFields(fields("""{"revision":3}""")))
-    assertEquals(0L to Change(emptyList(), emptyList(), hasLists = false, hasDevices = false),
-      decodeFields(fields("""{"revision":0,"profileId":"default"}""")))
     val lists = decodeFields(fields("""{"revision":1,"lists":$WORDS}""")).second
     assertEquals(true, lists.hasLists)
     assertEquals(false, lists.hasDevices)
     assertEquals("l", lists.lists.single().id)
+    // Lists sent without packs are each put in a pack of their own (typle-r v2.0.0).
+    assertEquals(true, lists.hasPacks)
+    assertEquals(listOf("pack-l"), lists.packs.map { it.id })
+    assertEquals("pack-l", lists.lists.single().packId)
     val devices = decodeFields(fields("""{"revision":1,"devices":[{"id":"d","name":" n ","layout":""}]}""")).second
     assertEquals(Change(emptyList(), listOf(Device("d", "n", "")), hasLists = false, hasDevices = true), devices)
     // Interests may be all a save sets; null is none.
@@ -98,9 +100,10 @@ class RequestTest {
     for (body in invalid) assertFailsWith<InvalidRequestException>(body) { decodeFields(fields(body)) }
     val legacy = listOf(
       """{"revision":1,"profileId":"other"}""", """{"revision":1,"profileId":null}""", """{"revision":1,"profileId":1}""",
-      """{"revision":1,"profiles":[]}""", """{"revision":1,"profileId":"other","lists":null}""",
+      """{"revision":1,"profiles":[]}""", """{"revision":1,"profileId":"other","lists":null}""", """{"revision":0,"profileId":"default"}""",
     )
-    for (body in legacy) assertFailsWith<LegacyRequestException>(body) { decodeFields(fields(body)) }
+    // Saves of apps with profiles are no longer taken (typle-r v2.0.0).
+    for (body in legacy) assertFailsWith<InvalidRequestException>(body) { decodeFields(fields(body)) }
   }
 
   // Only the lists and devices are looked at for what jsonb cannot store.

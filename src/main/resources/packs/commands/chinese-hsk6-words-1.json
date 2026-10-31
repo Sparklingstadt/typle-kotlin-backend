@@ -1,0 +1,256 @@
+{
+  "id": "chinese-hsk6-words-1",
+  "name": "中国語HSK6級（単語1）",
+  "category": "語学",
+  "tags": [
+    "中国語"
+  ],
+  "group": "中国語：HSK6級レベル単語",
+  "levels": [
+    "単語1"
+  ],
+  "words": [
+    {
+      "display": "安置",
+      "input": "ānzhì",
+      "annotation": "ānzhì / 落ち着かせる、配置する",
+      "input_type": "word"
+    },
+    {
+      "display": "把关",
+      "input": "bǎguān",
+      "annotation": "bǎguān / 厳しくチェックする",
+      "input_type": "word"
+    },
+    {
+      "display": "颁布",
+      "input": "bānbù",
+      "annotation": "bānbù / 公布する",
+      "input_type": "word"
+    },
+    {
+      "display": "包袱",
+      "input": "bāofu",
+      "annotation": "bāofu / 重荷、ふろしき包み",
+      "input_type": "word"
+    },
+    {
+      "display": "保守",
+      "input": "bǎoshǒu",
+      "annotation": "bǎoshǒu / 保守的な",
+      "input_type": "word"
+    },
+    {
+      "display": "抱负",
+      "input": "bàofù",
+      "annotation": "bàofù / 抱負",
+      "input_type": "word"
+    },
+    {
+      "display": "备份",
+      "input": "bèifèn",
+      "annotation": "bèifèn / バックアップ",
+      "input_type": "word"
+    },
+    {
+      "display": "本能",
+      "input": "běnnéng",
+      "annotation": "běnnéng / 本能",
+      "input_type": "word"
+    },
+    {
+      "display": "弊端",
+      "input": "bìduān",
+      "annotation": "bìduān / 弊害",
+      "input_type": "word"
+    },
+    {
+      "display": "辩护",
+      "input": "biànhù",
+      "annotation": "biànhù / 弁護する",
+      "input_type": "word"
+    },
+    {
+      "display": "博大精深",
+      "input": "bódà jīngshēn",
+      "annotation": "bódà jīngshēn / （思想・学識が）広く奥深い",
+      "input_type": "word"
+    },
+    {
+      "display": "不可思议",
+      "input": "bùkě sīyì",
+      "annotation": "bùkě sīyì / 不思議な、想像もつかない",
+      "input_type": "word"
+    },
+    {
+      "display": "采纳",
+      "input": "cǎinà",
+      "annotation": "cǎinà / （意見を）採用する",
+      "input_type": "word"
+    },
+    {
+      "display": "参照",
+      "input": "cānzhào",
+      "annotation": "cānzhào / 参照する",
+      "input_type": "word"
+    },
+    {
+      "display": "阐述",
+      "input": "chǎnshù",
+      "annotation": "chǎnshù / 詳しく述べる",
+      "input_type": "word"
+    },
+    {
+      "display": "倡导",
+      "input": "chàngdǎo",
+      "annotation": "chàngdǎo / 提唱する",
+      "input_type": "word"
+    },
+    {
+      "display": "沉淀",
+      "input": "chéndiàn",
+      "annotation": "chéndiàn / 沈殿する、蓄積する",
+      "input_type": "word"
+    },
+    {
+      "display": "澄清",
+      "input": "chéngqīng",
+      "annotation": "chéngqīng / はっきりさせる",
+      "input_type": "word"
+    },
+    {
+      "display": "筹备",
+      "input": "chóubèi",
+      "annotation": "chóubèi / 準備する",
+      "input_type": "word"
+    },
+    {
+      "display": "触犯",
+      "input": "chùfàn",
+      "annotation": "chùfàn / （法などに）触れる",
+      "input_type": "word"
+    },
+    {
+      "display": "创新",
+      "input": "chuàngxīn",
+      "annotation": "chuàngxīn / 革新する、イノベーション",
+      "input_type": "word"
+    },
+    {
+      "display": "磋商",
+      "input": "cuōshāng",
+      "annotation": "cuōshāng / 協議する",
+      "input_type": "word"
+    },
+    {
+      "display": "打包",
+      "input": "dǎbāo",
+      "annotation": "dǎbāo / 包む、持ち帰り用に包む",
+      "input_type": "word"
+    },
+    {
+      "display": "当务之急",
+      "input": "dāngwù zhī jí",
+      "annotation": "dāngwù zhī jí / 急務",
+      "input_type": "word"
+    },
+    {
+      "display": "抵制",
+      "input": "dǐzhì",
+      "annotation": "dǐzhì / ボイコットする、抑える",
+      "input_type": "word"
+    },
+    {
+      "display": "颠倒",
+      "input": "diāndǎo",
+      "annotation": "diāndǎo / 逆さまにする",
+      "input_type": "word"
+    },
+    {
+      "display": "动荡",
+      "input": "dòngdàng",
+      "annotation": "dòngdàng / 揺れ動く、不安定な",
+      "input_type": "word"
+    },
+    {
+      "display": "端正",
+      "input": "duānzhèng",
+      "annotation": "duānzhèng / きちんとした、正す",
+      "input_type": "word"
+    },
+    {
+      "display": "恶化",
+      "input": "èhuà",
+      "annotation": "èhuà / 悪化する",
+      "input_type": "word"
+    },
+    {
+      "display": "发扬",
+      "input": "fāyáng",
+      "annotation": "fāyáng / 発揚する",
+      "input_type": "word"
+    },
+    {
+      "display": "防御",
+      "input": "fángyù",
+      "annotation": "fángyù / 防御する",
+      "input_type": "word"
+    },
+    {
+      "display": "分歧",
+      "input": "fēnqí",
+      "annotation": "fēnqí / 食い違い",
+      "input_type": "word"
+    },
+    {
+      "display": "覆盖",
+      "input": "fùgài",
+      "annotation": "fùgài / 覆う",
+      "input_type": "word"
+    },
+    {
+      "display": "尴尬",
+      "input": "gāngà",
+      "annotation": "gāngà / 気まずい",
+      "input_type": "word"
+    },
+    {
+      "display": "高明",
+      "input": "gāomíng",
+      "annotation": "gāomíng / 優れた",
+      "input_type": "word"
+    },
+    {
+      "display": "公认",
+      "input": "gōngrèn",
+      "annotation": "gōngrèn / 公認する",
+      "input_type": "word"
+    },
+    {
+      "display": "巩固",
+      "input": "gǒnggù",
+      "annotation": "gǒnggù / 強固にする",
+      "input_type": "word"
+    },
+    {
+      "display": "孤独",
+      "input": "gūdú",
+      "annotation": "gūdú / 孤独な",
+      "input_type": "word"
+    },
+    {
+      "display": "规范",
+      "input": "guīfàn",
+      "annotation": "guīfàn / 規範",
+      "input_type": "word"
+    },
+    {
+      "display": "含糊",
+      "input": "hánhu",
+      "annotation": "hánhu / あいまいな",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

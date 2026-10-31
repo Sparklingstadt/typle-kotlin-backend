@@ -1,0 +1,852 @@
+{
+  "id": "04450fbe-2974-417c-9350-39802a5c650c",
+  "name": "Linux：システムの仕組み",
+  "category": "プログラミング",
+  "tags": [
+    "Linux"
+  ],
+  "words": [
+    {
+      "display": "/",
+      "input": "/",
+      "annotation": "Root：ファイルシステムの起点",
+      "input_type": "word"
+    },
+    {
+      "display": "/bin",
+      "input": "/bin",
+      "annotation": "Binaries：基本的な実行ファイル",
+      "input_type": "word"
+    },
+    {
+      "display": "/sbin",
+      "input": "/sbin",
+      "annotation": "System Binaries：システム管理用実行ファイル",
+      "input_type": "word"
+    },
+    {
+      "display": "/usr",
+      "input": "/usr",
+      "annotation": "Unix System Resourcesなどと説明される歴史的名称：アプリ・ライブラリ・共有データ",
+      "input_type": "word"
+    },
+    {
+      "display": "/usr/bin",
+      "input": "/usr/bin",
+      "annotation": "User Binaries：一般的なコマンド",
+      "input_type": "word"
+    },
+    {
+      "display": "/usr/sbin",
+      "input": "/usr/sbin",
+      "annotation": "System Binaries：システム管理用コマンド",
+      "input_type": "word"
+    },
+    {
+      "display": "/etc",
+      "input": "/etc",
+      "annotation": "Etcetera：システム全体の設定",
+      "input_type": "word"
+    },
+    {
+      "display": "/var",
+      "input": "/var",
+      "annotation": "Variable：ログなど変化するデータ",
+      "input_type": "word"
+    },
+    {
+      "display": "/var/log",
+      "input": "/var/log",
+      "annotation": "Log：システムログ",
+      "input_type": "word"
+    },
+    {
+      "display": "/home",
+      "input": "/home",
+      "annotation": "Home：一般ユーザーのホーム",
+      "input_type": "word"
+    },
+    {
+      "display": "/root",
+      "input": "/root",
+      "annotation": "Root：rootユーザーのホーム",
+      "input_type": "word"
+    },
+    {
+      "display": "/tmp",
+      "input": "/tmp",
+      "annotation": "Temporary：一時ファイル",
+      "input_type": "word"
+    },
+    {
+      "display": "/run",
+      "input": "/run",
+      "annotation": "Runtime：起動後の実行時データ",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev",
+      "input": "/dev",
+      "annotation": "Devices：デバイスファイル",
+      "input_type": "word"
+    },
+    {
+      "display": "/proc",
+      "input": "/proc",
+      "annotation": "Processes：プロセス・カーネル情報",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys",
+      "input": "/sys",
+      "annotation": "System：デバイス・カーネルの属性",
+      "input_type": "word"
+    },
+    {
+      "display": "/boot",
+      "input": "/boot",
+      "annotation": "Boot：カーネル・起動関連",
+      "input_type": "word"
+    },
+    {
+      "display": "/lib",
+      "input": "/lib",
+      "annotation": "Libraries：共有ライブラリなど",
+      "input_type": "word"
+    },
+    {
+      "display": "/opt",
+      "input": "/opt",
+      "annotation": "Optional：追加アプリケーション",
+      "input_type": "word"
+    },
+    {
+      "display": "/mnt",
+      "input": "/mnt",
+      "annotation": "Mount：一時的なマウント先",
+      "input_type": "word"
+    },
+    {
+      "display": "/media",
+      "input": "/media",
+      "annotation": "Media：リムーバブルメディアのマウント先",
+      "input_type": "word"
+    },
+    {
+      "display": "ls -la /",
+      "input": "ls -la /",
+      "annotation": "ルート直下を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tree -L 2 /etc",
+      "input": "tree -L 2 /etc",
+      "annotation": "/etcの構造を2階層表示",
+      "input_type": "command"
+    },
+    {
+      "display": "findmnt",
+      "input": "findmnt",
+      "annotation": "ファイルシステムのマウント状況",
+      "input_type": "command"
+    },
+    {
+      "display": "findmnt /",
+      "input": "findmnt /",
+      "annotation": "ルートファイルシステムの情報",
+      "input_type": "command"
+    },
+    {
+      "display": "stat /etc/passwd",
+      "input": "stat /etc/passwd",
+      "annotation": "ファイルの詳細情報",
+      "input_type": "command"
+    },
+    {
+      "display": "realpath /bin",
+      "input": "realpath /bin",
+      "annotation": "パスの実体を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/cpuinfo",
+      "input": "cat /proc/cpuinfo",
+      "annotation": "/proc/cpuinfo：CPU情報",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/meminfo",
+      "input": "cat /proc/meminfo",
+      "annotation": "/proc/meminfo：メモリ情報",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/version",
+      "input": "cat /proc/version",
+      "annotation": "/proc/version：カーネルバージョンなど",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/uptime",
+      "input": "cat /proc/uptime",
+      "annotation": "/proc/uptime：システム稼働時間",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/loadavg",
+      "input": "cat /proc/loadavg",
+      "annotation": "/proc/loadavg：システム負荷",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/mounts",
+      "input": "cat /proc/mounts",
+      "annotation": "/proc/mounts：マウント情報",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/filesystems",
+      "input": "cat /proc/filesystems",
+      "annotation": "/proc/filesystems：対応ファイルシステム",
+      "input_type": "command"
+    },
+    {
+      "display": "ls /proc/sys",
+      "input": "ls /proc/sys",
+      "annotation": "/proc/sys：カーネル設定項目",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/1234/status",
+      "input": "cat /proc/1234/status",
+      "annotation": "/proc/PID/status：プロセス状態・メモリなど",
+      "input_type": "command"
+    },
+    {
+      "display": "tr '\\0' ' ' < /proc/1234/cmdline",
+      "input": "tr '\\0' ' ' < /proc/1234/cmdline",
+      "annotation": "/proc/PID/cmdline：起動時の引数",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -l /proc/1234/fd",
+      "input": "ls -l /proc/1234/fd",
+      "annotation": "/proc/PID/fd：開いているファイルディスクリプタ",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/1234/maps",
+      "input": "cat /proc/1234/maps",
+      "annotation": "/proc/PID/maps：メモリマッピング",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /proc/1234/cgroup",
+      "input": "cat /proc/1234/cgroup",
+      "annotation": "/proc/PID/cgroup：所属cgroup情報",
+      "input_type": "command"
+    },
+    {
+      "display": "/sys/class/net",
+      "input": "/sys/class/net",
+      "annotation": "ネットワークインターフェース",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys/class/block",
+      "input": "/sys/class/block",
+      "annotation": "ブロックデバイス",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys/class/power_supply",
+      "input": "/sys/class/power_supply",
+      "annotation": "電源・バッテリー関連",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys/devices/system/cpu",
+      "input": "/sys/devices/system/cpu",
+      "annotation": "CPU構成",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys/devices/system/node",
+      "input": "/sys/devices/system/node",
+      "annotation": "NUMAノード",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys/fs/cgroup",
+      "input": "/sys/fs/cgroup",
+      "annotation": "cgroupsによるリソース管理",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys/module",
+      "input": "/sys/module",
+      "annotation": "カーネルモジュール",
+      "input_type": "word"
+    },
+    {
+      "display": "/sys/class/thermal",
+      "input": "/sys/class/thermal",
+      "annotation": "温度管理関連",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/null",
+      "input": "/dev/null",
+      "annotation": "Null Device：書き込んだデータを破棄",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/zero",
+      "input": "/dev/zero",
+      "annotation": "Zero Device：0のバイト列を読み出す",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/random",
+      "input": "/dev/random",
+      "annotation": "Random：乱数データを取得",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/urandom",
+      "input": "/dev/urandom",
+      "annotation": "Unblocking Random：乱数データを取得",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/tty",
+      "input": "/dev/tty",
+      "annotation": "Teletype：現在の制御端末",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/stdin",
+      "input": "/dev/stdin",
+      "annotation": "Standard Input：標準入力",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/stdout",
+      "input": "/dev/stdout",
+      "annotation": "Standard Output：標準出力",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/stderr",
+      "input": "/dev/stderr",
+      "annotation": "Standard Error：標準エラー出力",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/sda",
+      "input": "/dev/sda",
+      "annotation": "SCSI Diskなどに由来：ブロックデバイスの例",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/nvme0n1",
+      "input": "/dev/nvme0n1",
+      "annotation": "NVMe：NVMeストレージの例",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/loop0",
+      "input": "/dev/loop0",
+      "annotation": "Loop Device：ファイルをブロックデバイスとして扱う",
+      "input_type": "word"
+    },
+    {
+      "display": "/dev/pts",
+      "input": "/dev/pts",
+      "annotation": "Pseudo Terminals：疑似端末関連",
+      "input_type": "word"
+    },
+    {
+      "display": "stdin",
+      "input": "stdin",
+      "annotation": "FD 0：標準入力",
+      "input_type": "word"
+    },
+    {
+      "display": "stdout",
+      "input": "stdout",
+      "annotation": "FD 1：標準出力",
+      "input_type": "word"
+    },
+    {
+      "display": "stderr",
+      "input": "stderr",
+      "annotation": "FD 2：標準エラー出力",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGHUP",
+      "input": "SIGHUP",
+      "annotation": "1番（Hang Up）：端末切断通知・設定再読み込み",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGINT",
+      "input": "SIGINT",
+      "annotation": "2番（Interrupt）：Ctrl+Cによる割り込み",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGQUIT",
+      "input": "SIGQUIT",
+      "annotation": "3番（Quit）：終了要求・コアダンプ",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGKILL",
+      "input": "SIGKILL",
+      "annotation": "9番（Kill）：強制終了",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGUSR1",
+      "input": "SIGUSR1",
+      "annotation": "10番（User Signal 1）：アプリ固有の処理",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGSEGV",
+      "input": "SIGSEGV",
+      "annotation": "11番（Segmentation Violation）：不正メモリアクセス",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGUSR2",
+      "input": "SIGUSR2",
+      "annotation": "12番（User Signal 2）：アプリ固有の処理",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGPIPE",
+      "input": "SIGPIPE",
+      "annotation": "13番（Broken Pipe）：読み取り側が閉じたパイプへの書き込み",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGALRM",
+      "input": "SIGALRM",
+      "annotation": "14番（Alarm）：タイマー通知",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGTERM",
+      "input": "SIGTERM",
+      "annotation": "15番（Terminate）：正常終了の要求",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGCONT",
+      "input": "SIGCONT",
+      "annotation": "18番（Continue）：停止中プロセスの再開",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGSTOP",
+      "input": "SIGSTOP",
+      "annotation": "19番（Stop）：強制停止",
+      "input_type": "word"
+    },
+    {
+      "display": "SIGTSTP",
+      "input": "SIGTSTP",
+      "annotation": "20番（Terminal Stop）：Ctrl+Zによる停止",
+      "input_type": "word"
+    },
+    {
+      "display": "Pipe",
+      "input": "Pipe",
+      "annotation": "パイプ：プロセス間でデータを流す",
+      "input_type": "word"
+    },
+    {
+      "display": "FIFO",
+      "input": "FIFO",
+      "annotation": "名前付きパイプ：ファイルシステム上の名前を持つパイプ",
+      "input_type": "word"
+    },
+    {
+      "display": "Unix Domain Socket",
+      "input": "Unix Domain Socket",
+      "annotation": "Unixドメインソケット：同一ホスト上のプロセス間通信",
+      "input_type": "word"
+    },
+    {
+      "display": "TCP Socket",
+      "input": "TCP Socket",
+      "annotation": "TCPソケット：ネットワーク通信",
+      "input_type": "word"
+    },
+    {
+      "display": "Shared Memory",
+      "input": "Shared Memory",
+      "annotation": "共有メモリ：複数プロセスがメモリを共有",
+      "input_type": "word"
+    },
+    {
+      "display": "Semaphore",
+      "input": "Semaphore",
+      "annotation": "セマフォ：同期・排他制御",
+      "input_type": "word"
+    },
+    {
+      "display": "Message Queue",
+      "input": "Message Queue",
+      "annotation": "メッセージキュー：メッセージ単位でデータを受け渡す",
+      "input_type": "word"
+    },
+    {
+      "display": "Signal",
+      "input": "Signal",
+      "annotation": "シグナル：プロセスへの通知",
+      "input_type": "word"
+    },
+    {
+      "display": "mkfifo /tmp/myfifo",
+      "input": "mkfifo /tmp/myfifo",
+      "annotation": "mkfifo（Make FIFO）：名前付きパイプ作成",
+      "input_type": "command"
+    },
+    {
+      "display": "ipcs -a",
+      "input": "ipcs -a",
+      "annotation": "ipcs（IPC Status）：System V IPC資源の確認",
+      "input_type": "command"
+    },
+    {
+      "display": "ipcrm -m 1234",
+      "input": "ipcrm -m 1234",
+      "annotation": "ipcrm（IPC Remove）：System V IPC資源削除",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -xlp",
+      "input": "ss -xlp",
+      "annotation": "ss -x（Unix Socket）：Unixソケット確認",
+      "input_type": "command"
+    },
+    {
+      "display": "flock -n /tmp/task.lock ./task.sh",
+      "input": "flock -n /tmp/task.lock ./task.sh",
+      "annotation": "flock（File Lock）：ファイルロックによる排他制御",
+      "input_type": "command"
+    },
+    {
+      "display": "socat - UNIX-CONNECT:/tmp/app.sock",
+      "input": "socat - UNIX-CONNECT:/tmp/app.sock",
+      "annotation": "socat（Socket CAT）：通信経路の接続・中継",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -i file.txt",
+      "input": "ls -i file.txt",
+      "annotation": "ls -i：inode番号を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "stat file.txt",
+      "input": "stat file.txt",
+      "annotation": "stat：inode番号・リンク数・時刻などを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "df -i",
+      "input": "df -i",
+      "annotation": "inode使用率確認",
+      "input_type": "command"
+    },
+    {
+      "display": "find . -inum 12345",
+      "input": "find . -inum 12345",
+      "annotation": "find -inum：inode番号で検索",
+      "input_type": "command"
+    },
+    {
+      "display": "find . -links +1",
+      "input": "find . -links +1",
+      "annotation": "find -links：ハードリンク数で検索",
+      "input_type": "command"
+    },
+    {
+      "display": "ln original.txt hardlink.txt",
+      "input": "ln original.txt hardlink.txt",
+      "annotation": "ln：ハードリンク作成",
+      "input_type": "command"
+    },
+    {
+      "display": "ln -s original.txt symlink.txt",
+      "input": "ln -s original.txt symlink.txt",
+      "annotation": "ln -s：シンボリックリンク作成",
+      "input_type": "command"
+    },
+    {
+      "display": "readlink symlink.txt",
+      "input": "readlink symlink.txt",
+      "annotation": "readlink：シンボリックリンクの参照先表示",
+      "input_type": "command"
+    },
+    {
+      "display": "namei -l /home/user/app",
+      "input": "namei -l /home/user/app",
+      "annotation": "namei：パスの各構成要素を調査",
+      "input_type": "command"
+    },
+    {
+      "display": "filefrag -v file.txt",
+      "input": "filefrag -v file.txt",
+      "annotation": "filefrag：ファイルの配置情報確認",
+      "input_type": "command"
+    },
+    {
+      "display": "sysctl vm.swappiness",
+      "input": "sysctl vm.swappiness",
+      "annotation": "sysctl：カーネルパラメータの表示・変更",
+      "input_type": "command"
+    },
+    {
+      "display": "ulimit -a",
+      "input": "ulimit -a",
+      "annotation": "ulimit：シェルのリソース制限",
+      "input_type": "command"
+    },
+    {
+      "display": "prlimit --pid 1234",
+      "input": "prlimit --pid 1234",
+      "annotation": "prlimit：プロセスのリソース制限を表示・設定",
+      "input_type": "command"
+    },
+    {
+      "display": "taskset -pc 1234",
+      "input": "taskset -pc 1234",
+      "annotation": "taskset：CPUアフィニティ管理",
+      "input_type": "command"
+    },
+    {
+      "display": "ionice -p 1234",
+      "input": "ionice -p 1234",
+      "annotation": "ionice：I/O優先度管理",
+      "input_type": "command"
+    },
+    {
+      "display": "chrt -p 1234",
+      "input": "chrt -p 1234",
+      "annotation": "chrt：スケジューリング方針・優先度管理",
+      "input_type": "command"
+    },
+    {
+      "display": "numactl --hardware",
+      "input": "numactl --hardware",
+      "annotation": "numactl：NUMAポリシー指定",
+      "input_type": "command"
+    },
+    {
+      "display": "Mount",
+      "input": "Mount",
+      "annotation": "Mount Namespace：マウントポイントの隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "PID",
+      "input": "PID",
+      "annotation": "PID Namespace：プロセスID空間の隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "Network",
+      "input": "Network",
+      "annotation": "Network Namespace：ネットワークインターフェース・経路などの隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "UTS",
+      "input": "UTS",
+      "annotation": "UTS Namespace：ホスト名・ドメイン名の隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "IPC",
+      "input": "IPC",
+      "annotation": "IPC Namespace：IPC資源の隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "User",
+      "input": "User",
+      "annotation": "User Namespace：ユーザー・グループID空間の隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "Cgroup",
+      "input": "Cgroup",
+      "annotation": "Cgroup Namespace：cgroupの表示階層の隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "Time",
+      "input": "Time",
+      "annotation": "Time Namespace：一部のシステム時刻情報の隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "lsns",
+      "input": "lsns",
+      "annotation": "Namespace一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "unshare --user --map-root-user sh",
+      "input": "unshare --user --map-root-user sh",
+      "annotation": "unshare：新しいNamespaceで実行",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo nsenter -t 1234 -n ip addr",
+      "input": "sudo nsenter -t 1234 -n ip addr",
+      "annotation": "nsenter：既存のNamespaceに参加",
+      "input_type": "command"
+    },
+    {
+      "display": "systemd-cgls",
+      "input": "systemd-cgls",
+      "annotation": "cgroupの階層表示",
+      "input_type": "command"
+    },
+    {
+      "display": "systemd-cgtop",
+      "input": "systemd-cgtop",
+      "annotation": "cgroupごとのリソース監視",
+      "input_type": "command"
+    },
+    {
+      "display": "systemd-run --user --scope sleep 10",
+      "input": "systemd-run --user --scope sleep 10",
+      "annotation": "systemd-run：一時的なUnitでコマンド実行",
+      "input_type": "command"
+    },
+    {
+      "display": "Namespace",
+      "input": "Namespace",
+      "annotation": "何を見えるようにするか：プロセス・ネットワーク等の隔離",
+      "input_type": "word"
+    },
+    {
+      "display": "cgroups",
+      "input": "cgroups",
+      "annotation": "どれだけ資源を使えるか：CPU・メモリなどの管理",
+      "input_type": "word"
+    },
+    {
+      "display": "Capabilities",
+      "input": "Capabilities",
+      "annotation": "どの特権操作を許可するか：root権限を細分化",
+      "input_type": "word"
+    },
+    {
+      "display": "Seccomp",
+      "input": "Seccomp",
+      "annotation": "どのシステムコールを許可するか：カーネル操作の制限",
+      "input_type": "word"
+    },
+    {
+      "display": "top",
+      "input": "top",
+      "annotation": "サーバーが重い：CPU使用率・負荷",
+      "input_type": "command"
+    },
+    {
+      "display": "free -h",
+      "input": "free -h",
+      "annotation": "メモリ不足：メモリ・スワップ使用量",
+      "input_type": "command"
+    },
+    {
+      "display": "df -h",
+      "input": "df -h",
+      "annotation": "ディスク不足：ファイルシステムの空き",
+      "input_type": "command"
+    },
+    {
+      "display": "du -h --max-depth=1 /var",
+      "input": "du -h --max-depth=1 /var",
+      "annotation": "容量を使う場所が不明：ディレクトリ別使用量",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -p err -b",
+      "input": "journalctl -p err -b",
+      "annotation": "プロセスが落ちる：エラー記録",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -k -b",
+      "input": "journalctl -k -b",
+      "annotation": "OOM Killの疑い：カーネルログ",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl status nginx",
+      "input": "systemctl status nginx",
+      "annotation": "サービスが起動しない：サービス状態",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -v http://localhost:3000",
+      "input": "curl -v http://localhost:3000",
+      "annotation": "APIに接続できない：HTTP接続・レスポンス",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo ss -ltnp",
+      "input": "sudo ss -ltnp",
+      "annotation": "ポートが使えない：待受ポートとプロセス",
+      "input_type": "command"
+    },
+    {
+      "display": "dig example.com",
+      "input": "dig example.com",
+      "annotation": "DNS解決が失敗する：DNS応答",
+      "input_type": "command"
+    },
+    {
+      "display": "namei -l /path/to/file",
+      "input": "namei -l /path/to/file",
+      "annotation": "ファイルにアクセスできない：経路上のアクセス権",
+      "input_type": "command"
+    },
+    {
+      "display": "type -a node",
+      "input": "type -a node",
+      "annotation": "プログラムの位置が不明：コマンドの解決先",
+      "input_type": "command"
+    },
+    {
+      "display": "ldd ./program",
+      "input": "ldd ./program",
+      "annotation": "実行ファイルの依存関係調査：共有ライブラリの参照先",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo lsof +L1",
+      "input": "sudo lsof +L1",
+      "annotation": "削除したログの容量が残る：削除済みファイルを開くプロセス",
+      "input_type": "command"
+    },
+    {
+      "display": "bash -x script.sh",
+      "input": "bash -x script.sh",
+      "annotation": "シェルスクリプトが動かない：実行経路のトレース",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:08:36.929Z"
+}

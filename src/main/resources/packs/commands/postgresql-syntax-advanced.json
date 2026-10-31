@@ -1,0 +1,245 @@
+{
+  "id": "postgresql-syntax-advanced",
+  "name": "PostgreSQL構文（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "PostgreSQL",
+    "SQL"
+  ],
+  "group": "PostgreSQL構文",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "CREATE TABLE users (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  name text NOT NULL,\n  email text UNIQUE,\n  age integer CHECK (age >= 0),\n  active boolean NOT NULL DEFAULT true,\n  department_id bigint,\n  created_at timestamptz NOT NULL DEFAULT now(),\n  profile jsonb NOT NULL DEFAULT '{}'::jsonb,\n  tags text[] NOT NULL DEFAULT '{}'\n);\nCREATE TABLE orders (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  user_id bigint REFERENCES users(id),\n  amount numeric(12, 2) NOT NULL,\n  status text NOT NULL DEFAULT 'pending',\n  created_at timestamptz NOT NULL DEFAULT now()\n);",
+      "input": "CREATE TABLE users (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, name text NOT NULL, email text UNIQUE, age integer CHECK (age >= 0), active boolean NOT NULL DEFAULT true, department_id bigint, created_at timestamptz NOT NULL DEFAULT now(), profile jsonb NOT NULL DEFAULT '{}'::jsonb, tags text[] NOT NULL DEFAULT '{}'); CREATE TABLE orders (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, user_id bigint REFERENCES users(id), amount numeric(12,2) NOT NULL, status text NOT NULL DEFAULT 'pending', created_at timestamptz NOT NULL DEFAULT now());",
+      "annotation": "サンプルテーブル：例に使う表を作成（空の検証用スキーマ向け。同名表があると失敗。以下の例を全部順番に実行する用途ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "PREPARE find_user(bigint) AS SELECT *\nFROM users\nWHERE id = $1;\nEXECUTE find_user(1);\nDEALLOCATE find_user;",
+      "input": "PREPARE find_user(bigint) AS SELECT * FROM users WHERE id = $1; EXECUTE find_user(1); DEALLOCATE find_user;",
+      "annotation": "$1等のパラメーター：値をパラメーター化（アプリではドライバーのパラメーターAPIを使用。識別子は値パラメーターでは置き換えられない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT DISTINCT ON (department_id) department_id, id, created_at\nFROM users\nORDER BY department_id, created_at DESC, id DESC;",
+      "input": "SELECT DISTINCT ON (department_id) department_id, id, created_at FROM users ORDER BY department_id, created_at DESC, id DESC;",
+      "annotation": "DISTINCT ON：グループごとに先頭行（PostgreSQL固有。DISTINCT ON式をORDER BYの左端に合わせる）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT department_id, COUNT(*)\nFROM users\nGROUP BY department_id\nHAVING COUNT(*) >= 5;",
+      "input": "SELECT department_id, COUNT(*) FROM users GROUP BY department_id HAVING COUNT(*) >= 5;",
+      "annotation": "HAVING：集計後に絞る（WHEREは集計前の行に作用）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE active) AS active_count FROM users;",
+      "input": "SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE active) AS active_count FROM users;",
+      "annotation": "FILTER：集計の対象を条件指定",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT u.name, o.amount FROM users u INNER JOIN orders o ON o.user_id = u.id;",
+      "input": "SELECT u.name, o.amount FROM users u INNER JOIN orders o ON o.user_id = u.id;",
+      "annotation": "INNER JOIN：一致する行を結合",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT u.id, o.id AS order_id FROM users u LEFT JOIN orders o ON o.user_id = u.id;",
+      "input": "SELECT u.id, o.id AS order_id FROM users u LEFT JOIN orders o ON o.user_id = u.id;",
+      "annotation": "LEFT JOIN：左側を残して結合（右側へのWHERE条件で実質INNER JOINになる場合がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT u.id, o.id AS order_id\nFROM users u\nFULL\nOUTER JOIN orders o ON o.user_id = u.id;",
+      "input": "SELECT u.id, o.id AS order_id FROM users u FULL OUTER JOIN orders o ON o.user_id = u.id;",
+      "annotation": "FULL OUTER JOIN：両側の未一致行も残す",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT u.id, s.status\nFROM users u\nCROSS JOIN (\n  VALUES ('pending'), ('paid')\n) AS s(status);",
+      "input": "SELECT u.id, s.status FROM users u CROSS JOIN (VALUES ('pending'), ('paid')) AS s(status);",
+      "annotation": "CROSS JOIN：直積（行数が掛け算で増える）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT u.id, x.total\nFROM users u\nJOIN (\n  SELECT user_id AS id, SUM(amount) AS total\n  FROM orders\n  GROUP BY user_id\n) x USING (id);",
+      "input": "SELECT u.id, x.total FROM users u JOIN (SELECT user_id AS id, SUM(amount) AS total FROM orders GROUP BY user_id) x USING (id);",
+      "annotation": "USING：同名の結合列を指定",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users u WHERE EXISTS (\n  SELECT 1 FROM orders o WHERE o.user_id = u.id\n);",
+      "input": "SELECT * FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id = u.id);",
+      "annotation": "EXISTS：対応する行があるか",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT *\nFROM users u\nWHERE NOT EXISTS (\n  SELECT 1\n  FROM orders o\n  WHERE o.user_id = u.id\n);",
+      "input": "SELECT * FROM users u WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.user_id = u.id);",
+      "annotation": "NOT EXISTS：対応する行がないか",
+      "input_type": "code"
+    },
+    {
+      "display": "WITH totals AS (\n  SELECT user_id, SUM(amount) AS total\n  FROM orders\n  GROUP BY user_id\n)\nSELECT *\nFROM totals\nWHERE total >= 1000;",
+      "input": "WITH totals AS (SELECT user_id, SUM(amount) AS total FROM orders GROUP BY user_id) SELECT * FROM totals WHERE total >= 1000;",
+      "annotation": "WITH / CTE：クエリに名前を付ける（必ず実体化されるわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "WITH RECURSIVE nums(n) AS (\n  VALUES (1)\n  UNION ALL SELECT n + 1\n  FROM nums\n  WHERE n < 5\n)\nSELECT n\nFROM nums;",
+      "input": "WITH RECURSIVE nums(n) AS (VALUES (1) UNION ALL SELECT n + 1 FROM nums WHERE n < 5) SELECT n FROM nums;",
+      "annotation": "WITH RECURSIVE：再帰クエリ（終了条件が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT u.id, recent.id AS order_id\nFROM users u\nLEFT JOIN LATERAL (\n  SELECT id\n  FROM orders o\n  WHERE o.user_id = u.id\n  ORDER BY created_at DESC, id DESC\n  LIMIT 1\n) recent ON true;",
+      "input": "SELECT u.id, recent.id AS order_id FROM users u LEFT JOIN LATERAL (SELECT id FROM orders o WHERE o.user_id = u.id ORDER BY created_at DESC, id DESC LIMIT 1) recent ON true;",
+      "annotation": "LATERAL：左側の行を参照する副問い合わせ（ユーザーごとの最新注文など）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id, user_id, amount, SUM(amount) OVER (\n  PARTITION BY user_id\n) AS user_total\nFROM orders;",
+      "input": "SELECT id, user_id, amount, SUM(amount) OVER (PARTITION BY user_id) AS user_total FROM orders;",
+      "annotation": "OVER / PARTITION BY：行を残したまま集計（GROUP BYと異なり各行を残す）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id, ROW_NUMBER() OVER (\n  PARTITION BY user_id\n  ORDER BY created_at, id\n) AS n\nFROM orders;",
+      "input": "SELECT id, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at, id) AS n FROM orders;",
+      "annotation": "ROW_NUMBER：グループ内の連番（同順位の順番も決めるなら一意な並べ替え）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id, RANK() OVER (\n  ORDER BY amount DESC\n), DENSE_RANK() OVER (\n  ORDER BY amount DESC\n)\nFROM orders;",
+      "input": "SELECT id, RANK() OVER (ORDER BY amount DESC), DENSE_RANK() OVER (ORDER BY amount DESC) FROM orders;",
+      "annotation": "RANK / DENSE_RANK：順位（RANKは同順位後に欠番、DENSE_RANKは欠番なし）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id, LAG(amount) OVER (\n  PARTITION BY user_id\n  ORDER BY created_at, id\n)\nFROM orders;",
+      "input": "SELECT id, LAG(amount) OVER (PARTITION BY user_id ORDER BY created_at, id) FROM orders;",
+      "annotation": "LAG / LEAD：前後の行の値",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id, SUM(amount) OVER (\n  ORDER BY created_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n) AS running_total\nFROM orders;",
+      "input": "SELECT id, SUM(amount) OVER (ORDER BY created_at, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total FROM orders;",
+      "annotation": "ROWS BETWEEN：累積の窓枠（既定の窓枠との差に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO users (name, email, age) VALUES ('Pomo', 'pomo@example.com', 20);",
+      "input": "INSERT INTO users (name, email, age) VALUES ('Pomo', 'pomo@example.com', 20);",
+      "annotation": "INSERT INTO / VALUES：行を追加",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO users (name) SELECT 'User ' || n FROM generate_series(1, 3) AS g(n);",
+      "input": "INSERT INTO users (name) SELECT 'User ' || n FROM generate_series(1, 3) AS g(n);",
+      "annotation": "INSERT ... SELECT：検索結果を挿入",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO users (name, email) VALUES ('Pomo', 'pomo@example.com') ON CONFLICT (email) DO NOTHING;",
+      "input": "INSERT INTO users (name, email) VALUES ('Pomo', 'pomo@example.com') ON CONFLICT (email) DO NOTHING;",
+      "annotation": "ON CONFLICT DO NOTHING：一意競合時に追加しない（対象に適切な一意制約・インデックスが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO users (name, email) VALUES ('New', 'pomo@example.com') ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name\nRETURNING id, name;",
+      "input": "INSERT INTO users (name, email) VALUES ('New', 'pomo@example.com') ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name RETURNING id, name;",
+      "annotation": "ON CONFLICT DO UPDATE：一意競合時に更新（EXCLUDEDは挿入予定の行）",
+      "input_type": "code"
+    },
+    {
+      "display": "UPDATE users u SET active = true\nFROM (\n  SELECT DISTINCT user_id\n  FROM orders\n  WHERE status = 'paid'\n) o\nWHERE u.id = o.user_id;",
+      "input": "UPDATE users u SET active = true FROM (SELECT DISTINCT user_id FROM orders WHERE status = 'paid') o WHERE u.id = o.user_id;",
+      "annotation": "UPDATE ... FROM：別の表や結果を使って更新（対象行が複数の結合行に一致しないようにする）",
+      "input_type": "code"
+    },
+    {
+      "display": "MERGE INTO users u USING (\n  VALUES ('pomo@example.com', 'Pomo')\n) AS s(email, name) ON u.email = s.email WHEN MATCHED THEN UPDATE SET name = s.name WHEN NOT MATCHED THEN INSERT (email, name) VALUES (s.email, s.name);",
+      "input": "MERGE INTO users u USING (VALUES ('pomo@example.com', 'Pomo')) AS s(email, name) ON u.email = s.email WHEN MATCHED THEN UPDATE SET name = s.name WHEN NOT MATCHED THEN INSERT (email, name) VALUES (s.email, s.name);",
+      "annotation": "MERGE：一致条件に応じて更新・追加（PostgreSQL 15以降。ON CONFLICTと同じ競合処理保証ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE TABLE notes (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n  body text NOT NULL\n);",
+      "input": "CREATE TABLE notes (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, body text NOT NULL);",
+      "annotation": "CREATE TABLE：表を作る",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE TABLE reviews (\n  id bigint PRIMARY KEY,\n  user_id bigint REFERENCES users(id)\n);",
+      "input": "CREATE TABLE reviews (id bigint PRIMARY KEY, user_id bigint REFERENCES users(id));",
+      "annotation": "FOREIGN KEY：外部キー（参照側インデックスは自動作成されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE TABLE sessions (\n  id bigint PRIMARY KEY,\n  user_id bigint REFERENCES users(id) ON DELETE CASCADE\n);",
+      "input": "CREATE TABLE sessions (id bigint PRIMARY KEY, user_id bigint REFERENCES users(id) ON DELETE CASCADE);",
+      "annotation": "ON DELETE CASCADE：親削除時に子も削除（意図せぬ連鎖削除に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT DATE_TRUNC('month', created_at), COUNT(*)\nFROM users\nGROUP BY DATE_TRUNC('month', created_at);",
+      "input": "SELECT DATE_TRUNC('month', created_at), COUNT(*) FROM users GROUP BY DATE_TRUNC('month', created_at);",
+      "annotation": "DATE_TRUNC：日時を指定単位へ切り捨て（timestamptzではTimeZoneに注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "UPDATE users SET profile = jsonb_set(profile, '{premium}', 'true'::jsonb)\nWHERE id = 1;",
+      "input": "UPDATE users SET profile = jsonb_set(profile, '{premium}', 'true'::jsonb) WHERE id = 1;",
+      "annotation": "jsonb_set：JSONBの一部を変更（深いパスの途中のキーがない場合等に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE MATERIALIZED VIEW user_totals AS SELECT user_id, SUM(amount) AS total\nFROM orders\nGROUP BY user_id;",
+      "input": "CREATE MATERIALIZED VIEW user_totals AS SELECT user_id, SUM(amount) AS total FROM orders GROUP BY user_id;",
+      "annotation": "CREATE MATERIALIZED VIEW：結果を保存するビュー（元表変更だけでは内容が自動更新されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN;\nSAVEPOINT before_change;\nUPDATE users SET active = false\nWHERE id = 1;\nROLLBACK TO SAVEPOINT before_change;\nCOMMIT;",
+      "input": "BEGIN; SAVEPOINT before_change; UPDATE users SET active = false WHERE id = 1; ROLLBACK TO SAVEPOINT before_change; COMMIT;",
+      "annotation": "SAVEPOINT：途中の復帰地点",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN;\nSELECT *\nFROM orders\nWHERE status = 'pending'\nORDER BY id FOR UPDATE SKIP LOCKED\nLIMIT 1;\nCOMMIT;",
+      "input": "BEGIN; SELECT * FROM orders WHERE status = 'pending' ORDER BY id FOR UPDATE SKIP LOCKED LIMIT 1; COMMIT;",
+      "annotation": "SKIP LOCKED：ロック済み行を飛ばす（ジョブキュー等向け。一般的な整合した一覧取得には不向き）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN;\nSET LOCAL lock_timeout = '3s';\nSELECT *\nFROM users\nWHERE id = 1 FOR UPDATE;\nCOMMIT;",
+      "input": "BEGIN; SET LOCAL lock_timeout = '3s'; SELECT * FROM users WHERE id = 1 FOR UPDATE; COMMIT;",
+      "annotation": "SET LOCAL lock_timeout：ロック待機を制限（SET LOCALは現在トランザクション内だけ）",
+      "input_type": "code"
+    },
+    {
+      "display": "GRANT USAGE ON SCHEMA public TO app_reader;\nGRANT SELECT ON users TO app_reader;",
+      "input": "GRANT USAGE ON SCHEMA public TO app_reader; GRANT SELECT ON users TO app_reader;",
+      "annotation": "GRANT：権限付与（既存のusers表が対象。将来の表には別設定が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "COPY (\n  SELECT id, name FROM users\n) TO '/tmp/users.csv' WITH (FORMAT csv, HEADER true);",
+      "input": "COPY (SELECT id, name FROM users) TO '/tmp/users.csv' WITH (FORMAT csv, HEADER true);",
+      "annotation": "COPY：サーバー側CSV出力（サーバー上のパス。特別なファイル権限等が必要。クライアントのパスではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT column_name, data_type\nFROM information_schema.columns\nWHERE table_schema = 'public' AND table_name = 'users'\nORDER BY ordinal_position;",
+      "input": "SELECT column_name, data_type FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'users' ORDER BY ordinal_position;",
+      "annotation": "information_schema：表の構造等を参照（権限で見える範囲が変わる）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

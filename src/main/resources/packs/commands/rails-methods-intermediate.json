@@ -1,0 +1,107 @@
+{
+  "id": "rails-methods-intermediate",
+  "name": "Railsメソッド（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "Ruby on Rails",
+    "Ruby"
+  ],
+  "group": "Railsメソッド",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": "Rails.application.routes.draw do;\n  resources :users;\nend",
+      "input": "Rails.application.routes.draw do; resources :users; end",
+      "annotation": "resources：RESTルート（config/routes.rb。7標準アクションを生成）",
+      "input_type": "code"
+    },
+    {
+      "display": "root 'home#index';\nget '/health', to: 'health#show'",
+      "input": "root 'home#index'; get '/health', to: 'health#show'",
+      "annotation": "root / get：トップ・個別ルート（routes.draw内。対応コントローラーが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "def user_params;\n  params.expect(user: [:name, :email]);\nend",
+      "input": "def user_params; params.expect(user: [:name,:email]); end",
+      "annotation": "params / expect：許可した入力を取得（Rails 8の例。Strong Parametersは入力の業務検証・認可を代替しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "validates :name, presence: true;\nvalidates :email, uniqueness: true",
+      "input": "validates :name, presence: true; validates :email, uniqueness: true",
+      "annotation": "validates：値を検証（モデル内。一意性の競合防止にはDB一意制約も必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.find(1);\nUser.find_by(email: 'pomo@example.com')",
+      "input": "User.find(1); User.find_by(email: 'pomo@example.com')",
+      "annotation": "find / find_by：1件取得（findは対象なしで例外、find_byはnil）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.order(created_at: :desc, id: :desc).limit(20).offset(40)",
+      "input": "User.order(created_at: :desc,id: :desc).limit(20).offset(40)",
+      "annotation": "order / limit / offset：並べ替え・ページング（ユーザー入力の生SQLをorderへ渡さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.where(active: true).pluck(:id, :name);\nUser.where(id: 1).pick(:name)",
+      "input": "User.where(active: true).pluck(:id,:name); User.where(id: 1).pick(:name)",
+      "annotation": "pluck / pick / select：必要列だけ取得（pluckは配列。selectは選択列付きモデルのRelation）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.joins(:posts).distinct;\nUser.left_joins(:posts)",
+      "input": "User.joins(:posts).distinct; User.left_joins(:posts)",
+      "annotation": "joins / left_joins：関連を結合（joins自体は関連を事前ロードしない）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.preload(:posts).find_each { |u|\n  u.posts.each { |p|\n    puts p.title\n  }\n}",
+      "input": "User.preload(:posts).find_each { |u| u.posts.each { |p| puts p.title } }",
+      "annotation": "includes / preload：関連のN+1を避ける（includesは条件によってJOINになる等の差）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.find_each(batch_size: 500) { |u|\n  puts u.id\n}",
+      "input": "User.find_each(batch_size: 500) { |u| puts u.id }",
+      "annotation": "find_each：分割して処理（通常のorderで並ぶ一覧処理とは異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "user = User.new(name: 'Pomo', email: 'pomo@example.com');\nuser.save!",
+      "input": "user = User.new(name: 'Pomo',email: 'pomo@example.com'); user.save!",
+      "annotation": "new / save / save!：作成・保存（saveは検証失敗でfalse、save!は例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.create!(name: 'Pomo', email: 'pomo@example.com')",
+      "input": "User.create!(name: 'Pomo',email: 'pomo@example.com')",
+      "annotation": "create / create!：生成と保存（検証・callbackが実行される）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.where(active: false).update_all(name: 'Inactive')",
+      "input": "User.where(active: false).update_all(name: 'Inactive')",
+      "annotation": "update_all：一括更新（検証・callbackを通常通らずupdated_atも自動更新しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "user = User.find(1);\nuser.with_lock do;\n  user.update!(active: true);\nend",
+      "input": "user = User.find(1); user.with_lock do; user.update!(active: true); end",
+      "annotation": "with_lock：行ロックして処理（DB取引内で対象行をロックして更新。実データを変更する）",
+      "input_type": "code"
+    },
+    {
+      "display": "<h1><%= @user.name %></h1>\n<%= link_to '一覧', users_path %>",
+      "input": "<h1><%= @user.name %></h1> <%= link_to '一覧', users_path %>",
+      "annotation": "ERB / link_to：表示・リンク（通常自動HTMLエスケープ。rawやhtml_safeへ未検証入力を渡さない）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -1,0 +1,208 @@
+{
+  "id": "kotlin-syntax-advanced-1",
+  "name": "Kotlin構文（上級1）",
+  "category": "プログラミング",
+  "tags": [
+    "Kotlin"
+  ],
+  "group": "Kotlin構文",
+  "levels": [
+    "上級1"
+  ],
+  "words": [
+    {
+      "display": "fun greet(): Unit {\n  println(\"Hello\")\n}",
+      "input": "fun greet(): Unit { println(\"Hello\") }",
+      "annotation": "Unit：意味のある結果を返さない型（通常は戻り値型を省略）",
+      "input_type": "code"
+    },
+    {
+      "display": "val detail = \"長さは${name.length}です\"",
+      "input": "val detail = \"長さは${name.length}です\"",
+      "annotation": "${式}：式を文字列へ埋め込む",
+      "input_type": "code"
+    },
+    {
+      "display": "for (item in items) {\n  println(item)\n}",
+      "input": "for (item in items) { println(item) }",
+      "annotation": "for (item in items)：要素を順に処理（Javaの3部構成forはない）",
+      "input_type": "code"
+    },
+    {
+      "display": "fun greet(name: String) {\n  println(name)\n}",
+      "input": "fun greet(name: String) { println(name) }",
+      "annotation": "Unitの関数：意味のある結果を返さない",
+      "input_type": "code"
+    },
+    {
+      "display": "fun outer() {\n  fun inner() {\n  };\n  inner()\n}",
+      "input": "fun outer() { fun inner() {}; inner() }",
+      "annotation": "ローカル関数：関数内に関数を定義",
+      "input_type": "code"
+    },
+    {
+      "display": "if (name != null) {\n  println(name.length)\n}",
+      "input": "if (name != null) { println(name.length) }",
+      "annotation": "nullチェック：スマートキャスト（途中で変化しないと判断できる等の条件が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "val names = mutableListOf(\"A\", \"B\")",
+      "input": "val names = mutableListOf(\"A\", \"B\")",
+      "annotation": "mutableListOf：変更可能List（valでも要素の変更は可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "val scores = mutableMapOf<String, Int>()",
+      "input": "val scores = mutableMapOf<String, Int>()",
+      "annotation": "mutableMapOf：変更可能Map",
+      "input_type": "code"
+    },
+    {
+      "display": "val score = scores.getOrDefault(\"Pomo\", 0)",
+      "input": "val score = scores.getOrDefault(\"Pomo\", 0)",
+      "annotation": "getOrDefault：キーがなければ既定値（登録値がnullの場合はそのnullを返す）",
+      "input_type": "code"
+    },
+    {
+      "display": "val double: (Int) -> Int = { it * 2 }",
+      "input": "val double: (Int) -> Int = { it * 2 }",
+      "annotation": "it：単一引数の暗黙名（引数を明示しない単一引数ラムダ） / (引数型) -> 戻り値型：関数型",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = names.filter { it.length >= 3 }",
+      "input": "val result = names.filter { it.length >= 3 }",
+      "annotation": "filter：絞り込み / 末尾ラムダ：最後の関数型引数を括弧外へ",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = names.map { it.uppercase() }",
+      "input": "val result = names.map { it.uppercase() }",
+      "annotation": "map：各要素を変換",
+      "input_type": "code"
+    },
+    {
+      "display": "val ok = names.any { it.isEmpty() }",
+      "input": "val ok = names.any { it.isEmpty() }",
+      "annotation": "any：1つでも条件を満たすか",
+      "input_type": "code"
+    },
+    {
+      "display": "val ok = names.all { it.isNotEmpty() }",
+      "input": "val ok = names.all { it.isNotEmpty() }",
+      "annotation": "all：すべて条件を満たすか（空コレクションではtrue）",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = names.sortedBy { it.length }",
+      "input": "val result = names.sortedBy { it.length }",
+      "annotation": "sortedBy：指定値で並べ替え",
+      "input_type": "code"
+    },
+    {
+      "display": "val groups = names.groupBy { it.length }",
+      "input": "val groups = names.groupBy { it.length }",
+      "annotation": "groupBy：指定キーで分類",
+      "input_type": "code"
+    },
+    {
+      "display": "val isAdult: Boolean get() = age >= 20",
+      "input": "val isAdult: Boolean get() = age >= 20",
+      "annotation": "get()：カスタムgetter（クラス内。ageは定義済み）",
+      "input_type": "code"
+    },
+    {
+      "display": "open class Animal {\n  open fun speak() {\n  }\n}",
+      "input": "open class Animal { open fun speak() {} }",
+      "annotation": "open fun：オーバーライド可能なメンバー",
+      "input_type": "code"
+    },
+    {
+      "display": "abstract class Animal {\n  abstract fun speak()\n}",
+      "input": "abstract class Animal { abstract fun speak() }",
+      "annotation": "abstract class / fun：抽象クラス・抽象関数",
+      "input_type": "code"
+    },
+    {
+      "display": "interface Greeter {\n  fun greet(): String\n}",
+      "input": "interface Greeter { fun greet(): String }",
+      "annotation": "interface：インターフェース",
+      "input_type": "code"
+    },
+    {
+      "display": "enum class Status {\n  TODO,\n  DOING,\n  DONE\n}",
+      "input": "enum class Status { TODO, DOING, DONE }",
+      "annotation": "enum class：値を限定した列挙型",
+      "input_type": "code"
+    },
+    {
+      "display": "object Config { val appName = \"App\" }",
+      "input": "object Config { val appName = \"App\" }",
+      "annotation": "object：名前付きシングルトン",
+      "input_type": "code"
+    },
+    {
+      "display": "if (value is String) println(value.length)",
+      "input": "if (value is String) println(value.length)",
+      "annotation": "is：型判定（条件下でスマートキャスト）",
+      "input_type": "code"
+    },
+    {
+      "display": "class Box<T : Number>(val value: T)",
+      "input": "class Box<T : Number>(val value: T)",
+      "annotation": "T : Number：型パラメーターの上限",
+      "input_type": "code"
+    },
+    {
+      "display": "interface Source<out T> {\n  fun get(): T\n}",
+      "input": "interface Source<out T> { fun get(): T }",
+      "annotation": "out T：宣言側の共変（主にTを出力する型）",
+      "input_type": "code"
+    },
+    {
+      "display": "interface Sink<in T> {\n  fun put(value: T)\n}",
+      "input": "interface Sink<in T> { fun put(value: T) }",
+      "annotation": "in T：宣言側の反変（主にTを入力する型）",
+      "input_type": "code"
+    },
+    {
+      "display": "fun count(items: List<*>) = items.size",
+      "input": "fun count(items: List<*>) = items.size",
+      "annotation": "List<*>：スタープロジェクション（型引数を特定しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "fun String.greet() = \"こんにちは、$this\"",
+      "input": "fun String.greet() = \"こんにちは、$this\"",
+      "annotation": "fun 型.関数：拡張関数（型自体を変更するわけではない。静的に解決）",
+      "input_type": "code"
+    },
+    {
+      "display": "val copy = names.also { println(it.size) }",
+      "input": "val copy = names.also { println(it.size) }",
+      "annotation": "also：付随処理をして対象自身を返す（対象は通常it）",
+      "input_type": "code"
+    },
+    {
+      "display": "class User {\n  lateinit var name: String\n}",
+      "input": "class User { lateinit var name: String }",
+      "annotation": "lateinit var：初期化を後へ延ばす（初期化前アクセスは例外。非nullのvar。プリミティブ相当型等には不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "throw IllegalArgumentException(\"説明\")",
+      "input": "throw IllegalArgumentException(\"説明\")",
+      "annotation": "throw：例外送出",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = listOf(1, 2).map { it * 2 }",
+      "input": "val result = listOf(1, 2).map { it * 2 }",
+      "annotation": "構文とライブラリ：言語機能とAPIの区別（コレクション・スコープ関数は標準ライブラリ。多くのコルーチンAPIは追加ライブラリ）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

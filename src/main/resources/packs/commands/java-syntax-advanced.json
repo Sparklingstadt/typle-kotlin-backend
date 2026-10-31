@@ -1,0 +1,208 @@
+{
+  "id": "java-syntax-advanced",
+  "name": "Java構文（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Java"
+  ],
+  "group": "Java構文",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "String label = age >= 20 ? \"成人\" : \"未成年\";",
+      "input": "String label = age >= 20 ? \"成人\" : \"未成年\";",
+      "annotation": "条件 ? A : B：三項演算子",
+      "input_type": "code"
+    },
+    {
+      "display": "if (age >= 20) {\n  System.out.println(\"成人\");\n} else if (age >= 18) {\n  System.out.println(\"18歳以上\");\n} else {\n  System.out.println(\"18歳未満\");\n}",
+      "input": "if (age >= 20) { System.out.println(\"成人\"); } else if (age >= 18) { System.out.println(\"18歳以上\"); } else { System.out.println(\"18歳未満\"); }",
+      "annotation": "if / else if / else：条件分岐（条件を()で囲む）",
+      "input_type": "code"
+    },
+    {
+      "display": "switch (role) {\n  case \"admin\":\n    System.out.println(\"管理者\");\n    break;\n  default:\n    System.out.println(\"一般利用者\");\n}",
+      "input": "switch (role) { case \"admin\": System.out.println(\"管理者\"); break; default: System.out.println(\"一般利用者\"); }",
+      "annotation": "switch / case / break：従来形式の分岐（breakがないと後続caseへ実行が継続する場合がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "String label = switch (role) {\n  case \"admin\" -> \"管理者\";\n  case \"member\", \"guest\" -> \"一般利用者\";\n  default -> \"不明\";\n};",
+      "input": "String label = switch (role) { case \"admin\" -> \"管理者\"; case \"member\", \"guest\" -> \"一般利用者\"; default -> \"不明\"; };",
+      "annotation": "switch式 / ->：分岐結果を値にする（矢印形式は次のcaseへ流れない）",
+      "input_type": "code"
+    },
+    {
+      "display": "int fee = switch (type) {\n  case \"free\" -> 0;\n  default -> {\n    int base = 100;\n    yield base + 20;\n  }\n};",
+      "input": "int fee = switch (type) { case \"free\" -> 0; default -> { int base = 100; yield base + 20; } };",
+      "annotation": "yield：switch式のブロックから値を返す（switch式内で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "for (int i = 0; i < 5; i++) {\n  System.out.println(i);\n}",
+      "input": "for (int i = 0; i < 5; i++) { System.out.println(i); }",
+      "annotation": "for：回数指定",
+      "input_type": "code"
+    },
+    {
+      "display": "for (String name : names) {\n  System.out.println(name);\n}",
+      "input": "for (String name : names) { System.out.println(name); }",
+      "annotation": "拡張for：要素を順に処理（配列・Iterableが対象）",
+      "input_type": "code"
+    },
+    {
+      "display": "static int add(int a, int b) {\n  return a + b;\n}",
+      "input": "static int add(int a, int b) { return a + b; }",
+      "annotation": "戻り値あり：値を返すメソッド（クラス内に定義）",
+      "input_type": "code"
+    },
+    {
+      "display": "void greet(String name) {\n  System.out.println(name);\n}",
+      "input": "void greet(String name) { System.out.println(name); }",
+      "annotation": "戻り値なし：voidメソッド",
+      "input_type": "code"
+    },
+    {
+      "display": "int sum(int... values) {\n  int total = 0;\n  for (int v : values) {\n    total += v;\n  }\n  return total;\n}",
+      "input": "int sum(int... values) { int total = 0; for (int v : values) { total += v; } return total; }",
+      "annotation": "型... 引数：可変長引数（可変長引数は最後に置く）",
+      "input_type": "code"
+    },
+    {
+      "display": "int add(int a, int b) {\n  return a + b;\n}\ndouble add(double a, double b) {\n  return a + b;\n}",
+      "input": "int add(int a, int b) { return a + b; } double add(double a, double b) { return a + b; }",
+      "annotation": "オーバーロード：同名で引数を変える（戻り値型だけの違いでは不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "Map<String, Integer> scores = new HashMap<>();",
+      "input": "Map<String, Integer> scores = new HashMap<>();",
+      "annotation": "Map / HashMap：キーと値の対応（java.util.MapとHashMapをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "class User {\n  private String name;\n  User(String name) {\n    this.name = name;\n  }\n  public String greet() {\n    return \"こんにちは、\" + name;\n  }\n}",
+      "input": "class User { private String name; User(String name) { this.name = name; } public String greet() { return \"こんにちは、\" + name; } }",
+      "annotation": "class：フィールドと動作を定義",
+      "input_type": "code"
+    },
+    {
+      "display": "final List<String> names = new ArrayList<>();",
+      "input": "final List<String> names = new ArrayList<>();",
+      "annotation": "finalフィールド：再代入禁止（names.add等を禁止するわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "class User implements Greeter {\n  public String greet() {\n    return \"こんにちは\";\n  }\n}",
+      "input": "class User implements Greeter { public String greet() { return \"こんにちは\"; } }",
+      "annotation": "implements：インターフェース実装（複数のインターフェースを実装可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "abstract class Animal {\n  abstract void speak();\n}",
+      "input": "abstract class Animal { abstract void speak(); }",
+      "annotation": "abstract class：抽象クラス（直接インスタンス化できない）",
+      "input_type": "code"
+    },
+    {
+      "display": "@Override public String toString() {\n  return \"User\";\n}",
+      "input": "@Override public String toString() { return \"User\"; }",
+      "annotation": "@Override：オーバーライドを明示（コンパイラーが対応するメソッドを確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "User user = new User(\"Pomo\", 20);\nSystem.out.println(user.name());",
+      "input": "User user = new User(\"Pomo\", 20); System.out.println(user.name());",
+      "annotation": "recordアクセサー：コンポーネントを取得（nameフィールドへの直接アクセスではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "try {\n  int value = Integer.parseInt(text);\n  System.out.println(value);\n} catch (NumberFormatException e) {\n  System.out.println(\"整数に変換できません\");\n} finally {\n  System.out.println(\"後片付け\");\n}",
+      "input": "try { int value = Integer.parseInt(text); System.out.println(value); } catch (NumberFormatException e) { System.out.println(\"整数に変換できません\"); } finally { System.out.println(\"後片付け\"); }",
+      "annotation": "try / catch / finally：例外捕捉と後片付け（finallyは通常の終了・例外時に実行。JVM強制終了等では実行されない場合がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "void load() throws IOException { /* 読み込み処理 */ }",
+      "input": "void load() throws IOException { /* 読み込み処理 */ }",
+      "annotation": "throws：伝わり得る例外を宣言（java.io.IOExceptionをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "try (var reader = Files.newBufferedReader(path)) {\n  System.out.println(reader.readLine());\n}",
+      "input": "try (var reader = Files.newBufferedReader(path)) { System.out.println(reader.readLine()); }",
+      "annotation": "try-with-resources：リソースを自動クローズ（java.nio.file.Filesをimport。IOExceptionの捕捉またはthrowsが必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "static <T> T first(List<T> xs) {\n  return xs.get(0);\n}",
+      "input": "static <T> T first(List<T> xs) { return xs.get(0); }",
+      "annotation": "<T> 戻り値型：型パラメーター付きメソッド（空リストでは例外。java.util.Listをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "Runnable task = () -> System.out.println(\"実行\");",
+      "input": "Runnable task = () -> System.out.println(\"実行\");",
+      "annotation": "() -> 処理：引数なしラムダ（関数型インターフェースを対象に使う）",
+      "input_type": "code"
+    },
+    {
+      "display": "var result = names.stream().filter(n -> n.length() >= 3).toList();",
+      "input": "var result = names.stream().filter(n -> n.length() >= 3).toList();",
+      "annotation": "filter：条件で絞る",
+      "input_type": "code"
+    },
+    {
+      "display": "var result = names.stream().map(String::toUpperCase).toList();",
+      "input": "var result = names.stream().map(String::toUpperCase).toList();",
+      "annotation": "map：要素を変換",
+      "input_type": "code"
+    },
+    {
+      "display": "var result = names.stream().sorted().toList();",
+      "input": "var result = names.stream().sorted().toList();",
+      "annotation": "sorted：並べ替え",
+      "input_type": "code"
+    },
+    {
+      "display": "var result = names.stream().distinct().toList();",
+      "input": "var result = names.stream().distinct().toList();",
+      "annotation": "distinct：重複除去",
+      "input_type": "code"
+    },
+    {
+      "display": "List<String> result = names.stream().toList();",
+      "input": "List<String> result = names.stream().toList();",
+      "annotation": "toList：変更不可リストに収集（Listをimport。要素内部の不変性は保証しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "names.stream().forEach(System.out::println);",
+      "input": "names.stream().forEach(System.out::println);",
+      "annotation": "forEach：各要素に処理",
+      "input_type": "code"
+    },
+    {
+      "display": "List<String> result = names.stream().filter(name -> name.length() >=\n  3).map(String::toUpperCase).toList();",
+      "input": "List<String> result = names.stream() .filter(name -> name.length() >= 3) .map(String::toUpperCase) .toList();",
+      "annotation": "処理の連結：絞り込み・変換・収集",
+      "input_type": "code"
+    },
+    {
+      "display": "if (value instanceof String text) {\n  System.out.println(text.length());\n}",
+      "input": "if (value instanceof String text) { System.out.println(text.length()); }",
+      "annotation": "instanceofパターン：型判定と変数への束縛（valueがnullなら成立しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "String label = switch (value) {\n  case null -> \"null\";\n  case String text -> \"文字列: \" + text;\n  case Integer number -> \"整数: \" + number;\n  default -> \"その他\";\n};",
+      "input": "String label = switch (value) { case null -> \"null\"; case String text -> \"文字列: \" + text; case Integer number -> \"整数: \" + number; default -> \"その他\"; };",
+      "annotation": "switch型パターン：型による分岐（Java 21で標準機能。例ではvalueはObject型）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

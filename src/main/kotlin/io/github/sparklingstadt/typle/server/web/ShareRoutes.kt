@@ -44,7 +44,7 @@ suspend fun ApplicationCall.shares(config: Config) {
 }
 
 private suspend fun ApplicationCall.listShares(config: Config) {
-  val user = config.owner(this) ?: return refuse(HttpStatusCode.Unauthorized, "loginRequired")
+  val user = signedIn(config) ?: return
   val shares = try {
     withContext(Dispatchers.IO) { config.store!!.listShares(user.sub) }
   } catch (e: Exception) {
@@ -61,7 +61,7 @@ private suspend fun ApplicationCall.putShare(config: Config) {
   if (!(fromApp(this) || config.sameOrigin(request.headers["Origin"])) || type != "application/json") {
     return refuse(HttpStatusCode.Forbidden, "forbiddenRequest")
   }
-  val user = config.owner(this) ?: return refuse(HttpStatusCode.Unauthorized, "loginRequired")
+  val user = signedIn(config) ?: return
   val packId = readPackId() ?: return refuse(HttpStatusCode.BadRequest, "invalidWorkspace")
   val share = try {
     withContext(Dispatchers.IO) { config.store!!.putShare(user.sub, packId) }
@@ -85,7 +85,7 @@ private suspend fun ApplicationCall.deleteShare(config: Config) {
   if (!(fromApp(this) || config.sameOrigin(request.headers["Origin"]))) {
     return refuse(HttpStatusCode.Forbidden, "forbiddenRequest")
   }
-  val user = config.owner(this) ?: return refuse(HttpStatusCode.Unauthorized, "loginRequired")
+  val user = signedIn(config) ?: return
   val packId = request.queryParameters["pack"]
   if (packId.isNullOrEmpty()) return refuse(HttpStatusCode.BadRequest, "invalidWorkspace")
   try {

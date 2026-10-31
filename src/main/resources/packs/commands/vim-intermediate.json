@@ -1,0 +1,238 @@
+{
+  "id": "vim-intermediate",
+  "name": "Vimコマンド（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "Vim"
+  ],
+  "group": "Vimコマンド",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": ":w",
+      "input": ":w",
+      "annotation": "保存（Enterで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": ":q",
+      "input": ":q",
+      "annotation": "現在のウィンドウを閉じる（未保存変更があると通常は拒否）",
+      "input_type": "command"
+    },
+    {
+      "display": ":wq",
+      "input": ":wq",
+      "annotation": "保存して閉じる",
+      "input_type": "command"
+    },
+    {
+      "display": ":x",
+      "input": ":x",
+      "annotation": "変更があれば保存して閉じる",
+      "input_type": "command"
+    },
+    {
+      "display": ":q!",
+      "input": ":q!",
+      "annotation": "変更を破棄して閉じる（未保存の変更が失われる場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": ":qa",
+      "input": ":qa",
+      "annotation": "すべて閉じて終了（未保存変更があると拒否）",
+      "input_type": "command"
+    },
+    {
+      "display": "10G",
+      "input": "10G",
+      "annotation": "10行目へ（数字を変更して行番号を指定）",
+      "input_type": "command"
+    },
+    {
+      "display": ":10",
+      "input": ":10",
+      "annotation": "10行目へ（Enterで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "dd",
+      "input": "dd",
+      "annotation": "現在行を削除",
+      "input_type": "command"
+    },
+    {
+      "display": "3dd",
+      "input": "3dd",
+      "annotation": "現在行から3行削除",
+      "input_type": "command"
+    },
+    {
+      "display": "dw",
+      "input": "dw",
+      "annotation": "次の単語の先頭まで削除（行末付近などでは例外的な動作がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "diw",
+      "input": "diw",
+      "annotation": "カーソル位置の単語を削除",
+      "input_type": "command"
+    },
+    {
+      "display": "d$",
+      "input": "d$",
+      "annotation": "カーソル位置から行末まで削除（Dと同じ）",
+      "input_type": "command"
+    },
+    {
+      "display": "cc",
+      "input": "cc",
+      "annotation": "現在行を変更して入力モードへ",
+      "input_type": "command"
+    },
+    {
+      "display": "ciw",
+      "input": "ciw",
+      "annotation": "カーソル位置の単語を変更（新しい語を入力してEsc）",
+      "input_type": "command"
+    },
+    {
+      "display": "c$",
+      "input": "c$",
+      "annotation": "行末まで変更（Cと同じ）",
+      "input_type": "command"
+    },
+    {
+      "display": "ra",
+      "input": "ra",
+      "annotation": "r文字：現在位置の1文字を置換（例：raでaに置換）",
+      "input_type": "command"
+    },
+    {
+      "display": "yy",
+      "input": "yy",
+      "annotation": "現在行をコピー（通常Vim内部のレジスタへ）",
+      "input_type": "command"
+    },
+    {
+      "display": "3yy",
+      "input": "3yy",
+      "annotation": "現在行から3行コピー",
+      "input_type": "command"
+    },
+    {
+      "display": "yiw",
+      "input": "yiw",
+      "annotation": "カーソル位置の単語をコピー",
+      "input_type": "command"
+    },
+    {
+      "display": ".",
+      "input": ".",
+      "annotation": "直前の変更を繰り返す",
+      "input_type": "command"
+    },
+    {
+      "display": ">",
+      "input": ">",
+      "annotation": "ビジュアルモードで選択中：インデントを増やす",
+      "input_type": "command"
+    },
+    {
+      "display": "<",
+      "input": "<",
+      "annotation": "ビジュアルモードで選択中：インデントを減らす",
+      "input_type": "command"
+    },
+    {
+      "display": "=",
+      "input": "=",
+      "annotation": "ビジュアルモードで選択中：インデントを整える（ファイル形式・設定に依存）",
+      "input_type": "command"
+    },
+    {
+      "display": ">>",
+      "input": ">>",
+      "annotation": "現在行のインデントを増やす",
+      "input_type": "command"
+    },
+    {
+      "display": "<<",
+      "input": "<<",
+      "annotation": "現在行のインデントを減らす",
+      "input_type": "command"
+    },
+    {
+      "display": "*",
+      "input": "*",
+      "annotation": "現在の単語を下方向へ検索",
+      "input_type": "command"
+    },
+    {
+      "display": "#",
+      "input": "#",
+      "annotation": "現在の単語を上方向へ検索",
+      "input_type": "command"
+    },
+    {
+      "display": "ci\"",
+      "input": "ci\"",
+      "annotation": "二重引用符の内側を書き換える（対象範囲を認識できる位置で実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "di\"",
+      "input": "di\"",
+      "annotation": "二重引用符の内側を削除（対象範囲を認識できる位置で実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "yi\"",
+      "input": "yi\"",
+      "annotation": "二重引用符の内側をコピー（対象範囲を認識できる位置で実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "ci(",
+      "input": "ci(",
+      "annotation": "丸括弧の内側を書き換える（対象範囲を認識できる位置で実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "ci{",
+      "input": "ci{",
+      "annotation": "波括弧の内側を書き換える（対象範囲を認識できる位置で実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "da\"",
+      "input": "da\"",
+      "annotation": "二重引用符を含めて削除（周囲の空白も対象になる場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "vi(",
+      "input": "vi(",
+      "annotation": "丸括弧の内側を選択（iは内側、aは囲みも含む）",
+      "input_type": "command"
+    },
+    {
+      "display": ":ls",
+      "input": ":ls",
+      "annotation": "バッファ一覧（Enterで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": ":bd",
+      "input": ":bd",
+      "annotation": "現在のバッファを一覧から外す（ファイル自体は削除しない。未保存変更があると拒否）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

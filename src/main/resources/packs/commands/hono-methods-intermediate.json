@@ -1,0 +1,89 @@
+{
+  "id": "hono-methods-intermediate",
+  "name": "Honoメソッド（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "Hono",
+    "TypeScript"
+  ],
+  "group": "Honoメソッド",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": "app.get('/search', c => c.json({\n  q: c.req.query('q'),\n  tags: c.req.queries('tag')\n}));",
+      "input": "app.get('/search',c=>c.json({q:c.req.query('q'),tags:c.req.queries('tag')}));",
+      "annotation": "c.req.query / queries：クエリ取得（queryは単一、queriesは複数値）",
+      "input_type": "code"
+    },
+    {
+      "display": "const users = new Hono();\nusers.get('/', c => c.json([]));\napp.route('/users', users);",
+      "input": "const users=new Hono(); users.get('/',c=>c.json([])); app.route('/users',users);",
+      "annotation": "app.route：サブアプリをマウント（子のルート定義・登録順を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "const api = new Hono().basePath('/api');\napi.get('/health', c => c.json({ ok: true }));",
+      "input": "const api=new Hono().basePath('/api'); api.get('/health',c=>c.json({ok:true}));",
+      "annotation": "basePath：共通プレフィックス（/api/health）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.post('/echo', async c => {\n  const body: unknown = await c.req.json();\n  return c.json({ received: body });\n});",
+      "input": "app.post('/echo',async c=>{ const body:unknown=await c.req.json(); return c.json({received:body}); });",
+      "annotation": "c.req.json：JSON本文（unknownから実行時検証。大きさ制限・不正JSONの処理も用意）",
+      "input_type": "code"
+    },
+    {
+      "display": "/* validatorまたはzValidatorの後のハンドラー内: */ /* const input=c.req.valid('json'); */",
+      "input": "/* validatorまたはzValidatorの後のハンドラー内: */ /* const input=c.req.valid('json'); */",
+      "annotation": "c.req.valid：検証済み値を取得（TypeScriptの推論には同じルートのmiddleware連結を保つ）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.get('/header', c => {\n  c.header('X-App', 'sample');\n  return c.text('ok')\n});",
+      "input": "app.get('/header',c=>{c.header('X-App','sample');return c.text('ok')});",
+      "annotation": "c.header：応答ヘッダー",
+      "input_type": "code"
+    },
+    {
+      "display": "import { logger } from 'hono/logger';\nimport { timing } from 'hono/timing';\napp.use('*', logger(), timing());",
+      "input": "import {logger} from 'hono/logger'; import {timing} from 'hono/timing'; app.use('*',logger(),timing());",
+      "annotation": "logger / timing：ログ・計測（ログに秘密・個人情報を含めない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { cors } from 'hono/cors';\napp.use('/api/*', cors({ origin: 'https://app.example.com' }));",
+      "input": "import {cors} from 'hono/cors'; app.use('/api/*',cors({origin:'https://app.example.com'}));",
+      "annotation": "cors：CORS（認証・認可の代わりではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { secureHeaders } from 'hono/secure-headers';\napp.use('*', secureHeaders());",
+      "input": "import {secureHeaders} from 'hono/secure-headers'; app.use('*',secureHeaders());",
+      "annotation": "secureHeaders：ヘッダー保護（ポリシーをアプリに合わせる）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { bodyLimit } from 'hono/body-limit';\napp.use('/upload', bodyLimit({ maxSize: 1024 * 1024 }));",
+      "input": "import {bodyLimit} from 'hono/body-limit'; app.use('/upload',bodyLimit({maxSize:1024*1024}));",
+      "annotation": "bodyLimit：本文サイズ制限（実行環境の上限も別途確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "const response = await app.request('/');\nif (response.status !== 200)\n  throw new Error('unexpected status');",
+      "input": "const response=await app.request('/'); if(response.status!==200) throw new Error('unexpected status');",
+      "annotation": "app.request：サーバー起動なしのリクエスト（アプリが定義済み。テストランナーのexpect等とも組合せ可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { serve } from '@hono/node-server';\nserve({ fetch: app.fetch, port: 3000 });",
+      "input": "import {serve} from '@hono/node-server'; serve({fetch:app.fetch,port:3000});",
+      "annotation": "Node.js adapter：Nodeで起動（補足: @hono/node-serverを別途導入。実行環境に合う版を使用）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

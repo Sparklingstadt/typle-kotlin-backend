@@ -1,0 +1,721 @@
+{
+  "id": "0b27f311-38aa-40aa-9c29-ea17e374e1fe",
+  "name": "Linuxコマンド：基本",
+  "category": "プログラミング",
+  "tags": [
+    "Linux",
+    "シェル"
+  ],
+  "words": [
+    {
+      "display": "pwd",
+      "input": "pwd",
+      "annotation": "Print Working Directory：現在のディレクトリを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -la",
+      "input": "ls -la",
+      "annotation": "ls（List）：ファイル・フォルダの一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "cd /home",
+      "input": "cd /home",
+      "annotation": "cd（Change Directory）：ディレクトリ移動",
+      "input_type": "command"
+    },
+    {
+      "display": "mkdir -p app/src",
+      "input": "mkdir -p app/src",
+      "annotation": "mkdir（Make Directory）：ディレクトリ作成",
+      "input_type": "command"
+    },
+    {
+      "display": "rmdir old",
+      "input": "rmdir old",
+      "annotation": "rmdir（Remove Directory）：空のディレクトリ削除",
+      "input_type": "command"
+    },
+    {
+      "display": "touch index.js",
+      "input": "touch index.js",
+      "annotation": "touch（Touch）：ファイル作成・更新日時変更",
+      "input_type": "command"
+    },
+    {
+      "display": "cp -r src backup",
+      "input": "cp -r src backup",
+      "annotation": "cp（Copy）：ファイル・ディレクトリのコピー",
+      "input_type": "command"
+    },
+    {
+      "display": "mv old.txt new.txt",
+      "input": "mv old.txt new.txt",
+      "annotation": "mv（Move）：移動・名前変更",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -r old",
+      "input": "rm -r old",
+      "annotation": "rm（Remove）：ファイル・ディレクトリ削除",
+      "input_type": "command"
+    },
+    {
+      "display": "find . -name \"*.js\"",
+      "input": "find . -name \"*.js\"",
+      "annotation": "find（Find）：ファイル・ディレクトリ検索",
+      "input_type": "command"
+    },
+    {
+      "display": "ln -s target link",
+      "input": "ln -s target link",
+      "annotation": "ln（Link）：ハードリンク・シンボリックリンク作成",
+      "input_type": "command"
+    },
+    {
+      "display": "file app.log",
+      "input": "file app.log",
+      "annotation": "file（File）：ファイル形式を判別",
+      "input_type": "command"
+    },
+    {
+      "display": "stat app.log",
+      "input": "stat app.log",
+      "annotation": "stat（Status）：ファイルの詳細情報表示",
+      "input_type": "command"
+    },
+    {
+      "display": "cat config.json",
+      "input": "cat config.json",
+      "annotation": "cat（Concatenate）：内容表示・ファイル連結",
+      "input_type": "command"
+    },
+    {
+      "display": "less server.log",
+      "input": "less server.log",
+      "annotation": "less（Moreの対比から）：長いファイルをページ単位で閲覧",
+      "input_type": "command"
+    },
+    {
+      "display": "head -n 20 app.log",
+      "input": "head -n 20 app.log",
+      "annotation": "head（先頭）：ファイル冒頭を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tail -f app.log",
+      "input": "tail -f app.log",
+      "annotation": "tail（末尾）：ファイル末尾を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -n \"ERROR\" app.log",
+      "input": "grep -n \"ERROR\" app.log",
+      "annotation": "grep（Global Regular Expression Print）：文字列・正規表現で検索",
+      "input_type": "command"
+    },
+    {
+      "display": "sed 's/old/new/g' file",
+      "input": "sed 's/old/new/g' file",
+      "annotation": "sed（Stream Editor）：文字列置換・行編集",
+      "input_type": "command"
+    },
+    {
+      "display": "awk '{print $1}' file",
+      "input": "awk '{print $1}' file",
+      "annotation": "awk（開発者3名の姓の頭文字）：列単位のテキスト処理",
+      "input_type": "command"
+    },
+    {
+      "display": "sort names.txt",
+      "input": "sort names.txt",
+      "annotation": "sort（Sort）：行を並び替える",
+      "input_type": "command"
+    },
+    {
+      "display": "uniq -c names.txt",
+      "input": "uniq -c names.txt",
+      "annotation": "uniq（Unique）：隣接する重複行を整理",
+      "input_type": "command"
+    },
+    {
+      "display": "wc -l app.log",
+      "input": "wc -l app.log",
+      "annotation": "wc（Word Count）：行数・単語数・バイト数の集計",
+      "input_type": "command"
+    },
+    {
+      "display": "cut -d, -f2 data.csv",
+      "input": "cut -d, -f2 data.csv",
+      "annotation": "cut（Cut）：特定の列を抽出",
+      "input_type": "command"
+    },
+    {
+      "display": "diff -u old.txt new.txt",
+      "input": "diff -u old.txt new.txt",
+      "annotation": "diff（Difference）：ファイル間の差分表示",
+      "input_type": "command"
+    },
+    {
+      "display": "echo hello | tee out.txt",
+      "input": "echo hello | tee out.txt",
+      "annotation": "tee（T字分岐）：出力を画面とファイルに分岐",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo apt update",
+      "input": "sudo apt update",
+      "annotation": "sudo（Superuser Do（一般的な説明））：別ユーザーの権限でコマンド実行",
+      "input_type": "command"
+    },
+    {
+      "display": "su - alice",
+      "input": "su - alice",
+      "annotation": "su（Substitute User）：ユーザー切り替え",
+      "input_type": "command"
+    },
+    {
+      "display": "whoami",
+      "input": "whoami",
+      "annotation": "Who Am I：実行ユーザー名表示",
+      "input_type": "command"
+    },
+    {
+      "display": "id",
+      "input": "id",
+      "annotation": "Identity：UID・GIDなどを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "who",
+      "input": "who",
+      "annotation": "Who：ログイン中のユーザー表示",
+      "input_type": "command"
+    },
+    {
+      "display": "passwd",
+      "input": "passwd",
+      "annotation": "Password：パスワード変更",
+      "input_type": "command"
+    },
+    {
+      "display": "chmod 755 script.sh",
+      "input": "chmod 755 script.sh",
+      "annotation": "chmod（Change Mode）：権限変更",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo chown alice:dev app",
+      "input": "sudo chown alice:dev app",
+      "annotation": "chown（Change Owner）：所有者変更",
+      "input_type": "command"
+    },
+    {
+      "display": "chgrp dev app",
+      "input": "chgrp dev app",
+      "annotation": "chgrp（Change Group）：グループ変更",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo useradd -m alice",
+      "input": "sudo useradd -m alice",
+      "annotation": "useradd（User Add）：ユーザー作成",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo usermod -aG sudo alice",
+      "input": "sudo usermod -aG sudo alice",
+      "annotation": "usermod（User Modify）：ユーザー設定変更",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo userdel alice",
+      "input": "sudo userdel alice",
+      "annotation": "userdel（User Delete）：ユーザー削除",
+      "input_type": "command"
+    },
+    {
+      "display": "ps aux",
+      "input": "ps aux",
+      "annotation": "ps（Process Status）：プロセス一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "top",
+      "input": "top",
+      "annotation": "Top：CPU・メモリ使用状況の監視",
+      "input_type": "command"
+    },
+    {
+      "display": "htop",
+      "input": "htop",
+      "annotation": "Hisham's top：対話的なプロセス監視",
+      "input_type": "command"
+    },
+    {
+      "display": "kill 1234",
+      "input": "kill 1234",
+      "annotation": "kill（Kill）：PIDを指定してシグナル送信",
+      "input_type": "command"
+    },
+    {
+      "display": "pkill node",
+      "input": "pkill node",
+      "annotation": "pkill（Process Kill）：名前などでプロセスにシグナル送信",
+      "input_type": "command"
+    },
+    {
+      "display": "jobs",
+      "input": "jobs",
+      "annotation": "Jobs：シェルのジョブ一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "bg %1",
+      "input": "bg %1",
+      "annotation": "bg（Background）：ジョブをバックグラウンド再開",
+      "input_type": "command"
+    },
+    {
+      "display": "fg %1",
+      "input": "fg %1",
+      "annotation": "fg（Foreground）：ジョブを前面に戻す",
+      "input_type": "command"
+    },
+    {
+      "display": "nohup command &",
+      "input": "nohup command &",
+      "annotation": "nohup（No Hang Up）：端末切断時のSIGHUPを無視して実行",
+      "input_type": "command"
+    },
+    {
+      "display": "free -h",
+      "input": "free -h",
+      "annotation": "free（Free）：メモリ状況の表示",
+      "input_type": "command"
+    },
+    {
+      "display": "df -h",
+      "input": "df -h",
+      "annotation": "df（Disk Free）：ファイルシステム空き容量",
+      "input_type": "command"
+    },
+    {
+      "display": "du -sh .",
+      "input": "du -sh .",
+      "annotation": "du（Disk Usage）：ディレクトリ使用容量",
+      "input_type": "command"
+    },
+    {
+      "display": "uname -a",
+      "input": "uname -a",
+      "annotation": "uname（Unix Name）：カーネル・OS情報表示",
+      "input_type": "command"
+    },
+    {
+      "display": "uptime",
+      "input": "uptime",
+      "annotation": "Up Time：稼働時間・負荷表示",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl status nginx",
+      "input": "systemctl status nginx",
+      "annotation": "systemctl（System Control）：systemdサービス操作",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -u nginx",
+      "input": "journalctl -u nginx",
+      "annotation": "journalctl（Journal Control）：systemdログ閲覧",
+      "input_type": "command"
+    },
+    {
+      "display": "ip addr",
+      "input": "ip addr",
+      "annotation": "ip（IP）：IPアドレス・経路確認",
+      "input_type": "command"
+    },
+    {
+      "display": "ping -c 4 example.com",
+      "input": "ping -c 4 example.com",
+      "annotation": "ping（Ping）：ネットワーク疎通確認",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -I https://example.com",
+      "input": "curl -I https://example.com",
+      "annotation": "curl（Client URL）：HTTP通信・APIテスト",
+      "input_type": "command"
+    },
+    {
+      "display": "wget https://example.com/file.zip",
+      "input": "wget https://example.com/file.zip",
+      "annotation": "wget（World Wide Web Get）：ファイルダウンロード",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh user@server",
+      "input": "ssh user@server",
+      "annotation": "ssh（Secure Shell）：リモートサーバー接続",
+      "input_type": "command"
+    },
+    {
+      "display": "scp file user@server:/tmp/",
+      "input": "scp file user@server:/tmp/",
+      "annotation": "scp（Secure Copy）：SSH経由のファイル転送",
+      "input_type": "command"
+    },
+    {
+      "display": "rsync -av src/ backup/",
+      "input": "rsync -av src/ backup/",
+      "annotation": "rsync（Remote Sync）：ファイル同期",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -tuln",
+      "input": "ss -tuln",
+      "annotation": "ss（Socket Statistics）：通信ポートの状態確認",
+      "input_type": "command"
+    },
+    {
+      "display": "dig example.com",
+      "input": "dig example.com",
+      "annotation": "dig（Domain Information Groper）：DNS情報確認",
+      "input_type": "command"
+    },
+    {
+      "display": "nslookup example.com",
+      "input": "nslookup example.com",
+      "annotation": "nslookup（Name Server Lookup）：DNS問い合わせ",
+      "input_type": "command"
+    },
+    {
+      "display": "traceroute example.com",
+      "input": "traceroute example.com",
+      "annotation": "traceroute（Trace Route）：通信経路の確認",
+      "input_type": "command"
+    },
+    {
+      "display": "hostname",
+      "input": "hostname",
+      "annotation": "Host Name：ホスト名の表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -czvf backup.tar.gz app/",
+      "input": "tar -czvf backup.tar.gz app/",
+      "annotation": "tar（Tape Archive）：ファイルをまとめる・展開",
+      "input_type": "command"
+    },
+    {
+      "display": "gzip file.log",
+      "input": "gzip file.log",
+      "annotation": "gzip（GNU Zip）：gzip圧縮",
+      "input_type": "command"
+    },
+    {
+      "display": "gunzip file.log.gz",
+      "input": "gunzip file.log.gz",
+      "annotation": "gunzip（GNU Unzip）：gzip展開",
+      "input_type": "command"
+    },
+    {
+      "display": "zip -r app.zip app/",
+      "input": "zip -r app.zip app/",
+      "annotation": "zip（Zip）：ZIP形式に圧縮",
+      "input_type": "command"
+    },
+    {
+      "display": "unzip app.zip",
+      "input": "unzip app.zip",
+      "annotation": "unzip（Unzip）：ZIP形式を展開",
+      "input_type": "command"
+    },
+    {
+      "display": "xz file.log",
+      "input": "xz file.log",
+      "annotation": "xz（XZ）：高圧縮率の圧縮形式",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo apt install git",
+      "input": "sudo apt install git",
+      "annotation": "apt（Ubuntu / Debian）：パッケージ管理",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo apt-get update",
+      "input": "sudo apt-get update",
+      "annotation": "apt-get（Ubuntu / Debian）：スクリプトにも使いやすいパッケージ管理",
+      "input_type": "command"
+    },
+    {
+      "display": "dpkg -l",
+      "input": "dpkg -l",
+      "annotation": "dpkg（Debian系）：.debパッケージ操作",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo dnf install git",
+      "input": "sudo dnf install git",
+      "annotation": "dnf（Fedora / RHEL系）：パッケージ管理",
+      "input_type": "command"
+    },
+    {
+      "display": "rpm -qa",
+      "input": "rpm -qa",
+      "annotation": "rpm（RPM系）：.rpmパッケージ操作",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -S git",
+      "input": "sudo pacman -S git",
+      "annotation": "pacman（Arch Linux）：パッケージ管理",
+      "input_type": "command"
+    },
+    {
+      "display": "apt update",
+      "input": "apt update",
+      "annotation": "パッケージ一覧情報を更新",
+      "input_type": "command"
+    },
+    {
+      "display": "apt upgrade",
+      "input": "apt upgrade",
+      "annotation": "インストール済みパッケージを更新",
+      "input_type": "command"
+    },
+    {
+      "display": "apt install",
+      "input": "apt install",
+      "annotation": "パッケージをインストール",
+      "input_type": "command"
+    },
+    {
+      "display": "apt remove",
+      "input": "apt remove",
+      "annotation": "パッケージを削除",
+      "input_type": "command"
+    },
+    {
+      "display": "apt purge",
+      "input": "apt purge",
+      "annotation": "パッケージとシステム設定ファイルを削除",
+      "input_type": "command"
+    },
+    {
+      "display": "apt search",
+      "input": "apt search",
+      "annotation": "パッケージを検索",
+      "input_type": "command"
+    },
+    {
+      "display": "apt show",
+      "input": "apt show",
+      "annotation": "パッケージ詳細表示",
+      "input_type": "command"
+    },
+    {
+      "display": "apt autoremove",
+      "input": "apt autoremove",
+      "annotation": "不要になった依存パッケージを削除",
+      "input_type": "command"
+    },
+    {
+      "display": "echo $HOME",
+      "input": "echo $HOME",
+      "annotation": "echo：文字列や変数を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "export NODE_ENV=production",
+      "input": "export NODE_ENV=production",
+      "annotation": "export：環境変数を子プロセスに引き継ぐ",
+      "input_type": "command"
+    },
+    {
+      "display": "env",
+      "input": "env",
+      "annotation": "環境変数表示・指定して実行",
+      "input_type": "command"
+    },
+    {
+      "display": "which node",
+      "input": "which node",
+      "annotation": "which：PATH上の実行ファイル検索",
+      "input_type": "command"
+    },
+    {
+      "display": "type node",
+      "input": "type node",
+      "annotation": "type：コマンドの種類・解決先確認",
+      "input_type": "command"
+    },
+    {
+      "display": "alias ll='ls -la'",
+      "input": "alias ll='ls -la'",
+      "annotation": "alias：コマンドの別名登録",
+      "input_type": "command"
+    },
+    {
+      "display": "history",
+      "input": "history",
+      "annotation": "コマンド履歴表示",
+      "input_type": "command"
+    },
+    {
+      "display": "man ls",
+      "input": "man ls",
+      "annotation": "man：Manual：マニュアル表示",
+      "input_type": "command"
+    },
+    {
+      "display": "clear",
+      "input": "clear",
+      "annotation": "画面の表示を消去",
+      "input_type": "command"
+    },
+    {
+      "display": "echo hello > out.txt",
+      "input": "echo hello > out.txt",
+      "annotation": ">：標準出力をファイルに上書き",
+      "input_type": "command"
+    },
+    {
+      "display": "echo hello >> out.txt",
+      "input": "echo hello >> out.txt",
+      "annotation": ">>：標準出力をファイルに追記",
+      "input_type": "command"
+    },
+    {
+      "display": "wc -l < file.txt",
+      "input": "wc -l < file.txt",
+      "annotation": "<：ファイルを標準入力として渡す",
+      "input_type": "command"
+    },
+    {
+      "display": "command 2> error.log",
+      "input": "command 2> error.log",
+      "annotation": "2>：標準エラー出力をファイルへ",
+      "input_type": "command"
+    },
+    {
+      "display": "command > all.log 2>&1",
+      "input": "command > all.log 2>&1",
+      "annotation": "2>&1：標準エラー出力を標準出力と同じ先へ",
+      "input_type": "command"
+    },
+    {
+      "display": "ps aux | grep node",
+      "input": "ps aux | grep node",
+      "annotation": "|：パイプ：前の標準出力を次の標準入力へ",
+      "input_type": "command"
+    },
+    {
+      "display": "npm install && npm run dev",
+      "input": "npm install && npm run dev",
+      "annotation": "&&：前の処理が成功した場合のみ実行",
+      "input_type": "command"
+    },
+    {
+      "display": "command || echo failed",
+      "input": "command || echo failed",
+      "annotation": "||：前の処理が失敗した場合のみ実行",
+      "input_type": "command"
+    },
+    {
+      "display": "pwd; ls",
+      "input": "pwd; ls",
+      "annotation": ";：成否に関係なく順番に実行",
+      "input_type": "command"
+    },
+    {
+      "display": "sleep 10 &",
+      "input": "sleep 10 &",
+      "annotation": "&：バックグラウンド実行",
+      "input_type": "command"
+    },
+    {
+      "display": "command -v node",
+      "input": "command -v node",
+      "annotation": "Node.jsの実行場所を調べる",
+      "input_type": "command"
+    },
+    {
+      "display": "node -v",
+      "input": "node -v",
+      "annotation": "Node.jsのバージョン確認",
+      "input_type": "command"
+    },
+    {
+      "display": "npm -v",
+      "input": "npm -v",
+      "annotation": "npmのバージョン確認",
+      "input_type": "command"
+    },
+    {
+      "display": "pwd && ls -la",
+      "input": "pwd && ls -la",
+      "annotation": "現在のディレクトリとファイル一覧を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -la .env*",
+      "input": "ls -la .env*",
+      "annotation": ".envファイルの存在確認",
+      "input_type": "command"
+    },
+    {
+      "display": "ps aux | grep '[n]ode'",
+      "input": "ps aux | grep '[n]ode'",
+      "annotation": "プロセスを調べる",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -ltnp '( sport = :3000 )'",
+      "input": "ss -ltnp '( sport = :3000 )'",
+      "annotation": "3000番ポートの待受確認",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -s https://api.example.com/data",
+      "input": "curl -s https://api.example.com/data",
+      "annotation": "JSON APIを呼び出す",
+      "input_type": "command"
+    },
+    {
+      "display": "tail -f server.log",
+      "input": "tail -f server.log",
+      "annotation": "ログをリアルタイム監視",
+      "input_type": "command"
+    },
+    {
+      "display": "du -sh node_modules",
+      "input": "du -sh node_modules",
+      "annotation": "特定ディレクトリの容量確認",
+      "input_type": "command"
+    },
+    {
+      "display": "command -v git",
+      "input": "command -v git",
+      "annotation": "Gitの場所を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "git status",
+      "input": "git status",
+      "annotation": "Gitの状態確認",
+      "input_type": "command"
+    },
+    {
+      "display": "npm run dev",
+      "input": "npm run dev",
+      "annotation": "開発サーバー起動",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:09:25.523Z"
+}

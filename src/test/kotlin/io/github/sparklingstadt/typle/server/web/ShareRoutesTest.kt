@@ -225,22 +225,23 @@ class ShareRoutesTest {
         assertEquals(204, share("DELETE", "/api/shares?pack=p", owner = owner).statusCode())
         expectError(request("GET", "/api/shared?id=$id"), 404, "sharedPackNotFound")
 
-        // A save with packs that no longer has the pack deletes its link; a save of the lists alone does not.
+        // A save with packs that no longer has the pack deletes its link, and so does a save of the lists alone, which
+        // puts each list in a pack of its own (typle-r v2.0.0).
         val shared = share("PUT", "/api/shares", """{"packId":"p"}""", owner).body().substringAfter("\"id\":\"").substringBefore('"')
-        assertEquals(200, save(1, """"lists":[$list]""").statusCode())
-        assertEquals(200, request("GET", "/api/shared?id=$shared").statusCode(), "after a lists-only save")
         val other = list.replace("\"p\"", "\"q\"")
-        assertEquals(200, save(2, """"lists":[$other],"packs":[${pack.replace("\"p\"", "\"q\"")}]""").statusCode())
+        assertEquals(200, save(1, """"lists":[$other],"packs":[${pack.replace("\"p\"", "\"q\"")}]""").statusCode())
         expectError(request("GET", "/api/shared?id=$shared"), 404, "sharedPackNotFound", "after the pack is removed")
+        val alone = share("PUT", "/api/shares", """{"packId":"q"}""", owner).body().substringAfter("\"id\":\"").substringBefore('"')
+        assertEquals(200, save(2, """"lists":[$list]""").statusCode())
+        expectError(request("GET", "/api/shared?id=$alone"), 404, "sharedPackNotFound", "after a lists-only save")
         assertEquals("{\"shares\":[]}\n", share("GET", "/api/shares", owner = owner).body())
       }
     }
   }
 
-  // With a real database: lists sent alone (an app that does not know packs) may overlap and are saved as sent, and
-  // /api/workspace answers them so; a link to their pack shares them separated, as Go reads the row (Go's
-  // TestPutLevelsWithoutPacksRealStore). Sent with their packs, they are refused.
-  @Test fun realDatabaseSeparatesLevels() {
+  // With a real database: lists sent alone are each put in a pack of their own (typle-r v2.0.0), so levels that would
+  // overlap in one pack do not, and /api/workspace answers them so. Sent with their packs, they are refused.
+  @Test fun realDatabaseListsAloneGetPacksOfTheirOwn() {
     val connection = System.getenv("TYPLE_TEST_DATABASE_URL").orEmpty()
     assumeTrue(connection.isNotEmpty(), "TYPLE_TEST_DATABASE_URL is not set")
     val owner = "github:8" + Random.nextLong(100_000_000_000L, 999_999_999_999L)
@@ -259,13 +260,13 @@ class ShareRoutesTest {
         expectError(save(1, "$overlapping,\"packs\":[$pack]"), 400, "levelsConflict")
         assertEquals(200, save(1, overlapping).statusCode())
         val workspace = request("GET", "/api/workspace", headers = mapOf("Cookie" to cookie)).body()
-        assertTrue("""["初級"]""" in workspace && "初級（2）" !in workspace, workspace)
+        assertTrue("\"pack-a\"" in workspace && "\"pack-b\"" in workspace && "初級（2）" !in workspace, workspace)
 
-        val put = share("PUT", "/api/shares", """{"packId":"p"}""", owner)
+        val put = share("PUT", "/api/shares", """{"packId":"pack-b"}""", owner)
         assertEquals(200, put.statusCode(), put.body())
         val read = request("GET", "/api/shared?id=" + put.body().substringAfter("\"id\":\"").substringBefore('"'))
         assertEquals(200, read.statusCode())
-        assertTrue("\"初級（2）\"\n" in read.body(), read.body())
+        assertTrue("\"初級\"\n" in read.body(), read.body())
       }
     }
   }

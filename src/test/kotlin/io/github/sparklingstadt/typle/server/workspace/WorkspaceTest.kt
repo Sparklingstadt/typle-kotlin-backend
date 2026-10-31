@@ -174,9 +174,6 @@ class WorkspaceTest {
     val b = w.lists[1]
     assertEquals(listOf("", "", "", emptyList<String>()), listOf(b.packId, b.group, b.category, b.tags))
     assertTrue(""""name":"A","packId":"p","createdAt"""" in encode(w.lists), encode(w.lists))
-    assertTrue(""""name":"A","packId":"p","group":"G","category":"語学","tags":["英語","<b>"],"createdAt"""" in
-      encodeWithLabels(w.lists), encodeWithLabels(w.lists))
-    assertTrue("""{"id":"b","name":"B","createdAt"""" in encodeWithLabels(w.lists), encodeWithLabels(w.lists))
     for (labels in listOf(""""category":1""", """"tags":"a"""", """"tags":[1]""", """"tags":[null]""", """"packId":1""", """"group":1""")) {
       assertFailsWith<InvalidWorkspaceException>(labels) {
         decode("""[{"id":"a","name":"A",$labels,"createdAt":"x","words":[{"display":"a","input":"a","annotation":""}],"records":[]}]""", "[]")

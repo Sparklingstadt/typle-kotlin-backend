@@ -1,0 +1,238 @@
+{
+  "id": "vim-advanced",
+  "name": "Vimコマンド（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Vim"
+  ],
+  "group": "Vimコマンド",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": ":w 名前",
+      "input": ":w 名前",
+      "annotation": "指定名で書き出す（編集中のファイル名は通常そのまま）",
+      "input_type": "command"
+    },
+    {
+      "display": ":qa!",
+      "input": ":qa!",
+      "annotation": "未保存変更を破棄してすべて終了",
+      "input_type": "command"
+    },
+    {
+      "display": ":wqa",
+      "input": ":wqa",
+      "annotation": "変更のあるバッファを保存して終了",
+      "input_type": "command"
+    },
+    {
+      "display": ":e ./memo.txt",
+      "input": ":e ./memo.txt",
+      "annotation": ":e パス：別のファイルを開く（例：:e ./memo.txt）",
+      "input_type": "command"
+    },
+    {
+      "display": ":e!",
+      "input": ":e!",
+      "annotation": "ファイルを読み直す（現在の未保存変更を破棄）",
+      "input_type": "command"
+    },
+    {
+      "display": ":saveas パス",
+      "input": ":saveas パス",
+      "annotation": "別名保存してそのファイルを編集",
+      "input_type": "command"
+    },
+    {
+      "display": "vim memo.txt",
+      "input": "vim memo.txt",
+      "annotation": "Vimでファイルを開く（Vim内ではなくターミナルで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "\"+y",
+      "input": "\"+y",
+      "annotation": "OSのクリップボードへコピー（選択範囲または移動指定と組み合わせる。例：選択後に実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "\"+p",
+      "input": "\"+p",
+      "annotation": "OSのクリップボードから貼り付け（Vimのビルドと実行環境の対応が必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "gg=G",
+      "input": "gg=G",
+      "annotation": "ファイル全体のインデントを整える（ファイル形式・設定に依存）",
+      "input_type": "command"
+    },
+    {
+      "display": "/文字列",
+      "input": "/文字列",
+      "annotation": "下方向へ検索（Enterで検索実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "?文字列",
+      "input": "?文字列",
+      "annotation": "上方向へ検索（Enterで検索実行）",
+      "input_type": "command"
+    },
+    {
+      "display": ":noh",
+      "input": ":noh",
+      "annotation": "検索の強調表示を一時的に消す（次の検索操作などで再表示）",
+      "input_type": "command"
+    },
+    {
+      "display": ":s/old/new/",
+      "input": ":s/old/new/",
+      "annotation": "現在行の最初の一致を置換（Enterで実行。検索パターンは正規表現）",
+      "input_type": "command"
+    },
+    {
+      "display": ":s/old/new/g",
+      "input": ":s/old/new/g",
+      "annotation": "現在行のすべての一致を置換",
+      "input_type": "command"
+    },
+    {
+      "display": ":%s/old/new/g",
+      "input": ":%s/old/new/g",
+      "annotation": "ファイル全体ですべて置換",
+      "input_type": "command"
+    },
+    {
+      "display": ":%s/old/new/gc",
+      "input": ":%s/old/new/gc",
+      "annotation": "確認しながら全体を置換",
+      "input_type": "command"
+    },
+    {
+      "display": ":10,20s/old/new/g",
+      "input": ":10,20s/old/new/g",
+      "annotation": "10〜20行目で置換",
+      "input_type": "command"
+    },
+    {
+      "display": "/\\V文字列",
+      "input": "/\\V文字列",
+      "annotation": "特殊文字の解釈を抑えて検索（バックスラッシュと検索区切りには引き続き注意。Enterで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": ":bnext",
+      "input": ":bnext",
+      "annotation": "次のバッファへ",
+      "input_type": "command"
+    },
+    {
+      "display": ":bprev",
+      "input": ":bprev",
+      "annotation": "前のバッファへ",
+      "input_type": "command"
+    },
+    {
+      "display": ":b 3",
+      "input": ":b 3",
+      "annotation": "3番のバッファへ（番号は:lsで確認）",
+      "input_type": "command"
+    },
+    {
+      "display": ":sp ファイル",
+      "input": ":sp ファイル",
+      "annotation": "上下に分割して開く",
+      "input_type": "command"
+    },
+    {
+      "display": ":vsp ファイル",
+      "input": ":vsp ファイル",
+      "annotation": "左右に分割して開く",
+      "input_type": "command"
+    },
+    {
+      "display": ":close",
+      "input": ":close",
+      "annotation": "現在のウィンドウを閉じる",
+      "input_type": "command"
+    },
+    {
+      "display": ":only",
+      "input": ":only",
+      "annotation": "現在のウィンドウだけを残す（未保存変更のある他ウィンドウは閉じられない場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": ":set number",
+      "input": ":set number",
+      "annotation": "行番号を表示（設定を継続する場合は通常~/.vimrcに記述）",
+      "input_type": "command"
+    },
+    {
+      "display": ":set nonumber",
+      "input": ":set nonumber",
+      "annotation": "行番号を非表示",
+      "input_type": "command"
+    },
+    {
+      "display": ":set relativenumber",
+      "input": ":set relativenumber",
+      "annotation": "相対行番号を表示",
+      "input_type": "command"
+    },
+    {
+      "display": ":set ignorecase",
+      "input": ":set ignorecase",
+      "annotation": "検索で大文字小文字を区別しない",
+      "input_type": "command"
+    },
+    {
+      "display": ":set smartcase",
+      "input": ":set smartcase",
+      "annotation": "大文字を含む検索語では区別（ignorecase有効時）",
+      "input_type": "command"
+    },
+    {
+      "display": ":set hlsearch",
+      "input": ":set hlsearch",
+      "annotation": "検索結果を強調表示",
+      "input_type": "command"
+    },
+    {
+      "display": ":set expandtab",
+      "input": ":set expandtab",
+      "annotation": "入力するタブを空白へ変換（既存のタブはそのまま）",
+      "input_type": "command"
+    },
+    {
+      "display": ":set tabstop=4 shiftwidth=4",
+      "input": ":set tabstop=4 shiftwidth=4",
+      "annotation": "タブ表示幅・インデント幅を設定",
+      "input_type": "command"
+    },
+    {
+      "display": ":help",
+      "input": ":help",
+      "annotation": "ヘルプを開く",
+      "input_type": "command"
+    },
+    {
+      "display": ":help ciw",
+      "input": ":help ciw",
+      "annotation": ":help コマンド：指定項目のヘルプ（例：:help ciw）",
+      "input_type": "command"
+    },
+    {
+      "display": ":version",
+      "input": ":version",
+      "annotation": "バージョン・対応機能を確認",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}
