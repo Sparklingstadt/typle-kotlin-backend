@@ -1,5 +1,7 @@
 package io.github.sparklingstadt.typle.server.web
 
+import io.github.sparklingstadt.typle.server.auth.FFPF
+import io.github.sparklingstadt.typle.server.auth.goQueryEscape
 import io.github.sparklingstadt.typle.server.session.newSession
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -97,6 +99,28 @@ class ConfigTest {
     for ((case, want) in cases) {
       val (name, local, set) = case
       assertEquals(want, fromEnv(validEnv() + set, local).localLogin, name)
+    }
+  }
+
+  // FFPF ID is on with all three of its settings, and the issuer's trailing slash is dropped. With one or two of them
+  // it is off, with one warning and no error; with none it is off without a word, as it is simply not used.
+  @Test fun ffpf() {
+    val values = validEnv() + mapOf(
+      "FFPF_ID_ISSUER" to "https://portal.example/", "FFPF_ID_CLIENT_ID" to "typle", "FFPF_ID_CLIENT_SECRET" to "ffpf-secret",
+    )
+    val ffpf = fromEnv(values).ffpf as FFPF
+    assertEquals(listOf("https://portal.example", "typle", "ffpf-secret"), listOf(ffpf.issuer, ffpf.clientId, ffpf.clientSecret))
+    assertEquals(emptyList(), logged)
+    // The redirect_uri FFPF ID is given is the callback at AUTH_URL's origin.
+    val location = TestServer { typleWeb(fromEnv(values)) }.use { it.request("GET", "/api/auth/signin?provider=ffpf") }.location()
+    assertTrue(location.startsWith("https://portal.example/oauth/authorize?"), location)
+    assertTrue("redirect_uri=" + goQueryEscape("https://typle.example/api/auth/callback/ffpf") in location, location)
+
+    for (missing in listOf(listOf("FFPF_ID_ISSUER"), listOf("FFPF_ID_CLIENT_ID"), listOf("FFPF_ID_CLIENT_SECRET"),
+      listOf("FFPF_ID_ISSUER", "FFPF_ID_CLIENT_SECRET"), listOf("FFPF_ID_ISSUER", "FFPF_ID_CLIENT_ID", "FFPF_ID_CLIENT_SECRET"))) {
+      logged.clear()
+      assertNull(fromEnv(values - missing.toSet()).ffpf, missing.toString())
+      assertEquals(if (missing.size == 3) 0 else 1, logged.count { "FFPF_ID_ISSUER, FFPF_ID_CLIENT_ID and FFPF_ID_CLIENT_SECRET" in it }, missing.toString())
     }
   }
 }

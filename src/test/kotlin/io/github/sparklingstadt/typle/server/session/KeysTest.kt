@@ -25,6 +25,32 @@ private const val APP_VECTOR =
 private const val CODE_VECTOR =
   "eyJzdWIiOiJnaXRodWI6MSIsIm5hbWUiOiJFMkUgVXNlciIsImltYWdlIjoiIiwiY2hhbGxlbmdlIjoiYyIsImV4cCI6MTcwMDAwMDEyMH0.S4rpIFLsgPstmeF53Xta9sCxQRoXAeRWHXhDzWkp3gA"
 
+// Go's githubOAuthVector, githubOAuthChallengeVector, githubAdminOAuthVector and githubAdminOAuthChallengeVector: a
+// login through GitHub must keep producing exactly these bytes, whatever FFPF ID added.
+private const val GITHUB_OAUTH_VECTOR =
+  "eyJzdGF0ZSI6InN0YXRlLTEiLCJ2ZXJpZmllciI6InZlcmlmaWVyLTEiLCJyZXR1cm5UbyI6Ii9wbGF5P3g9MSZ5PTIiLCJleHAiOjE3MDAwMDA2MDB9.y5nMp3lk65vqMyNXUc39dSZAxmu8WNzgeieOaANmsC8"
+private const val GITHUB_OAUTH_CHALLENGE_VECTOR =
+  "eyJzdGF0ZSI6InN0YXRlLTEiLCJ2ZXJpZmllciI6InZlcmlmaWVyLTEiLCJyZXR1cm5UbyI6Ii9wbGF5IiwiZXhwIjoxNzAwMDAwNjAwLCJjaGFsbGVuZ2UiOiJjaGFsIn0._7F8TYEmhmwIsNwPzJnsVUonAYu94NPottWTamO9hUY"
+private const val GITHUB_ADMIN_OAUTH_VECTOR =
+  "eyJzdGF0ZSI6InN0YXRlLTEiLCJ2ZXJpZmllciI6InZlcmlmaWVyLTEiLCJyZXR1cm5UbyI6Ii9hZG1pbiIsImV4cCI6MTcwMDAwMDYwMCwiYWRtaW4iOnRydWV9.CxrR0KPjFCBD9iuQaBxuMshksjtvwTc3EtkytWzJDsE"
+private const val GITHUB_ADMIN_OAUTH_CHALLENGE_VECTOR =
+  "eyJzdGF0ZSI6InN0YXRlLTEiLCJ2ZXJpZmllciI6InZlcmlmaWVyLTEiLCJyZXR1cm5UbyI6Ii9hZG1pbiIsImV4cCI6MTcwMDAwMDYwMCwiY2hhbGxlbmdlIjoiY2hhbCIsImFkbWluIjp0cnVlfQ.kBmQ8Yj84Dx4M1PKmLanyAbs7RwR7dhvi6E09zNBS1I"
+
+// What the Go backend seals (server/internal/session) for the administrator, the FFPF ID logins and an FFPF ID session.
+private const val ADMIN_VECTOR =
+  "eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwic3ViIjoiY2FiYzEyMyIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxNzAwMDQzMjAwfQ.XqwudlROHt5YDCwNZXLZj5wSnrkMOwd78uyuXeUlyN0"
+private const val FFPF_ADMIN_OAUTH_VECTOR =
+  "eyJzdGF0ZSI6InMiLCJ2ZXJpZmllciI6InYiLCJyZXR1cm5UbyI6Ii9hZG1pbiIsImV4cCI6MTcwMDAwMDYwMCwiYWRtaW4iOnRydWUsInByb3ZpZGVyIjoiZmZwZiIsIm5vbmNlIjoibiJ9.6vUOssil-6kRXNl-r78Fq35Ertjrznzf6jGhylyGE6c"
+private const val FFPF_APP_OAUTH_VECTOR =
+  "eyJzdGF0ZSI6InMiLCJ2ZXJpZmllciI6InYiLCJyZXR1cm5UbyI6Ii9wbGF5IiwiZXhwIjoxNzAwMDAwNjAwLCJjaGFsbGVuZ2UiOiJjIiwicHJvdmlkZXIiOiJmZnBmIiwibm9uY2UiOiJuIn0.cHzmA_ilCHpSCdWkLmh8YxTrhhaUs2xR_XFagw_xGGI"
+private const val FFPF_SESSION_VECTOR =
+  "eyJzdWIiOiJmZnBmOmNhYmMxMjMiLCJuYW1lIjoi44G144KPIiwiaW1hZ2UiOiIiLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6MTcwMjU5MjAwMH0.iFetc07mjA9gUqjRPwh3bfkuGPPE4VGLGdhZ4uToJs0"
+
+// Go's githubAdminVector: an administrator's cookie of a GitHub sign-in (key info "typle admin v1"), which must not
+// open now that /admin is reached only through FFPF ID.
+private const val GITHUB_ADMIN_VECTOR =
+  "eyJsb2dpbiI6InNwYXJrbGluZ3N0YWR0IiwiZ2l0aHViSWQiOjQyLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6MTcwMDA0MzIwMH0.f0QswMlBjBK-DevHqVkrPppWjfbqi7G8AYa3_3I6cXQ"
+
 private const val NOW = 1700000000_000L
 private val E2E_USER = Session("github:1", "E2E User", "", 1700000000, 1702592000)
 
@@ -95,6 +121,12 @@ class KeysTest {
       "sub other prefix" to keys.seal(Session("gitlab:42", "Ada", "", now, now + 3600)),
       "sub with newline" to keys.seal(Session("github:42\n", "Ada", "", now, now + 3600)),
       "sub with full-width digit" to keys.seal(Session("github:４２", "Ada", "", now, now + 3600)),
+      "ffpf sub empty" to keys.seal(Session("ffpf:", "Ada", "", now, now + 3600)),
+      "ffpf sub upper case" to keys.seal(Session("ffpf:A", "Ada", "", now, now + 3600)),
+      "ffpf sub too long" to keys.seal(Session("ffpf:" + "a".repeat(65), "Ada", "", now, now + 3600)),
+      "ffpf sub with a dash" to keys.seal(Session("ffpf:a-b", "Ada", "", now, now + 3600)),
+      "ffpf sub with newline" to keys.seal(Session("ffpf:abc\n", "Ada", "", now, now + 3600)),
+      "ffpf sub with a prefix" to keys.seal(Session("ffpf:github:1", "Ada", "", now, now + 3600)),
       "no dot" to good.replace(".", ""),
       "empty" to "",
       "only dot" to ".",
@@ -141,7 +173,7 @@ class KeysTest {
     val good = AppCode("github:42", "", "", "challenge", NOW / 1000 + SessionTimes.APP_CODE_MAX_AGE)
     assertNull(keys.openCode(keys.sealCode(good), good.expires * 1000), "expired")
     assertNull(keys.openCode(keys.sealCode(good.copy(challenge = "")), NOW), "no challenge")
-    assertNull(keys.openCode(keys.sealCode(good.copy(sub = "local")), NOW), "no GitHub account")
+    assertNull(keys.openCode(keys.sealCode(good.copy(sub = "local")), NOW), "no GitHub or FFPF ID account")
     val expired = newSession("github:42", "Ada", "", NOW - SessionTimes.MAX_AGE * 1000)
     assertNull(keys.openApp(keys.sealApp(expired), NOW), "expired token")
   }
@@ -175,5 +207,85 @@ class KeysTest {
     assertEquals("__Host-typle-session", cookieName(true))
     assertEquals("typle-session", cookieName(false))
     assertEquals("typle-oauth", OAUTH_COOKIE)
+  }
+
+  @Test fun githubOAuthCookieBytesAreUnchanged() {
+    val expires = 1700000600L
+    for ((want, o) in mapOf(
+      GITHUB_OAUTH_VECTOR to OAuthState("state-1", "verifier-1", "/play?x=1&y=2", "", expires),
+      GITHUB_OAUTH_CHALLENGE_VECTOR to OAuthState("state-1", "verifier-1", "/play", "chal", expires),
+      GITHUB_ADMIN_OAUTH_VECTOR to OAuthState("state-1", "verifier-1", "/admin", "", expires, admin = true),
+      GITHUB_ADMIN_OAUTH_CHALLENGE_VECTOR to OAuthState("state-1", "verifier-1", "/admin", "chal", expires, admin = true),
+    )) {
+      assertEquals(want, keys.sealOAuth(o), o.toString())
+      assertEquals(o, keys.openOAuth(want, expires * 1000 - 60_000), o.toString())
+    }
+  }
+
+  // Go's TestOAuthProviderAndNonce, with the bytes Go seals.
+  @Test fun oauthProviderAndNonce() {
+    for ((want, o) in mapOf(
+      FFPF_APP_OAUTH_VECTOR to OAuthState("s", "v", "/play", "c", 1700000600, provider = "ffpf", nonce = "n"),
+      FFPF_ADMIN_OAUTH_VECTOR to OAuthState("s", "v", "/admin", "", 1700000600, admin = true, provider = "ffpf", nonce = "n"),
+    )) {
+      assertEquals(want, keys.sealOAuth(o))
+      assertEquals(o, keys.openOAuth(want, NOW))
+    }
+    // admin is a boolean, as Go's json.Unmarshal reads it.
+    val payload = Base64.getUrlEncoder().withoutPadding()
+      .encodeToString("""{"state":"s","verifier":"v","returnTo":"/","exp":1700000600,"admin":"true"}""".toByteArray())
+    assertNull(keys.openOAuth(payload + "." + Base64.getUrlEncoder().withoutPadding().encodeToString(keys.signOAuth(payload)), NOW))
+  }
+
+  @Test fun ffpfSessionAndCode() {
+    val want = newSession("ffpf:cabc123", "ふわ", "", NOW)
+    assertEquals(FFPF_SESSION_VECTOR, keys.seal(want))
+    assertEquals(want, keys.open(FFPF_SESSION_VECTOR, NOW))
+    assertEquals(want, keys.openApp(keys.sealApp(want), NOW))
+    val code = AppCode("ffpf:cabc123", "ふわ", "", "c", NOW / 1000 + SessionTimes.APP_CODE_MAX_AGE)
+    assertEquals(code, keys.openCode(keys.sealCode(code), NOW))
+    val long = newSession("ffpf:" + "a".repeat(64), "x", "", NOW)
+    assertEquals(long, keys.open(keys.seal(long), NOW), "a 64-character subject must open")
+  }
+
+  // The administrator's cookie opens only as itself, and no other kind opens as it.
+  @Test fun adminKeysAreSeparate() {
+    val a = newAdmin("admin@example.com", "cabc123", NOW)
+    assertEquals(NOW / 1000 + SessionTimes.ADMIN_MAX_AGE, a.expires)
+    val admin = keys.sealAdmin(a)
+    assertEquals(ADMIN_VECTOR, admin)
+    assertEquals(a, keys.openAdmin(admin, NOW))
+    val s = newSession("ffpf:cabc123", "Ada", "", NOW)
+    val others = listOf(keys.seal(s), keys.sealApp(s),
+      keys.sealOAuth(OAuthState("s", "v", "/admin", "", NOW / 1000 + SessionTimes.OAUTH_MAX_AGE, admin = true, provider = "ffpf", nonce = "n")),
+      keys.sealCode(AppCode("ffpf:cabc123", "", "", "c", NOW / 1000 + SessionTimes.APP_CODE_MAX_AGE)))
+    for (value in others) assertNull(keys.openAdmin(value, NOW), value)
+    assertNull(keys.open(admin, NOW))
+    assertNull(keys.openApp(admin, NOW))
+    assertNull(keys.openAdmin(admin, a.expires * 1000), "expired")
+  }
+
+  // The administrator's cookie names an FFPF ID account: an email, and a sub as FFPF ID spells it.
+  @Test fun openAdminRefusesOtherAccounts() {
+    for ((name, a) in mapOf(
+      "no email" to newAdmin("", "cabc123", NOW),
+      "no sub" to newAdmin("admin@example.com", "", NOW),
+      "sub upper case" to newAdmin("admin@example.com", "Cabc", NOW),
+      "sub too long" to newAdmin("admin@example.com", "a".repeat(65), NOW),
+      "sub with a dash" to newAdmin("admin@example.com", "a-b", NOW),
+      "sub with newline" to newAdmin("admin@example.com", "abc\n", NOW),
+      "sub with a prefix" to newAdmin("admin@example.com", "ffpf:abc", NOW),
+    )) assertNull(keys.openAdmin(keys.sealAdmin(a), NOW), name)
+    val long = newAdmin("admin@example.com", "a".repeat(64), NOW)
+    assertEquals(long, keys.openAdmin(keys.sealAdmin(long), NOW), "a 64-character sub must open")
+  }
+
+  @Test fun openAdminRefusesGitHubAdminCookie() {
+    assertNull(keys.openAdmin(GITHUB_ADMIN_VECTOR, NOW))
+  }
+
+  @Test fun adminCookieNames() {
+    assertEquals("__Host-typle-admin", adminCookieName(true))
+    assertEquals("typle-admin", adminCookieName(false))
   }
 }

@@ -1,5 +1,6 @@
 package io.github.sparklingstadt.typle.server
 
+import io.github.sparklingstadt.typle.server.store.AdminSource
 import io.github.sparklingstadt.typle.server.store.SessionSource
 import io.github.sparklingstadt.typle.server.store.Store
 import io.github.sparklingstadt.typle.server.web.Config
@@ -43,11 +44,18 @@ class Backend(
    * databaseUnavailable.
    */
   internal val login: Config by lazy {
-    config.copy(sessions = object : SessionSource {
-      private fun opened() = store() ?: throw IllegalStateException("the database is not open")
-      override fun revokeSessions(owner: String) = opened().revokeSessions(owner)
-      override fun sessionsRevokedAt(owner: String) = opened().sessionsRevokedAt(owner)
-    })
+    fun opened() = store() ?: throw IllegalStateException("the database is not open")
+    config.copy(
+      sessions = object : SessionSource {
+        override fun revokeSessions(owner: String) = opened().revokeSessions(owner)
+        override fun sessionsRevokedAt(owner: String) = opened().sessionsRevokedAt(owner)
+      },
+      // A login to the administrator's dashboard is the other /api/auth request that opens the database (Go's
+      // lazyAdmins).
+      admins = object : AdminSource {
+        override fun admin(email: String, sub: String) = opened().admin(email, sub)
+      },
+    )
   }
 
   /** The database, opening it if that has not been done; null while it does not open (the reason is logged). Blocks. */

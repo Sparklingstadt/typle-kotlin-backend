@@ -1,10 +1,16 @@
 package io.github.sparklingstadt.typle.server.web
 
+import io.github.sparklingstadt.typle.server.auth.FFPFLogin
+import io.github.sparklingstadt.typle.server.auth.FFPFUser
 import io.github.sparklingstadt.typle.server.auth.GitHubAccount
+import io.github.sparklingstadt.typle.server.auth.goQueryEscape
 import io.github.sparklingstadt.typle.server.auth.OAuthClient
 import io.github.sparklingstadt.typle.server.auth.UserSource
 import io.github.sparklingstadt.typle.server.session.Keys
 import io.github.sparklingstadt.typle.server.session.newSession
+import io.github.sparklingstadt.typle.server.store.AdminOverview
+import io.github.sparklingstadt.typle.server.store.AdminSource
+import io.github.sparklingstadt.typle.server.store.AdminUsers
 import io.github.sparklingstadt.typle.server.store.Change
 import io.github.sparklingstadt.typle.server.store.Saved
 import io.github.sparklingstadt.typle.server.store.Share
@@ -131,6 +137,78 @@ class FakeStore(
     failure?.let { throw it }
     return shared
   }
+
+  // typle_admins: allowed answers admin, which remembers what it was asked; overview and users answer what the test
+  // sets, or failure.
+  var allowed = false
+  var checkFailure: Exception? = null
+  var checks = 0
+  var adminEmail = ""
+  var adminSub = ""
+  var overview: AdminOverview? = null
+  var users: AdminUsers? = null
+  var usersPage = -1
+
+  override fun admin(email: String, sub: String): Boolean {
+    checks++
+    adminEmail = email
+    adminSub = sub
+    checkFailure?.let { throw it }
+    return allowed
+  }
+
+  override fun overview(): AdminOverview {
+    failure?.let { throw it }
+    return overview!!
+  }
+
+  override fun users(page: Int): AdminUsers {
+    usersPage = page
+    failure?.let { throw it }
+    return users!!
+  }
+}
+
+/** Go's adminStore as an AdminSource alone (Config.admins): allowed answers, and it counts the checks. */
+class FakeAdmins(var allowed: Boolean = false) : AdminSource {
+  var checks = 0
+
+  override fun admin(email: String, sub: String): Boolean {
+    checks++
+    return allowed
+  }
+}
+
+/** FFPF ID: it records what it was given, and answers user, or failure when one is set. */
+class FakeFFPF(var user: FFPFUser = FFPFUser("cabc", "user@example.com", " FFPF User ")) : FFPFLogin {
+  var state = ""
+  var challenge = ""
+  var nonce = ""
+  var redirectUri = ""
+  var exchanges = 0
+  var code = ""
+  var verifier = ""
+  var exchangeUri = ""
+  var exchangeNonce = ""
+  var failure: Exception? = null
+
+  override fun authorizeUrl(state: String, challenge: String, nonce: String, redirectUri: String): String {
+    this.state = state
+    this.challenge = challenge
+    this.nonce = nonce
+    this.redirectUri = redirectUri
+    return "https://id.test/oauth/authorize?state=" + goQueryEscape(state)
+  }
+
+  override fun exchange(code: String, verifier: String, redirectUri: String, nonce: String): FFPFUser {
+    exchanges++
+    this.code = code
+    this.verifier = verifier
+    exchangeUri = redirectUri
+    exchangeNonce = nonce
+    failure?.let { throw it }
+    return user
+  }
 }
 
 /** A GitHub OAuth App that hands out the token "gho_<code>" for any code but "bad", and records what it was given. */
@@ -162,7 +240,9 @@ fun testConfig(
   gitHub: UserSource? = FakeGitHub(),
   localLogin: Boolean = false,
   now: () -> Long = System::currentTimeMillis,
-) = Config(store, Keys.create(TEST_SECRET), parseBaseUrl(base)!!, now, oauth, gitHub, localLogin)
+  ffpf: FFPFLogin? = null,
+  admins: AdminSource? = null,
+) = Config(store, Keys.create(TEST_SECRET), parseBaseUrl(base)!!, now, oauth, gitHub, localLogin, ffpf = ffpf, admins = admins)
 
 /** The app's backend on a free local port, spoken to over real HTTP, so that headers and HEAD are as a browser sees them. */
 class TestServer(module: Application.() -> Unit) : AutoCloseable {

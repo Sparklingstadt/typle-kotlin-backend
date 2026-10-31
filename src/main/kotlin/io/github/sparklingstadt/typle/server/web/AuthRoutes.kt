@@ -1,5 +1,6 @@
 package io.github.sparklingstadt.typle.server.web
 
+import io.github.sparklingstadt.typle.server.auth.FFPFRejectedException
 import io.github.sparklingstadt.typle.server.auth.goTrimSpace
 import io.github.sparklingstadt.typle.server.json.GoJson
 import io.github.sparklingstadt.typle.server.json.JsonNull
@@ -28,7 +29,13 @@ import java.util.Base64
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-private const val CALLBACK_PATH = "/api/auth/callback/github"
+private const val GITHUB_CALLBACK = "/api/auth/callback/github"
+private const val FFPF_CALLBACK = "/api/auth/callback/ffpf"
+
+// The providers, as signin's provider= and /api/auth/session's providers name them. A GitHub login keeps an empty
+// provider in its OAuth cookie, so that the cookie is the same as before FFPF ID was added.
+private const val PROVIDER_GITHUB = "github"
+private const val PROVIDER_FFPF = "ffpf"
 
 // Where the OAuth cookie lives: only the login endpoints are sent it.
 private const val AUTH_PATH = "/api/auth"
@@ -92,24 +99,29 @@ private fun randomValue(): String = ByteArray(32).also(random::nextBytes).let(ba
 internal suspend fun ApplicationCall.auth(config: Config, path: String): Boolean {
   when (path) {
     "/api/auth/signin" -> signin(config)
-    CALLBACK_PATH -> callback(config)
+    GITHUB_CALLBACK -> callback(config, PROVIDER_GITHUB)
+    FFPF_CALLBACK -> callback(config, PROVIDER_FFPF)
     "/api/auth/session" -> session(config)
     "/api/auth/token" -> token(config)
     "/api/auth/signout" -> signout(config)
     "/api/auth/local" -> localLogin(config)
+    "/api/auth/admin/signout" -> adminSignout(config)
     else -> return false
   }
   return true
 }
 
-/** Where GitHub sends the browser back to; it is the callback URL of the OAuth App. */
-private fun Config.redirectUri() = baseUrl.origin + CALLBACK_PATH
+/**
+ * Where the provider sends the browser back to: the callback URL of the GitHub OAuth App, or the redirect URI
+ * registered for the FFPF ID client.
+ */
+private fun Config.redirectUri(path: String) = baseUrl.origin + path
 
 /** Sets a cookie, written as Go's http.SetCookie writes it. A negative maxAge deletes it. */
-fun ApplicationCall.setCookie(name: String, value: String, path: String, maxAge: Int, secure: Boolean) {
+fun ApplicationCall.setCookie(name: String, value: String, path: String, maxAge: Int, secure: Boolean, sameSite: String = "Lax") {
   val age = if (maxAge < 0) 0 else maxAge
   response.headers.append("Set-Cookie",
-    "$name=$value; Path=$path; Max-Age=$age; HttpOnly" + (if (secure) "; Secure" else "") + "; SameSite=Lax")
+    "$name=$value; Path=$path; Max-Age=$age; HttpOnly" + (if (secure) "; Secure" else "") + "; SameSite=$sameSite")
 }
 
 internal fun ApplicationCall.sessionCookie(config: Config, value: String, maxAge: Int) =
@@ -123,7 +135,7 @@ private fun ApplicationCall.issue(config: Config, sub: String, name: String, ima
   sessionCookie(config, config.keys.seal(newSession(sub, name, image, config.now())), SessionTimes.MAX_AGE.toInt())
 
 /** Redirects the browser; a redirect is not kept by a cache, as it may set a cookie. */
-private suspend fun ApplicationCall.goTo(location: String) {
+internal suspend fun ApplicationCall.goTo(location: String) {
   response.headers.append("Location", location)
   response.headers.append("Cache-Control", "no-store")
   respond(HttpStatusCode.Found)
@@ -133,68 +145,114 @@ private suspend fun ApplicationCall.goTo(location: String) {
 private suspend fun ApplicationCall.toApp(key: String, value: String) =
   goTo("$APP_RETURN?$key=" + URLEncoder.encode(value, Charsets.UTF_8))
 
-/** Whether the login can run; otherwise answers 503 and logs why (a missing setting is not reported as an error). */
-private suspend fun ApplicationCall.loginReady(config: Config): Boolean {
-  if (config.oauth != null && config.gitHub != null) return true
-  logLine("${request.httpMethod.value} ${request.path()}: the login is not configured")
+/** Whether the provider's login is configured. */
+private fun Config.ready(provider: String) =
+  if (provider == PROVIDER_FFPF) ffpf != null else oauth != null && gitHub != null
+
+/**
+ * Whether the provider's login can run; otherwise answers 503 and logs why (a missing setting is not reported as an
+ * error).
+ */
+private suspend fun ApplicationCall.loginReady(config: Config, provider: String): Boolean {
+  if (config.ready(provider)) return true
+  logLine("${request.httpMethod.value} ${request.path()}: the $provider login is not configured")
   refuse(HttpStatusCode.ServiceUnavailable, "authUnavailable")
   return false
 }
 
 /**
- * Sends the browser to GitHub with a state and a PKCE challenge, and keeps the state, the verifier and where to return
- * to in the signed OAuth cookie. With client=ipad, client=macos, client=android or client=windows and the app's own
- * S256 code_challenge, the login is that app's: it ends at APP_RETURN with a code that only the holder of the
- * challenge's verifier can trade for a token. Only GET: it sets cookies, which a HEAD must not do.
+ * Sends the browser to GitHub, or with provider=ffpf to FFPF ID, with a state and a PKCE challenge (and for FFPF ID a
+ * nonce), and keeps them, the verifier and where to return to in the signed OAuth cookie. With client=ipad,
+ * client=macos, client=android or client=windows and the app's own S256 code_challenge, the login is that app's: it
+ * ends at APP_RETURN with a code that only the holder of the challenge's verifier can trade for a token. With admin=1
+ * the login is to the administrator's dashboard: it always goes through FFPF ID, whatever provider says, and always
+ * returns to the dashboard. Only GET: it sets cookies, which a HEAD must not do.
  */
 private suspend fun ApplicationCall.signin(config: Config) {
-  if (!methods(HttpMethod.Get) || !loginReady(config)) return
+  if (!methods(HttpMethod.Get)) return
   val query = request.queryParameters
+  val admin = query["admin"] == "1"
+  val provider = if (admin || query["provider"] == PROVIDER_FFPF) PROVIDER_FFPF else PROVIDER_GITHUB
+  if (!loginReady(config, provider)) return
+  val returnTo = if (admin) ADMIN_PAGE else safeReturnTo(query["returnTo"])
   var appChallenge = ""
-  if (query["client"] in appClients) {
+  if (!admin && query["client"] in appClients) {
     appChallenge = query["code_challenge"].orEmpty()
     if (!pkceChallenge.matches(appChallenge)) return toApp("error", "loginFailed")
   }
   val state = randomValue()
   val verifier = randomValue()
   val expires = Math.floorDiv(config.now(), 1000L) + SessionTimes.OAUTH_MAX_AGE
-  oauthCookie(config, config.keys.sealOAuth(OAuthState(state, verifier, safeReturnTo(query["returnTo"]), appChallenge, expires)),
-    SessionTimes.OAUTH_MAX_AGE.toInt())
-  goTo(config.oauth!!.authorizeUrl(state, challengeOf(verifier), config.redirectUri()))
+  var pending = OAuthState(state, verifier, returnTo, appChallenge, expires, admin)
+  val location = if (provider == PROVIDER_FFPF) {
+    val nonce = randomValue()
+    pending = pending.copy(provider = PROVIDER_FFPF, nonce = nonce)
+    config.ffpf!!.authorizeUrl(state, challengeOf(verifier), nonce, config.redirectUri(FFPF_CALLBACK))
+  } else {
+    config.oauth!!.authorizeUrl(state, challengeOf(verifier), config.redirectUri(GITHUB_CALLBACK))
+  }
+  oauthCookie(config, config.keys.sealOAuth(pending), SessionTimes.OAUTH_MAX_AGE.toInt())
+  goTo(location)
 }
 
 /**
- * Where GitHub sends the browser back to. Whatever happens, the OAuth cookie is spent and the browser goes back to the
- * page it left, signed in only if everything checked out. A login an app started goes back to the app instead, with a
- * code for it to trade for a token, or loginFailed; no cookie is set.
+ * Where the provider sends the browser back to. Whatever happens, the OAuth cookie is spent and the browser goes back
+ * to the page it left, signed in only if everything checked out: the cookie was started for this provider, its state
+ * matches, and the provider vouches for the account. A login an app started goes back to the app instead, with a code
+ * for it to trade for a token, or loginFailed; no cookie is set. A login to the administrator's dashboard ends in
+ * finishAdmin; it can only be one through FFPF ID, and one that comes back to GitHub's callback goes back to the
+ * dashboard with adminForbidden.
  */
-private suspend fun ApplicationCall.callback(config: Config) {
-  if (!methods(HttpMethod.Get) || !loginReady(config)) return
+private suspend fun ApplicationCall.callback(config: Config, provider: String) {
+  if (!methods(HttpMethod.Get) || !loginReady(config, provider)) return
   oauthCookie(config, "", -1)
   val pending = cookie(this, OAUTH_COOKIE)?.let { config.keys.openOAuth(it, config.now()) }
+  if (pending != null && pending.admin && provider != PROVIDER_FFPF) return goTo(ADMIN_REFUSED)
   val returnTo = pending?.let { safeReturnTo(it.returnTo) } ?: DEFAULT_TO
   val app = pending != null && pending.challenge.isNotEmpty()
   suspend fun fail() = if (app) toApp("error", "loginFailed") else goTo(returnTo)
+  // The cookie of a GitHub login has no provider, and that of an FFPF ID login "ffpf".
+  val started = pending?.provider?.ifEmpty { PROVIDER_GITHUB }
   val query = request.queryParameters
   val state = query["state"].orEmpty()
   val code = query["code"].orEmpty()
-  if (pending == null || query["error"].orEmpty().isNotEmpty() || state.isEmpty() || code.isEmpty() ||
+  if (pending == null || started != provider || query["error"].orEmpty().isNotEmpty() || state.isEmpty() || code.isEmpty() ||
     !MessageDigest.isEqual(state.toByteArray(), pending.state.toByteArray())) return fail()
-  val user = try {
-    withContext(Dispatchers.IO) {
-      val token = config.oauth!!.exchange(code, pending.verifier, config.redirectUri())
-      config.gitHub!!.user(token)
+  val sub: String
+  val name: String
+  var image = ""
+  if (provider == PROVIDER_FFPF) {
+    val user = try {
+      withContext(Dispatchers.IO) {
+        config.ffpf!!.exchange(code, pending.verifier, config.redirectUri(FFPF_CALLBACK), pending.nonce)
+      }
+    } catch (e: Exception) {
+      // A refusal comes of what the user did, such as a code used twice, and is not the app's failure.
+      if (e !is FFPFRejectedException) report(e, "auth.callback")
+      return fail()
     }
-  } catch (e: Exception) {
-    report(e, "auth.callback")
-    return fail()
+    if (pending.admin) return finishAdmin(config, user)
+    sub = user.account
+    name = goTrimSpace(user.name)
+  } else {
+    val user = try {
+      withContext(Dispatchers.IO) {
+        val token = config.oauth!!.exchange(code, pending.verifier, config.redirectUri(GITHUB_CALLBACK))
+        config.gitHub!!.user(token)
+      }
+    } catch (e: Exception) {
+      report(e, "auth.callback")
+      return fail()
+    }
+    sub = user.account
+    name = goTrimSpace(user.displayName)
+    image = user.avatarUrl
   }
-  val name = goTrimSpace(user.displayName)
   if (app) {
     val expires = Math.floorDiv(config.now(), 1000L) + SessionTimes.APP_CODE_MAX_AGE
-    return toApp("code", config.keys.sealCode(AppCode(user.account, name, user.avatarUrl, pending.challenge, expires)))
+    return toApp("code", config.keys.sealCode(AppCode(sub, name, image, pending.challenge, expires)))
   }
-  issue(config, user.account, name, user.avatarUrl)
+  issue(config, sub, name, image)
   goTo(returnTo)
 }
 
@@ -237,10 +295,11 @@ private suspend fun ApplicationCall.token(config: Config) {
   reply(HttpStatusCode.OK, "{\"token\":" + GoJson.string(config.keys.sealApp(signedIn), true) + ",\"user\":" + userJson(signedIn) + "}")
 }
 
-// The answer of /api/auth/session: who is signed in, and the logins the screen may offer (as Go's providers: "github"
-// when its OAuth App is set up; Kotlin has no FFPF ID login).
+// The answer of /api/auth/session: who is signed in, and the logins that are configured, which the screen may offer
+// (in the order it lists them: "github" before "ffpf").
 private fun sessionAnswer(config: Config, user: Session?) =
-  "{\"user\":" + (user?.let(::userJson) ?: "null") + ",\"providers\":" + (if (config.oauth != null) "[\"github\"]" else "[]") + "}"
+  "{\"user\":" + (user?.let(::userJson) ?: "null") + ",\"providers\":" +
+    listOf(PROVIDER_GITHUB, PROVIDER_FFPF).filter(config::ready).joinToString(",", "[", "]") { "\"$it\"" } + "}"
 
 /**
  * Who is signed in. It is not sealed again however active the user is: a session ends MAX_AGE after its login (typle-r
@@ -266,7 +325,7 @@ private suspend fun ApplicationCall.session(config: Config) {
   reply(HttpStatusCode.OK, sessionAnswer(config, user))
 }
 
-private suspend fun ApplicationCall.noContent() {
+internal suspend fun ApplicationCall.noContent() {
   response.headers.append("Cache-Control", "private, no-store")
   response.headers.append("Vary", "Cookie")
   respond(HttpStatusCode.NoContent)
