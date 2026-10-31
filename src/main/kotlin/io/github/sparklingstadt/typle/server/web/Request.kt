@@ -10,13 +10,11 @@ import io.github.sparklingstadt.typle.server.json.JsonValue
 import io.github.sparklingstadt.typle.server.store.Change
 import io.github.sparklingstadt.typle.server.workspace.InvalidWorkspaceException
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
-import io.github.sparklingstadt.typle.server.workspace.separateLevels
-import io.github.sparklingstadt.typle.server.workspace.catalog
 import io.github.sparklingstadt.typle.server.workspace.checkLibrary
-import io.github.sparklingstadt.typle.server.workspace.followOfficial
+import io.github.sparklingstadt.typle.server.workspace.checkLimits
+import io.github.sparklingstadt.typle.server.workspace.repaired
 import io.github.sparklingstadt.typle.server.workspace.decodeInterests
 import io.github.sparklingstadt.typle.server.workspace.decodeValues
-import io.github.sparklingstadt.typle.server.workspace.trimJS
 import java.io.InputStream
 
 /** MAX_WORKSPACE_BYTES (src/core/workspaceRequest.ts). */
@@ -26,12 +24,6 @@ const val MAX_BODY_BYTES = 1 shl 20
 private const val MAX_SAFE_INTEGER = (1L shl 53) - 1
 
 class TooLargeException : Exception("request body is too large")
-
-/**
- * A save from a screen of the app before profiles were removed, for a profile other than the first or changing the
- * profiles. It is answered with a conflict, so that screen reloads (LegacyProfileRequest in the app).
- */
-class LegacyRequestException : Exception("request for a profile that no longer exists")
 
 class InvalidRequestException : Exception("request is not a valid workspace")
 
@@ -53,21 +45,20 @@ fun parseObject(body: String): JsonObject = try {
 }
 
 /**
- * Reads a save, as validateWorkspaceRequest does and in its order: the revision, then the legacy profile
- * (LegacyRequestException), then the lists, packs and devices (InvalidRequestException), then the interests
- * (InvalidRequestException), which may be all a save sets. The limits of the lists and the number of them are checked
- * by the store, before it touches the database.
+ * Reads a save, as validateWorkspaceRequest does and in its order: the revision, then the lists, packs and devices
+ * (InvalidRequestException), then the interests (InvalidRequestException), which may be all a save sets. Saves of apps
+ * with profiles (profileId, profiles) are no longer taken (typle-r v2.0.0). The lists are stored as Go's Decode repairs
+ * them (readSaved), with the packs it makes for lists sent without them. The number of lists is checked by the store,
+ * before it touches the database.
  */
 fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   val members = fields.members
   val revision = safeInteger(members["revision"]) ?: throw InvalidRequestException()
-  if ("profileId" in members && members["profileId"] != JsonString("default")) throw LegacyRequestException()
-  if ("profiles" in members) throw LegacyRequestException()
   val lists = members["lists"]
   val packs = members["packs"]
   val devices = members["devices"]
-  // Packs only make sense with the lists that belong to them.
-  if (packs != null && lists == null) throw InvalidRequestException()
+  // Packs are saved only with their lists; lists sent without them are each put in a pack of their own.
+  if ("profileId" in members || "profiles" in members || (packs != null && lists == null)) throw InvalidRequestException()
   // Interests may be all a save sets. They are judged after the other parts, as in validateWorkspaceRequest, so that
   // lists whose levels overlap are told so first. Left out, they stay as saved; sent null, they are none. interests is
   // null for interests to refuse.
@@ -94,25 +85,18 @@ fun decodeFields(fields: JsonObject): Pair<Long, Change> {
   }
   // A part that is left out is read as empty, so that only the other one is checked.
   val decoded = try {
-    decodeValues(lists ?: JsonArray(emptyList()), devices ?: JsonArray(emptyList()), packs)
+    val sent = decodeValues(lists ?: JsonArray(emptyList()), devices ?: JsonArray(emptyList()), packs ?: JsonArray(emptyList()))
+    // The limits of the lists as sent, such as their levels before they are joined.
+    if (lists != null) checkLimits(sent.lists)
+    repaired(sent)
   } catch (_: InvalidWorkspaceException) {
+    throw InvalidRequestException()
+  } catch (_: WorkspaceError) {
     throw InvalidRequestException()
   }
   if (interests == null) throw InvalidRequestException()
-  if (packs == null) {
-    // An app that does not know packs sends its lists with their labels, which are saved as it sent them.
-    return revision to Change(decoded.lists, decoded.devices, hasLists = lists != null, hasDevices = devices != null,
-      interests = interests, hasInterests = hasInterests)
-  }
-  // Go repairs the library before it is saved, which leaves one that checkLibrary accepts as it is but for the names of
-  // its packs and lists, trimmed (their trimmed lowercase is already unique), and the levels of lists sent with several
-  // (by an app before v0.97.0), joined into one and told apart (separateLevels). Its Decode then follows the official
-  // catalog (followOfficial): copies of official packs from before v0.98.0 go with their lists and records, and followed
-  // packs are made equal to the catalog.
-  val (packsFollowed, listsFollowed) = followOfficial(decoded.packs.map { it.copy(name = trimJS(it.name)) },
-    separateLevels(decoded.lists.map { it.copy(name = trimJS(it.name)) }), catalog)
-  return revision to Change(listsFollowed, decoded.devices, hasLists = true, hasDevices = devices != null, packs = packsFollowed,
-    hasPacks = true, interests = interests, hasInterests = hasInterests)
+  return revision to Change(decoded.lists, decoded.devices, hasLists = lists != null, hasDevices = devices != null,
+    packs = decoded.packs, hasPacks = lists != null, interests = interests, hasInterests = hasInterests)
 }
 
 /**

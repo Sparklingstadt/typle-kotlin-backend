@@ -235,18 +235,19 @@ class WorkspaceRoutesTest {
       """"revision":1,"profileId":"default","profiles":[{"id":"default","name":"メイン"}]""",
       """"revision":1,"profileId":"p2","lists":null""",
     )
-    for (f in fields) expectError(put(payload(TEST_OWNER, f)), 409, "conflict", f)
+    // Saves of apps with profiles are no longer taken (typle-r v2.0.0): they are invalid, the first profile's too.
+    for (f in fields + """"revision":1,"profileId":"default","lists":[$ONE_LIST]""") expectError(put(payload(TEST_OWNER, f)), 400, "invalidWorkspace", f)
     assertEquals(0, store.writes)
-    assertEquals(200, put(payload(TEST_OWNER, """"revision":1,"profileId":"default","lists":[$ONE_LIST]""")).statusCode())
   }
 
   @Test fun putAnswersAndPassesOn() = serve {
     val device = """{"id":"mac","name":"MacBook","layout":"JIS"}"""
     val list = ONE_LIST.replace(""""records":[]""", """"records":[],"shared":true,"shareId":"x","keep":1""")
     val response = put(payload(TEST_OWNER, """"revision":3,"lists":[$list],"devices":[$device]"""))
+    // The list sent alone is put in a pack of its own (typle-r v2.0.0).
     assertEquals(
-      """{"lists":[{"id":"one","name":"One","createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[],"keep":1}],""" +
-        """"packs":null,"devices":[$device],"interests":$DEFAULTS,"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
+      """{"lists":[{"id":"one","name":"One","packId":"pack-one","createdAt":"2026-09-06","words":[{"display":"a","input":"a","annotation":""}],"records":[],"keep":1}],""" +
+        """"packs":[{"id":"pack-one","name":"One","createdAt":"2026-09-06"}],"devices":[$device],"interests":$DEFAULTS,"revision":4,"accountId":"$TEST_OWNER"}""" + "\n",
       response.body())
     expectJsonHeaders("put", response)
     assertEquals(3L, store.revision)
@@ -292,13 +293,14 @@ class WorkspaceRoutesTest {
       response.body())
     val change = store.change!!
     assertTrue(change.hasLists && change.hasPacks && change.packs.size == 1 && change.packs[0].category == "C", change.toString())
-    // A save from an app that does not know packs keeps the labels it sent on its lists, and the saved packs.
+    // Lists sent alone are each put in a pack of their own, which their labels move to (typle-r v2.0.0).
     val labeled = ONE_LIST.replace(""""records":[]""", """"records":[],"group":"G","category":"C","tags":["t"]""")
     val again = put(payload(TEST_OWNER, """"revision":2,"lists":[$labeled]"""))
     assertEquals(200, again.statusCode(), again.body())
-    assertTrue(""""group":"G","category":"C","tags":["t"]""" in again.body() && """"packs":[$A_PACK]""" in again.body(), again.body())
+    assertTrue(""""packs":[{"id":"pack-one","name":"One","category":"C","tags":["t"],"createdAt":"2026-09-06"}]""" in again.body() &&
+      "group" !in again.body(), again.body())
     val list = store.change!!.lists[0]
-    assertTrue(!store.change!!.hasPacks && list.group == "G" && list.category == "C" && list.packId == "", store.change.toString())
+    assertTrue(store.change!!.hasPacks && list.group == "" && list.category == "" && list.packId == "pack-one", store.change.toString())
     val writes = store.writes
     fun with(fields: String) = PACKED_ONE.replace(""""records":[]""", """"records":[],$fields""")
     val cases = mapOf(
@@ -455,14 +457,15 @@ class WorkspaceRoutesTest {
     val cookie = sessionCookie(owner)
     assertEquals("null", packsOf(get(cookie)), "without a row")
     assertEquals(200, put(payload(owner, """"revision":0,"lists":[$ONE_LIST]"""), cookie).statusCode())
-    assertEquals("null", packsOf(get(cookie)), "for a row saved without packs")
+    assertTrue(""""id":"pack-one"""" in packsOf(get(cookie)), "the list's own pack")
     val saved = put(payload(owner, """"revision":1,"lists":[$PACKED_ONE],"packs":[$A_PACK]"""), cookie)
     val read = get(cookie)
     assertEquals(200 to saved.body(), saved.statusCode() to read.body())
     assertTrue(""""category":"C"""" in packsOf(read), read.body())
-    // Lists sent alone leave the saved packs as they are.
+    // Lists sent alone are each put in a pack of their own, in place of the saved packs.
     assertEquals(200, put(payload(owner, """"revision":2,"lists":[$PACKED_ONE,${aList("two", "Two")}]"""), cookie).statusCode())
-    assertEquals(packsOf(read), packsOf(get(cookie)))
+    val packs = packsOf(get(cookie))
+    assertTrue(""""id":"pack-one"""" in packs && """"id":"pack-two"""" in packs && """"id":"p"""" !in packs, packs)
   }
 
   // A lists-only save stores the group it sends, which becomes a pack's name when it is read, so a group longer than
@@ -497,7 +500,7 @@ class WorkspaceRoutesTest {
     expectInterests(put(payload(owner, """"revision":2,"interests":["language","language/ru"]"""), cookie), """["language","language/ru"]""")
     expectInterests(put(payload(owner, """"revision":3,"devices":[]"""), cookie), """["language","language/ru"]""")
     val read = get(cookie).body()
-    assertTrue(read.startsWith("""{"lists":[{"id":"one",""") && read.endsWith(""","revision":4,"accountId":"$owner"}""" + "\n"), read)
+    assertTrue(read.startsWith("""{"lists":[{""") && """"id":"one"""" in read && read.endsWith(""","revision":4,"accountId":"$owner"}""" + "\n"), read)
     expectError(put(payload(owner, """"revision":4,"interests":["a","a"]"""), cookie), 400, "invalidWorkspace")
     expectInterests(put(payload(owner, """"revision":4,"interests":null"""), cookie), "[]")
     expectInterests(get(cookie), "[]")

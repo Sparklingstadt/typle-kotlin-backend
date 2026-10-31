@@ -1,0 +1,96 @@
+{
+  "id": "oracle-plsql-syntax-beginner",
+  "name": "Oracle PL/SQL構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Oracle",
+    "PL/SQL",
+    "SQL"
+  ],
+  "group": "Oracle PL/SQL構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "-- SQL/PLはOracleのPL/SQLとして整理",
+      "input": "-- SQL/PLはOracleのPL/SQLとして整理",
+      "annotation": "Oracle PL/SQL：対象・用語（Db2 SQL PL・PostgreSQL PL/pgSQLとは別。Oracle 19c以降の主要構文を中心に記載）",
+      "input_type": "code"
+    },
+    {
+      "display": "SET SERVEROUTPUT ON",
+      "input": "SET SERVEROUTPUT ON",
+      "annotation": "出力を有効化（SQL*Plus等のクライアントコマンド。PL/SQL構文ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_name users.name%TYPE;\nBEGIN\n  NULL;\nEND;",
+      "input": "DECLARE v_name users.name%TYPE; BEGIN NULL; END;",
+      "annotation": "%TYPE：列等から型を継承（users表・name列が必要。制約・既定値をすべて継承するわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_user users%ROWTYPE;\nBEGIN\n  SELECT * INTO v_user FROM users WHERE id = 1;\nEND;",
+      "input": "DECLARE v_user users%ROWTYPE; BEGIN SELECT * INTO v_user FROM users WHERE id=1; END;",
+      "annotation": "%ROWTYPE：行構造を変数化（users表が必要。SELECT INTOは正確に1行が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  i PLS_INTEGER := 0;\nBEGIN\n  LOOP\n    i := i + 1;\n    EXIT WHEN i >= 3;\n  END LOOP;\nEND;",
+      "input": "DECLARE i PLS_INTEGER:=0; BEGIN LOOP i:=i+1; EXIT WHEN i>=3; END LOOP; END;",
+      "annotation": "LOOP / EXIT WHEN：無限ループから脱出",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  i PLS_INTEGER := 0;\nBEGIN\n  WHILE i < 3 LOOP\n    i := i + 1;\n  END LOOP;\nEND;",
+      "input": "DECLARE i PLS_INTEGER:=0; BEGIN WHILE i<3 LOOP i:=i+1; END LOOP; END;",
+      "annotation": "WHILE LOOP：条件反復",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  FOR i IN REVERSE 1..3 LOOP\n    DBMS_OUTPUT.PUT_LINE(i);\n  END LOOP;\nEND;",
+      "input": "BEGIN FOR i IN REVERSE 1..3 LOOP DBMS_OUTPUT.PUT_LINE(i); END LOOP; END;",
+      "annotation": "FOR / REVERSE：整数範囲の反復（両端を含む。制御変数は暗黙宣言）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  DELETE FROM users WHERE id = 1;\nEND;",
+      "input": "BEGIN DELETE FROM users WHERE id=1; END;",
+      "annotation": "DELETE：削除（実データ削除。COMMITまたはROLLBACKを判断）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  RAISE NO_DATA_FOUND;\nEXCEPTION\n  WHEN NO_DATA_FOUND THEN\n    RAISE;\n  END;",
+      "input": "BEGIN RAISE NO_DATA_FOUND; EXCEPTION WHEN NO_DATA_FOUND THEN RAISE; END;",
+      "annotation": "RAISE：例外を再送出（意図的に例外が伝播）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  RAISE_APPLICATION_ERROR(-20001, '不正な入力');\nEND;",
+      "input": "BEGIN RAISE_APPLICATION_ERROR(-20001,'不正な入力'); END;",
+      "annotation": "RAISE_APPLICATION_ERROR：アプリ用エラー（通常-20000〜-20999）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_result NUMBER;\nBEGIN\n  double_value(p_in => 2, p_out => v_result);\nEND;",
+      "input": "DECLARE v_result NUMBER; BEGIN double_value(p_in=>2,p_out=>v_result); END;",
+      "annotation": "名前付き呼出：引数名で指定（double_valueが定義済み）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE OR REPLACE PACKAGE math_api AS\n  FUNCTION twice(n NUMBER) RETURN NUMBER;\nEND;",
+      "input": "CREATE OR REPLACE PACKAGE math_api AS FUNCTION twice(n NUMBER) RETURN NUMBER; END;",
+      "annotation": "PACKAGE / PACKAGE BODY：宣言と実装を分離（呼出はmath_api.twice(2)等）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT name, type, line, position, text FROM user_errors ORDER BY name, sequence;",
+      "input": "SELECT name,type,line,position,text FROM user_errors ORDER BY name,sequence;",
+      "annotation": "USER_ERRORS：コンパイルエラー確認（SQL。SHOW ERRORSはクライアントコマンド）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -1,0 +1,90 @@
+{
+  "id": "oracle-plsql-syntax-advanced",
+  "name": "Oracle PL/SQL構文（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Oracle",
+    "PL/SQL",
+    "SQL"
+  ],
+  "group": "Oracle PL/SQL構文",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "DECLARE\n  v_age PLS_INTEGER := 20;\n  c_limit CONSTANT PLS_INTEGER := 100;\nBEGIN\n  v_age := 21;\n  DBMS_OUTPUT.PUT_LINE(v_age);\nEND;",
+      "input": "DECLARE v_age PLS_INTEGER:=20; c_limit CONSTANT PLS_INTEGER:=100; BEGIN v_age:=21; DBMS_OUTPUT.PUT_LINE(v_age); END;",
+      "annotation": ":= / CONSTANT：変数・定数（ローカル変数の既定値は通常NULL）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_amount NUMBER(12, 2) := 123.45;\n  v_ok BOOLEAN := TRUE;\nBEGIN\n  IF v_ok THEN\n    DBMS_OUTPUT.PUT_LINE(v_amount);\n  END IF;\nEND;",
+      "input": "DECLARE v_amount NUMBER(12,2):=123.45; v_ok BOOLEAN:=TRUE; BEGIN IF v_ok THEN DBMS_OUTPUT.PUT_LINE(v_amount); END IF; END;",
+      "annotation": "NUMBER / VARCHAR2 / DATE / BOOLEAN：主な型（19cのBOOLEANはPL/SQL内。SQL列へのBOOLEAN対応は新しい版と区別）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_role VARCHAR2(20) := 'admin';\nBEGIN\n  CASE v_role\n  WHEN 'admin' THEN\n    DBMS_OUTPUT.PUT_LINE('管理者');\n  ELSE\n    DBMS_OUTPUT.PUT_LINE('その他');\n  END CASE;\nEND;",
+      "input": "DECLARE v_role VARCHAR2(20):='admin'; BEGIN CASE v_role WHEN 'admin' THEN DBMS_OUTPUT.PUT_LINE('管理者'); ELSE DBMS_OUTPUT.PUT_LINE('その他'); END CASE; END;",
+      "annotation": "CASE：値による分岐（文と式のCASEを区別）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_name VARCHAR2(100);\nBEGIN\n  SELECT name INTO v_name\n  FROM users\n  WHERE id = 1;\n  DBMS_OUTPUT.PUT_LINE(v_name);\nEND;",
+      "input": "DECLARE v_name VARCHAR2(100); BEGIN SELECT name INTO v_name FROM users WHERE id=1; DBMS_OUTPUT.PUT_LINE(v_name); END;",
+      "annotation": "SELECT INTO：1行を変数へ取得（users表が必要。0行・複数行で例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_id NUMBER;\nBEGIN\n  INSERT INTO users(name) VALUES('Pomo')\n  RETURNING id INTO v_id;\n  DBMS_OUTPUT.PUT_LINE(v_id);\nEND;",
+      "input": "DECLARE v_id NUMBER; BEGIN INSERT INTO users(name) VALUES('Pomo') RETURNING id INTO v_id; DBMS_OUTPUT.PUT_LINE(v_id); END;",
+      "annotation": "INSERT / RETURNING INTO：追加値を受け取る（users.idの採番等を準備。自動COMMITしない）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  CURSOR c_users IS SELECT name\n  FROM users;\nBEGIN\n  FOR r IN c_users LOOP\n    DBMS_OUTPUT.PUT_LINE(r.name);\n  END LOOP;\nEND;",
+      "input": "DECLARE CURSOR c_users IS SELECT name FROM users; BEGIN FOR r IN c_users LOOP DBMS_OUTPUT.PUT_LINE(r.name); END LOOP; END;",
+      "annotation": "明示カーソル：カーソルを宣言",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  CURSOR c IS SELECT name\n  FROM users;\n  v_name users.name%TYPE;\nBEGIN\n  OPEN c;\n  LOOP\n    FETCH c INTO v_name;\n    EXIT WHEN c%NOTFOUND;\n    DBMS_OUTPUT.PUT_LINE(v_name);\n  END LOOP;\n  CLOSE c;\nEND;",
+      "input": "DECLARE CURSOR c IS SELECT name FROM users; v_name users.name%TYPE; BEGIN OPEN c; LOOP FETCH c INTO v_name; EXIT WHEN c%NOTFOUND; DBMS_OUTPUT.PUT_LINE(v_name); END LOOP; CLOSE c; END;",
+      "annotation": "OPEN FETCH CLOSE：明示的に行取得（実運用では例外時の解放も考慮）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  TYPE names_t IS TABLE OF VARCHAR2(100) INDEX BY PLS_INTEGER;\n  names names_t;\nBEGIN\n  names(1) := 'Pomo';\n  DBMS_OUTPUT.PUT_LINE(names.COUNT);\nEND;",
+      "input": "DECLARE TYPE names_t IS TABLE OF VARCHAR2(100) INDEX BY PLS_INTEGER; names names_t; BEGIN names(1):='Pomo'; DBMS_OUTPUT.PUT_LINE(names.COUNT); END;",
+      "annotation": "連想配列：キー付き配列（添字が密に連続するとは限らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  TYPE ids_t IS TABLE OF users.id%TYPE;\n  ids ids_t;\nBEGIN\n  SELECT id BULK COLLECT INTO ids\n  FROM users;\n  DBMS_OUTPUT.PUT_LINE(ids.COUNT);\nEND;",
+      "input": "DECLARE TYPE ids_t IS TABLE OF users.id%TYPE; ids ids_t; BEGIN SELECT id BULK COLLECT INTO ids FROM users; DBMS_OUTPUT.PUT_LINE(ids.COUNT); END;",
+      "annotation": "BULK COLLECT：複数行を一括取得（大量取得はメモリ消費。FETCH BULK COLLECT LIMIT等も検討）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  TYPE ids_t IS TABLE OF NUMBER;\n  ids ids_t := ids_t(1, 2, 3);\nBEGIN\n  FORALL i IN 1..ids.COUNT UPDATE users SET name = 'New'\n  WHERE id = ids(i);\nEND;",
+      "input": "DECLARE TYPE ids_t IS TABLE OF NUMBER; ids ids_t:=ids_t(1,2,3); BEGIN FORALL i IN 1..ids.COUNT UPDATE users SET name='New' WHERE id=ids(i); END;",
+      "annotation": "FORALL：DMLをまとめて送る（通常のFORループとは別。実データ変更）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_name users.name%TYPE;\nBEGIN\n  SELECT name INTO v_name\n  FROM users\n  WHERE id = 1;\nEXCEPTION\n  WHEN NO_DATA_FOUND THEN\n    DBMS_OUTPUT.PUT_LINE('なし');\n  WHEN TOO_MANY_ROWS THEN\n    RAISE;\n  END;",
+      "input": "DECLARE v_name users.name%TYPE; BEGIN SELECT name INTO v_name FROM users WHERE id=1; EXCEPTION WHEN NO_DATA_FOUND THEN DBMS_OUTPUT.PUT_LINE('なし'); WHEN TOO_MANY_ROWS THEN RAISE; END;",
+      "annotation": "EXCEPTION / NO_DATA_FOUND：例外処理",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  RAISE NO_DATA_FOUND;\nEXCEPTION\n  WHEN OTHERS THEN\n    DBMS_OUTPUT.PUT_LINE(SQLCODE || ':' || SQLERRM);\n    RAISE;\n  END;",
+      "input": "BEGIN RAISE NO_DATA_FOUND; EXCEPTION WHEN OTHERS THEN DBMS_OUTPUT.PUT_LINE(SQLCODE || ':' || SQLERRM); RAISE; END;",
+      "annotation": "SQLCODE / SQLERRM：例外情報（WHEN OTHERSで無条件に握りつぶさない）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

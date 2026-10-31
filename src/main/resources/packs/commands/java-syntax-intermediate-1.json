@@ -1,0 +1,214 @@
+{
+  "id": "java-syntax-intermediate-1",
+  "name": "Java構文（中級1）",
+  "category": "プログラミング",
+  "tags": [
+    "Java"
+  ],
+  "group": "Java構文",
+  "levels": [
+    "中級1"
+  ],
+  "words": [
+    {
+      "display": "System.out.println(\"Hello\");",
+      "input": "System.out.println(\"Hello\");",
+      "annotation": "System.out.println：表示して改行（標準API）",
+      "input_type": "code"
+    },
+    {
+      "display": "/* 複数行の コメント */",
+      "input": "/* 複数行の コメント */",
+      "annotation": "/* ... */：複数行コメント",
+      "input_type": "code"
+    },
+    {
+      "display": "/** 利用者を表します。 */",
+      "input": "/** 利用者を表します。 */",
+      "annotation": "/** ... */：Javadoc用コメント（型やメソッド等の宣言前に配置）",
+      "input_type": "code"
+    },
+    {
+      "display": "String name = \"Pomo\";",
+      "input": "String name = \"Pomo\";",
+      "annotation": "String：文字列の変数（参照型）",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean enabled = true;",
+      "input": "boolean enabled = true;",
+      "annotation": "boolean：真偽値の変数",
+      "input_type": "code"
+    },
+    {
+      "display": "static final int MAX = 100;",
+      "input": "static final int MAX = 100;",
+      "annotation": "static final：クラスに属する再代入不可フィールド（クラス内に記述）",
+      "input_type": "code"
+    },
+    {
+      "display": "String text = \"hello\";",
+      "input": "String text = \"hello\";",
+      "annotation": "String：文字列（クラス。プリミティブ型ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "int remainder = 10 % 3;",
+      "input": "int remainder = 10 % 3;",
+      "annotation": "+ - * / %：加減乗除・余り（整数同士の除算は小数部を切り捨て）",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean same = a == b;",
+      "input": "boolean same = a == b;",
+      "annotation": "== / !=：等値・不等値比較（参照型の==は参照の同一性を比較）",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean adult = age >= 20;",
+      "input": "boolean adult = age >= 20;",
+      "annotation": "< <= > >=：大小比較",
+      "input_type": "code"
+    },
+    {
+      "display": "int masked = flags & 3;",
+      "input": "int masked = flags & 3;",
+      "annotation": "& | ^ ~：ビット演算（&、|、^はbooleanにも利用可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "for (; ; ) {\n  break;\n}",
+      "input": "for (;;) { break; }",
+      "annotation": "for (;;)：無限ループ",
+      "input_type": "code"
+    },
+    {
+      "display": "if (done) {\n  break;\n}",
+      "input": "if (done) { break; }",
+      "annotation": "break：ループ等を抜ける（ループ・switch等の中で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "if (skip) {\n  continue;\n}",
+      "input": "if (skip) { continue; }",
+      "annotation": "continue：次の反復へ（ループ内で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "int result = add(2, 3);",
+      "input": "int result = add(2, 3);",
+      "annotation": "メソッド呼び出し：引数を渡して呼ぶ",
+      "input_type": "code"
+    },
+    {
+      "display": "int[] nums = { 1, 2, 3 };",
+      "input": "int[] nums = {1, 2, 3};",
+      "annotation": "型[] 名前 = {...}：配列リテラル（長さ固定）",
+      "input_type": "code"
+    },
+    {
+      "display": "int[] nums = new int[3];",
+      "input": "int[] nums = new int[3];",
+      "annotation": "new 型[長さ]：配列を作成（要素は既定値）",
+      "input_type": "code"
+    },
+    {
+      "display": "names.add(\"Pomo\");",
+      "input": "names.add(\"Pomo\");",
+      "annotation": "List.add：リストへ追加",
+      "input_type": "code"
+    },
+    {
+      "display": "String first = names.get(0);",
+      "input": "String first = names.get(0);",
+      "annotation": "List.get：指定位置の値",
+      "input_type": "code"
+    },
+    {
+      "display": "names.set(0, \"New\");",
+      "input": "names.set(0, \"New\");",
+      "annotation": "List.set：指定位置を書き換える",
+      "input_type": "code"
+    },
+    {
+      "display": "int n = names.size();",
+      "input": "int n = names.size();",
+      "annotation": "List.size：リストの要素数",
+      "input_type": "code"
+    },
+    {
+      "display": "scores.put(\"Pomo\", 100);",
+      "input": "scores.put(\"Pomo\", 100);",
+      "annotation": "Map.put：追加・更新",
+      "input_type": "code"
+    },
+    {
+      "display": "public void greet() {\n}",
+      "input": "public void greet() {}",
+      "annotation": "public：公開（型・モジュール等のアクセス条件も関係）",
+      "input_type": "code"
+    },
+    {
+      "display": "final class Utility {\n}",
+      "input": "final class Utility {}",
+      "annotation": "final class：継承禁止",
+      "input_type": "code"
+    },
+    {
+      "display": "import java.util.List;",
+      "input": "import java.util.List;",
+      "annotation": "import：型を読み込む",
+      "input_type": "code"
+    },
+    {
+      "display": "class Dog extends Animal {\n}",
+      "input": "class Dog extends Animal {}",
+      "annotation": "extends：クラス継承（直接の親クラスは1つ）",
+      "input_type": "code"
+    },
+    {
+      "display": "interface A extends B {\n}",
+      "input": "interface A extends B {}",
+      "annotation": "interface extends：インターフェース継承",
+      "input_type": "code"
+    },
+    {
+      "display": "abstract void speak();",
+      "input": "abstract void speak();",
+      "annotation": "abstractメソッド：実装のない抽象メソッド（抽象クラス等の適切な場所で宣言）",
+      "input_type": "code"
+    },
+    {
+      "display": "Status status = Status.DOING;",
+      "input": "Status status = Status.DOING;",
+      "annotation": "enum値：列挙値を使用",
+      "input_type": "code"
+    },
+    {
+      "display": "class Box<T> {\n  T value;\n}",
+      "input": "class Box<T> { T value; }",
+      "annotation": "class Box<T>：型パラメーター付きクラス",
+      "input_type": "code"
+    },
+    {
+      "display": "List< ? extends Number> nums;",
+      "input": "List<? extends Number> nums;",
+      "annotation": "? extends 型：上限境界ワイルドカード（要素をNumberとして読める。一般に具体的な数値を追加できない）",
+      "input_type": "code"
+    },
+    {
+      "display": "List< ? super Integer> nums;",
+      "input": "List<? super Integer> nums;",
+      "annotation": "? super 型：下限境界ワイルドカード（Integerを追加可能。読み取りは一般にObject）",
+      "input_type": "code"
+    },
+    {
+      "display": "var stream = names.stream();",
+      "input": "var stream = names.stream();",
+      "annotation": "stream：要素処理用Streamを作成（標準API。Streamは通常1回だけ消費）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

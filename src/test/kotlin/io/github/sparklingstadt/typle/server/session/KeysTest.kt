@@ -153,11 +153,22 @@ class KeysTest {
     assertNull(keys.open(cookie, NOW))
   }
 
-  @Test fun needsRenewal() {
-    val s = newSession("github:1", "A", "", NOW)
-    assertFalse(s.needsRenewal(NOW + 23 * 3600_000L))
-    assertFalse(s.needsRenewal(NOW + 24 * 3600_000L - 1000))
-    assertTrue(s.needsRenewal(NOW + 24 * 3600_000L))
+  // Go's TestRevokedBy: the sessions of a login no later than the revocation, the very second included.
+  @Test fun revokedBy() {
+    val issued = java.time.Instant.ofEpochSecond(1700000000)
+    val s = newSession("github:1", "A", "", issued.toEpochMilli() + 400)
+    assertFalse(s.revokedBy(null), "never revoked")
+    assertFalse(s.revokedBy(issued.minusSeconds(1)), "revoked before the login")
+    assertTrue(s.revokedBy(issued.plusMillis(900)), "revoked in the second of the login")
+    assertTrue(s.revokedBy(issued.plusSeconds(3600)), "revoked after the login")
+  }
+
+  // Go's TestSessionAbsoluteLifetime: a session is valid MAX_AGE after its login and no longer, as nothing extends it.
+  @Test fun absoluteLifetime() {
+    val issued = 1700000000_000L
+    val value = keys.seal(newSession("github:1", "A", "", issued))
+    assertNotNull(keys.open(value, issued + (SessionTimes.MAX_AGE - 1) * 1000))
+    assertNull(keys.open(value, issued + SessionTimes.MAX_AGE * 1000))
   }
 
   @Test fun cookieNames() {

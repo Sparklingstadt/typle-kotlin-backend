@@ -1,0 +1,251 @@
+{
+  "id": "un-member-states-chinese-193-lowercase-beginner-2",
+  "name": "国名：中国語・国連加盟国（小文字・初級2）",
+  "category": "語学",
+  "tags": [
+    "中国語",
+    "国名"
+  ],
+  "group": "国名：中国語・国連加盟国（小文字）",
+  "levels": [
+    "初級2"
+  ],
+  "words": [
+    {
+      "display": "安道尔",
+      "input": "andaoer",
+      "annotation": "Āndào'ěr / アンドラ",
+      "input_type": "word"
+    },
+    {
+      "display": "比利时",
+      "input": "bilishi",
+      "annotation": "Bǐlìshí / ベルギー",
+      "input_type": "word"
+    },
+    {
+      "display": "贝宁",
+      "input": "beining",
+      "annotation": "Bèiníng / ベナン",
+      "input_type": "word"
+    },
+    {
+      "display": "加拿大",
+      "input": "jianada",
+      "annotation": "Jiānádà / カナダ",
+      "input_type": "word"
+    },
+    {
+      "display": "科摩罗",
+      "input": "kemoluo",
+      "annotation": "Kēmóluó / コモロ",
+      "input_type": "word"
+    },
+    {
+      "display": "加蓬",
+      "input": "jiapeng",
+      "annotation": "Jiāpéng / ガボン",
+      "input_type": "word"
+    },
+    {
+      "display": "几内亚",
+      "input": "jineiya",
+      "annotation": "Jǐnèiyà / ギニア",
+      "input_type": "word"
+    },
+    {
+      "display": "圭亚那",
+      "input": "guiyana",
+      "annotation": "Guīyànà / ガイアナ",
+      "input_type": "word"
+    },
+    {
+      "display": "冰岛",
+      "input": "bingdao",
+      "annotation": "Bīngdǎo / アイスランド",
+      "input_type": "word"
+    },
+    {
+      "display": "爱尔兰",
+      "input": "aierlan",
+      "annotation": "Ài'ěrlán / アイルランド",
+      "input_type": "word"
+    },
+    {
+      "display": "以色列",
+      "input": "yiselie",
+      "annotation": "Yǐsèliè / イスラエル",
+      "input_type": "word"
+    },
+    {
+      "display": "肯尼亚",
+      "input": "kenniya",
+      "annotation": "Kěnníyà / ケニア",
+      "input_type": "word"
+    },
+    {
+      "display": "科威特",
+      "input": "keweite",
+      "annotation": "Kēwēitè / クウェート",
+      "input_type": "word"
+    },
+    {
+      "display": "黎巴嫩",
+      "input": "libanen",
+      "annotation": "Líbānèn / レバノン",
+      "input_type": "word"
+    },
+    {
+      "display": "马拉维",
+      "input": "malawei",
+      "annotation": "Mǎlāwéi / マラウイ",
+      "input_type": "word"
+    },
+    {
+      "display": "摩纳哥",
+      "input": "monage",
+      "annotation": "Mónàgē / モナコ",
+      "input_type": "word"
+    },
+    {
+      "display": "蒙古",
+      "input": "menggu",
+      "annotation": "Měnggǔ / モンゴル",
+      "input_type": "word"
+    },
+    {
+      "display": "黑山",
+      "input": "heishan",
+      "annotation": "Hēishān / モンテネグロ",
+      "input_type": "word"
+    },
+    {
+      "display": "摩洛哥",
+      "input": "moluoge",
+      "annotation": "Móluògē / モロッコ",
+      "input_type": "word"
+    },
+    {
+      "display": "尼泊尔",
+      "input": "niboer",
+      "annotation": "Níbó'ěr / ネパール",
+      "input_type": "word"
+    },
+    {
+      "display": "尼日尔",
+      "input": "nirier",
+      "annotation": "Nírì'ěr / ニジェール",
+      "input_type": "word"
+    },
+    {
+      "display": "挪威",
+      "input": "nuowei",
+      "annotation": "Nuówēi / ノルウェー",
+      "input_type": "word"
+    },
+    {
+      "display": "巴拿马",
+      "input": "banama",
+      "annotation": "Bānámǎ / パナマ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴拉圭",
+      "input": "balagui",
+      "annotation": "Bālāguī / パラグアイ",
+      "input_type": "word"
+    },
+    {
+      "display": "葡萄牙",
+      "input": "putaoya",
+      "annotation": "Pútáoyá / ポルトガル",
+      "input_type": "word"
+    },
+    {
+      "display": "卡塔尔",
+      "input": "kataer",
+      "annotation": "Kǎtǎ'ěr / カタール",
+      "input_type": "word"
+    },
+    {
+      "display": "萨摩亚",
+      "input": "samoya",
+      "annotation": "Sàmóyà / サモア",
+      "input_type": "word"
+    },
+    {
+      "display": "索马里",
+      "input": "suomali",
+      "annotation": "Suǒmǎlǐ / ソマリア",
+      "input_type": "word"
+    },
+    {
+      "display": "南非",
+      "input": "nanfei",
+      "annotation": "Nánfēi / 南アフリカ",
+      "input_type": "word"
+    },
+    {
+      "display": "西班牙",
+      "input": "xibanya",
+      "annotation": "Xībānyá / スペイン",
+      "input_type": "word"
+    },
+    {
+      "display": "苏里南",
+      "input": "sulinan",
+      "annotation": "Sūlǐnán / スリナム",
+      "input_type": "word"
+    },
+    {
+      "display": "瑞典",
+      "input": "ruidian",
+      "annotation": "Ruìdiǎn / スウェーデン",
+      "input_type": "word"
+    },
+    {
+      "display": "瑞士",
+      "input": "ruishi",
+      "annotation": "Ruìshì / スイス",
+      "input_type": "word"
+    },
+    {
+      "display": "泰国",
+      "input": "taiguo",
+      "annotation": "Tàiguó / タイ",
+      "input_type": "word"
+    },
+    {
+      "display": "汤加",
+      "input": "tangjia",
+      "annotation": "Tāngjiā / トンガ",
+      "input_type": "word"
+    },
+    {
+      "display": "突尼斯",
+      "input": "tunisi",
+      "annotation": "Tūnísī / チュニジア",
+      "input_type": "word"
+    },
+    {
+      "display": "土耳其",
+      "input": "tuerqi",
+      "annotation": "Tǔ'ěrqí / トルコ",
+      "input_type": "word"
+    },
+    {
+      "display": "图瓦卢",
+      "input": "tuwalu",
+      "annotation": "Túwǎlú / ツバル",
+      "input_type": "word"
+    },
+    {
+      "display": "越南",
+      "input": "yuenan",
+      "annotation": "Yuènán / ベトナム",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

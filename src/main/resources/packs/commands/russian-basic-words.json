@@ -1,0 +1,256 @@
+{
+  "id": "russian-basic-words",
+  "name": "ロシア語（基礎単語）",
+  "category": "語学",
+  "tags": [
+    "ロシア語"
+  ],
+  "group": "ロシア語：基礎・中級",
+  "levels": [
+    "基礎単語"
+  ],
+  "words": [
+    {
+      "display": "вода",
+      "input": "вода",
+      "annotation": "вода / 水",
+      "input_type": "word"
+    },
+    {
+      "display": "хлеб",
+      "input": "хлеб",
+      "annotation": "хлеб / パン",
+      "input_type": "word"
+    },
+    {
+      "display": "книга",
+      "input": "книга",
+      "annotation": "книга / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "дом",
+      "input": "дом",
+      "annotation": "дом / 家",
+      "input_type": "word"
+    },
+    {
+      "display": "школа",
+      "input": "школа",
+      "annotation": "школа / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "друг",
+      "input": "друг",
+      "annotation": "друг / 友達（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "семья",
+      "input": "семья",
+      "annotation": "семья / 家族",
+      "input_type": "word"
+    },
+    {
+      "display": "собака",
+      "input": "собака",
+      "annotation": "собака / 犬",
+      "input_type": "word"
+    },
+    {
+      "display": "кошка",
+      "input": "кошка",
+      "annotation": "кошка / 猫",
+      "input_type": "word"
+    },
+    {
+      "display": "машина",
+      "input": "машина",
+      "annotation": "машина / 車",
+      "input_type": "word"
+    },
+    {
+      "display": "поезд",
+      "input": "поезд",
+      "annotation": "поезд / 列車",
+      "input_type": "word"
+    },
+    {
+      "display": "деньги",
+      "input": "деньги",
+      "annotation": "деньги / お金",
+      "input_type": "word"
+    },
+    {
+      "display": "время",
+      "input": "время",
+      "annotation": "время / 時間",
+      "input_type": "word"
+    },
+    {
+      "display": "день",
+      "input": "день",
+      "annotation": "день / 日、昼",
+      "input_type": "word"
+    },
+    {
+      "display": "ночь",
+      "input": "ночь",
+      "annotation": "ночь / 夜",
+      "input_type": "word"
+    },
+    {
+      "display": "утро",
+      "input": "утро",
+      "annotation": "утро / 朝",
+      "input_type": "word"
+    },
+    {
+      "display": "еда",
+      "input": "еда",
+      "annotation": "еда / 食べ物",
+      "input_type": "word"
+    },
+    {
+      "display": "имя",
+      "input": "имя",
+      "annotation": "имя / 名前",
+      "input_type": "word"
+    },
+    {
+      "display": "город",
+      "input": "город",
+      "annotation": "город / 都市、町",
+      "input_type": "word"
+    },
+    {
+      "display": "страна",
+      "input": "страна",
+      "annotation": "страна / 国",
+      "input_type": "word"
+    },
+    {
+      "display": "идти",
+      "input": "идти",
+      "annotation": "идти / （歩いて）行く",
+      "input_type": "word"
+    },
+    {
+      "display": "жить",
+      "input": "жить",
+      "annotation": "жить / 住む、生きる",
+      "input_type": "word"
+    },
+    {
+      "display": "есть",
+      "input": "есть",
+      "annotation": "есть / 食べる",
+      "input_type": "word"
+    },
+    {
+      "display": "пить",
+      "input": "пить",
+      "annotation": "пить / 飲む",
+      "input_type": "word"
+    },
+    {
+      "display": "видеть",
+      "input": "видеть",
+      "annotation": "видеть / 見える、見る",
+      "input_type": "word"
+    },
+    {
+      "display": "читать",
+      "input": "читать",
+      "annotation": "читать / 読む",
+      "input_type": "word"
+    },
+    {
+      "display": "писать",
+      "input": "писать",
+      "annotation": "писать / 書く",
+      "input_type": "word"
+    },
+    {
+      "display": "говорить",
+      "input": "говорить",
+      "annotation": "говорить / 話す",
+      "input_type": "word"
+    },
+    {
+      "display": "любить",
+      "input": "любить",
+      "annotation": "любить / 愛する、好きである",
+      "input_type": "word"
+    },
+    {
+      "display": "хотеть",
+      "input": "хотеть",
+      "annotation": "хотеть / ～したい、欲しい",
+      "input_type": "word"
+    },
+    {
+      "display": "большой",
+      "input": "большой",
+      "annotation": "большой / 大きい",
+      "input_type": "word"
+    },
+    {
+      "display": "маленький",
+      "input": "маленький",
+      "annotation": "маленький / 小さい",
+      "input_type": "word"
+    },
+    {
+      "display": "новый",
+      "input": "новый",
+      "annotation": "новый / 新しい",
+      "input_type": "word"
+    },
+    {
+      "display": "старый",
+      "input": "старый",
+      "annotation": "старый / 古い、年をとった",
+      "input_type": "word"
+    },
+    {
+      "display": "хороший",
+      "input": "хороший",
+      "annotation": "хороший / 良い",
+      "input_type": "word"
+    },
+    {
+      "display": "плохой",
+      "input": "плохой",
+      "annotation": "плохой / 悪い",
+      "input_type": "word"
+    },
+    {
+      "display": "горячий",
+      "input": "горячий",
+      "annotation": "горячий / 熱い",
+      "input_type": "word"
+    },
+    {
+      "display": "холодный",
+      "input": "холодный",
+      "annotation": "холодный / 寒い、冷たい",
+      "input_type": "word"
+    },
+    {
+      "display": "сегодня",
+      "input": "сегодня",
+      "annotation": "сегодня / 今日",
+      "input_type": "word"
+    },
+    {
+      "display": "спасибо",
+      "input": "спасибо",
+      "annotation": "спасибо / ありがとう",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

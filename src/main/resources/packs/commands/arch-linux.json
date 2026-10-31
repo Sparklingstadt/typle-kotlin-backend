@@ -1,0 +1,590 @@
+{
+  "id": "arch-linux",
+  "name": "Arch Linuxコマンド",
+  "category": "プログラミング",
+  "tags": [
+    "Arch Linux",
+    "Linux",
+    "シェル"
+  ],
+  "words": [
+    {
+      "display": "pwd",
+      "input": "pwd",
+      "annotation": "現在のフォルダを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -lah",
+      "input": "ls -lah",
+      "annotation": "ls：ファイル一覧を表示（-aで隠しファイル、-lで詳細、-hで容量を読みやすく表示）",
+      "input_type": "command"
+    },
+    {
+      "display": "cd ~/Downloads",
+      "input": "cd ~/Downloads",
+      "annotation": "cd：フォルダを移動",
+      "input_type": "command"
+    },
+    {
+      "display": "cd ..",
+      "input": "cd ..",
+      "annotation": "1つ上へ移動",
+      "input_type": "command"
+    },
+    {
+      "display": "mkdir -p project/src",
+      "input": "mkdir -p project/src",
+      "annotation": "mkdir -p：階層ごとフォルダを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "touch memo.txt",
+      "input": "touch memo.txt",
+      "annotation": "touch：ファイル作成・更新日時変更（既存内容は変更しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "cp memo.txt backup.txt",
+      "input": "cp memo.txt backup.txt",
+      "annotation": "cp：ファイルをコピー（コピー先を上書きする場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "cp -r src backup",
+      "input": "cp -r src backup",
+      "annotation": "cp -r：フォルダをコピー",
+      "input_type": "command"
+    },
+    {
+      "display": "mv old.txt new.txt",
+      "input": "mv old.txt new.txt",
+      "annotation": "mv：移動・名前変更（移動先を上書きする場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -i memo.txt",
+      "input": "rm -i memo.txt",
+      "annotation": "rm -i：確認しながら削除（ゴミ箱を経由しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -r old-folder",
+      "input": "rm -r old-folder",
+      "annotation": "rm -r：フォルダと中身を削除（ゴミ箱を経由しない。対象を確認する）",
+      "input_type": "command"
+    },
+    {
+      "display": "ln -s ~/Documents/docs docs-link",
+      "input": "ln -s ~/Documents/docs docs-link",
+      "annotation": "ln -s：シンボリックリンクを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "find . -name \"*.log\"",
+      "input": "find . -name \"*.log\"",
+      "annotation": "find：ファイルを検索（パターンは引用符で囲む）",
+      "input_type": "command"
+    },
+    {
+      "display": "xdg-open report.pdf",
+      "input": "xdg-open report.pdf",
+      "annotation": "xdg-open：既定アプリで開く（xdg-utilsが必要。主にデスクトップ環境向け）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Syu",
+      "input": "sudo pacman -Syu",
+      "annotation": "DB更新とシステム全体の更新（部分更新は非サポート。-Syだけ実行して一部を導入しない） / sudo：管理者権限で実行（sudoの導入と権限設定が必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -S git",
+      "input": "sudo pacman -S git",
+      "annotation": "sudo pacman -S パッケージ名：公式パッケージを導入（DBだけ更新して古いシステムに導入しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Syu git",
+      "input": "sudo pacman -Syu git",
+      "annotation": "sudo pacman -Syu パッケージ名：全体更新と導入をまとめて実行",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Ss firefox",
+      "input": "pacman -Ss firefox",
+      "annotation": "pacman -Ss キーワード：公式リポジトリを検索",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Si git",
+      "input": "pacman -Si git",
+      "annotation": "pacman -Si パッケージ名：リポジトリ上の情報を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qs python",
+      "input": "pacman -Qs python",
+      "annotation": "pacman -Qs キーワード：導入済みパッケージを検索",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qi git",
+      "input": "pacman -Qi git",
+      "annotation": "pacman -Qi パッケージ名：導入済みパッケージの詳細",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Q",
+      "input": "pacman -Q",
+      "annotation": "導入済み一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qe",
+      "input": "pacman -Qe",
+      "annotation": "明示的に導入したものを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qdt",
+      "input": "pacman -Qdt",
+      "annotation": "不要になった依存パッケージを表示（表示だけ。削除前に必要性を確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qm",
+      "input": "pacman -Qm",
+      "annotation": "同期DBに存在しない導入済みパッケージを表示（AUR由来とは限らない）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Ql git",
+      "input": "pacman -Ql git",
+      "annotation": "pacman -Ql パッケージ名：配置したファイルの一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qo /usr/bin/bash",
+      "input": "pacman -Qo /usr/bin/bash",
+      "annotation": "pacman -Qo パス：ファイルの所属パッケージを確認",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -R firefox",
+      "input": "sudo pacman -R firefox",
+      "annotation": "sudo pacman -R パッケージ名：パッケージを削除",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Rs firefox",
+      "input": "sudo pacman -Rs firefox",
+      "annotation": "sudo pacman -Rs パッケージ名：対象と不要な依存を削除（削除予定一覧を確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -U ./example-1.0-1-x86_64.pkg.tar.zst",
+      "input": "sudo pacman -U ./example-1.0-1-x86_64.pkg.tar.zst",
+      "annotation": "sudo pacman -U ファイル：ローカルパッケージを導入（実際のファイル名へ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "checkupdates",
+      "input": "checkupdates",
+      "annotation": "更新候補を確認（pacman-contribが必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo paccache -r",
+      "input": "sudo paccache -r",
+      "annotation": "古いパッケージキャッシュを削除（pacman-contribが必要。標準では各パッケージの最新3世代を残す）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Fy",
+      "input": "sudo pacman -Fy",
+      "annotation": "ファイル検索用DBを更新（パッケージ更新用DBとは別）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -F bin/rg",
+      "input": "pacman -F bin/rg",
+      "annotation": "pacman -F ファイル名：ファイルの提供元パッケージを検索（未導入パッケージも対象。事前にファイルDBを更新）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qk bash",
+      "input": "pacman -Qk bash",
+      "annotation": "pacman -Qk パッケージ名：配置ファイルの存在を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "less /var/log/pacman.log",
+      "input": "less /var/log/pacman.log",
+      "annotation": "パッケージ操作履歴を読む（qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -S --needed base-devel git",
+      "input": "sudo pacman -S --needed base-devel git",
+      "annotation": "ビルド用基本ツールを導入（全体更新済みの環境で実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "git clone https://aur.archlinux.org/パッケージ名.git",
+      "input": "git clone https://aur.archlinux.org/パッケージ名.git",
+      "annotation": "git clone URL：AURのビルド手順を取得（実際のAURパッケージ名へ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "less PKGBUILD",
+      "input": "less PKGBUILD",
+      "annotation": "ビルド手順を確認（関連スクリプトも確認。qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "makepkg -si",
+      "input": "makepkg -si",
+      "annotation": "依存導入・ビルド・インストール（取得したフォルダ内で一般ユーザーとして実行。sudo makepkgは使わない）",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl status sshd",
+      "input": "systemctl status sshd",
+      "annotation": "systemctl status サービス：サービスの状態を確認（例はopenssh導入時）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl start sshd",
+      "input": "sudo systemctl start sshd",
+      "annotation": "sudo systemctl start サービス：今すぐ起動",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl stop sshd",
+      "input": "sudo systemctl stop sshd",
+      "annotation": "sudo systemctl stop サービス：今すぐ停止",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl restart sshd",
+      "input": "sudo systemctl restart sshd",
+      "annotation": "sudo systemctl restart サービス：再起動（接続中サービスでは接続が切れる場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl enable sshd",
+      "input": "sudo systemctl enable sshd",
+      "annotation": "sudo systemctl enable サービス：OS起動時の自動起動を有効化（今すぐの起動は行わない）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl disable sshd",
+      "input": "sudo systemctl disable sshd",
+      "annotation": "sudo systemctl disable サービス：自動起動を無効化（実行中サービスは停止しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl enable --now sshd",
+      "input": "sudo systemctl enable --now sshd",
+      "annotation": "sudo systemctl enable --now サービス：自動起動を有効化して今すぐ起動",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl --failed",
+      "input": "systemctl --failed",
+      "annotation": "失敗したユニットを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl list-units --type=service",
+      "input": "systemctl list-units --type=service",
+      "annotation": "読み込まれたサービスを表示（既定では主にアクティブなもの。非アクティブも表示する場合は--allを追加）",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl list-unit-files --type=service",
+      "input": "systemctl list-unit-files --type=service",
+      "annotation": "サービス定義と自動起動設定を一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl daemon-reload",
+      "input": "sudo systemctl daemon-reload",
+      "annotation": "サービス定義の変更を読み込む（サービスの再起動とは別）",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl --user status 名前",
+      "input": "systemctl --user status 名前",
+      "annotation": "ユーザーサービスの状態を確認（実際のユニット名へ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -b",
+      "input": "journalctl -b",
+      "annotation": "今回起動以降のログ（閲覧権限が不足する場合はsudo。qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -b -1",
+      "input": "journalctl -b -1",
+      "annotation": "前回起動のログ（前回分が保存されている場合のみ）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -u sshd",
+      "input": "journalctl -u sshd",
+      "annotation": "journalctl -u サービス：指定サービスのログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -u sshd -f",
+      "input": "journalctl -u sshd -f",
+      "annotation": "journalctl -u サービス -f：指定サービスのログを追跡（Control + Cで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -p err -b",
+      "input": "journalctl -p err -b",
+      "annotation": "今回起動のエラー以上のログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl --since \"1 hour ago\"",
+      "input": "journalctl --since \"1 hour ago\"",
+      "annotation": "journalctl --since 日時：指定時点以降のログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -k -b",
+      "input": "journalctl -k -b",
+      "annotation": "今回起動のカーネルログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl --disk-usage",
+      "input": "journalctl --disk-usage",
+      "annotation": "ログの使用容量",
+      "input_type": "command"
+    },
+    {
+      "display": "ip addr",
+      "input": "ip addr",
+      "annotation": "IPアドレスを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ip link",
+      "input": "ip link",
+      "annotation": "ネットワーク機器の状態",
+      "input_type": "command"
+    },
+    {
+      "display": "ip route",
+      "input": "ip route",
+      "annotation": "経路を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ping -c 4 archlinux.org",
+      "input": "ping -c 4 archlinux.org",
+      "annotation": "ping -c 回数 宛先：疎通を確認（応答がなくても通信不可とは限らない）",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -tuln",
+      "input": "ss -tuln",
+      "annotation": "TCP・UDPの待受ポート",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo ss -tulpn",
+      "input": "sudo ss -tulpn",
+      "annotation": "待受ポートとプロセス",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -I https://archlinux.org",
+      "input": "curl -I https://archlinux.org",
+      "annotation": "curl -I URL：HTTPヘッダーを確認（curlが必要。HEADリクエストを送信）",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh user@hostname",
+      "input": "ssh user@hostname",
+      "annotation": "SSH接続（opensshと接続先の認証が必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "nmcli device status",
+      "input": "nmcli device status",
+      "annotation": "ネットワーク機器の管理状態（NetworkManager利用時）",
+      "input_type": "command"
+    },
+    {
+      "display": "nmcli device wifi list",
+      "input": "nmcli device wifi list",
+      "annotation": "Wi-Fi一覧（NetworkManager利用時）",
+      "input_type": "command"
+    },
+    {
+      "display": "nmcli --ask device wifi connect \"SSID\"",
+      "input": "nmcli --ask device wifi connect \"SSID\"",
+      "annotation": "nmcli --ask device wifi connect SSID：Wi-Fiに接続（NetworkManager利用時。パスワードを対話入力）",
+      "input_type": "command"
+    },
+    {
+      "display": "iwctl",
+      "input": "iwctl",
+      "annotation": "iwdの対話画面を起動（iwd利用時。exitで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "ps aux",
+      "input": "ps aux",
+      "annotation": "プロセス一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "top",
+      "input": "top",
+      "annotation": "CPU・メモリ使用状況（qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "pgrep -af node",
+      "input": "pgrep -af node",
+      "annotation": "pgrep -af：コマンド名・引数でプロセス検索",
+      "input_type": "command"
+    },
+    {
+      "display": "kill 12345",
+      "input": "kill 12345",
+      "annotation": "kill PID：プロセスに終了を要求（対象PIDへ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "free -h",
+      "input": "free -h",
+      "annotation": "メモリ使用量",
+      "input_type": "command"
+    },
+    {
+      "display": "df -h",
+      "input": "df -h",
+      "annotation": "ファイルシステムの空き容量",
+      "input_type": "command"
+    },
+    {
+      "display": "du -sh ~/Downloads",
+      "input": "du -sh ~/Downloads",
+      "annotation": "du -sh パス：フォルダの使用容量",
+      "input_type": "command"
+    },
+    {
+      "display": "lsblk -f",
+      "input": "lsblk -f",
+      "annotation": "ディスク・パーティション・ファイルシステム一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "findmnt",
+      "input": "findmnt",
+      "annotation": "マウント状態",
+      "input_type": "command"
+    },
+    {
+      "display": "uname -r",
+      "input": "uname -r",
+      "annotation": "実行中カーネルのバージョン",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /etc/os-release",
+      "input": "cat /etc/os-release",
+      "annotation": "OS情報",
+      "input_type": "command"
+    },
+    {
+      "display": "hostnamectl",
+      "input": "hostnamectl",
+      "annotation": "ホスト名・OS情報",
+      "input_type": "command"
+    },
+    {
+      "display": "timedatectl",
+      "input": "timedatectl",
+      "annotation": "時刻・タイムゾーン情報",
+      "input_type": "command"
+    },
+    {
+      "display": "reboot",
+      "input": "reboot",
+      "annotation": "再起動（環境により管理者権限が必要。未保存データを確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "poweroff",
+      "input": "poweroff",
+      "annotation": "シャットダウン（環境により管理者権限が必要。未保存データを確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "id",
+      "input": "id",
+      "annotation": "UID・所属グループを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "chmod u+x script.sh",
+      "input": "chmod u+x script.sh",
+      "annotation": "chmod：アクセス権を変更（例は所有者に実行権限を追加）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo chown user:group file.txt",
+      "input": "sudo chown user:group file.txt",
+      "annotation": "chown：所有者・グループを変更（実在するユーザー・グループへ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "passwd",
+      "input": "passwd",
+      "annotation": "自分のパスワードを変更",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -czf backup.tar.gz folder",
+      "input": "tar -czf backup.tar.gz folder",
+      "annotation": "tar -czf：tar.gzで圧縮（既存の同名アーカイブを上書き）",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -xzf backup.tar.gz",
+      "input": "tar -xzf backup.tar.gz",
+      "annotation": "tar -xzf：tar.gzを展開（既存ファイルを上書きする場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "command -v python",
+      "input": "command -v python",
+      "annotation": "command -v：コマンドの場所等を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "man pacman",
+      "input": "man pacman",
+      "annotation": "man：マニュアルを読む（man-dbとman-pages等が必要な場合がある。qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman --help",
+      "input": "pacman --help",
+      "annotation": "コマンド --help：ヘルプを表示",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

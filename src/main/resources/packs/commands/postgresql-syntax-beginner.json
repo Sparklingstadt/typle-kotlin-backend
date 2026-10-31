@@ -1,0 +1,245 @@
+{
+  "id": "postgresql-syntax-beginner",
+  "name": "PostgreSQL構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "PostgreSQL",
+    "SQL"
+  ],
+  "group": "PostgreSQL構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "SHOW server_version;",
+      "input": "SHOW server_version;",
+      "annotation": "対象バージョン：例の利用条件（PostgreSQL 15以降を想定した主要構文。各例は独立した断片で、表・列・権限等の準備が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT 1;\nSELECT 2;",
+      "input": "SELECT 1; SELECT 2;",
+      "annotation": ";：文を区切る",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT 'Pomo';",
+      "input": "SELECT 'Pomo';",
+      "annotation": "'文字列'：文字列リテラル（文字列中の単一引用符は''で表す）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT name AS \"表示名\" FROM users;",
+      "input": "SELECT name AS \"表示名\" FROM users;",
+      "annotation": "\"識別子\"：識別子の引用（引用しない識別子は小文字として扱う。文字列の引用とは異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM public.users;",
+      "input": "SELECT * FROM public.users;",
+      "annotation": "スキーマ.表：スキーマ修飾（同名オブジェクトの曖昧さを避ける）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id, name FROM users;",
+      "input": "SELECT id, name FROM users;",
+      "annotation": "SELECT / FROM：列を取得",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users;",
+      "input": "SELECT * FROM users;",
+      "annotation": "SELECT *：全列を取得（列追加の影響を受けやすい）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE age >= 20;",
+      "input": "SELECT * FROM users WHERE age >= 20;",
+      "annotation": "WHERE：条件で絞る",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE age <> 20;",
+      "input": "SELECT * FROM users WHERE age <> 20;",
+      "annotation": "比較演算子：比較（NULLとの通常比較は真偽がunknownになる）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE email IS NULL;",
+      "input": "SELECT * FROM users WHERE email IS NULL;",
+      "annotation": "IS NULL / IS NOT NULL：NULLの判定",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT DISTINCT department_id FROM users;",
+      "input": "SELECT DISTINCT department_id FROM users;",
+      "annotation": "DISTINCT：重複行を除く（選択した列全体で重複判定）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT COUNT(*) FROM users;",
+      "input": "SELECT COUNT(*) FROM users;",
+      "annotation": "COUNT(*)：行数",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT COUNT(email) FROM users;",
+      "input": "SELECT COUNT(email) FROM users;",
+      "annotation": "COUNT(列)：非NULLの件数（NULLを数えない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT MIN(age), MAX(age) FROM users;",
+      "input": "SELECT MIN(age), MAX(age) FROM users;",
+      "annotation": "MIN / MAX：最小・最大",
+      "input_type": "code"
+    },
+    {
+      "display": "TRUNCATE TABLE orders;",
+      "input": "TRUNCATE TABLE orders;",
+      "annotation": "TRUNCATE：表をまとめて空にする（強いロックを取る。DELETEトリガーは発火しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "TRUNCATE TABLE orders RESTART IDENTITY;",
+      "input": "TRUNCATE TABLE orders RESTART IDENTITY;",
+      "annotation": "TRUNCATE ... RESTART IDENTITY：表を空にし採番も戻す（全データ削除。表に所有されるシーケンスが対象）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users ADD COLUMN nickname text;",
+      "input": "ALTER TABLE users ADD COLUMN nickname text;",
+      "annotation": "ALTER TABLE ADD COLUMN：列を追加",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users DROP COLUMN nickname;",
+      "input": "ALTER TABLE users DROP COLUMN nickname;",
+      "annotation": "ALTER TABLE DROP COLUMN：列を削除（列データを失う）",
+      "input_type": "code"
+    },
+    {
+      "display": "DROP TABLE notes;",
+      "input": "DROP TABLE notes;",
+      "annotation": "DROP TABLE：表を削除（表とデータを失う。CASCADEは依存オブジェクトにも影響）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE SCHEMA app;",
+      "input": "CREATE SCHEMA app;",
+      "annotation": "CREATE SCHEMA：スキーマを作る",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT 123.45::numeric(12, 2);",
+      "input": "SELECT 123.45::numeric(12,2);",
+      "annotation": "numeric(p,s)：正確な小数（金額等。精度・スケールに制約）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT 0.1::double precision;",
+      "input": "SELECT 0.1::double precision;",
+      "annotation": "double precision：近似の浮動小数点（正確な10進小数ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT true, false, NULL::boolean;",
+      "input": "SELECT true, false, NULL::boolean;",
+      "annotation": "boolean：真偽値",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT INTERVAL '7 days';",
+      "input": "SELECT INTERVAL '7 days';",
+      "annotation": "interval：期間",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT gen_random_uuid();",
+      "input": "SELECT gen_random_uuid();",
+      "annotation": "uuid：UUID（例の関数はPostgreSQL 15以降で組込み）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT decode('4869', 'hex');",
+      "input": "SELECT decode('4869', 'hex');",
+      "annotation": "bytea：バイナリ",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT ROUND(123.456::numeric, 2);",
+      "input": "SELECT ROUND(123.456::numeric, 2);",
+      "annotation": "ROUND：小数を丸める（小数桁指定の例はnumeric）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT CURRENT_DATE, NOW();",
+      "input": "SELECT CURRENT_DATE, NOW();",
+      "annotation": "CURRENT_DATE / NOW：現在の日付・日時（NOWはトランザクション開始時点）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT clock_timestamp();",
+      "input": "SELECT clock_timestamp();",
+      "annotation": "clock_timestamp：実際の現在時刻（同一文の実行中にも変化し得る）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT NOW() - INTERVAL '7 days';",
+      "input": "SELECT NOW() - INTERVAL '7 days';",
+      "annotation": "日時 + INTERVAL：日時の加減算",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM generate_series(1, 5);",
+      "input": "SELECT * FROM generate_series(1, 5);",
+      "annotation": "generate_series：連番等を生成",
+      "input_type": "code"
+    },
+    {
+      "display": "DROP INDEX users_age_idx;",
+      "input": "DROP INDEX users_age_idx;",
+      "annotation": "DROP INDEX：インデックス削除（その索引が存在する場合）",
+      "input_type": "code"
+    },
+    {
+      "display": "REFRESH MATERIALIZED VIEW user_totals;",
+      "input": "REFRESH MATERIALIZED VIEW user_totals;",
+      "annotation": "REFRESH MATERIALIZED VIEW：保存結果を更新（通常は参照をブロック。CONCURRENTLYには適切な一意索引等が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "ANALYZE users;",
+      "input": "ANALYZE users;",
+      "annotation": "ANALYZE：統計情報を更新（対象に適切な権限が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "VACUUM (ANALYZE) users;",
+      "input": "VACUUM (ANALYZE) users;",
+      "annotation": "VACUUM：不要領域の再利用等（トランザクションブロック内不可。通常OSへ容量を返す処理ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE ROLE app_reader;",
+      "input": "CREATE ROLE app_reader;",
+      "annotation": "CREATE ROLE：ロール作成（適切な管理権限が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "REVOKE SELECT ON users FROM app_reader;",
+      "input": "REVOKE SELECT ON users FROM app_reader;",
+      "annotation": "REVOKE：権限を取り消す（他ロール経由等の権限は残る場合がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "SHOW TimeZone;",
+      "input": "SHOW TimeZone;",
+      "annotation": "SHOW：設定を確認",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

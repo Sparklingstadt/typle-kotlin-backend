@@ -1,0 +1,217 @@
+{
+  "id": "eba3ec64-7d45-4f41-9de1-200ba5e957d5",
+  "name": "Vercel CLIコマンド",
+  "category": "プログラミング",
+  "tags": [
+    "Vercel",
+    "クラウド"
+  ],
+  "words": [
+    {
+      "display": "vercel login",
+      "input": "vercel login",
+      "annotation": "ログイン：Vercelアカウントで認証する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel switch",
+      "input": "vercel switch",
+      "annotation": "チーム切替：操作するチームを切り替える",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel link",
+      "input": "vercel link",
+      "annotation": "プロジェクト連携：手元のフォルダをVercelプロジェクトに紐づける",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel pull",
+      "input": "vercel pull",
+      "annotation": "設定取得：環境変数とプロジェクト設定を取得する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel dev",
+      "input": "vercel dev",
+      "annotation": "ローカル開発：Vercelの実行環境をローカルで再現して動作確認する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel build",
+      "input": "vercel build",
+      "annotation": "ビルド：ローカルやCI環境でビルドする",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel deploy",
+      "input": "vercel deploy",
+      "annotation": "プレビュー公開：確認用のデプロイを作成する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel deploy --prod",
+      "input": "vercel deploy --prod",
+      "annotation": "本番公開：本番環境にデプロイする",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel redeploy <URL>",
+      "input": "vercel redeploy <URL>",
+      "annotation": "再デプロイ：既存のデプロイを再ビルドして公開する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel promote <URL>",
+      "input": "vercel promote <URL>",
+      "annotation": "本番への昇格：既存のデプロイを本番に切り替える",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel rollback",
+      "input": "vercel rollback",
+      "annotation": "ロールバック：本番を過去のデプロイに戻す",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel inspect <URL> --logs",
+      "input": "vercel inspect <URL> --logs",
+      "annotation": "デプロイ調査：デプロイの状態やビルドログを確認する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel logs",
+      "input": "vercel logs",
+      "annotation": "実行ログ：アプリの実行ログを取得する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel curl /api/hello",
+      "input": "vercel curl /api/hello",
+      "annotation": "HTTP動作確認：保護されたデプロイにも認証付きでリクエストする",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel domains ls",
+      "input": "vercel domains ls",
+      "annotation": "ドメイン：独自ドメインの一覧・追加・購入などを行う",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel dns ls example.com",
+      "input": "vercel dns ls example.com",
+      "annotation": "DNS：DNSレコードを確認・追加・削除する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel cache purge",
+      "input": "vercel cache purge",
+      "annotation": "キャッシュ：CDN・データキャッシュを削除・無効化する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel blob put image.png",
+      "input": "vercel blob put image.png",
+      "annotation": "ファイル保存：Vercel Blobのファイルをアップロード・取得する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel firewall rules list",
+      "input": "vercel firewall rules list",
+      "annotation": "セキュリティ：FirewallのルールやIPブロックを管理する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel flags list",
+      "input": "vercel flags list",
+      "annotation": "機能切替：Feature Flagsを管理する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel crons ls",
+      "input": "vercel crons ls",
+      "annotation": "定期処理：Cronの一覧確認・設定追加・手動実行を行う（ベータ）",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel usage",
+      "input": "vercel usage",
+      "annotation": "利用状況：利用量と費用を確認する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel api /v2/user",
+      "input": "vercel api /v2/user",
+      "annotation": "API操作：Vercel REST APIを認証付きで呼び出す",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel env ls",
+      "input": "vercel env ls",
+      "annotation": "環境変数の確認：登録された環境変数の一覧を表示する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel env add API_KEY production",
+      "input": "vercel env add API_KEY production",
+      "annotation": "環境変数の登録：本番・プレビュー・開発環境ごとに登録する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel env pull .env.local",
+      "input": "vercel env pull .env.local",
+      "annotation": "環境変数の取得：ローカルのファイルに書き出す",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel project ls",
+      "input": "vercel project ls",
+      "annotation": "プロジェクト一覧：チーム内のプロジェクトを一覧表示する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel project create my-app",
+      "input": "vercel project create my-app",
+      "annotation": "プロジェクト作成：新しいプロジェクトを作成する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel project update --framework nextjs",
+      "input": "vercel project update --framework nextjs",
+      "annotation": "ビルド設定変更：フレームワークやビルドコマンドを変更する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel project pause",
+      "input": "vercel project pause",
+      "annotation": "公開の停止：本番トラフィックを一時停止する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel project resume",
+      "input": "vercel project resume",
+      "annotation": "公開の再開：本番トラフィックを再開する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel integration discover",
+      "input": "vercel integration discover",
+      "annotation": "外部サービス連携：Marketplaceのサービスを探して導入する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel integration list",
+      "input": "vercel integration list",
+      "annotation": "連携リソース確認：プロジェクトに紐づく連携サービスを確認する",
+      "input_type": "command"
+    },
+    {
+      "display": "vercel metrics schema",
+      "input": "vercel metrics schema",
+      "annotation": "性能・アクセス分析：照会できる指標の一覧を表示する（多くの指標の照会にはObservability Plusが必要）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:33:09.521Z"
+}

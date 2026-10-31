@@ -4,8 +4,10 @@ import io.github.sparklingstadt.typle.server.json.GoJson
 import io.github.sparklingstadt.typle.server.json.JsonString
 import io.github.sparklingstadt.typle.server.session.Session
 import io.github.sparklingstadt.typle.server.session.cookieName
+import io.github.sparklingstadt.typle.server.session.revokedBy
 import io.github.sparklingstadt.typle.server.store.ConflictException
 import io.github.sparklingstadt.typle.server.store.Saved
+import io.github.sparklingstadt.typle.server.store.SessionSource
 import io.github.sparklingstadt.typle.server.workspace.DEFAULT_INTERESTS
 import io.github.sparklingstadt.typle.server.workspace.WorkspaceError
 import io.github.sparklingstadt.typle.server.workspace.encodeInterests
@@ -39,6 +41,38 @@ fun Config.owner(call: ApplicationCall): Session? {
 }
 
 val Config.secure: Boolean get() = baseUrl.scheme == "https"
+
+/** A backend set up without a database to keep the revocations in (Go's errNoSessions). */
+class NoSessionsException : Exception("no database to check the session against")
+
+/** Config.sessions, or else Config.store, as Go's sessions; null without either. */
+val Config.sessionSource: SessionSource? get() = sessions ?: store
+
+/** Whether the account signed out of every device after user's login (Go's revoked). */
+suspend fun Config.revoked(user: Session): Boolean {
+  val source = sessionSource ?: throw NoSessionsException()
+  return user.revokedBy(withContext(Dispatchers.IO) { source.sessionsRevokedAt(user.sub) })
+}
+
+/**
+ * owner, for a request that reads or changes the account's data, as Go's signedIn: the session must also not have been
+ * revoked. Otherwise it answers the request and returns null: loginRequired without a session or with a revoked one,
+ * whose cookie is then removed, and databaseUnavailable when the revocations cannot be read, as the data cannot be either.
+ */
+suspend fun ApplicationCall.signedIn(config: Config): Session? {
+  val user = config.owner(this) ?: return null.also { refuse(HttpStatusCode.Unauthorized, "loginRequired") }
+  val revoked = try {
+    config.revoked(user)
+  } catch (e: Exception) {
+    report(e, "session.check")
+    return null.also { refuse(HttpStatusCode.ServiceUnavailable, "databaseUnavailable") }
+  }
+  if (revoked) {
+    if (!fromApp(this)) sessionCookie(config, "", -1)
+    return null.also { refuse(HttpStatusCode.Unauthorized, "loginRequired") }
+  }
+  return user
+}
 
 /**
  * The first cookie of the name, as Go's Request.Cookie reads it: the value as written, without enclosing quotes, and
@@ -77,19 +111,21 @@ suspend fun ApplicationCall.workspace(config: Config) {
   if (request.httpMethod == HttpMethod.Put) writeWorkspace(config) else readWorkspace(config)
 }
 
-// The answer of GET and PUT, in the order of Go's saved: the lists, packs, devices and interests as the database stores
+// The answer of GET and PUT (and of the record changes, with the record), in the order of Go's saved: the lists, packs, devices and interests as the database stores
 // them, with the fields Typle does not know. Packs are null for lists saved before packs existed, and for an account
 // that has saved nothing. Interests are DEFAULT_INTERESTS (every option) when none have been saved, as the app reads
 // them; saved [] is [].
-private suspend fun ApplicationCall.answer(saved: Saved, owner: String) = reply(HttpStatusCode.OK,
+internal fun answerJson(saved: Saved, owner: String) =
   "{\"lists\":" + GoJson.compact(saved.lists, escapeHtml = true) +
     ",\"packs\":" + (saved.packs?.let { GoJson.compact(it, escapeHtml = true) } ?: "null") +
     ",\"devices\":" + GoJson.compact(saved.devices, escapeHtml = true) +
     ",\"interests\":" + GoJson.compact(saved.interests.orEmpty().ifEmpty { encodeInterests(DEFAULT_INTERESTS) }, escapeHtml = true) +
-    ",\"revision\":" + saved.revision + ",\"accountId\":" + GoJson.string(owner, escapeHtml = true) + "}")
+    ",\"revision\":" + saved.revision + ",\"accountId\":" + GoJson.string(owner, escapeHtml = true) + "}"
+
+private suspend fun ApplicationCall.answer(saved: Saved, owner: String) = reply(HttpStatusCode.OK, answerJson(saved, owner))
 
 private suspend fun ApplicationCall.readWorkspace(config: Config) {
-  val user = config.owner(this) ?: return refuse(HttpStatusCode.Unauthorized, "loginRequired")
+  val user = signedIn(config) ?: return
   val result = try {
     withContext(Dispatchers.IO) { config.store!!.readRevision(user.sub) }
   } catch (e: Exception) {
@@ -107,7 +143,7 @@ private suspend fun ApplicationCall.writeWorkspace(config: Config) {
   if (!(fromApp(this) || config.sameOrigin(request.headers["Origin"])) || type != "application/json") {
     return refuse(HttpStatusCode.Forbidden, "forbiddenRequest")
   }
-  val user = config.owner(this) ?: return refuse(HttpStatusCode.Unauthorized, "loginRequired")
+  val user = signedIn(config) ?: return
   // Go's server gives a request without a body (no length, or a length of 0, and no chunks) no body at all.
   val length = request.headers["Content-Length"]
   if (length == "0" || (length == null && request.headers["Transfer-Encoding"] == null)) {
@@ -127,8 +163,6 @@ private suspend fun ApplicationCall.writeWorkspace(config: Config) {
     val account = fields.members["accountId"]
     if (account !is JsonString || account.value != user.sub) return refuse(HttpStatusCode.Unauthorized, "loginAccountChanged")
     decodeFields(fields)
-  } catch (_: LegacyRequestException) {
-    return refuse(HttpStatusCode.Conflict, "conflict")
   } catch (_: LevelsConflictException) {
     return refuse(HttpStatusCode.BadRequest, "levelsConflict")
   } catch (_: InvalidRequestException) {

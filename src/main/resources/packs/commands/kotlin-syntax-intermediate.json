@@ -1,0 +1,214 @@
+{
+  "id": "kotlin-syntax-intermediate",
+  "name": "Kotlin構文（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "Kotlin"
+  ],
+  "group": "Kotlin構文",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": "val n = \"abc\".toIntOrNull()",
+      "input": "val n = \"abc\".toIntOrNull()",
+      "annotation": "toIntOrNull()：失敗時にnullとなる変換（結果はInt?）",
+      "input_type": "code"
+    },
+    {
+      "display": "val n: Int;\nn = 1;\nprintln(n)",
+      "input": "val n: Int; n = 1; println(n)",
+      "annotation": "初期化：使用前に値を設定（変数・プロパティは適切な初期化が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "val message = \"こんにちは、$name\"",
+      "input": "val message = \"こんにちは、$name\"",
+      "annotation": "$変数：文字列テンプレート",
+      "input_type": "code"
+    },
+    {
+      "display": "val text = \"\"\"1行目 2行目\"\"\"",
+      "input": "val text = \"\"\"1行目 2行目\"\"\"",
+      "annotation": "\"\"\"...\"\"\"：raw文字列（改行を含められる。バックスラッシュのエスケープは解釈しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "val ok = enabled && !blocked",
+      "input": "val ok = enabled && !blocked",
+      "annotation": "&& || !：論理演算（&&と||は短絡評価）",
+      "input_type": "code"
+    },
+    {
+      "display": "for (i in 0..4) println(i)",
+      "input": "for (i in 0..4) println(i)",
+      "annotation": "..：両端を含む範囲（0〜4）",
+      "input_type": "code"
+    },
+    {
+      "display": "for (i in 0..<5) println(i)",
+      "input": "for (i in 0..<5) println(i)",
+      "annotation": "..<：上端を含まない範囲（0以上5未満）",
+      "input_type": "code"
+    },
+    {
+      "display": "for (i in 0 until 5) println(i)",
+      "input": "for (i in 0 until 5) println(i)",
+      "annotation": "until：上端を含まない範囲（0以上5未満）",
+      "input_type": "code"
+    },
+    {
+      "display": "for (i in 5 downTo 1) println(i)",
+      "input": "for (i in 5 downTo 1) println(i)",
+      "annotation": "downTo：降順の範囲",
+      "input_type": "code"
+    },
+    {
+      "display": "for (i in 0..10 step 2) println(i)",
+      "input": "for (i in 0..10 step 2) println(i)",
+      "annotation": "step：刻み幅（正の刻み幅を指定）",
+      "input_type": "code"
+    },
+    {
+      "display": "while (count < 5) {\n  count++\n}",
+      "input": "while (count < 5) { count++ }",
+      "annotation": "while：条件が真の間",
+      "input_type": "code"
+    },
+    {
+      "display": "do {\n  count++\n}\nwhile (count < 5)",
+      "input": "do { count++ } while (count < 5)",
+      "annotation": "do / while：最低1回実行",
+      "input_type": "code"
+    },
+    {
+      "display": "val length: Int ? = name?.length",
+      "input": "val length: Int? = name?.length",
+      "annotation": "?.：安全呼び出し（nullなら結果はnull）",
+      "input_type": "code"
+    },
+    {
+      "display": "val displayName = name?: \"Guest\"",
+      "input": "val displayName = name ?: \"Guest\"",
+      "annotation": "?:：Elvis演算子（左辺がnullの場合のみ右辺）",
+      "input_type": "code"
+    },
+    {
+      "display": "name?.let { println(it.length) }",
+      "input": "name?.let { println(it.length) }",
+      "annotation": "?.let：非null時だけ処理（letは標準ライブラリ関数）",
+      "input_type": "code"
+    },
+    {
+      "display": "val items = arrayOf(\"A\", \"B\")",
+      "input": "val items = arrayOf(\"A\", \"B\")",
+      "annotation": "arrayOf：配列（標準ライブラリ）",
+      "input_type": "code"
+    },
+    {
+      "display": "val nums = intArrayOf(1, 2, 3)",
+      "input": "val nums = intArrayOf(1, 2, 3)",
+      "annotation": "intArrayOf：IntArray",
+      "input_type": "code"
+    },
+    {
+      "display": "val names = listOf(\"A\", \"B\")",
+      "input": "val names = listOf(\"A\", \"B\")",
+      "annotation": "listOf：読み取り専用List（完全な不変性の保証とは別）",
+      "input_type": "code"
+    },
+    {
+      "display": "val tags = setOf(\"A\", \"B\")",
+      "input": "val tags = setOf(\"A\", \"B\")",
+      "annotation": "setOf：重複しない集合",
+      "input_type": "code"
+    },
+    {
+      "display": "val tags = mutableSetOf(\"A\")",
+      "input": "val tags = mutableSetOf(\"A\")",
+      "annotation": "mutableSetOf：変更可能な集合",
+      "input_type": "code"
+    },
+    {
+      "display": "val scores = mapOf(\"Pomo\" to 100)",
+      "input": "val scores = mapOf(\"Pomo\" to 100)",
+      "annotation": "mapOf / to：キーと値の対応（toはPairを作る標準関数）",
+      "input_type": "code"
+    },
+    {
+      "display": "val double = { x: Int -> x * 2 }",
+      "input": "val double = { x: Int -> x * 2 }",
+      "annotation": "{ 引数 -> 本体 }：ラムダ式",
+      "input_type": "code"
+    },
+    {
+      "display": "names.forEach { println(it) }",
+      "input": "names.forEach { println(it) }",
+      "annotation": "forEach：各要素に処理",
+      "input_type": "code"
+    },
+    {
+      "display": "val user = User(\"Pomo\", 20)",
+      "input": "val user = User(\"Pomo\", 20)",
+      "annotation": "インスタンス作成：クラスのインスタンス（newを書かない）",
+      "input_type": "code"
+    },
+    {
+      "display": "val updated = user.copy(age = 21)",
+      "input": "val updated = user.copy(age = 21)",
+      "annotation": "copy：一部を変えてコピー（浅いコピー。内部参照は共有）",
+      "input_type": "code"
+    },
+    {
+      "display": "val notString = value !is String",
+      "input": "val notString = value !is String",
+      "annotation": "!is：指定型でないことを判定",
+      "input_type": "code"
+    },
+    {
+      "display": "val n = name.let { it.length }",
+      "input": "val n = name.let { it.length }",
+      "annotation": "let：対象をitとして処理し結果を返す（通常のit名。ラムダ引数名を変更可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "val n = with (name) {\n  length\n}",
+      "input": "val n = with(name) { length }",
+      "annotation": "with：指定対象をthisとして処理（ラムダの結果を返す）",
+      "input_type": "code"
+    },
+    {
+      "display": "val name by lazy { \"Pomo\" }",
+      "input": "val name by lazy { \"Pomo\" }",
+      "annotation": "by lazy：初回アクセス時に初期化（委譲プロパティ）",
+      "input_type": "code"
+    },
+    {
+      "display": "resource.use { r -> println(r) }",
+      "input": "resource.use { r -> println(r) }",
+      "annotation": "use：リソースを自動クローズ（対応するリソース型に使用。プラットフォームに依存）",
+      "input_type": "code"
+    },
+    {
+      "display": "launch { println(\"実行\") }",
+      "input": "launch { println(\"実行\") }",
+      "annotation": "launch：結果値のない処理を開始（CoroutineScope内で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "val result = async { \"完了\" }",
+      "input": "val result = async { \"完了\" }",
+      "annotation": "async：結果値のある処理を開始（CoroutineScope内で使用。Deferredを返す）",
+      "input_type": "code"
+    },
+    {
+      "display": "val message = result.await()",
+      "input": "val message = result.await()",
+      "annotation": "await：結果を待つ（suspend関数等から呼ぶ）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

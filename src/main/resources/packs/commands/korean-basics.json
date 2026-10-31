@@ -1,0 +1,492 @@
+{
+  "id": "korean-basics",
+  "name": "韓国語：基礎単語・基礎構文",
+  "words": [
+    {
+      "display": "저는 학생이에요.",
+      "input": "jeoneun haksaengieyo.",
+      "annotation": "jeoneun haksaengieyo. / 私は学生です。",
+      "input_type": "word"
+    },
+    {
+      "display": "이것은 책이에요.",
+      "input": "igeoseun chaegieyo.",
+      "annotation": "igeoseun chaegieyo. / これは本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "이것은 제 책이 아니에요.",
+      "input": "igeoseun je chaegi anieyo.",
+      "annotation": "igeoseun je chaegi anieyo. / これは私の本ではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "이 사람은 누구예요?",
+      "input": "i sarameun nugu-yeyo?",
+      "annotation": "i sarameun nugu-yeyo? / この人は誰ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "이것은 뭐예요?",
+      "input": "igeoseun mwoyeyo?",
+      "annotation": "igeoseun mwoyeyo? / これは何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "화장실이 어디예요?",
+      "input": "hwajangsiri eodiyeyo?",
+      "annotation": "hwajangsiri eodiyeyo? / トイレはどこですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "이름이 뭐예요?",
+      "input": "ireumi mwoyeyo?",
+      "annotation": "ireumi mwoyeyo? / 名前は何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "제 이름은 민수예요.",
+      "input": "je ireumeun Minsu-yeyo.",
+      "annotation": "je ireumeun Minsu-yeyo. / 私の名前はミンスです。",
+      "input_type": "word"
+    },
+    {
+      "display": "저는 일본에서 왔어요.",
+      "input": "jeoneun Ilboneseo wasseoyo.",
+      "annotation": "jeoneun Ilboneseo wasseoyo. / 私は日本から来ました。",
+      "input_type": "word"
+    },
+    {
+      "display": "질문이 있어요.",
+      "input": "jilmuni isseoyo.",
+      "annotation": "jilmuni isseoyo. / 質問があります。",
+      "input_type": "word"
+    },
+    {
+      "display": "시간이 없어요.",
+      "input": "sigani eopseoyo.",
+      "annotation": "sigani eopseoyo. / 時間がありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "물을 마시고 싶어요.",
+      "input": "mureul masigo sipeoyo.",
+      "annotation": "mureul masigo sipeoyo. / 水を飲みたいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "가야 해요.",
+      "input": "gaya haeyo.",
+      "annotation": "gaya haeyo. / 行かなければなりません。",
+      "input_type": "word"
+    },
+    {
+      "display": "저는 음악을 좋아해요.",
+      "input": "jeoneun eumageul joahaeyo.",
+      "annotation": "jeoneun eumageul joahaeyo. / 私は音楽が好きです。",
+      "input_type": "word"
+    },
+    {
+      "display": "제가 도와줄 수 있어요.",
+      "input": "jega dowajul su isseoyo.",
+      "annotation": "jega dowajul su isseoyo. / 私が手伝えます。",
+      "input_type": "word"
+    },
+    {
+      "display": "들어가도 돼요?",
+      "input": "deureogado dwaeyo?",
+      "annotation": "deureogado dwaeyo? / 入ってもいいですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "물 좀 주세요.",
+      "input": "mul jom juseyo.",
+      "annotation": "mul jom juseyo. / 水をください。",
+      "input_type": "word"
+    },
+    {
+      "display": "이거 얼마예요?",
+      "input": "igeo eolmayeyo?",
+      "annotation": "igeo eolmayeyo? / これはいくらですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "이해가 안 돼요.",
+      "input": "ihaega an dwaeyo.",
+      "annotation": "ihaega an dwaeyo. / 理解できません。",
+      "input_type": "word"
+    },
+    {
+      "display": "다시 말해 주세요.",
+      "input": "dasi malhae juseyo.",
+      "annotation": "dasi malhae juseyo. / もう一度言ってください。",
+      "input_type": "word"
+    },
+    {
+      "display": "저",
+      "input": "jeo",
+      "annotation": "jeo / 私（丁寧な表現）",
+      "input_type": "word"
+    },
+    {
+      "display": "나",
+      "input": "na",
+      "annotation": "na / 私（くだけた表現）",
+      "input_type": "word"
+    },
+    {
+      "display": "너",
+      "input": "neo",
+      "annotation": "neo / 君、あなた（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "우리",
+      "input": "uri",
+      "annotation": "uri / 私たち、私たちの",
+      "input_type": "word"
+    },
+    {
+      "display": "이것",
+      "input": "igeot",
+      "annotation": "igeot / これ",
+      "input_type": "word"
+    },
+    {
+      "display": "그것",
+      "input": "geugeot",
+      "annotation": "geugeot / それ",
+      "input_type": "word"
+    },
+    {
+      "display": "저것",
+      "input": "jeogeot",
+      "annotation": "jeogeot / あれ",
+      "input_type": "word"
+    },
+    {
+      "display": "여기",
+      "input": "yeogi",
+      "annotation": "yeogi / ここ",
+      "input_type": "word"
+    },
+    {
+      "display": "누구",
+      "input": "nugu",
+      "annotation": "nugu / 誰",
+      "input_type": "word"
+    },
+    {
+      "display": "무엇",
+      "input": "mueot",
+      "annotation": "mueot / 何",
+      "input_type": "word"
+    },
+    {
+      "display": "어디",
+      "input": "eodi",
+      "annotation": "eodi / どこ",
+      "input_type": "word"
+    },
+    {
+      "display": "언제",
+      "input": "eonje",
+      "annotation": "eonje / いつ",
+      "input_type": "word"
+    },
+    {
+      "display": "왜",
+      "input": "wae",
+      "annotation": "wae / なぜ",
+      "input_type": "word"
+    },
+    {
+      "display": "어떻게",
+      "input": "eotteoke",
+      "annotation": "eotteoke / どのように、どう",
+      "input_type": "word"
+    },
+    {
+      "display": "얼마",
+      "input": "eolma",
+      "annotation": "eolma / いくら",
+      "input_type": "word"
+    },
+    {
+      "display": "몇",
+      "input": "myeot",
+      "annotation": "myeot / いくつの、何～",
+      "input_type": "word"
+    },
+    {
+      "display": "네",
+      "input": "ne",
+      "annotation": "ne / はい",
+      "input_type": "word"
+    },
+    {
+      "display": "아니요",
+      "input": "aniyo",
+      "annotation": "aniyo / いいえ",
+      "input_type": "word"
+    },
+    {
+      "display": "안",
+      "input": "an",
+      "annotation": "an / ～しない（動詞・形容詞の前に置く）",
+      "input_type": "word"
+    },
+    {
+      "display": "그리고",
+      "input": "geurigo",
+      "annotation": "geurigo / そして",
+      "input_type": "word"
+    },
+    {
+      "display": "하지만",
+      "input": "hajiman",
+      "annotation": "hajiman / しかし",
+      "input_type": "word"
+    },
+    {
+      "display": "또는",
+      "input": "ttoneun",
+      "annotation": "ttoneun / または",
+      "input_type": "word"
+    },
+    {
+      "display": "안녕하세요",
+      "input": "annyeonghaseyo",
+      "annotation": "annyeonghaseyo / こんにちは",
+      "input_type": "word"
+    },
+    {
+      "display": "안녕",
+      "input": "annyeong",
+      "annotation": "annyeong / やあ、じゃあね（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "감사합니다",
+      "input": "gamsahamnida",
+      "annotation": "gamsahamnida / ありがとうございます",
+      "input_type": "word"
+    },
+    {
+      "display": "부탁합니다",
+      "input": "butakhamnida",
+      "annotation": "butakhamnida / お願いします",
+      "input_type": "word"
+    },
+    {
+      "display": "죄송합니다",
+      "input": "joesonghamnida",
+      "annotation": "joesonghamnida / 申し訳ありません",
+      "input_type": "word"
+    },
+    {
+      "display": "안녕히 가세요",
+      "input": "annyeonghi gaseyo",
+      "annotation": "annyeonghi gaseyo / さようなら（去る相手に）",
+      "input_type": "word"
+    },
+    {
+      "display": "잘",
+      "input": "jal",
+      "annotation": "jal / よく、うまく",
+      "input_type": "word"
+    },
+    {
+      "display": "아주",
+      "input": "aju",
+      "annotation": "aju / とても",
+      "input_type": "word"
+    },
+    {
+      "display": "사람",
+      "input": "saram",
+      "annotation": "saram / 人",
+      "input_type": "word"
+    },
+    {
+      "display": "친구",
+      "input": "chingu",
+      "annotation": "chingu / 友達",
+      "input_type": "word"
+    },
+    {
+      "display": "아이",
+      "input": "ai",
+      "annotation": "ai / 子ども",
+      "input_type": "word"
+    },
+    {
+      "display": "가족",
+      "input": "gajok",
+      "annotation": "gajok / 家族",
+      "input_type": "word"
+    },
+    {
+      "display": "집",
+      "input": "jip",
+      "annotation": "jip / 家",
+      "input_type": "word"
+    },
+    {
+      "display": "학교",
+      "input": "hakgyo",
+      "annotation": "hakgyo / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "일",
+      "input": "il",
+      "annotation": "il / 仕事、こと",
+      "input_type": "word"
+    },
+    {
+      "display": "가게",
+      "input": "gage",
+      "annotation": "gage / 店",
+      "input_type": "word"
+    },
+    {
+      "display": "책",
+      "input": "chaek",
+      "annotation": "chaek / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "물",
+      "input": "mul",
+      "annotation": "mul / 水",
+      "input_type": "word"
+    },
+    {
+      "display": "빵",
+      "input": "ppang",
+      "annotation": "ppang / パン",
+      "input_type": "word"
+    },
+    {
+      "display": "음식",
+      "input": "eumsik",
+      "annotation": "eumsik / 食べ物",
+      "input_type": "word"
+    },
+    {
+      "display": "시간",
+      "input": "sigan",
+      "annotation": "sigan / 時間",
+      "input_type": "word"
+    },
+    {
+      "display": "돈",
+      "input": "don",
+      "annotation": "don / お金",
+      "input_type": "word"
+    },
+    {
+      "display": "오늘",
+      "input": "oneul",
+      "annotation": "oneul / 今日",
+      "input_type": "word"
+    },
+    {
+      "display": "내일",
+      "input": "naeil",
+      "annotation": "naeil / 明日",
+      "input_type": "word"
+    },
+    {
+      "display": "어제",
+      "input": "eoje",
+      "annotation": "eoje / 昨日",
+      "input_type": "word"
+    },
+    {
+      "display": "지금",
+      "input": "jigeum",
+      "annotation": "jigeum / 今",
+      "input_type": "word"
+    },
+    {
+      "display": "크다",
+      "input": "keuda",
+      "annotation": "keuda / 大きい",
+      "input_type": "word"
+    },
+    {
+      "display": "작다",
+      "input": "jakda",
+      "annotation": "jakda / 小さい",
+      "input_type": "word"
+    },
+    {
+      "display": "좋다",
+      "input": "jota",
+      "annotation": "jota / 良い",
+      "input_type": "word"
+    },
+    {
+      "display": "새롭다",
+      "input": "saeropda",
+      "annotation": "saeropda / 新しい",
+      "input_type": "word"
+    },
+    {
+      "display": "있다",
+      "input": "itda",
+      "annotation": "itda / いる、ある",
+      "input_type": "word"
+    },
+    {
+      "display": "하다",
+      "input": "hada",
+      "annotation": "hada / する",
+      "input_type": "word"
+    },
+    {
+      "display": "가다",
+      "input": "gada",
+      "annotation": "gada / 行く",
+      "input_type": "word"
+    },
+    {
+      "display": "말하다",
+      "input": "malhada",
+      "annotation": "malhada / 話す",
+      "input_type": "word"
+    },
+    {
+      "display": "이해하다",
+      "input": "ihaehada",
+      "annotation": "ihaehada / 理解する",
+      "input_type": "word"
+    },
+    {
+      "display": "알다",
+      "input": "alda",
+      "annotation": "alda / 知っている",
+      "input_type": "word"
+    },
+    {
+      "display": "원하다",
+      "input": "wonhada",
+      "annotation": "wonhada / 望む、欲する",
+      "input_type": "word"
+    },
+    {
+      "display": "먹다",
+      "input": "meokda",
+      "annotation": "meokda / 食べる",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-28T13:45:45.842Z",
+  "category": "語学",
+  "tags": [
+    "韓国語"
+  ]
+}

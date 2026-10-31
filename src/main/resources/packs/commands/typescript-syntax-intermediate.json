@@ -1,0 +1,124 @@
+{
+  "id": "typescript-syntax-intermediate",
+  "name": "TypeScript構文（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "TypeScript"
+  ],
+  "group": "TypeScript構文",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": "let name: string | null = null;\nconst missing: undefined = undefined;\nconst n: bigint = 1n;",
+      "input": "let name:string|null=null; const missing:undefined=undefined; const n:bigint=1n;",
+      "annotation": "null / undefined / bigint：基本型（bigint等はtarget・実行環境を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "function fail(message: string): never { throw new Error(message) }\nfunction log(): void { console.log('Hello') }",
+      "input": "function fail(message:string):never {throw new Error(message)} function log():void {console.log('Hello')}",
+      "annotation": "never / void：戻らない・有用な値なし（voidとundefinedの意味は完全には同じでない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const user: {\n  name?: string\n} | null = Math.random() > 0.5 ? {} : null;\nconst name = user?.name ?? 'Guest';",
+      "input": "const user:{name?:string}|null=Math.random()>0.5?{}:null; const name=user?.name??'Guest';",
+      "annotation": "?. / ??：null等への安全なアクセス（??はnull/undefinedだけ。||は0・空文字等にも反応）",
+      "input_type": "code"
+    },
+    {
+      "display": "type User = {\n  id: number;\n  name: string\n};\nconst user: User = { id: 1, name: 'Pomo' };",
+      "input": "type User={id:number;name:string}; const user:User={id:1,name:'Pomo'};",
+      "annotation": "type：型エイリアス（実行時に検証・生成するものではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "type Named = {\n  name: string\n};\ntype WithId = {\n  id: number\n};\ntype User = Named & WithId;",
+      "input": "type Named={name:string}; type WithId={id:number}; type User=Named&WithId;",
+      "annotation": "intersection：型の組合せ（同名フィールドの矛盾で利用不能な型になり得る）",
+      "input_type": "code"
+    },
+    {
+      "display": "const routes = { home: '/', users: '/users' } as const satisfies Record<string, string>;",
+      "input": "const routes={home:'/',users:'/users'} as const satisfies Record<string,string>;",
+      "annotation": "satisfies：型に適合することを検査（単純な型注釈より具体的な型情報を保てる）",
+      "input_type": "code"
+    },
+    {
+      "display": "const value: unknown = 'hello';\nconst text = value as string;\n/* nullableValue! は実行時チェックを追加しない */",
+      "input": "const value:unknown='hello'; const text=value as string; /* nullableValue! は実行時チェックを追加しない */",
+      "annotation": "as / 非null !：型アサーション（外部入力に使っても安全性は保証されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "type Transform = (value: number) => number;\nconst twice: Transform = n => n * 2;",
+      "input": "type Transform=(value:number)=>number; const twice:Transform=n=>n*2;",
+      "annotation": "関数型：関数を値にする",
+      "input_type": "code"
+    },
+    {
+      "display": "const age = 20;\nconst label = age >= 20 ? '成人' : '未成年';\nif (age >= 20) {\n  console.log(label)\n}",
+      "input": "const age=20; const label=age>=20?'成人':'未成年'; if(age>=20){console.log(label)}",
+      "annotation": "if / switch / 三項：条件分岐（JavaScriptの構文）",
+      "input_type": "code"
+    },
+    {
+      "display": "for (const n of [1, 2, 3])\n  console.log(n);\nfor (const key in {\n  a: 1\n})\n  console.log(key);",
+      "input": "for(const n of [1,2,3]) console.log(n); for(const key in {a:1}) console.log(key);",
+      "annotation": "for of / for in：値・キーを反復（for inは継承された列挙可能プロパティも対象。配列要素には通常for of）",
+      "input_type": "code"
+    },
+    {
+      "display": "function size(value: string | number) {\n  if (typeof value === 'string')\n    return value.length;\n  return value;\n}",
+      "input": "function size(value:string|number){ if(typeof value==='string') return value.length; return value; }",
+      "annotation": "typeof / in / instanceof：型の絞り込み",
+      "input_type": "code"
+    },
+    {
+      "display": "function identity<T>(value: T): T { return value }\nconst n = identity(1);",
+      "input": "function identity<T>(value:T):T{return value} const n=identity(1);",
+      "annotation": "<T>：型を抽象化",
+      "input_type": "code"
+    },
+    {
+      "display": "function lengthOf<T extends {\n  length: number\n}>(value: T) {\n  return value.length\n}",
+      "input": "function lengthOf<T extends {length:number}>(value:T){return value.length}",
+      "annotation": "extends制約：利用可能な操作を限定",
+      "input_type": "code"
+    },
+    {
+      "display": "const user = { id: 1, name: 'Pomo' };\ntype User = typeof user;\ntype UserKey = keyof User;",
+      "input": "const user={id:1,name:'Pomo'}; type User=typeof user; type UserKey=keyof User;",
+      "annotation": "keyof / typeof：キー・値から型を作る（型位置のtypeofと実行時typeofを区別）",
+      "input_type": "code"
+    },
+    {
+      "display": "type ElementOf<T> = T extends readonly (infer U)[] ? U : T;\ntype N = ElementOf<number[]>;",
+      "input": "type ElementOf<T>=T extends readonly (infer U)[]?U:T; type N=ElementOf<number[]>;",
+      "annotation": "conditional types / infer：型の条件分岐・抽出（条件付き型のunionへの分配に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "type Scores = Record<string, number>;\ntype S = 'a' | 'b';\ntype A = Exclude<S, 'b'>;\ntype B = Extract<S, 'b'>;",
+      "input": "type Scores=Record<string,number>; type S='a'|'b'; type A=Exclude<S,'b'>; type B=Extract<S,'b'>;",
+      "annotation": "Record / Exclude / Extract：辞書・unionの操作",
+      "input_type": "code"
+    },
+    {
+      "display": "const values = await Promise.all([Promise.resolve(1), Promise.resolve(2)]);",
+      "input": "const values=await Promise.all([Promise.resolve(1),Promise.resolve(2)]);",
+      "annotation": "Promise.all / allSettled：複数のPromise（top-level awaitにはESM等の設定が必要。allは最初のrejectで失敗扱い）",
+      "input_type": "code"
+    },
+    {
+      "display": "/* 正式7.0はtypescriptパッケージ。 */ /* @typescript/native-previewは正式版の導入例として使わない。 */",
+      "input": "/* 正式7.0はtypescriptパッケージ。 */ /* @typescript/native-previewは正式版の導入例として使わない。 */",
+      "annotation": "旧previewとの区別：導入パッケージ（7.1 Betaの新API・提案標準ライブラリ等を7.0の必須構文に混ぜない）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -1,0 +1,210 @@
+{
+  "id": "arch-linux-beginner",
+  "name": "Arch Linuxコマンド（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Arch Linux",
+    "Linux",
+    "シェル"
+  ],
+  "group": "Arch Linuxコマンド",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "pwd",
+      "input": "pwd",
+      "annotation": "現在のフォルダを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -lah",
+      "input": "ls -lah",
+      "annotation": "ls：ファイル一覧を表示（-aで隠しファイル、-lで詳細、-hで容量を読みやすく表示）",
+      "input_type": "command"
+    },
+    {
+      "display": "cd ..",
+      "input": "cd ..",
+      "annotation": "1つ上へ移動",
+      "input_type": "command"
+    },
+    {
+      "display": "touch memo.txt",
+      "input": "touch memo.txt",
+      "annotation": "touch：ファイル作成・更新日時変更（既存内容は変更しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Q",
+      "input": "pacman -Q",
+      "annotation": "導入済み一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qe",
+      "input": "pacman -Qe",
+      "annotation": "明示的に導入したものを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qdt",
+      "input": "pacman -Qdt",
+      "annotation": "不要になった依存パッケージを表示（表示だけ。削除前に必要性を確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qm",
+      "input": "pacman -Qm",
+      "annotation": "同期DBに存在しない導入済みパッケージを表示（AUR由来とは限らない）",
+      "input_type": "command"
+    },
+    {
+      "display": "checkupdates",
+      "input": "checkupdates",
+      "annotation": "更新候補を確認（pacman-contribが必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "less PKGBUILD",
+      "input": "less PKGBUILD",
+      "annotation": "ビルド手順を確認（関連スクリプトも確認。qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "makepkg -si",
+      "input": "makepkg -si",
+      "annotation": "依存導入・ビルド・インストール（取得したフォルダ内で一般ユーザーとして実行。sudo makepkgは使わない）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -b",
+      "input": "journalctl -b",
+      "annotation": "今回起動以降のログ（閲覧権限が不足する場合はsudo。qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "ip addr",
+      "input": "ip addr",
+      "annotation": "IPアドレスを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ip link",
+      "input": "ip link",
+      "annotation": "ネットワーク機器の状態",
+      "input_type": "command"
+    },
+    {
+      "display": "ip route",
+      "input": "ip route",
+      "annotation": "経路を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ss -tuln",
+      "input": "ss -tuln",
+      "annotation": "TCP・UDPの待受ポート",
+      "input_type": "command"
+    },
+    {
+      "display": "iwctl",
+      "input": "iwctl",
+      "annotation": "iwdの対話画面を起動（iwd利用時。exitで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "ps aux",
+      "input": "ps aux",
+      "annotation": "プロセス一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "top",
+      "input": "top",
+      "annotation": "CPU・メモリ使用状況（qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "kill 12345",
+      "input": "kill 12345",
+      "annotation": "kill PID：プロセスに終了を要求（対象PIDへ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "free -h",
+      "input": "free -h",
+      "annotation": "メモリ使用量",
+      "input_type": "command"
+    },
+    {
+      "display": "df -h",
+      "input": "df -h",
+      "annotation": "ファイルシステムの空き容量",
+      "input_type": "command"
+    },
+    {
+      "display": "lsblk -f",
+      "input": "lsblk -f",
+      "annotation": "ディスク・パーティション・ファイルシステム一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "findmnt",
+      "input": "findmnt",
+      "annotation": "マウント状態",
+      "input_type": "command"
+    },
+    {
+      "display": "uname -r",
+      "input": "uname -r",
+      "annotation": "実行中カーネルのバージョン",
+      "input_type": "command"
+    },
+    {
+      "display": "hostnamectl",
+      "input": "hostnamectl",
+      "annotation": "ホスト名・OS情報",
+      "input_type": "command"
+    },
+    {
+      "display": "timedatectl",
+      "input": "timedatectl",
+      "annotation": "時刻・タイムゾーン情報",
+      "input_type": "command"
+    },
+    {
+      "display": "reboot",
+      "input": "reboot",
+      "annotation": "再起動（環境により管理者権限が必要。未保存データを確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "poweroff",
+      "input": "poweroff",
+      "annotation": "シャットダウン（環境により管理者権限が必要。未保存データを確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "id",
+      "input": "id",
+      "annotation": "UID・所属グループを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "passwd",
+      "input": "passwd",
+      "annotation": "自分のパスワードを変更",
+      "input_type": "command"
+    },
+    {
+      "display": "man pacman",
+      "input": "man pacman",
+      "annotation": "man：マニュアルを読む（man-dbとman-pages等が必要な場合がある。qで終了）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

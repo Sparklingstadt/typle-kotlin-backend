@@ -1,0 +1,256 @@
+{
+  "id": "english-basic-syntax",
+  "name": "英語（基礎構文）",
+  "category": "語学",
+  "tags": [
+    "英語"
+  ],
+  "group": "英語：基礎・中級",
+  "levels": [
+    "基礎構文"
+  ],
+  "words": [
+    {
+      "display": "I am a student.",
+      "input": "I am a student.",
+      "annotation": "I am a student. / 私は学生です。",
+      "input_type": "word"
+    },
+    {
+      "display": "This is a book.",
+      "input": "This is a book.",
+      "annotation": "This is a book. / これは本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "That is not my bag.",
+      "input": "That is not my bag.",
+      "annotation": "That is not my bag. / あれは私のかばんではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Are you Japanese?",
+      "input": "Are you Japanese?",
+      "annotation": "Are you Japanese? / あなたは日本人ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Yes, I am.",
+      "input": "Yes, I am.",
+      "annotation": "Yes, I am. / はい、そうです。",
+      "input_type": "word"
+    },
+    {
+      "display": "No, I'm not.",
+      "input": "No, I'm not.",
+      "annotation": "No, I'm not. / いいえ、違います。",
+      "input_type": "word"
+    },
+    {
+      "display": "What is this?",
+      "input": "What is this?",
+      "annotation": "What is this? / これは何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Who is she?",
+      "input": "Who is she?",
+      "annotation": "Who is she? / 彼女は誰ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Where is the station?",
+      "input": "Where is the station?",
+      "annotation": "Where is the station? / 駅はどこですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "When is your birthday?",
+      "input": "When is your birthday?",
+      "annotation": "When is your birthday? / あなたの誕生日はいつですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "How are you?",
+      "input": "How are you?",
+      "annotation": "How are you? / お元気ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "I'm fine, thank you.",
+      "input": "I'm fine, thank you.",
+      "annotation": "I'm fine, thank you. / 元気です、ありがとう。",
+      "input_type": "word"
+    },
+    {
+      "display": "Nice to meet you.",
+      "input": "Nice to meet you.",
+      "annotation": "Nice to meet you. / はじめまして。",
+      "input_type": "word"
+    },
+    {
+      "display": "My name is Ken.",
+      "input": "My name is Ken.",
+      "annotation": "My name is Ken. / 私の名前はケンです。",
+      "input_type": "word"
+    },
+    {
+      "display": "I like music.",
+      "input": "I like music.",
+      "annotation": "I like music. / 私は音楽が好きです。",
+      "input_type": "word"
+    },
+    {
+      "display": "I don't like coffee.",
+      "input": "I don't like coffee.",
+      "annotation": "I don't like coffee. / 私はコーヒーが好きではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Do you have a pen?",
+      "input": "Do you have a pen?",
+      "annotation": "Do you have a pen? / ペンを持っていますか？",
+      "input_type": "word"
+    },
+    {
+      "display": "I have two brothers.",
+      "input": "I have two brothers.",
+      "annotation": "I have two brothers. / 私には兄弟が2人います。",
+      "input_type": "word"
+    },
+    {
+      "display": "She lives in Tokyo.",
+      "input": "She lives in Tokyo.",
+      "annotation": "She lives in Tokyo. / 彼女は東京に住んでいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "He doesn't eat meat.",
+      "input": "He doesn't eat meat.",
+      "annotation": "He doesn't eat meat. / 彼は肉を食べません。",
+      "input_type": "word"
+    },
+    {
+      "display": "What time is it?",
+      "input": "What time is it?",
+      "annotation": "What time is it? / 何時ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "It's three o'clock.",
+      "input": "It's three o'clock.",
+      "annotation": "It's three o'clock. / 3時です。",
+      "input_type": "word"
+    },
+    {
+      "display": "How much is this?",
+      "input": "How much is this?",
+      "annotation": "How much is this? / これはいくらですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "I want some water.",
+      "input": "I want some water.",
+      "annotation": "I want some water. / 水が欲しいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Can you help me?",
+      "input": "Can you help me?",
+      "annotation": "Can you help me? / 手伝ってもらえますか？",
+      "input_type": "word"
+    },
+    {
+      "display": "I can swim.",
+      "input": "I can swim.",
+      "annotation": "I can swim. / 私は泳げます。",
+      "input_type": "word"
+    },
+    {
+      "display": "There is a cat on the bed.",
+      "input": "There is a cat on the bed.",
+      "annotation": "There is a cat on the bed. / ベッドの上に猫がいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "There are many people here.",
+      "input": "There are many people here.",
+      "annotation": "There are many people here. / ここにはたくさんの人がいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "I am reading a book now.",
+      "input": "I am reading a book now.",
+      "annotation": "I am reading a book now. / 私は今、本を読んでいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "I went to the park yesterday.",
+      "input": "I went to the park yesterday.",
+      "annotation": "I went to the park yesterday. / 私は昨日、公園に行きました。",
+      "input_type": "word"
+    },
+    {
+      "display": "I will call you tomorrow.",
+      "input": "I will call you tomorrow.",
+      "annotation": "I will call you tomorrow. / 明日あなたに電話します。",
+      "input_type": "word"
+    },
+    {
+      "display": "Let's go together.",
+      "input": "Let's go together.",
+      "annotation": "Let's go together. / 一緒に行きましょう。",
+      "input_type": "word"
+    },
+    {
+      "display": "Please sit down.",
+      "input": "Please sit down.",
+      "annotation": "Please sit down. / 座ってください。",
+      "input_type": "word"
+    },
+    {
+      "display": "Don't worry.",
+      "input": "Don't worry.",
+      "annotation": "Don't worry. / 心配しないで。",
+      "input_type": "word"
+    },
+    {
+      "display": "Excuse me.",
+      "input": "Excuse me.",
+      "annotation": "Excuse me. / すみません。",
+      "input_type": "word"
+    },
+    {
+      "display": "I'm sorry.",
+      "input": "I'm sorry.",
+      "annotation": "I'm sorry. / ごめんなさい。",
+      "input_type": "word"
+    },
+    {
+      "display": "See you later.",
+      "input": "See you later.",
+      "annotation": "See you later. / またあとで。",
+      "input_type": "word"
+    },
+    {
+      "display": "It is sunny today.",
+      "input": "It is sunny today.",
+      "annotation": "It is sunny today. / 今日は晴れています。",
+      "input_type": "word"
+    },
+    {
+      "display": "This bag is bigger than that one.",
+      "input": "This bag is bigger than that one.",
+      "annotation": "This bag is bigger than that one. / このかばんはあれより大きいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "I get up at seven every day.",
+      "input": "I get up at seven every day.",
+      "annotation": "I get up at seven every day. / 私は毎日7時に起きます。",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

@@ -1,0 +1,553 @@
+{
+  "id": "8f3cf116-1f9f-4579-a071-e600094b104d",
+  "name": "macOSターミナル（zsh）コマンド",
+  "category": "プログラミング",
+  "tags": [
+    "macOS",
+    "シェル"
+  ],
+  "words": [
+    {
+      "display": "pwd",
+      "input": "pwd",
+      "annotation": "現在のフォルダを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ls",
+      "input": "ls",
+      "annotation": "ファイルとフォルダの一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -la",
+      "input": "ls -la",
+      "annotation": "隠しファイルを含む詳細一覧",
+      "input_type": "command"
+    },
+    {
+      "display": "ls -lh",
+      "input": "ls -lh",
+      "annotation": "容量を読みやすく表示",
+      "input_type": "command"
+    },
+    {
+      "display": "cd ~/Downloads",
+      "input": "cd ~/Downloads",
+      "annotation": "cd：フォルダを移動（スペースを含むパスは引用符で囲む）",
+      "input_type": "command"
+    },
+    {
+      "display": "cd ..",
+      "input": "cd ..",
+      "annotation": "1つ上へ移動",
+      "input_type": "command"
+    },
+    {
+      "display": "cd ~",
+      "input": "cd ~",
+      "annotation": "ホームへ移動",
+      "input_type": "command"
+    },
+    {
+      "display": "cd -",
+      "input": "cd -",
+      "annotation": "直前のフォルダへ戻る",
+      "input_type": "command"
+    },
+    {
+      "display": "open .",
+      "input": "open .",
+      "annotation": ".：現在のフォルダを表す（パスの記号） / Finderで現在のフォルダを開く",
+      "input_type": "command"
+    },
+    {
+      "display": "ls ..",
+      "input": "ls ..",
+      "annotation": "..：1つ上のフォルダを表す（パスの記号）",
+      "input_type": "command"
+    },
+    {
+      "display": "ls ~/Desktop",
+      "input": "ls ~/Desktop",
+      "annotation": "~：ホームフォルダを表す（パスの記号）",
+      "input_type": "command"
+    },
+    {
+      "display": "mkdir project",
+      "input": "mkdir project",
+      "annotation": "mkdir：フォルダを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "mkdir -p project/src/components",
+      "input": "mkdir -p project/src/components",
+      "annotation": "mkdir -p：階層をまとめて作成",
+      "input_type": "command"
+    },
+    {
+      "display": "touch memo.txt",
+      "input": "touch memo.txt",
+      "annotation": "touch：ファイル作成・更新日時変更（既存ファイルの内容は変更しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "cp memo.txt memo-backup.txt",
+      "input": "cp memo.txt memo-backup.txt",
+      "annotation": "cp：ファイルをコピー（同名のコピー先を上書きする場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "cp -R src src-backup",
+      "input": "cp -R src src-backup",
+      "annotation": "cp -R：フォルダをコピー",
+      "input_type": "command"
+    },
+    {
+      "display": "mv old.txt new.txt",
+      "input": "mv old.txt new.txt",
+      "annotation": "mv：移動・名前変更（同名の移動先を上書きする場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -i memo.txt",
+      "input": "rm -i memo.txt",
+      "annotation": "rm -i：確認しながら削除（ゴミ箱を経由しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "rm -r old-folder",
+      "input": "rm -r old-folder",
+      "annotation": "rm -r：フォルダと中身を削除（ゴミ箱を経由しない。対象を確認する）",
+      "input_type": "command"
+    },
+    {
+      "display": "rmdir empty-folder",
+      "input": "rmdir empty-folder",
+      "annotation": "rmdir：空のフォルダを削除",
+      "input_type": "command"
+    },
+    {
+      "display": "ln -s ~/Documents/docs docs-link",
+      "input": "ln -s ~/Documents/docs docs-link",
+      "annotation": "ln -s：シンボリックリンクを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "file image.png",
+      "input": "file image.png",
+      "annotation": "file：ファイル形式を判定",
+      "input_type": "command"
+    },
+    {
+      "display": "stat memo.txt",
+      "input": "stat memo.txt",
+      "annotation": "stat：ファイル属性を表示（Linux版とオプションが異なる）",
+      "input_type": "command"
+    },
+    {
+      "display": "cat memo.txt",
+      "input": "cat memo.txt",
+      "annotation": "cat：内容を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "less app.log",
+      "input": "less app.log",
+      "annotation": "less：長い内容をスクロール表示（qで終了。/文字列で検索）",
+      "input_type": "command"
+    },
+    {
+      "display": "head -n 20 app.log",
+      "input": "head -n 20 app.log",
+      "annotation": "head：先頭を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tail -n 20 app.log",
+      "input": "tail -n 20 app.log",
+      "annotation": "tail：末尾を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "tail -f app.log",
+      "input": "tail -f app.log",
+      "annotation": "tail -f：ログの追記を追跡（Control + Cで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "nano memo.txt",
+      "input": "nano memo.txt",
+      "annotation": "nano：テキストを編集（Control + Oで保存、Control + Xで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -n \"ERROR\" app.log",
+      "input": "grep -n \"ERROR\" app.log",
+      "annotation": "grep：一致する行を検索（-nは行番号表示）",
+      "input_type": "command"
+    },
+    {
+      "display": "grep -Rn \"TODO\" src",
+      "input": "grep -Rn \"TODO\" src",
+      "annotation": "grep -R：フォルダ内を再帰検索",
+      "input_type": "command"
+    },
+    {
+      "display": "find . -name \"*.tsx\"",
+      "input": "find . -name \"*.tsx\"",
+      "annotation": "find：名前などでファイル検索（パターンを引用符で囲む）",
+      "input_type": "command"
+    },
+    {
+      "display": "mdfind 'kMDItemFSName == \"*.pdf\"'",
+      "input": "mdfind 'kMDItemFSName == \"*.pdf\"'",
+      "annotation": "mdfind：Spotlightの索引から検索（索引対象に依存する）",
+      "input_type": "command"
+    },
+    {
+      "display": "wc -l memo.txt",
+      "input": "wc -l memo.txt",
+      "annotation": "wc -l：行数を数える（正確には改行文字の数）",
+      "input_type": "command"
+    },
+    {
+      "display": "sort names.txt",
+      "input": "sort names.txt",
+      "annotation": "sort：行を並べ替える",
+      "input_type": "command"
+    },
+    {
+      "display": "sort names.txt | uniq",
+      "input": "sort names.txt | uniq",
+      "annotation": "uniq：隣接する重複行をまとめる（離れた重複はそのままでは除去しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "diff -u old.txt new.txt",
+      "input": "diff -u old.txt new.txt",
+      "annotation": "diff：ファイルの差分を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "open report.pdf",
+      "input": "open report.pdf",
+      "annotation": "open：既定アプリで開く",
+      "input_type": "command"
+    },
+    {
+      "display": "open -a TextEdit memo.txt",
+      "input": "open -a TextEdit memo.txt",
+      "annotation": "open -a：アプリを指定して開く",
+      "input_type": "command"
+    },
+    {
+      "display": "open https://example.com",
+      "input": "open https://example.com",
+      "annotation": "open URL：ブラウザでURLを開く",
+      "input_type": "command"
+    },
+    {
+      "display": "pwd | pbcopy",
+      "input": "pwd | pbcopy",
+      "annotation": "pbcopy：クリップボードへコピー",
+      "input_type": "command"
+    },
+    {
+      "display": "pbpaste > memo.txt",
+      "input": "pbpaste > memo.txt",
+      "annotation": "pbpaste：クリップボードを出力（例は既存ファイルを上書き）",
+      "input_type": "command"
+    },
+    {
+      "display": "screencapture ~/Desktop/screen.png",
+      "input": "screencapture ~/Desktop/screen.png",
+      "annotation": "screencapture：スクリーンショットを保存（画面収録権限が必要な場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "sips -g pixelWidth -g pixelHeight image.png",
+      "input": "sips -g pixelWidth -g pixelHeight image.png",
+      "annotation": "sips：画像情報を表示・画像変換（例は幅と高さの表示）",
+      "input_type": "command"
+    },
+    {
+      "display": "say \"こんにちは\"",
+      "input": "say \"こんにちは\"",
+      "annotation": "say：文字を読み上げる",
+      "input_type": "command"
+    },
+    {
+      "display": "caffeinate -i",
+      "input": "caffeinate -i",
+      "annotation": "アイドルスリープを防ぐ（Control + Cで解除）",
+      "input_type": "command"
+    },
+    {
+      "display": "sw_vers",
+      "input": "sw_vers",
+      "annotation": "macOSバージョンを表示",
+      "input_type": "command"
+    },
+    {
+      "display": "system_profiler SPHardwareDataType",
+      "input": "system_profiler SPHardwareDataType",
+      "annotation": "system_profiler：ハードウェア情報を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "ps aux",
+      "input": "ps aux",
+      "annotation": "プロセスを一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "top",
+      "input": "top",
+      "annotation": "CPU・メモリ使用状況を表示（qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "pgrep -fl node",
+      "input": "pgrep -fl node",
+      "annotation": "pgrep -fl：名前でプロセス検索",
+      "input_type": "command"
+    },
+    {
+      "display": "kill 12345",
+      "input": "kill 12345",
+      "annotation": "kill：プロセスに終了を要求（12345を対象PIDに置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "lsof -nP -iTCP:3000 -sTCP:LISTEN",
+      "input": "lsof -nP -iTCP:3000 -sTCP:LISTEN",
+      "annotation": "lsof -i：ポートの使用状況を確認（例は3000番の待受プロセス）",
+      "input_type": "command"
+    },
+    {
+      "display": "df -h",
+      "input": "df -h",
+      "annotation": "ディスクの空き容量を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "du -sh ~/Downloads",
+      "input": "du -sh ~/Downloads",
+      "annotation": "du -sh：フォルダの使用容量を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -I https://example.com",
+      "input": "curl -I https://example.com",
+      "annotation": "curl -I：HTTPヘッダーを確認（HEADリクエストを送る）",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -L -o page.html https://example.com",
+      "input": "curl -L -o page.html https://example.com",
+      "annotation": "curl -L -o：URLからファイルを取得（-Lはリダイレクト追従。既存出力を上書き）",
+      "input_type": "command"
+    },
+    {
+      "display": "ping -c 4 example.com",
+      "input": "ping -c 4 example.com",
+      "annotation": "ping：ネットワーク疎通を確認（応答がなくても通信不可とは限らない）",
+      "input_type": "command"
+    },
+    {
+      "display": "dig example.com",
+      "input": "dig example.com",
+      "annotation": "dig：DNS情報を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "ssh user@hostname",
+      "input": "ssh user@hostname",
+      "annotation": "ssh：リモートへSSH接続（接続先のアカウントと認証が必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "scp memo.txt user@hostname:~/",
+      "input": "scp memo.txt user@hostname:~/",
+      "annotation": "scp：SSH経由でファイル転送（接続先の認証が必要）",
+      "input_type": "command"
+    },
+    {
+      "display": "project=ffpf-portal",
+      "input": "project=ffpf-portal",
+      "annotation": "名前=値：シェル変数を設定",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$project\"",
+      "input": "echo \"$project\"",
+      "annotation": "echo：文字や変数を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "export NODE_ENV=development",
+      "input": "export NODE_ENV=development",
+      "annotation": "export：環境変数を設定（子プロセスにも渡される）",
+      "input_type": "command"
+    },
+    {
+      "display": "unset NODE_ENV",
+      "input": "unset NODE_ENV",
+      "annotation": "unset：変数を解除",
+      "input_type": "command"
+    },
+    {
+      "display": "print -l $path",
+      "input": "print -l $path",
+      "annotation": "コマンド検索先を1行ずつ表示（zshのpath配列）",
+      "input_type": "command"
+    },
+    {
+      "display": "command -v node",
+      "input": "command -v node",
+      "annotation": "command -v：コマンドの場所・定義を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "type -a python3",
+      "input": "type -a python3",
+      "annotation": "type -a：同名コマンドの候補を確認",
+      "input_type": "command"
+    },
+    {
+      "display": "alias ll='ls -lah'",
+      "input": "alias ll='ls -lah'",
+      "annotation": "alias：コマンドの別名を設定（永続化する場合は~/.zshrcに記述）",
+      "input_type": "command"
+    },
+    {
+      "display": "unalias ll",
+      "input": "unalias ll",
+      "annotation": "unalias：別名を解除",
+      "input_type": "command"
+    },
+    {
+      "display": "history",
+      "input": "history",
+      "annotation": "コマンド履歴を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "source ~/.zshrc",
+      "input": "source ~/.zshrc",
+      "annotation": "source：現在のシェルで設定等を読み込む（指定ファイルの内容を実行する）",
+      "input_type": "command"
+    },
+    {
+      "display": "jobs",
+      "input": "jobs",
+      "annotation": "ジョブを一覧表示（現在のシェルのジョブが対象）",
+      "input_type": "command"
+    },
+    {
+      "display": "fg",
+      "input": "fg",
+      "annotation": "ジョブを前面で再開",
+      "input_type": "command"
+    },
+    {
+      "display": "exit",
+      "input": "exit",
+      "annotation": "シェルを終了",
+      "input_type": "command"
+    },
+    {
+      "display": "cat app.log | grep \"ERROR\"",
+      "input": "cat app.log | grep \"ERROR\"",
+      "annotation": "|：左の標準出力を右の標準入力へ渡す",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"hello\" > memo.txt",
+      "input": "echo \"hello\" > memo.txt",
+      "annotation": ">：出力を保存・上書き（既存内容を上書き）",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"追加\" >> memo.txt",
+      "input": "echo \"追加\" >> memo.txt",
+      "annotation": ">>：末尾へ追記",
+      "input_type": "command"
+    },
+    {
+      "display": "ls /nonexistent 2> error.log",
+      "input": "ls /nonexistent 2> error.log",
+      "annotation": "2>：標準エラー出力を保存（既存のエラーログを上書き）",
+      "input_type": "command"
+    },
+    {
+      "display": "mkdir demo && cd demo",
+      "input": "mkdir demo && cd demo",
+      "annotation": "&&：成功した場合だけ次を実行",
+      "input_type": "command"
+    },
+    {
+      "display": "command -v node || echo \"見つかりません\"",
+      "input": "command -v node || echo \"見つかりません\"",
+      "annotation": "||：失敗した場合だけ次を実行",
+      "input_type": "command"
+    },
+    {
+      "display": "pwd; ls",
+      "input": "pwd; ls",
+      "annotation": ";：成否に関係なく順番に実行",
+      "input_type": "command"
+    },
+    {
+      "display": "sleep 60 &",
+      "input": "sleep 60 &",
+      "annotation": "&：バックグラウンドで実行",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"現在地: $(pwd)\"",
+      "input": "echo \"現在地: $(pwd)\"",
+      "annotation": "$(...)：コマンド出力を埋め込む",
+      "input_type": "command"
+    },
+    {
+      "display": "ls *.png",
+      "input": "ls *.png",
+      "annotation": "*：ファイル名の任意の文字列に一致（zshでは通常、一致がないとno matches found）",
+      "input_type": "command"
+    },
+    {
+      "display": "man ls",
+      "input": "man ls",
+      "annotation": "man：コマンドのマニュアルを表示（qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "man zshbuiltins",
+      "input": "man zshbuiltins",
+      "annotation": "zsh組み込み機能のマニュアル（qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "sed -i '' 's/old/new/g' file.txt",
+      "input": "sed -i '' 's/old/new/g' file.txt",
+      "annotation": "sed -i ''：ファイルを直接置換編集（macOS形式。バックアップを作らず上書き）",
+      "input_type": "command"
+    },
+    {
+      "display": "date -v+1d",
+      "input": "date -v+1d",
+      "annotation": "翌日の日付を表示（macOS形式。システム時刻は変更しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "stat -f '%N %z bytes' file.txt",
+      "input": "stat -f '%N %z bytes' file.txt",
+      "annotation": "stat -f：書式を指定して属性を表示（macOS形式）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:08:05.342Z"
+}

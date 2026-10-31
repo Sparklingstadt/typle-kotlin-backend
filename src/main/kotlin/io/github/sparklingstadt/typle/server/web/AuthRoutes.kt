@@ -13,7 +13,6 @@ import io.github.sparklingstadt.typle.server.session.OAuthState
 import io.github.sparklingstadt.typle.server.session.Session
 import io.github.sparklingstadt.typle.server.session.SessionTimes
 import io.github.sparklingstadt.typle.server.session.cookieName
-import io.github.sparklingstadt.typle.server.session.needsRenewal
 import io.github.sparklingstadt.typle.server.session.newSession
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
@@ -113,7 +112,7 @@ fun ApplicationCall.setCookie(name: String, value: String, path: String, maxAge:
     "$name=$value; Path=$path; Max-Age=$age; HttpOnly" + (if (secure) "; Secure" else "") + "; SameSite=Lax")
 }
 
-private fun ApplicationCall.sessionCookie(config: Config, value: String, maxAge: Int) =
+internal fun ApplicationCall.sessionCookie(config: Config, value: String, maxAge: Int) =
   setCookie(cookieName(config.secure), value, "/", maxAge, config.secure)
 
 private fun ApplicationCall.oauthCookie(config: Config, value: String, maxAge: Int) =
@@ -238,22 +237,33 @@ private suspend fun ApplicationCall.token(config: Config) {
   reply(HttpStatusCode.OK, "{\"token\":" + GoJson.string(config.keys.sealApp(signedIn), true) + ",\"user\":" + userJson(signedIn) + "}")
 }
 
+// The answer of /api/auth/session: who is signed in, and the logins the screen may offer (as Go's providers: "github"
+// when its OAuth App is set up; Kotlin has no FFPF ID login).
+private fun sessionAnswer(config: Config, user: Session?) =
+  "{\"user\":" + (user?.let(::userJson) ?: "null") + ",\"providers\":" + (if (config.oauth != null) "[\"github\"]" else "[]") + "}"
+
 /**
- * Who is signed in. A session that has grown old is signed again, so an active user stays signed in: a cookie is set
- * again, and an app is given a new token.
+ * Who is signed in. It is not sealed again however active the user is: a session ends MAX_AGE after its login (typle-r
+ * v0.107.0). A revoked one (signed out of every device) is no one, and its cookie is removed, when the revocations can
+ * be read; otherwise the answer goes on without them, and the account's data, which is read with the revocations
+ * (signedIn), stays out of reach all the same.
  */
 private suspend fun ApplicationCall.session(config: Config) {
   if (!methods(HttpMethod.Get, HttpMethod.Head)) return
-  val user = config.owner(this) ?: return reply(HttpStatusCode.OK, "{\"user\":null}")
-  var token = ""
-  if (user.needsRenewal(config.now())) {
-    if (fromApp(this)) {
-      token = ",\"token\":" + GoJson.string(config.keys.sealApp(newSession(user.sub, user.name, user.image, config.now())), true)
-    } else {
-      issue(config, user.sub, user.name, user.image)
-    }
+  val user = config.owner(this) ?: return reply(HttpStatusCode.OK, sessionAnswer(config, null))
+  val revoked = try {
+    config.revoked(user)
+  } catch (_: NoSessionsException) {
+    false
+  } catch (e: Exception) {
+    report(e, "session.check")
+    false
   }
-  reply(HttpStatusCode.OK, "{\"user\":" + userJson(user) + token + "}")
+  if (revoked) {
+    if (!fromApp(this)) sessionCookie(config, "", -1)
+    return reply(HttpStatusCode.OK, sessionAnswer(config, null))
+  }
+  reply(HttpStatusCode.OK, sessionAnswer(config, user))
 }
 
 private suspend fun ApplicationCall.noContent() {
@@ -262,11 +272,33 @@ private suspend fun ApplicationCall.noContent() {
   respond(HttpStatusCode.NoContent)
 }
 
-/** Forgets the session in the browser. The session is only a signed cookie, so there is nothing to revoke. */
+/**
+ * Forgets the session in the browser. With ?everywhere=1 it also signs the account out of every device, as Go's
+ * signout (typle-r v0.107.0): every session cookie and app token of a login until now is revoked
+ * (Store.revokeSessions). An app may ask for that too, with its token and without an Origin. Signing out everywhere needs
+ * a session that is itself not revoked; it answers loginRequired, and databaseUnavailable when the revocations cannot be
+ * read or written, and then the cookie is kept so that the user can try again.
+ */
 private suspend fun ApplicationCall.signout(config: Config) {
   if (!methods(HttpMethod.Post)) return
-  if (!config.sameOrigin(request.headers["Origin"])) return refuse(HttpStatusCode.Forbidden, "forbiddenRequest")
-  sessionCookie(config, "", -1)
+  val everywhere = request.queryParameters["everywhere"] == "1"
+  if (!(config.sameOrigin(request.headers["Origin"]) || everywhere && fromApp(this))) {
+    return refuse(HttpStatusCode.Forbidden, "forbiddenRequest")
+  }
+  if (everywhere) {
+    val user = config.owner(this) ?: return refuse(HttpStatusCode.Unauthorized, "loginRequired")
+    val revoked = try {
+      config.revoked(user).also { if (!it) withContext(Dispatchers.IO) { config.sessionSource!!.revokeSessions(user.sub) } }
+    } catch (e: Exception) {
+      report(e, "session.revoke")
+      return refuse(HttpStatusCode.ServiceUnavailable, "databaseUnavailable")
+    }
+    if (revoked) {
+      if (!fromApp(this)) sessionCookie(config, "", -1)
+      return refuse(HttpStatusCode.Unauthorized, "loginRequired")
+    }
+  }
+  if (!fromApp(this)) sessionCookie(config, "", -1)
   noContent()
 }
 

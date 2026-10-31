@@ -1,0 +1,159 @@
+{
+  "lists": [
+    {
+      "id": "a",
+      "name": "a",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p1"
+    },
+    {
+      "id": "b",
+      "name": "b",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "category": "古い",
+      "tags": [
+        "t"
+      ]
+    },
+    {
+      "id": "c",
+      "name": "c",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "missing"
+    },
+    {
+      "id": "d",
+      "name": "d",
+      "words": [
+        {
+          "display": "ls",
+          "input": "ls",
+          "annotation": ""
+        }
+      ],
+      "records": [],
+      "createdAt": "2026-10-01T00:00:00.000Z",
+      "packId": "p1",
+      "category": "X"
+    }
+  ],
+  "packs": [
+    {
+      "id": "p1",
+      "name": "P",
+      "category": "C",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "p2",
+      "name": "Gone",
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "expected": {
+    "packs": [
+      {
+        "id": "p1",
+        "name": "P",
+        "category": "C",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "pack-b",
+        "name": "b",
+        "category": "古い",
+        "tags": [
+          "t"
+        ],
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      },
+      {
+        "id": "pack-c",
+        "name": "c",
+        "createdAt": "2026-10-01T00:00:00.000Z"
+      }
+    ],
+    "lists": [
+      {
+        "id": "a",
+        "name": "a",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p1"
+      },
+      {
+        "id": "b",
+        "name": "b",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "pack-b"
+      },
+      {
+        "id": "c",
+        "name": "c",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "pack-c"
+      },
+      {
+        "id": "d",
+        "name": "d",
+        "words": [
+          {
+            "display": "ls",
+            "input": "ls",
+            "annotation": ""
+          }
+        ],
+        "records": [],
+        "createdAt": "2026-10-01T00:00:00.000Z",
+        "packId": "p1"
+      }
+    ]
+  }
+}

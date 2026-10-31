@@ -1,0 +1,214 @@
+{
+  "id": "java-syntax-beginner",
+  "name": "Java構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Java"
+  ],
+  "group": "Java構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "public class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Hello, Java!\");\n  }\n}",
+      "input": "public class Main { public static void main(String[] args) { System.out.println(\"Hello, Java!\"); } }",
+      "annotation": "class：クラス定義（Main.javaに保存する例） / コード例の利用：断片を適切な場所へ配置（多くの例はメソッド内の断片。未定義変数・型・import等を補って利用）",
+      "input_type": "code"
+    },
+    {
+      "display": "public class Main {\n}",
+      "input": "public class Main {}",
+      "annotation": "public：外部に公開",
+      "input_type": "code"
+    },
+    {
+      "display": "static int count = 0;",
+      "input": "static int count = 0;",
+      "annotation": "static：インスタンスではなくクラスに属する（クラス内に記述）",
+      "input_type": "code"
+    },
+    {
+      "display": "void greet() {\n}",
+      "input": "void greet() {}",
+      "annotation": "void：戻り値なし",
+      "input_type": "code"
+    },
+    {
+      "display": "int age = 20;",
+      "input": "int age = 20;",
+      "annotation": ";：文の終わり（ブロックなど全構文の末尾に付けるわけではない） / 型 名前 = 値：変数の宣言と初期化",
+      "input_type": "code"
+    },
+    {
+      "display": "// コメント",
+      "input": "// コメント",
+      "annotation": "//：1行コメント",
+      "input_type": "code"
+    },
+    {
+      "display": "double rate = 0.5;",
+      "input": "double rate = 0.5;",
+      "annotation": "double：浮動小数点数の変数 / double：倍精度浮動小数点数",
+      "input_type": "code"
+    },
+    {
+      "display": "var age = 20;",
+      "input": "var age = 20;",
+      "annotation": "var：ローカル変数の型推論（動的型ではない。初期値が必要。通常のフィールド・メソッド引数型には使わない）",
+      "input_type": "code"
+    },
+    {
+      "display": "age = 21;",
+      "input": "age = 21;",
+      "annotation": "=：代入（宣言済み変数へ代入）",
+      "input_type": "code"
+    },
+    {
+      "display": "final int MAX = 100;",
+      "input": "final int MAX = 100;",
+      "annotation": "final：再代入禁止（参照先オブジェクトの内部変更まで禁止するわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "double n = age;",
+      "input": "double n = age;",
+      "annotation": "拡大変換：対応する型へ暗黙に変換（型の組合せによっては精度が失われる）",
+      "input_type": "code"
+    },
+    {
+      "display": "int n = (int) 3.9;",
+      "input": "int n = (int) 3.9;",
+      "annotation": "(型) 値：明示的なキャスト（結果3。縮小変換では情報が失われ得る）",
+      "input_type": "code"
+    },
+    {
+      "display": "byte n = 10;",
+      "input": "byte n = 10;",
+      "annotation": "byte：8ビット符号付き整数",
+      "input_type": "code"
+    },
+    {
+      "display": "short n = 100;",
+      "input": "short n = 100;",
+      "annotation": "short：16ビット符号付き整数",
+      "input_type": "code"
+    },
+    {
+      "display": "int n = 100;",
+      "input": "int n = 100;",
+      "annotation": "int：32ビット符号付き整数",
+      "input_type": "code"
+    },
+    {
+      "display": "long n = 100L;",
+      "input": "long n = 100L;",
+      "annotation": "long：64ビット符号付き整数（Lはlongリテラル）",
+      "input_type": "code"
+    },
+    {
+      "display": "float rate = 0.5f;",
+      "input": "float rate = 0.5f;",
+      "annotation": "float：単精度浮動小数点数（fはfloatリテラル）",
+      "input_type": "code"
+    },
+    {
+      "display": "char c = 'A';",
+      "input": "char c = 'A';",
+      "annotation": "char：UTF-16コード単位（Unicodeの1文字すべてを1つのcharで表せるわけではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean ok = false;",
+      "input": "boolean ok = false;",
+      "annotation": "boolean：真偽値",
+      "input_type": "code"
+    },
+    {
+      "display": "count += 2;",
+      "input": "count += 2;",
+      "annotation": "+= -= *= /=：複合代入",
+      "input_type": "code"
+    },
+    {
+      "display": "i++;",
+      "input": "i++;",
+      "annotation": "++ / --：1増減（前置・後置では式の値が異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "int n = 1 << 3;",
+      "input": "int n = 1 << 3;",
+      "annotation": "<< >> >>>：ビットシフト（>>>はゼロ埋め右シフト）",
+      "input_type": "code"
+    },
+    {
+      "display": "return result;",
+      "input": "return result;",
+      "annotation": "return 値;：値を返して終了（戻り値型に合う値）",
+      "input_type": "code"
+    },
+    {
+      "display": "return;",
+      "input": "return;",
+      "annotation": "値を返さず終了（voidメソッド等）",
+      "input_type": "code"
+    },
+    {
+      "display": "int first = nums[0];",
+      "input": "int first = nums[0];",
+      "annotation": "配列[i]：要素へアクセス（範囲外は例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "int n = nums.length;",
+      "input": "int n = nums.length;",
+      "annotation": "配列.length：配列の長さ（メソッド呼び出しではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "this.name = name;",
+      "input": "this.name = name;",
+      "annotation": "this：現在のインスタンス",
+      "input_type": "code"
+    },
+    {
+      "display": "protected int count;",
+      "input": "protected int count;",
+      "annotation": "protected：同一パッケージ・サブクラス向け（別パッケージのサブクラスからのアクセスには条件がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "int count;",
+      "input": "int count;",
+      "annotation": "修飾子なし：同一パッケージ内（パッケージプライベート）",
+      "input_type": "code"
+    },
+    {
+      "display": "private String name;",
+      "input": "private String name;",
+      "annotation": "private：宣言元の型の内部向け（同じトップレベル型に含まれる入れ子の型からのアクセス等は可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "package example.app;",
+      "input": "package example.app;",
+      "annotation": "package：パッケージ宣言（通常はソース先頭に配置）",
+      "input_type": "code"
+    },
+    {
+      "display": "super.toString();",
+      "input": "super.toString();",
+      "annotation": "super.method()：親クラスの実装呼び出し",
+      "input_type": "code"
+    },
+    {
+      "display": "java - version",
+      "input": "java -version",
+      "annotation": "Java 21基準：構文・APIの対象バージョン（java -versionはターミナルで実行するコマンド）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

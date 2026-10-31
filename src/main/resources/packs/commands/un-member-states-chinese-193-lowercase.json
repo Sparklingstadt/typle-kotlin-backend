@@ -1,0 +1,1171 @@
+{
+  "id": "un-member-states-chinese-193-lowercase",
+  "name": "国名：中国語・国連加盟193か国（小文字）",
+  "category": "語学",
+  "tags": [
+    "中国語",
+    "国名"
+  ],
+  "words": [
+    {
+      "display": "阿富汗",
+      "input": "afuhan",
+      "annotation": "Āfùhàn / アフガニスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "阿尔巴尼亚",
+      "input": "aerbaniya",
+      "annotation": "Ā'ěrbāníyà / アルバニア",
+      "input_type": "word"
+    },
+    {
+      "display": "阿尔及利亚",
+      "input": "aerjiliya",
+      "annotation": "Ā'ěrjílìyà / アルジェリア",
+      "input_type": "word"
+    },
+    {
+      "display": "安道尔",
+      "input": "andaoer",
+      "annotation": "Āndào'ěr / アンドラ",
+      "input_type": "word"
+    },
+    {
+      "display": "安哥拉",
+      "input": "angela",
+      "annotation": "Āngēlā / アンゴラ",
+      "input_type": "word"
+    },
+    {
+      "display": "安提瓜和巴布达",
+      "input": "antigua he babuda",
+      "annotation": "Āntíguā hé Bābùdá / アンティグア・バーブーダ",
+      "input_type": "word"
+    },
+    {
+      "display": "阿根廷",
+      "input": "agenting",
+      "annotation": "Āgēntíng / アルゼンチン",
+      "input_type": "word"
+    },
+    {
+      "display": "亚美尼亚",
+      "input": "yameiniya",
+      "annotation": "Yàměiníyà / アルメニア",
+      "input_type": "word"
+    },
+    {
+      "display": "澳大利亚",
+      "input": "aodaliya",
+      "annotation": "Àodàlìyà / オーストラリア",
+      "input_type": "word"
+    },
+    {
+      "display": "奥地利",
+      "input": "aodili",
+      "annotation": "Àodìlì / オーストリア",
+      "input_type": "word"
+    },
+    {
+      "display": "阿塞拜疆",
+      "input": "asaibaijiang",
+      "annotation": "Āsàibàijiāng / アゼルバイジャン",
+      "input_type": "word"
+    },
+    {
+      "display": "巴哈马",
+      "input": "bahama",
+      "annotation": "Bāhāmǎ / バハマ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴林",
+      "input": "balin",
+      "annotation": "Bālín / バーレーン",
+      "input_type": "word"
+    },
+    {
+      "display": "孟加拉国",
+      "input": "mengjialaguo",
+      "annotation": "Mèngjiālāguó / バングラデシュ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴巴多斯",
+      "input": "babaduosi",
+      "annotation": "Bābāduōsī / バルバドス",
+      "input_type": "word"
+    },
+    {
+      "display": "白俄罗斯",
+      "input": "baieluosi",
+      "annotation": "Bái'Éluósī / ベラルーシ",
+      "input_type": "word"
+    },
+    {
+      "display": "比利时",
+      "input": "bilishi",
+      "annotation": "Bǐlìshí / ベルギー",
+      "input_type": "word"
+    },
+    {
+      "display": "伯利兹",
+      "input": "bolizi",
+      "annotation": "Bólìzī / ベリーズ",
+      "input_type": "word"
+    },
+    {
+      "display": "贝宁",
+      "input": "beining",
+      "annotation": "Bèiníng / ベナン",
+      "input_type": "word"
+    },
+    {
+      "display": "不丹",
+      "input": "budan",
+      "annotation": "Bùdān / ブータン",
+      "input_type": "word"
+    },
+    {
+      "display": "多民族玻利维亚国",
+      "input": "duominzu boliweiya guo",
+      "annotation": "Duōmínzú Bōlìwéiyà Guó / ボリビア",
+      "input_type": "word"
+    },
+    {
+      "display": "波斯尼亚和黑塞哥维那",
+      "input": "bosiniya he heisaigeweina",
+      "annotation": "Bōsīníyà hé Hēisàigēwéinà / ボスニア・ヘルツェゴビナ",
+      "input_type": "word"
+    },
+    {
+      "display": "博茨瓦纳",
+      "input": "bociwana",
+      "annotation": "Bócíwǎnà / ボツワナ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴西",
+      "input": "baxi",
+      "annotation": "Bāxī / ブラジル",
+      "input_type": "word"
+    },
+    {
+      "display": "文莱达鲁萨兰国",
+      "input": "wenlai dalusalan guo",
+      "annotation": "Wénlái Dálǔsàlán Guó / ブルネイ",
+      "input_type": "word"
+    },
+    {
+      "display": "保加利亚",
+      "input": "baojialiya",
+      "annotation": "Bǎojiālìyà / ブルガリア",
+      "input_type": "word"
+    },
+    {
+      "display": "布基纳法索",
+      "input": "bujina fasuo",
+      "annotation": "Bùjīnà Fǎsuǒ / ブルキナファソ",
+      "input_type": "word"
+    },
+    {
+      "display": "布隆迪",
+      "input": "bulongdi",
+      "annotation": "Bùlóngdí / ブルンジ",
+      "input_type": "word"
+    },
+    {
+      "display": "佛得角",
+      "input": "fodejiao",
+      "annotation": "Fódéjiǎo / カーボベルデ",
+      "input_type": "word"
+    },
+    {
+      "display": "柬埔寨",
+      "input": "jianpuzhai",
+      "annotation": "Jiǎnpǔzhài / カンボジア",
+      "input_type": "word"
+    },
+    {
+      "display": "喀麦隆",
+      "input": "kamailong",
+      "annotation": "Kāmàilóng / カメルーン",
+      "input_type": "word"
+    },
+    {
+      "display": "加拿大",
+      "input": "jianada",
+      "annotation": "Jiānádà / カナダ",
+      "input_type": "word"
+    },
+    {
+      "display": "中非共和国",
+      "input": "zhongfei gongheguo",
+      "annotation": "Zhōngfēi Gònghéguó / 中央アフリカ共和国",
+      "input_type": "word"
+    },
+    {
+      "display": "乍得",
+      "input": "zhade",
+      "annotation": "Zhàdé / チャド",
+      "input_type": "word"
+    },
+    {
+      "display": "智利",
+      "input": "zhili",
+      "annotation": "Zhìlì / チリ",
+      "input_type": "word"
+    },
+    {
+      "display": "中国",
+      "input": "zhongguo",
+      "annotation": "Zhōngguó / 中国",
+      "input_type": "word"
+    },
+    {
+      "display": "哥伦比亚",
+      "input": "gelunbiya",
+      "annotation": "Gēlúnbǐyà / コロンビア",
+      "input_type": "word"
+    },
+    {
+      "display": "科摩罗",
+      "input": "kemoluo",
+      "annotation": "Kēmóluó / コモロ",
+      "input_type": "word"
+    },
+    {
+      "display": "刚果（布）",
+      "input": "gangguo bu",
+      "annotation": "Gāngguǒ (Bù) / コンゴ共和国",
+      "input_type": "word"
+    },
+    {
+      "display": "哥斯达黎加",
+      "input": "gesidalijia",
+      "annotation": "Gēsīdálíjiā / コスタリカ",
+      "input_type": "word"
+    },
+    {
+      "display": "科特迪瓦",
+      "input": "ketediwa",
+      "annotation": "Kētèdíwǎ / コートジボワール",
+      "input_type": "word"
+    },
+    {
+      "display": "克罗地亚",
+      "input": "keluodiya",
+      "annotation": "Kèluódìyà / クロアチア",
+      "input_type": "word"
+    },
+    {
+      "display": "古巴",
+      "input": "guba",
+      "annotation": "Gǔbā / キューバ",
+      "input_type": "word"
+    },
+    {
+      "display": "塞浦路斯",
+      "input": "saipulusi",
+      "annotation": "Sàipǔlùsī / キプロス",
+      "input_type": "word"
+    },
+    {
+      "display": "捷克",
+      "input": "jieke",
+      "annotation": "Jiékè / チェコ",
+      "input_type": "word"
+    },
+    {
+      "display": "朝鲜民主主义人民共和国",
+      "input": "chaoxian minzhuzhuyi renmin gongheguo",
+      "annotation": "Cháoxiǎn Mínzhǔzhǔyì Rénmín Gònghéguó / 北朝鮮",
+      "input_type": "word"
+    },
+    {
+      "display": "刚果民主共和国",
+      "input": "gangguo minzhu gongheguo",
+      "annotation": "Gāngguǒ Mínzhǔ Gònghéguó / コンゴ民主共和国",
+      "input_type": "word"
+    },
+    {
+      "display": "丹麦",
+      "input": "danmai",
+      "annotation": "Dānmài / デンマーク",
+      "input_type": "word"
+    },
+    {
+      "display": "吉布提",
+      "input": "jibuti",
+      "annotation": "Jíbùtí / ジブチ",
+      "input_type": "word"
+    },
+    {
+      "display": "多米尼克",
+      "input": "duominike",
+      "annotation": "Duōmǐníkè / ドミニカ国",
+      "input_type": "word"
+    },
+    {
+      "display": "多米尼加共和国",
+      "input": "duominijia gongheguo",
+      "annotation": "Duōmǐníjiā Gònghéguó / ドミニカ共和国",
+      "input_type": "word"
+    },
+    {
+      "display": "厄瓜多尔",
+      "input": "eguaduoer",
+      "annotation": "Èguāduō'ěr / エクアドル",
+      "input_type": "word"
+    },
+    {
+      "display": "埃及",
+      "input": "aiji",
+      "annotation": "Āijí / エジプト",
+      "input_type": "word"
+    },
+    {
+      "display": "萨尔瓦多",
+      "input": "saerwaduo",
+      "annotation": "Sà'ěrwǎduō / エルサルバドル",
+      "input_type": "word"
+    },
+    {
+      "display": "赤道几内亚",
+      "input": "chidao jineiya",
+      "annotation": "Chìdào Jǐnèiyà / 赤道ギニア",
+      "input_type": "word"
+    },
+    {
+      "display": "厄立特里亚",
+      "input": "eliteliya",
+      "annotation": "Èlìtèlǐyà / エリトリア",
+      "input_type": "word"
+    },
+    {
+      "display": "爱沙尼亚",
+      "input": "aishaniya",
+      "annotation": "Àishāníyà / エストニア",
+      "input_type": "word"
+    },
+    {
+      "display": "斯威士兰",
+      "input": "siweishilan",
+      "annotation": "Sīwēishìlán / エスワティニ",
+      "input_type": "word"
+    },
+    {
+      "display": "埃塞俄比亚",
+      "input": "aisaiebiya",
+      "annotation": "Āisài'ébǐyà / エチオピア",
+      "input_type": "word"
+    },
+    {
+      "display": "斐济",
+      "input": "feiji",
+      "annotation": "Fěijì / フィジー",
+      "input_type": "word"
+    },
+    {
+      "display": "芬兰",
+      "input": "fenlan",
+      "annotation": "Fēnlán / フィンランド",
+      "input_type": "word"
+    },
+    {
+      "display": "法国",
+      "input": "faguo",
+      "annotation": "Fǎguó / フランス",
+      "input_type": "word"
+    },
+    {
+      "display": "加蓬",
+      "input": "jiapeng",
+      "annotation": "Jiāpéng / ガボン",
+      "input_type": "word"
+    },
+    {
+      "display": "冈比亚",
+      "input": "gangbiya",
+      "annotation": "Gāngbǐyà / ガンビア",
+      "input_type": "word"
+    },
+    {
+      "display": "格鲁吉亚",
+      "input": "gelujiya",
+      "annotation": "Gélǔjíyà / ジョージア",
+      "input_type": "word"
+    },
+    {
+      "display": "德国",
+      "input": "deguo",
+      "annotation": "Déguó / ドイツ",
+      "input_type": "word"
+    },
+    {
+      "display": "加纳",
+      "input": "jiana",
+      "annotation": "Jiānà / ガーナ",
+      "input_type": "word"
+    },
+    {
+      "display": "希腊",
+      "input": "xila",
+      "annotation": "Xīlà / ギリシャ",
+      "input_type": "word"
+    },
+    {
+      "display": "格林纳达",
+      "input": "gelinnada",
+      "annotation": "Gélínnádá / グレナダ",
+      "input_type": "word"
+    },
+    {
+      "display": "危地马拉",
+      "input": "weidimala",
+      "annotation": "Wēidìmǎlā / グアテマラ",
+      "input_type": "word"
+    },
+    {
+      "display": "几内亚",
+      "input": "jineiya",
+      "annotation": "Jǐnèiyà / ギニア",
+      "input_type": "word"
+    },
+    {
+      "display": "几内亚比绍",
+      "input": "jineiya bishao",
+      "annotation": "Jǐnèiyà Bǐshào / ギニアビサウ",
+      "input_type": "word"
+    },
+    {
+      "display": "圭亚那",
+      "input": "guiyana",
+      "annotation": "Guīyànà / ガイアナ",
+      "input_type": "word"
+    },
+    {
+      "display": "海地",
+      "input": "haidi",
+      "annotation": "Hǎidì / ハイチ",
+      "input_type": "word"
+    },
+    {
+      "display": "洪都拉斯",
+      "input": "hongdulasi",
+      "annotation": "Hóngdūlāsī / ホンジュラス",
+      "input_type": "word"
+    },
+    {
+      "display": "匈牙利",
+      "input": "xiongyali",
+      "annotation": "Xiōngyálì / ハンガリー",
+      "input_type": "word"
+    },
+    {
+      "display": "冰岛",
+      "input": "bingdao",
+      "annotation": "Bīngdǎo / アイスランド",
+      "input_type": "word"
+    },
+    {
+      "display": "印度",
+      "input": "yindu",
+      "annotation": "Yìndù / インド",
+      "input_type": "word"
+    },
+    {
+      "display": "印度尼西亚",
+      "input": "yindunixiya",
+      "annotation": "Yìndùníxīyà / インドネシア",
+      "input_type": "word"
+    },
+    {
+      "display": "伊朗伊斯兰共和国",
+      "input": "yilang yisilan gongheguo",
+      "annotation": "Yīlǎng Yīsīlán Gònghéguó / イラン",
+      "input_type": "word"
+    },
+    {
+      "display": "伊拉克",
+      "input": "yilake",
+      "annotation": "Yīlākè / イラク",
+      "input_type": "word"
+    },
+    {
+      "display": "爱尔兰",
+      "input": "aierlan",
+      "annotation": "Ài'ěrlán / アイルランド",
+      "input_type": "word"
+    },
+    {
+      "display": "以色列",
+      "input": "yiselie",
+      "annotation": "Yǐsèliè / イスラエル",
+      "input_type": "word"
+    },
+    {
+      "display": "意大利",
+      "input": "yidali",
+      "annotation": "Yìdàlì / イタリア",
+      "input_type": "word"
+    },
+    {
+      "display": "牙买加",
+      "input": "yamaijia",
+      "annotation": "Yámǎijiā / ジャマイカ",
+      "input_type": "word"
+    },
+    {
+      "display": "日本",
+      "input": "riben",
+      "annotation": "Rìběn / 日本",
+      "input_type": "word"
+    },
+    {
+      "display": "约旦",
+      "input": "yuedan",
+      "annotation": "Yuēdàn / ヨルダン",
+      "input_type": "word"
+    },
+    {
+      "display": "哈萨克斯坦",
+      "input": "hasakesitan",
+      "annotation": "Hāsàkèsītǎn / カザフスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "肯尼亚",
+      "input": "kenniya",
+      "annotation": "Kěnníyà / ケニア",
+      "input_type": "word"
+    },
+    {
+      "display": "基里巴斯",
+      "input": "jilibasi",
+      "annotation": "Jīlǐbāsī / キリバス",
+      "input_type": "word"
+    },
+    {
+      "display": "科威特",
+      "input": "keweite",
+      "annotation": "Kēwēitè / クウェート",
+      "input_type": "word"
+    },
+    {
+      "display": "吉尔吉斯斯坦",
+      "input": "jierjisisitan",
+      "annotation": "Jí'ěrjísīsītǎn / キルギス",
+      "input_type": "word"
+    },
+    {
+      "display": "老挝人民民主共和国",
+      "input": "laowo renmin minzhu gongheguo",
+      "annotation": "Lǎowō Rénmín Mínzhǔ Gònghéguó / ラオス",
+      "input_type": "word"
+    },
+    {
+      "display": "拉脱维亚",
+      "input": "latuoweiya",
+      "annotation": "Lātuōwéiyà / ラトビア",
+      "input_type": "word"
+    },
+    {
+      "display": "黎巴嫩",
+      "input": "libanen",
+      "annotation": "Líbānèn / レバノン",
+      "input_type": "word"
+    },
+    {
+      "display": "莱索托",
+      "input": "laisuotuo",
+      "annotation": "Láisuǒtuō / レソト",
+      "input_type": "word"
+    },
+    {
+      "display": "利比里亚",
+      "input": "libiliya",
+      "annotation": "Lìbǐlǐyà / リベリア",
+      "input_type": "word"
+    },
+    {
+      "display": "利比亚",
+      "input": "libiya",
+      "annotation": "Lìbǐyà / リビア",
+      "input_type": "word"
+    },
+    {
+      "display": "列支敦士登",
+      "input": "liezhidunshideng",
+      "annotation": "Lièzhīdūnshìdēng / リヒテンシュタイン",
+      "input_type": "word"
+    },
+    {
+      "display": "立陶宛",
+      "input": "litaowan",
+      "annotation": "Lìtáowǎn / リトアニア",
+      "input_type": "word"
+    },
+    {
+      "display": "卢森堡",
+      "input": "lusenbao",
+      "annotation": "Lúsēnbǎo / ルクセンブルク",
+      "input_type": "word"
+    },
+    {
+      "display": "马达加斯加",
+      "input": "madajiasijia",
+      "annotation": "Mǎdájiāsījiā / マダガスカル",
+      "input_type": "word"
+    },
+    {
+      "display": "马拉维",
+      "input": "malawei",
+      "annotation": "Mǎlāwéi / マラウイ",
+      "input_type": "word"
+    },
+    {
+      "display": "马来西亚",
+      "input": "malaixiya",
+      "annotation": "Mǎláixīyà / マレーシア",
+      "input_type": "word"
+    },
+    {
+      "display": "马尔代夫",
+      "input": "maerdaifu",
+      "annotation": "Mǎ'ěrdàifū / モルディブ",
+      "input_type": "word"
+    },
+    {
+      "display": "马里",
+      "input": "mali",
+      "annotation": "Mǎlǐ / マリ",
+      "input_type": "word"
+    },
+    {
+      "display": "马耳他",
+      "input": "maerta",
+      "annotation": "Mǎ'ěrtā / マルタ",
+      "input_type": "word"
+    },
+    {
+      "display": "马绍尔群岛",
+      "input": "mashaoer qundao",
+      "annotation": "Mǎshào'ěr Qúndǎo / マーシャル諸島",
+      "input_type": "word"
+    },
+    {
+      "display": "毛里塔尼亚",
+      "input": "maolitaniya",
+      "annotation": "Máolǐtǎníyà / モーリタニア",
+      "input_type": "word"
+    },
+    {
+      "display": "毛里求斯",
+      "input": "maoliqiusi",
+      "annotation": "Máolǐqiúsī / モーリシャス",
+      "input_type": "word"
+    },
+    {
+      "display": "墨西哥",
+      "input": "moxige",
+      "annotation": "Mòxīgē / メキシコ",
+      "input_type": "word"
+    },
+    {
+      "display": "密克罗尼西亚联邦",
+      "input": "mikeluonixiya lianbang",
+      "annotation": "Mìkèluóníxīyà Liánbāng / ミクロネシア連邦",
+      "input_type": "word"
+    },
+    {
+      "display": "摩尔多瓦共和国",
+      "input": "moerduowa gongheguo",
+      "annotation": "Mó'ěrduōwǎ Gònghéguó / モルドバ",
+      "input_type": "word"
+    },
+    {
+      "display": "摩纳哥",
+      "input": "monage",
+      "annotation": "Mónàgē / モナコ",
+      "input_type": "word"
+    },
+    {
+      "display": "蒙古",
+      "input": "menggu",
+      "annotation": "Měnggǔ / モンゴル",
+      "input_type": "word"
+    },
+    {
+      "display": "黑山",
+      "input": "heishan",
+      "annotation": "Hēishān / モンテネグロ",
+      "input_type": "word"
+    },
+    {
+      "display": "摩洛哥",
+      "input": "moluoge",
+      "annotation": "Móluògē / モロッコ",
+      "input_type": "word"
+    },
+    {
+      "display": "莫桑比克",
+      "input": "mosangbike",
+      "annotation": "Mòsāngbǐkè / モザンビーク",
+      "input_type": "word"
+    },
+    {
+      "display": "缅甸",
+      "input": "miandian",
+      "annotation": "Miǎndiàn / ミャンマー",
+      "input_type": "word"
+    },
+    {
+      "display": "纳米比亚",
+      "input": "namibiya",
+      "annotation": "Nàmǐbǐyà / ナミビア",
+      "input_type": "word"
+    },
+    {
+      "display": "瑙鲁",
+      "input": "naolu",
+      "annotation": "Nǎolǔ / ナウル",
+      "input_type": "word"
+    },
+    {
+      "display": "尼泊尔",
+      "input": "niboer",
+      "annotation": "Níbó'ěr / ネパール",
+      "input_type": "word"
+    },
+    {
+      "display": "荷兰王国",
+      "input": "helan wangguo",
+      "annotation": "Hélán Wángguó / オランダ",
+      "input_type": "word"
+    },
+    {
+      "display": "新西兰",
+      "input": "xinxilan",
+      "annotation": "Xīnxīlán / ニュージーランド",
+      "input_type": "word"
+    },
+    {
+      "display": "尼加拉瓜",
+      "input": "nijialagua",
+      "annotation": "Níjiālāguā / ニカラグア",
+      "input_type": "word"
+    },
+    {
+      "display": "尼日尔",
+      "input": "nirier",
+      "annotation": "Nírì'ěr / ニジェール",
+      "input_type": "word"
+    },
+    {
+      "display": "尼日利亚",
+      "input": "niriliya",
+      "annotation": "Nírìlìyà / ナイジェリア",
+      "input_type": "word"
+    },
+    {
+      "display": "北马其顿",
+      "input": "bei maqidun",
+      "annotation": "Běi Mǎqídùn / 北マケドニア",
+      "input_type": "word"
+    },
+    {
+      "display": "挪威",
+      "input": "nuowei",
+      "annotation": "Nuówēi / ノルウェー",
+      "input_type": "word"
+    },
+    {
+      "display": "阿曼",
+      "input": "aman",
+      "annotation": "Āmàn / オマーン",
+      "input_type": "word"
+    },
+    {
+      "display": "巴基斯坦",
+      "input": "bajisitan",
+      "annotation": "Bājīsītǎn / パキスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "帕劳",
+      "input": "palao",
+      "annotation": "Pàláo / パラオ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴拿马",
+      "input": "banama",
+      "annotation": "Bānámǎ / パナマ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴布亚新几内亚",
+      "input": "babuya xin jineiya",
+      "annotation": "Bābùyà Xīn Jǐnèiyà / パプアニューギニア",
+      "input_type": "word"
+    },
+    {
+      "display": "巴拉圭",
+      "input": "balagui",
+      "annotation": "Bālāguī / パラグアイ",
+      "input_type": "word"
+    },
+    {
+      "display": "秘鲁",
+      "input": "bilu",
+      "annotation": "Bìlǔ / ペルー",
+      "input_type": "word"
+    },
+    {
+      "display": "菲律宾",
+      "input": "feilvbin",
+      "annotation": "Fēilǜbīn / フィリピン",
+      "input_type": "word"
+    },
+    {
+      "display": "波兰",
+      "input": "bolan",
+      "annotation": "Bōlán / ポーランド",
+      "input_type": "word"
+    },
+    {
+      "display": "葡萄牙",
+      "input": "putaoya",
+      "annotation": "Pútáoyá / ポルトガル",
+      "input_type": "word"
+    },
+    {
+      "display": "卡塔尔",
+      "input": "kataer",
+      "annotation": "Kǎtǎ'ěr / カタール",
+      "input_type": "word"
+    },
+    {
+      "display": "大韩民国",
+      "input": "dahan minguo",
+      "annotation": "Dàhán Mínguó / 韓国",
+      "input_type": "word"
+    },
+    {
+      "display": "罗马尼亚",
+      "input": "luomaniya",
+      "annotation": "Luómǎníyà / ルーマニア",
+      "input_type": "word"
+    },
+    {
+      "display": "俄罗斯联邦",
+      "input": "eluosi lianbang",
+      "annotation": "Éluósī Liánbāng / ロシア",
+      "input_type": "word"
+    },
+    {
+      "display": "卢旺达",
+      "input": "luwangda",
+      "annotation": "Lúwàngdá / ルワンダ",
+      "input_type": "word"
+    },
+    {
+      "display": "圣基茨和尼维斯",
+      "input": "sheng jici he niweisi",
+      "annotation": "Shèng Jīcí hé Níwéisī / セントクリストファー・ネービス",
+      "input_type": "word"
+    },
+    {
+      "display": "圣卢西亚",
+      "input": "sheng luxiya",
+      "annotation": "Shèng Lúxīyà / セントルシア",
+      "input_type": "word"
+    },
+    {
+      "display": "圣文森特和格林纳丁斯",
+      "input": "sheng wensente he gelinnadingsi",
+      "annotation": "Shèng Wénsēntè hé Gélínnàdīngsī / セントビンセントおよびグレナディーン諸島",
+      "input_type": "word"
+    },
+    {
+      "display": "萨摩亚",
+      "input": "samoya",
+      "annotation": "Sàmóyà / サモア",
+      "input_type": "word"
+    },
+    {
+      "display": "圣马力诺",
+      "input": "sheng malinuo",
+      "annotation": "Shèng Mǎlìnuò / サンマリノ",
+      "input_type": "word"
+    },
+    {
+      "display": "圣多美和普林西比",
+      "input": "sheng duomei he pulinxibi",
+      "annotation": "Shèng Duōměi hé Pǔlínxībǐ / サントメ・プリンシペ",
+      "input_type": "word"
+    },
+    {
+      "display": "沙特阿拉伯",
+      "input": "shate alabo",
+      "annotation": "Shātè Ālābó / サウジアラビア",
+      "input_type": "word"
+    },
+    {
+      "display": "塞内加尔",
+      "input": "saineijiaer",
+      "annotation": "Sàinèijiā'ěr / セネガル",
+      "input_type": "word"
+    },
+    {
+      "display": "塞尔维亚",
+      "input": "saierweiya",
+      "annotation": "Sài'ěrwéiyà / セルビア",
+      "input_type": "word"
+    },
+    {
+      "display": "塞舌尔",
+      "input": "saisheer",
+      "annotation": "Sàishé'ěr / セーシェル",
+      "input_type": "word"
+    },
+    {
+      "display": "塞拉利昂",
+      "input": "sailaliang",
+      "annotation": "Sāilālì'áng / シエラレオネ",
+      "input_type": "word"
+    },
+    {
+      "display": "新加坡",
+      "input": "xinjiapo",
+      "annotation": "Xīnjiāpō / シンガポール",
+      "input_type": "word"
+    },
+    {
+      "display": "斯洛伐克",
+      "input": "siluofake",
+      "annotation": "Sīluòfákè / スロバキア",
+      "input_type": "word"
+    },
+    {
+      "display": "斯洛文尼亚",
+      "input": "siluowenniya",
+      "annotation": "Sīluòwénníyà / スロベニア",
+      "input_type": "word"
+    },
+    {
+      "display": "所罗门群岛",
+      "input": "suoluomen qundao",
+      "annotation": "Suǒluómén Qúndǎo / ソロモン諸島",
+      "input_type": "word"
+    },
+    {
+      "display": "索马里",
+      "input": "suomali",
+      "annotation": "Suǒmǎlǐ / ソマリア",
+      "input_type": "word"
+    },
+    {
+      "display": "南非",
+      "input": "nanfei",
+      "annotation": "Nánfēi / 南アフリカ",
+      "input_type": "word"
+    },
+    {
+      "display": "南苏丹",
+      "input": "nan sudan",
+      "annotation": "Nán Sūdān / 南スーダン",
+      "input_type": "word"
+    },
+    {
+      "display": "西班牙",
+      "input": "xibanya",
+      "annotation": "Xībānyá / スペイン",
+      "input_type": "word"
+    },
+    {
+      "display": "斯里兰卡",
+      "input": "sililanka",
+      "annotation": "Sīlǐlánkǎ / スリランカ",
+      "input_type": "word"
+    },
+    {
+      "display": "苏丹",
+      "input": "sudan",
+      "annotation": "Sūdān / スーダン",
+      "input_type": "word"
+    },
+    {
+      "display": "苏里南",
+      "input": "sulinan",
+      "annotation": "Sūlǐnán / スリナム",
+      "input_type": "word"
+    },
+    {
+      "display": "瑞典",
+      "input": "ruidian",
+      "annotation": "Ruìdiǎn / スウェーデン",
+      "input_type": "word"
+    },
+    {
+      "display": "瑞士",
+      "input": "ruishi",
+      "annotation": "Ruìshì / スイス",
+      "input_type": "word"
+    },
+    {
+      "display": "阿拉伯叙利亚共和国",
+      "input": "alabo xuliya gongheguo",
+      "annotation": "Ālābó Xùlìyà Gònghéguó / シリア",
+      "input_type": "word"
+    },
+    {
+      "display": "塔吉克斯坦",
+      "input": "tajikesitan",
+      "annotation": "Tǎjíkèsītǎn / タジキスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "泰国",
+      "input": "taiguo",
+      "annotation": "Tàiguó / タイ",
+      "input_type": "word"
+    },
+    {
+      "display": "东帝汶",
+      "input": "dongdiwen",
+      "annotation": "Dōngdìwèn / 東ティモール",
+      "input_type": "word"
+    },
+    {
+      "display": "多哥",
+      "input": "duoge",
+      "annotation": "Duōgē / トーゴ",
+      "input_type": "word"
+    },
+    {
+      "display": "汤加",
+      "input": "tangjia",
+      "annotation": "Tāngjiā / トンガ",
+      "input_type": "word"
+    },
+    {
+      "display": "特立尼达和多巴哥",
+      "input": "telinida he duobage",
+      "annotation": "Tèlìnídá hé Duōbāgē / トリニダード・トバゴ",
+      "input_type": "word"
+    },
+    {
+      "display": "突尼斯",
+      "input": "tunisi",
+      "annotation": "Tūnísī / チュニジア",
+      "input_type": "word"
+    },
+    {
+      "display": "土耳其",
+      "input": "tuerqi",
+      "annotation": "Tǔ'ěrqí / トルコ",
+      "input_type": "word"
+    },
+    {
+      "display": "土库曼斯坦",
+      "input": "tukumansitan",
+      "annotation": "Tǔkùmànsītǎn / トルクメニスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "图瓦卢",
+      "input": "tuwalu",
+      "annotation": "Túwǎlú / ツバル",
+      "input_type": "word"
+    },
+    {
+      "display": "乌干达",
+      "input": "wuganda",
+      "annotation": "Wūgāndá / ウガンダ",
+      "input_type": "word"
+    },
+    {
+      "display": "乌克兰",
+      "input": "wukelan",
+      "annotation": "Wūkèlán / ウクライナ",
+      "input_type": "word"
+    },
+    {
+      "display": "阿拉伯联合酋长国",
+      "input": "alabo lianhe qiuzhangguo",
+      "annotation": "Ālābó Liánhé Qiúzhǎngguó / アラブ首長国連邦",
+      "input_type": "word"
+    },
+    {
+      "display": "大不列颠及北爱尔兰联合王国",
+      "input": "da buliedian ji bei aierlan lianhe wangguo",
+      "annotation": "Dà Bùlièdiān jí Běi Ài'ěrlán Liánhé Wángguó / 英国",
+      "input_type": "word"
+    },
+    {
+      "display": "坦桑尼亚联合共和国",
+      "input": "tansangniya lianhe gongheguo",
+      "annotation": "Tǎnsāngníyà Liánhé Gònghéguó / タンザニア",
+      "input_type": "word"
+    },
+    {
+      "display": "美利坚合众国",
+      "input": "meilijian hezhongguo",
+      "annotation": "Měilìjiān Hézhòngguó / アメリカ合衆国",
+      "input_type": "word"
+    },
+    {
+      "display": "乌拉圭",
+      "input": "wulagui",
+      "annotation": "Wūlāguī / ウルグアイ",
+      "input_type": "word"
+    },
+    {
+      "display": "乌兹别克斯坦",
+      "input": "wuzibiekesitan",
+      "annotation": "Wūzībiékèsītǎn / ウズベキスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "瓦努阿图",
+      "input": "wanuatu",
+      "annotation": "Wǎnǔ'ātú / バヌアツ",
+      "input_type": "word"
+    },
+    {
+      "display": "委内瑞拉玻利瓦尔共和国",
+      "input": "weineiruila boliwaer gongheguo",
+      "annotation": "Wěinèiruìlā Bōlìwǎ'ěr Gònghéguó / ベネズエラ",
+      "input_type": "word"
+    },
+    {
+      "display": "越南",
+      "input": "yuenan",
+      "annotation": "Yuènán / ベトナム",
+      "input_type": "word"
+    },
+    {
+      "display": "也门",
+      "input": "yemen",
+      "annotation": "Yěmén / イエメン",
+      "input_type": "word"
+    },
+    {
+      "display": "赞比亚",
+      "input": "zanbiya",
+      "annotation": "Zànbǐyà / ザンビア",
+      "input_type": "word"
+    },
+    {
+      "display": "津巴布韦",
+      "input": "jinbabuwei",
+      "annotation": "Jīnbābùwéi / ジンバブエ",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

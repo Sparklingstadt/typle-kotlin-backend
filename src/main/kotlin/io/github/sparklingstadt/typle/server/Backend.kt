@@ -1,5 +1,6 @@
 package io.github.sparklingstadt.typle.server
 
+import io.github.sparklingstadt.typle.server.store.SessionSource
 import io.github.sparklingstadt.typle.server.store.Store
 import io.github.sparklingstadt.typle.server.web.Config
 import io.github.sparklingstadt.typle.server.web.logLine
@@ -35,8 +36,19 @@ class Backend(
   private var failedAt: Long? = null
   private var flight: CompletableFuture<Store?>? = null
 
-  /** The configuration of a request: with the database for any path but the login's. */
-  internal val login: Config get() = config
+  /**
+   * The configuration of the login's paths, without the database, so that they never wait for it, but for the
+   * revocations (signing out of every device), which open it for that one question (Go's Config.Sessions). While it
+   * does not open, they fail: the session's answer then goes on unchecked, and signing out everywhere answers
+   * databaseUnavailable.
+   */
+  internal val login: Config by lazy {
+    config.copy(sessions = object : SessionSource {
+      private fun opened() = store() ?: throw IllegalStateException("the database is not open")
+      override fun revokeSessions(owner: String) = opened().revokeSessions(owner)
+      override fun sessionsRevokedAt(owner: String) = opened().sessionsRevokedAt(owner)
+    })
+  }
 
   /** The database, opening it if that has not been done; null while it does not open (the reason is logged). Blocks. */
   fun store(): Store? {

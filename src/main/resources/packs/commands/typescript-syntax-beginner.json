@@ -1,0 +1,124 @@
+{
+  "id": "typescript-syntax-beginner",
+  "name": "TypeScript構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "TypeScript"
+  ],
+  "group": "TypeScript構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "// TypeScript 7.0 / strictを想定",
+      "input": "// TypeScript 7.0 / strictを想定",
+      "annotation": "TypeScript 7.0：対象・構文と実装の区別（7.0は正式提供済み。大きな変更はネイティブ実装。下記は7で使う主要構文であり7で初登場の一覧ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const name = 'Pomo';\nlet count = 0;\ncount += 1;",
+      "input": "const name='Pomo'; let count=0; count+=1;",
+      "annotation": "const / let：再代入不可・可（constも参照先内部の変更は禁止しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const age: number = 20;\nconst enabled = true;\nconst text: string = 'Hello';",
+      "input": "const age:number=20; const enabled=true; const text:string='Hello';",
+      "annotation": "型注釈・推論：値の型（型は通常実行時に消える）",
+      "input_type": "code"
+    },
+    {
+      "display": "const name = 'Pomo';\nconst message = `Hello, ${name}`;",
+      "input": "const name='Pomo'; const message=`Hello, ${name}`;",
+      "annotation": "テンプレート文字列：値の埋込み（JavaScriptの実行時構文）",
+      "input_type": "code"
+    },
+    {
+      "display": "interface Named {\n  name: string\n}\ninterface User extends Named {\n  id: number\n}",
+      "input": "interface Named {name:string} interface User extends Named {id:number}",
+      "annotation": "interface / extends：オブジェクト契約",
+      "input_type": "code"
+    },
+    {
+      "display": "type User = {\n  readonly id: number;\n  name?: string\n};",
+      "input": "type User={readonly id:number;name?:string};",
+      "annotation": "optional / readonly：任意・読取専用（readonlyは型検査上の制約。深い不変性ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "type Status = 'todo' | 'done';\nlet id: string | number = 1;",
+      "input": "type Status='todo'|'done'; let id:string|number=1;",
+      "annotation": "union / literal：候補の型",
+      "input_type": "code"
+    },
+    {
+      "display": "const config = { mode: 'dark', sizes: [1, 2] } as const;",
+      "input": "const config={mode:'dark',sizes:[1,2]} as const;",
+      "annotation": "as const：リテラルを保持（型のreadonly化であり実行時Object.freezeではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "function add(a: number, b: number): number { return a + b }",
+      "input": "function add(a:number,b:number):number {return a+b}",
+      "annotation": "function / 戻り値型：関数定義",
+      "input_type": "code"
+    },
+    {
+      "display": "const double = (n: number): number => n * 2;",
+      "input": "const double=(n:number):number=>n*2;",
+      "annotation": "arrow function：無名関数",
+      "input_type": "code"
+    },
+    {
+      "display": "type User = {\n  id: number;\n  name: string\n};\ntype Name = User['name'];",
+      "input": "type User={id:number;name:string}; type Name=User['name'];",
+      "annotation": "T[K]：プロパティ型",
+      "input_type": "code"
+    },
+    {
+      "display": "type Optional<T> = {\n  [K in keyof T]?: T[K]\n};",
+      "input": "type Optional<T>={[K in keyof T]?:T[K]};",
+      "annotation": "mapped types：キーを変換",
+      "input_type": "code"
+    },
+    {
+      "display": "type Method = 'get' | 'post';\ntype EventName = `${Method}:users`;",
+      "input": "type Method='get'|'post'; type EventName=`${Method}:users`;",
+      "annotation": "template literal types：文字列型を組み立てる（実行時の文字列処理ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "class Counter {\n  #count = 0;\n  increment() {\n    this.#count++\n  }\n}",
+      "input": "class Counter { #count=0; increment(){this.#count++} }",
+      "annotation": "#private / private：実行時・型上の非公開（TSのprivate修飾子とJSの#フィールドの保護レベルは異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "declare function externalApi(id: number): Promise<string>;",
+      "input": "declare function externalApi(id:number):Promise<string>;",
+      "annotation": "declare / .d.ts：実装が別にある型を宣言（実装は生成されない。実行時に別途必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "npm install -D typescript@7.0",
+      "input": "npm install -D typescript@7.0",
+      "annotation": "ネイティブコンパイラー：型検査・ビルドの実装（公式7.0発表に基づく。速度改善はコードをGoで書き直すことを要求しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx tsc --noEmit",
+      "input": "npx tsc --noEmit",
+      "annotation": "ネイティブコンパイラー：型検査・ビルドの実装（公式7.0発表に基づく。速度改善はコードをGoで書き直すことを要求しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "// TypeScriptを内部importするLint・変換・解析ツールの対応版を確認",
+      "input": "// TypeScriptを内部importするLint・変換・解析ツールの対応版を確認",
+      "annotation": "コンパイラーAPI互換性：周辺ツールの対応（7.0には従来のプログラム用コンパイラーAPIがない。必要な周辺ツールは公式の6系互換パッケージ等で併用。7.1のAPIとは区別）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -1,0 +1,256 @@
+{
+  "id": "czech-intermediate-syntax",
+  "name": "チェコ語（中級構文）",
+  "category": "語学",
+  "tags": [
+    "チェコ語"
+  ],
+  "group": "チェコ語：中級",
+  "levels": [
+    "中級構文"
+  ],
+  "words": [
+    {
+      "display": "Bydlím tady už pět let.",
+      "input": "Bydlím tady už pět let.",
+      "annotation": "Bydlím tady už pět let. / 私はここにもう5年住んでいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "Byl jsi někdy v Praze?",
+      "input": "Byl jsi někdy v Praze?",
+      "annotation": "Byl jsi někdy v Praze? / プラハに行ったことがある？（男性に）",
+      "input_type": "word"
+    },
+    {
+      "display": "Právě jsem dodělal úkol.",
+      "input": "Právě jsem dodělal úkol.",
+      "annotation": "Právě jsem dodělal úkol. / ちょうど宿題を終えたところです。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Když zavolala, díval jsem se na televizi.",
+      "input": "Když zavolala, díval jsem se na televizi.",
+      "annotation": "Když zavolala, díval jsem se na televizi. / 彼女が電話してきたとき、私はテレビを見ていました。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Jestli bude pršet, zůstaneme doma.",
+      "input": "Jestli bude pršet, zůstaneme doma.",
+      "annotation": "Jestli bude pršet, zůstaneme doma. / 雨が降ったら、家にいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "Kdybych byl tebou, souhlasil bych.",
+      "input": "Kdybych byl tebou, souhlasil bych.",
+      "annotation": "Kdybych byl tebou, souhlasil bych. / もし私が君なら、同意するだろう。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Kdybych to věděl, pomohl bych ti.",
+      "input": "Kdybych to věděl, pomohl bych ti.",
+      "annotation": "Kdybych to věděl, pomohl bych ti. / 知っていたら、君を手伝ったのに。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Ten most byl postaven v roce 1990.",
+      "input": "Ten most byl postaven v roce 1990.",
+      "annotation": "Ten most byl postaven v roce 1990. / その橋は1990年に建てられました。",
+      "input_type": "word"
+    },
+    {
+      "display": "Muž, který bydlí vedle, je lékař.",
+      "input": "Muž, který bydlí vedle, je lékař.",
+      "annotation": "Muž, který bydlí vedle, je lékař. / 隣に住んでいる男性は医者です。",
+      "input_type": "word"
+    },
+    {
+      "display": "To je kniha, kterou jsem včera koupil.",
+      "input": "To je kniha, kterou jsem včera koupil.",
+      "annotation": "To je kniha, kterou jsem včera koupil. / これは私が昨日買った本です。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Vím, kde bydlí.",
+      "input": "Vím, kde bydlí.",
+      "annotation": "Vím, kde bydlí. / その人がどこに住んでいるか知っています。",
+      "input_type": "word"
+    },
+    {
+      "display": "Nevíte, kdy otevírá obchod?",
+      "input": "Nevíte, kdy otevírá obchod?",
+      "annotation": "Nevíte, kdy otevírá obchod? / 店がいつ開くかご存じですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Řekl, že je unavený.",
+      "input": "Řekl, že je unavený.",
+      "annotation": "Řekl, že je unavený. / 彼は疲れていると言いました。",
+      "input_type": "word"
+    },
+    {
+      "display": "Zeptala se, jestli můžu přijít.",
+      "input": "Zeptala se, jestli můžu přijít.",
+      "annotation": "Zeptala se, jestli můžu přijít. / 彼女は私が来られるかどうか尋ねました。",
+      "input_type": "word"
+    },
+    {
+      "display": "Těším se na tebe.",
+      "input": "Těším se na tebe.",
+      "annotation": "Těším se na tebe. / 君に会えるのを楽しみにしているよ。",
+      "input_type": "word"
+    },
+    {
+      "display": "Dřív jsem hrál tenis.",
+      "input": "Dřív jsem hrál tenis.",
+      "annotation": "Dřív jsem hrál tenis. / 以前はテニスをしていました。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Měl bys jít k lékaři.",
+      "input": "Měl bys jít k lékaři.",
+      "annotation": "Měl bys jít k lékaři. / 医者に行ったほうがいいよ。（男性に）",
+      "input_type": "word"
+    },
+    {
+      "display": "Nemusíš přijít.",
+      "input": "Nemusíš přijít.",
+      "annotation": "Nemusíš přijít. / 来なくてもいいよ。",
+      "input_type": "word"
+    },
+    {
+      "display": "Tady se nesmí kouřit.",
+      "input": "Tady se nesmí kouřit.",
+      "annotation": "Tady se nesmí kouřit. / ここでたばこを吸ってはいけません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Musím jít.",
+      "input": "Musím jít.",
+      "annotation": "Musím jít. / 行かなければなりません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je mi dvacet let.",
+      "input": "Je mi dvacet let.",
+      "annotation": "Je mi dvacet let. / 私は20歳です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Líbí se mi ten film.",
+      "input": "Líbí se mi ten film.",
+      "annotation": "Líbí se mi ten film. / 私はその映画が気に入っています。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je mi zima.",
+      "input": "Je mi zima.",
+      "annotation": "Je mi zima. / 私は寒いです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Bylo pro mě těžké číst tu knihu.",
+      "input": "Bylo pro mě těžké číst tu knihu.",
+      "annotation": "Bylo pro mě těžké číst tu knihu. / その本を読むのは私には難しかったです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Chci, abys mi pomohl.",
+      "input": "Chci, abys mi pomohl.",
+      "annotation": "Chci, abys mi pomohl. / 君に手伝ってほしい。（男性に）",
+      "input_type": "word"
+    },
+    {
+      "display": "Přišel jsem, abych si s vámi promluvil.",
+      "input": "Přišel jsem, abych si s vámi promluvil.",
+      "annotation": "Přišel jsem, abych si s vámi promluvil. / あなたと話すために来ました。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Čím víc čteš, tím víc víš.",
+      "input": "Čím víc čteš, tím víc víš.",
+      "annotation": "Čím víc čteš, tím víc víš. / 読めば読むほど多くのことを知る。",
+      "input_type": "word"
+    },
+    {
+      "display": "To je nejzajímavější film, jaký jsem kdy viděl.",
+      "input": "To je nejzajímavější film, jaký jsem kdy viděl.",
+      "annotation": "To je nejzajímavější film, jaký jsem kdy viděl. / これは私が今まで見た中で一番面白い映画です。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Praha je větší než Brno.",
+      "input": "Praha je větší než Brno.",
+      "annotation": "Praha je větší než Brno. / プラハはブルノより大きいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Nejen on, ale i ona přišla pozdě.",
+      "input": "Nejen on, ale i ona přišla pozdě.",
+      "annotation": "Nejen on, ale i ona přišla pozdě. / 彼だけでなく彼女も遅れて来ました。",
+      "input_type": "word"
+    },
+    {
+      "display": "I když byla zima, šli jsme ven.",
+      "input": "I když byla zima, šli jsme ven.",
+      "annotation": "I když byla zima, šli jsme ven. / 寒かったけれど、私たちは外に出かけました。",
+      "input_type": "word"
+    },
+    {
+      "display": "Zůstal jsem doma, protože jsem byl nemocný.",
+      "input": "Zůstal jsem doma, protože jsem byl nemocný.",
+      "annotation": "Zůstal jsem doma, protože jsem byl nemocný. / 病気だったので家にいました。（男性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Počkám tady, dokud se nevrátíš.",
+      "input": "Počkám tady, dokud se nevrátíš.",
+      "annotation": "Počkám tady, dokud se nevrátíš. / 君が戻るまでここで待つよ。",
+      "input_type": "word"
+    },
+    {
+      "display": "Když jsme přišli, film už začal.",
+      "input": "Když jsme přišli, film už začal.",
+      "annotation": "Když jsme přišli, film už začal. / 私たちが着いたときには、映画はもう始まっていました。",
+      "input_type": "word"
+    },
+    {
+      "display": "Škoda, že neumím francouzsky.",
+      "input": "Škoda, že neumím francouzsky.",
+      "annotation": "Škoda, že neumím francouzsky. / フランス語ができないのが残念です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je čas jít domů.",
+      "input": "Je čas jít domů.",
+      "annotation": "Je čas jít domů. / もう家に帰る時間です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Mohl byste otevřít okno?",
+      "input": "Mohl byste otevřít okno?",
+      "annotation": "Mohl byste otevřít okno? / 窓を開けていただけますか？（男性に）",
+      "input_type": "word"
+    },
+    {
+      "display": "Raději zůstanu doma.",
+      "input": "Raději zůstanu doma.",
+      "annotation": "Raději zůstanu doma. / むしろ家にいたいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Musel pracovat celou noc.",
+      "input": "Musel pracovat celou noc.",
+      "annotation": "Musel pracovat celou noc. / 彼は一晩中働かなければなりませんでした。",
+      "input_type": "word"
+    },
+    {
+      "display": "Dejte mi vědět, až budete mít čas.",
+      "input": "Dejte mi vědět, až budete mít čas.",
+      "annotation": "Dejte mi vědět, až budete mít čas. / 時間ができたら知らせてください。",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

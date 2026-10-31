@@ -1,0 +1,245 @@
+{
+  "id": "postgresql-syntax-intermediate-2",
+  "name": "PostgreSQL構文（中級2）",
+  "category": "プログラミング",
+  "tags": [
+    "PostgreSQL",
+    "SQL"
+  ],
+  "group": "PostgreSQL構文",
+  "levels": [
+    "中級2"
+  ],
+  "words": [
+    {
+      "display": "/* 1行コメント */ SELECT /* ブロックコメント */ 1;",
+      "input": "/* 1行コメント */ SELECT /* ブロックコメント */ 1;",
+      "annotation": "-- / /* ... */：コメント",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE active AND (age >= 20 OR age IS NULL);",
+      "input": "SELECT * FROM users WHERE active AND (age >= 20 OR age IS NULL);",
+      "annotation": "AND / OR / NOT：条件を組み合わせる（混在時は括弧で意図を明示）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users ORDER BY created_at DESC, id DESC;",
+      "input": "SELECT * FROM users ORDER BY created_at DESC, id DESC;",
+      "annotation": "ORDER BY：並べ替え（指定しない取得順は保証されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE id > 100 ORDER BY id LIMIT 20;",
+      "input": "SELECT * FROM users WHERE id > 100 ORDER BY id LIMIT 20;",
+      "annotation": "キ―セットページング：前回の続きから取得（前回の最終id等を使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT department_id, COUNT(*) FROM users GROUP BY department_id;",
+      "input": "SELECT department_id, COUNT(*) FROM users GROUP BY department_id;",
+      "annotation": "GROUP BY：グループ単位に集計",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT STRING_AGG(name, ', ' ORDER BY id) FROM users;",
+      "input": "SELECT STRING_AGG(name, ', ' ORDER BY id) FROM users;",
+      "annotation": "STRING_AGG：文字列を連結（順番が必要なら集計内でORDER BY）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM orders WHERE amount > (\n  SELECT AVG(amount) FROM orders\n);",
+      "input": "SELECT * FROM orders WHERE amount > (SELECT AVG(amount) FROM orders);",
+      "annotation": "スカラーサブクエリ：単一値を式に使う（複数行を返すとエラー）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id FROM users WHERE active UNION ALL SELECT id FROM users WHERE NOT active;",
+      "input": "SELECT id FROM users WHERE active UNION ALL SELECT id FROM users WHERE NOT active;",
+      "annotation": "UNION / UNION ALL：結果を連結（UNIONは重複排除、UNION ALLは保持）",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO users (name) VALUES ('Pomo') RETURNING id, name;",
+      "input": "INSERT INTO users (name) VALUES ('Pomo') RETURNING id, name;",
+      "annotation": "RETURNING：変更した行を返す（UPDATE・DELETEでも使用可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "UPDATE users SET age = age + 1 WHERE id = 1 RETURNING id, age;",
+      "input": "UPDATE users SET age = age + 1 WHERE id = 1 RETURNING id, age;",
+      "annotation": "UPDATE / SET / WHERE：行を更新（WHEREなしは全行更新）",
+      "input_type": "code"
+    },
+    {
+      "display": "DELETE FROM orders o USING users u WHERE o.user_id = u.id AND NOT u.active;",
+      "input": "DELETE FROM orders o USING users u WHERE o.user_id = u.id AND NOT u.active;",
+      "annotation": "DELETE ... USING：結合条件で削除",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE TABLE counters (\n  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY\n);",
+      "input": "CREATE TABLE counters (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY);",
+      "annotation": "IDENTITY：自動採番列（値の連続性・欠番なしを保証しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users ADD CONSTRAINT users_name_unique UNIQUE (name);",
+      "input": "ALTER TABLE users ADD CONSTRAINT users_name_unique UNIQUE (name);",
+      "annotation": "UNIQUE：一意制約（既存の重複があると失敗。通常NULL同士は同値としない）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE orders ADD CONSTRAINT orders_amount_positive CHECK (amount >= 0);",
+      "input": "ALTER TABLE orders ADD CONSTRAINT orders_amount_positive CHECK (amount >= 0);",
+      "annotation": "CHECK：行の条件制約（条件がNULLの場合も通る。必要ならNOT NULLも併用）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users ALTER COLUMN age TYPE bigint USING age::bigint;",
+      "input": "ALTER TABLE users ALTER COLUMN age TYPE bigint USING age::bigint;",
+      "annotation": "ALTER COLUMN TYPE：列型を変更（ロック・書き換えの負荷が発生する場合がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users RENAME COLUMN nickname TO display_name;",
+      "input": "ALTER TABLE users RENAME COLUMN nickname TO display_name;",
+      "annotation": "RENAME COLUMN / TO：列名・表名を変更（この例はnickname列がある場合）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE TABLE user_snapshot AS SELECT id, name FROM users;",
+      "input": "CREATE TABLE user_snapshot AS SELECT id, name FROM users;",
+      "annotation": "CREATE TABLE AS：検索結果で表を作る（元表の制約・インデックス等は通常引き継がない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT DATE '2026-01-01', TIMESTAMP '2026-01-01 12:00:00';",
+      "input": "SELECT DATE '2026-01-01', TIMESTAMP '2026-01-01 12:00:00';",
+      "annotation": "date / timestamp：日付・タイムゾーンなし日時（timestamp単独はwithout time zone）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT name, CASE WHEN age >= 20 THEN '成人' ELSE 'その他' END FROM users;",
+      "input": "SELECT name, CASE WHEN age >= 20 THEN '成人' ELSE 'その他' END FROM users;",
+      "annotation": "CASE WHEN：条件に応じた値",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT name || 'さん', CONCAT(name, 'さん') FROM users;",
+      "input": "SELECT name || 'さん', CONCAT(name, 'さん') FROM users;",
+      "annotation": "|| / CONCAT：文字列連結（||はNULLがあると通常NULL。CONCATはNULL引数を無視）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT LOWER(name), UPPER(name), TRIM(name) FROM users;",
+      "input": "SELECT LOWER(name), UPPER(name), TRIM(name) FROM users;",
+      "annotation": "LOWER / UPPER / TRIM：文字列加工",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT LENGTH(name), SUBSTRING(name FROM 1 FOR 2) FROM users;",
+      "input": "SELECT LENGTH(name), SUBSTRING(name FROM 1 FOR 2) FROM users;",
+      "annotation": "LENGTH / SUBSTRING：長さ・部分文字列（LENGTH(text)は文字数）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT profile->'address', profile->>'name' FROM users;",
+      "input": "SELECT profile->'address', profile->>'name' FROM users;",
+      "annotation": "-> / ->>：JSON要素の取得（->はJSON、->>はtext）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE profile @ > '{\"premium\":true}'::jsonb;",
+      "input": "SELECT * FROM users WHERE profile @> '{\"premium\":true}'::jsonb;",
+      "annotation": "@>：JSONB包含",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT jsonb_build_object('id', id, 'name', name) FROM users;",
+      "input": "SELECT jsonb_build_object('id', id, 'name', name) FROM users;",
+      "annotation": "jsonb_build_object：JSONBオブジェクトを構築",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE tags && ARRAY['go', 'sql'];",
+      "input": "SELECT * FROM users WHERE tags && ARRAY['go', 'sql'];",
+      "annotation": "&&：配列の重なり",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE INDEX users_created_at_idx ON users(created_at);",
+      "input": "CREATE INDEX users_created_at_idx ON users(created_at);",
+      "annotation": "CREATE INDEX：検索用インデックス（読み取りが速くなる場合があるが更新・容量コストが増える）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE INDEX orders_user_created_idx ON orders(user_id, created_at DESC);",
+      "input": "CREATE INDEX orders_user_created_idx ON orders(user_id, created_at DESC);",
+      "annotation": "複合インデックス：複数列のインデックス（列順・条件・並べ替えに合わせて設計）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE INDEX users_active_idx ON users(id) WHERE active;",
+      "input": "CREATE INDEX users_active_idx ON users(id) WHERE active;",
+      "annotation": "部分インデックス：条件に合う行だけを索引化（クエリ条件と述語の関係が重要）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE INDEX users_lower_email_idx ON users(LOWER(email));",
+      "input": "CREATE INDEX users_lower_email_idx ON users(LOWER(email));",
+      "annotation": "式インデックス：式の結果を索引化",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE INDEX users_profile_gin_idx ON users USING GIN(profile);",
+      "input": "CREATE INDEX users_profile_gin_idx ON users USING GIN(profile);",
+      "annotation": "USING GIN：JSONB等向けGIN索引（演算子・演算子クラスにより対応が異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE INDEX CONCURRENTLY users_age_idx ON users(age);",
+      "input": "CREATE INDEX CONCURRENTLY users_age_idx ON users(age);",
+      "annotation": "CREATE INDEX CONCURRENTLY：書き込みを止めにくい索引作成（トランザクションブロック内不可。失敗時に無効索引が残り得る）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE VIEW active_users AS SELECT id, name FROM users WHERE active;",
+      "input": "CREATE VIEW active_users AS SELECT id, name FROM users WHERE active;",
+      "annotation": "CREATE VIEW：クエリをビューとして保存（通常は結果を保存しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN;\nUPDATE users SET active = false WHERE id = 1;\nCOMMIT;",
+      "input": "BEGIN; UPDATE users SET active = false WHERE id = 1; COMMIT;",
+      "annotation": "BEGIN / COMMIT：処理をまとめて確定（実行すると変更が確定）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN;\nUPDATE users SET active = false WHERE id = 1;\nROLLBACK;",
+      "input": "BEGIN; UPDATE users SET active = false WHERE id = 1; ROLLBACK;",
+      "annotation": "ROLLBACK：変更を取り消す（シーケンスの採番等は巻き戻らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN ISOLATION LEVEL SERIALIZABLE;\nSELECT * FROM users WHERE id = 1;\nCOMMIT;",
+      "input": "BEGIN ISOLATION LEVEL SERIALIZABLE; SELECT * FROM users WHERE id = 1; COMMIT;",
+      "annotation": "ISOLATION LEVEL：分離レベルを指定（直列化失敗時はトランザクション全体の再試行が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN;\nSELECT * FROM users WHERE id = 1 FOR UPDATE;\nCOMMIT;",
+      "input": "BEGIN; SELECT * FROM users WHERE id = 1 FOR UPDATE; COMMIT;",
+      "annotation": "FOR UPDATE：取得行を更新用にロック（ロックは通常トランザクション終了まで）",
+      "input_type": "code"
+    },
+    {
+      "display": "EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM users WHERE id = 1;",
+      "input": "EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM users WHERE id = 1;",
+      "annotation": "EXPLAIN ANALYZE：実行して実測計画を表示（対象SQLを実際に実行。UPDATE・DELETE等にも副作用がある）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

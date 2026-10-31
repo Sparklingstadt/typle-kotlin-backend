@@ -1,0 +1,256 @@
+{
+  "id": "chinese-hsk6-words-2",
+  "name": "中国語HSK6級（単語2）",
+  "category": "語学",
+  "tags": [
+    "中国語"
+  ],
+  "group": "中国語：HSK6級レベル単語",
+  "levels": [
+    "単語2"
+  ],
+  "words": [
+    {
+      "display": "衡量",
+      "input": "héngliáng",
+      "annotation": "héngliáng / 評価する、はかる",
+      "input_type": "word"
+    },
+    {
+      "display": "忽略",
+      "input": "hūlüè",
+      "annotation": "hūlüè / 見落とす、おろそかにする",
+      "input_type": "word"
+    },
+    {
+      "display": "呼吁",
+      "input": "hūyù",
+      "annotation": "hūyù / 呼びかける",
+      "input_type": "word"
+    },
+    {
+      "display": "回顾",
+      "input": "huígù",
+      "annotation": "huígù / 振り返る",
+      "input_type": "word"
+    },
+    {
+      "display": "机密",
+      "input": "jīmì",
+      "annotation": "jīmì / 機密",
+      "input_type": "word"
+    },
+    {
+      "display": "坚定",
+      "input": "jiāndìng",
+      "annotation": "jiāndìng / 揺るぎない",
+      "input_type": "word"
+    },
+    {
+      "display": "见解",
+      "input": "jiànjiě",
+      "annotation": "jiànjiě / 見解",
+      "input_type": "word"
+    },
+    {
+      "display": "借鉴",
+      "input": "jièjiàn",
+      "annotation": "jièjiàn / 手本にする、参考にする",
+      "input_type": "word"
+    },
+    {
+      "display": "竭尽全力",
+      "input": "jiéjìn quánlì",
+      "annotation": "jiéjìn quánlì / 全力を尽くす",
+      "input_type": "word"
+    },
+    {
+      "display": "敬业",
+      "input": "jìngyè",
+      "annotation": "jìngyè / 仕事に打ち込む",
+      "input_type": "word"
+    },
+    {
+      "display": "局限",
+      "input": "júxiàn",
+      "annotation": "júxiàn / 限定する、限界",
+      "input_type": "word"
+    },
+    {
+      "display": "开拓",
+      "input": "kāituò",
+      "annotation": "kāituò / 開拓する",
+      "input_type": "word"
+    },
+    {
+      "display": "慷慨",
+      "input": "kāngkǎi",
+      "annotation": "kāngkǎi / 気前がよい",
+      "input_type": "word"
+    },
+    {
+      "display": "考核",
+      "input": "kǎohé",
+      "annotation": "kǎohé / 審査する、評価する",
+      "input_type": "word"
+    },
+    {
+      "display": "空前绝后",
+      "input": "kōngqián juéhòu",
+      "annotation": "kōngqián juéhòu / 空前絶後",
+      "input_type": "word"
+    },
+    {
+      "display": "落实",
+      "input": "luòshí",
+      "annotation": "luòshí / 実行に移す、具体化する",
+      "input_type": "word"
+    },
+    {
+      "display": "茫然",
+      "input": "mángrán",
+      "annotation": "mángrán / 茫然とした",
+      "input_type": "word"
+    },
+    {
+      "display": "弥补",
+      "input": "míbǔ",
+      "annotation": "míbǔ / 補う",
+      "input_type": "word"
+    },
+    {
+      "display": "模范",
+      "input": "mófàn",
+      "annotation": "mófàn / 模範",
+      "input_type": "word"
+    },
+    {
+      "display": "蓬勃",
+      "input": "péngbó",
+      "annotation": "péngbó / 勢いがよい",
+      "input_type": "word"
+    },
+    {
+      "display": "频繁",
+      "input": "pínfán",
+      "annotation": "pínfán / 頻繁な",
+      "input_type": "word"
+    },
+    {
+      "display": "迄今为止",
+      "input": "qìjīn wéizhǐ",
+      "annotation": "qìjīn wéizhǐ / 今に至るまで",
+      "input_type": "word"
+    },
+    {
+      "display": "潜力",
+      "input": "qiánlì",
+      "annotation": "qiánlì / 潜在力",
+      "input_type": "word"
+    },
+    {
+      "display": "倾向",
+      "input": "qīngxiàng",
+      "annotation": "qīngxiàng / 傾向",
+      "input_type": "word"
+    },
+    {
+      "display": "权衡",
+      "input": "quánhéng",
+      "annotation": "quánhéng / 比較検討する",
+      "input_type": "word"
+    },
+    {
+      "display": "擅长",
+      "input": "shàncháng",
+      "annotation": "shàncháng / 得意とする",
+      "input_type": "word"
+    },
+    {
+      "display": "生疏",
+      "input": "shēngshū",
+      "annotation": "shēngshū / 不慣れな、疎遠な",
+      "input_type": "word"
+    },
+    {
+      "display": "实施",
+      "input": "shíshī",
+      "annotation": "shíshī / 実施する",
+      "input_type": "word"
+    },
+    {
+      "display": "视野",
+      "input": "shìyě",
+      "annotation": "shìyě / 視野",
+      "input_type": "word"
+    },
+    {
+      "display": "随意",
+      "input": "suíyì",
+      "annotation": "suíyì / 気ままに、自由に",
+      "input_type": "word"
+    },
+    {
+      "display": "坦白",
+      "input": "tǎnbái",
+      "annotation": "tǎnbái / 率直な、白状する",
+      "input_type": "word"
+    },
+    {
+      "display": "体谅",
+      "input": "tǐliàng",
+      "annotation": "tǐliàng / 思いやる",
+      "input_type": "word"
+    },
+    {
+      "display": "妥协",
+      "input": "tuǒxié",
+      "annotation": "tuǒxié / 妥協する",
+      "input_type": "word"
+    },
+    {
+      "display": "维护",
+      "input": "wéihù",
+      "annotation": "wéihù / 守る、維持する",
+      "input_type": "word"
+    },
+    {
+      "display": "欣慰",
+      "input": "xīnwèi",
+      "annotation": "xīnwèi / 喜ばしい、ほっとする",
+      "input_type": "word"
+    },
+    {
+      "display": "严峻",
+      "input": "yánjùn",
+      "annotation": "yánjùn / 厳しい",
+      "input_type": "word"
+    },
+    {
+      "display": "一丝不苟",
+      "input": "yìsī bùgǒu",
+      "annotation": "yìsī bùgǒu / 少しもおろそかにしない",
+      "input_type": "word"
+    },
+    {
+      "display": "着重",
+      "input": "zhuózhòng",
+      "annotation": "zhuózhòng / 重点を置く",
+      "input_type": "word"
+    },
+    {
+      "display": "自主",
+      "input": "zìzhǔ",
+      "annotation": "zìzhǔ / 自主的な",
+      "input_type": "word"
+    },
+    {
+      "display": "纵横",
+      "input": "zònghéng",
+      "annotation": "zònghéng / 縦横、自由自在な",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

@@ -38,7 +38,7 @@ fun checkLimits(lists: List<WordList>) {
     }
     for (word in list.words) {
       if (utf16Length(word.input) > MAX_WORD_TEXT || utf16Length(word.display) > MAX_WORD_TEXT ||
-        utf16Length(word.annotation) > MAX_ANNOTATION) {
+        utf16Length(word.annotation) > MAX_ANNOTATION || !validInputType(word.inputType)) {
         throw WorkspaceError("invalidWorkspace")
       }
     }
@@ -49,27 +49,20 @@ fun checkLimits(lists: List<WordList>) {
  * Writes lists as the app saves them in the lists column, as Go's workspace.Encode does. The category and tags belong to
  * the list's pack, so they are left out (see encodePacks), and so is the group.
  */
-fun encode(lists: List<WordList>): String = encodeLists(lists, labels = false)
-
-/**
- * Writes lists as an app that does not know packs saves them, as Go's workspace.EncodeWithLabels does: each with its
- * group, category and tags, which the app moves into packs when it reads them.
- */
-fun encodeWithLabels(lists: List<WordList>): String = encodeLists(lists, labels = true)
-
-private fun encodeLists(lists: List<WordList>, labels: Boolean): String = lists.joinToString(",", "[", "]") { list ->
+fun encode(lists: List<WordList>): String = lists.joinToString(",", "[", "]") { list ->
   object_(list.extra,
     "id" to str(list.id), "name" to str(list.name), "packId" to list.packId.ifEmpty { null }?.let(::str),
-    "group" to list.group.takeIf { labels && it.isNotEmpty() }?.let(::str),
-    "category" to list.category.takeIf { labels && it.isNotEmpty() }?.let(::str),
-    "tags" to list.tags.takeIf { labels && it.isNotEmpty() }?.let(::strings),
     "createdAt" to str(list.createdAt),
     "words" to list.words.joinToString(",", "[", "]") { word ->
-      object_(word.extra, "display" to str(word.display), "input" to str(word.input), "annotation" to str(word.annotation))
+      object_(word.extra, "display" to str(word.display), "input" to str(word.input), "annotation" to str(word.annotation),
+        "input_type" to word.inputType.ifEmpty { null }?.let(::str))
     },
     "records" to list.records.joinToString(",", "[", "]", transform = ::record),
   )
 }
+
+/** Writes one record as a list's records array holds it (a row of typle_records), as Go's json.Marshal of a Record. */
+fun encodeRecord(r: Record): String = record(r)
 
 /** Writes packs as the app saves them in the packs column, as Go's workspace.EncodePacks does. */
 fun encodePacks(packs: List<Pack>): String = packs.joinToString(",", "[", "]") { pack ->

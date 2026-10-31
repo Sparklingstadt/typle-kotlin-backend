@@ -1,0 +1,492 @@
+{
+  "id": "french-basics",
+  "name": "フランス語：基礎単語・基礎構文",
+  "words": [
+    {
+      "display": "Je suis étudiant / étudiante.",
+      "input": "Je suis étudiant / étudiante.",
+      "annotation": "Je suis étudiant / étudiante. / 私は学生です。（男性／女性）",
+      "input_type": "word"
+    },
+    {
+      "display": "C'est un livre.",
+      "input": "C'est un livre.",
+      "annotation": "C'est un livre. / これは本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ce n'est pas mon livre.",
+      "input": "Ce n'est pas mon livre.",
+      "annotation": "Ce n'est pas mon livre. / これは私の本ではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Qui est-ce ?",
+      "input": "Qui est-ce ?",
+      "annotation": "Qui est-ce ? / これは誰ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Qu'est-ce que c'est ?",
+      "input": "Qu'est-ce que c'est ?",
+      "annotation": "Qu'est-ce que c'est ? / これは何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Où sont les toilettes ?",
+      "input": "Où sont les toilettes ?",
+      "annotation": "Où sont les toilettes ? / トイレはどこですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Comment vous appelez-vous ?",
+      "input": "Comment vous appelez-vous ?",
+      "annotation": "Comment vous appelez-vous ? / お名前は何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Je m'appelle Anna.",
+      "input": "Je m'appelle Anna.",
+      "annotation": "Je m'appelle Anna. / 私の名前はアンナです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je viens du Japon.",
+      "input": "Je viens du Japon.",
+      "annotation": "Je viens du Japon. / 私は日本出身です。",
+      "input_type": "word"
+    },
+    {
+      "display": "J'ai une question.",
+      "input": "J'ai une question.",
+      "annotation": "J'ai une question. / 質問があります。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je n'ai pas le temps.",
+      "input": "Je n'ai pas le temps.",
+      "annotation": "Je n'ai pas le temps. / 時間がありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je voudrais boire de l'eau.",
+      "input": "Je voudrais boire de l'eau.",
+      "annotation": "Je voudrais boire de l'eau. / 水を飲みたいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je dois partir.",
+      "input": "Je dois partir.",
+      "annotation": "Je dois partir. / 私は出発しなければなりません。",
+      "input_type": "word"
+    },
+    {
+      "display": "J'aime la musique.",
+      "input": "J'aime la musique.",
+      "annotation": "J'aime la musique. / 私は音楽が好きです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Je peux vous aider.",
+      "input": "Je peux vous aider.",
+      "annotation": "Je peux vous aider. / あなたを手伝えます。",
+      "input_type": "word"
+    },
+    {
+      "display": "Est-ce que je peux entrer ?",
+      "input": "Est-ce que je peux entrer ?",
+      "annotation": "Est-ce que je peux entrer ? / 入ってもいいですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "De l'eau, s'il vous plaît.",
+      "input": "De l'eau, s'il vous plaît.",
+      "annotation": "De l'eau, s'il vous plaît. / 水をお願いします。",
+      "input_type": "word"
+    },
+    {
+      "display": "Combien ça coûte ?",
+      "input": "Combien ça coûte ?",
+      "annotation": "Combien ça coûte ? / これはいくらですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Je ne comprends pas.",
+      "input": "Je ne comprends pas.",
+      "annotation": "Je ne comprends pas. / 理解できません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Répétez, s'il vous plaît.",
+      "input": "Répétez, s'il vous plaît.",
+      "annotation": "Répétez, s'il vous plaît. / もう一度言ってください。",
+      "input_type": "word"
+    },
+    {
+      "display": "je",
+      "input": "je",
+      "annotation": "je / 私",
+      "input_type": "word"
+    },
+    {
+      "display": "tu",
+      "input": "tu",
+      "annotation": "tu / 君、あなた（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "vous",
+      "input": "vous",
+      "annotation": "vous / あなた（丁寧）、あなたたち",
+      "input_type": "word"
+    },
+    {
+      "display": "il",
+      "input": "il",
+      "annotation": "il / 彼、それ（男性名詞を受ける）",
+      "input_type": "word"
+    },
+    {
+      "display": "elle",
+      "input": "elle",
+      "annotation": "elle / 彼女、それ（女性名詞を受ける）",
+      "input_type": "word"
+    },
+    {
+      "display": "nous",
+      "input": "nous",
+      "annotation": "nous / 私たち",
+      "input_type": "word"
+    },
+    {
+      "display": "ils",
+      "input": "ils",
+      "annotation": "ils / 彼ら、それら（男性を含む複数）",
+      "input_type": "word"
+    },
+    {
+      "display": "elles",
+      "input": "elles",
+      "annotation": "elles / 彼女ら、それら（女性のみの複数）",
+      "input_type": "word"
+    },
+    {
+      "display": "qui",
+      "input": "qui",
+      "annotation": "qui / 誰",
+      "input_type": "word"
+    },
+    {
+      "display": "quoi",
+      "input": "quoi",
+      "annotation": "quoi / 何",
+      "input_type": "word"
+    },
+    {
+      "display": "où",
+      "input": "où",
+      "annotation": "où / どこ、どこへ",
+      "input_type": "word"
+    },
+    {
+      "display": "quand",
+      "input": "quand",
+      "annotation": "quand / いつ",
+      "input_type": "word"
+    },
+    {
+      "display": "pourquoi",
+      "input": "pourquoi",
+      "annotation": "pourquoi / なぜ",
+      "input_type": "word"
+    },
+    {
+      "display": "comment",
+      "input": "comment",
+      "annotation": "comment / どのように、どう",
+      "input_type": "word"
+    },
+    {
+      "display": "combien",
+      "input": "combien",
+      "annotation": "combien / いくつ、いくら",
+      "input_type": "word"
+    },
+    {
+      "display": "oui",
+      "input": "oui",
+      "annotation": "oui / はい",
+      "input_type": "word"
+    },
+    {
+      "display": "non",
+      "input": "non",
+      "annotation": "non / いいえ",
+      "input_type": "word"
+    },
+    {
+      "display": "ne … pas",
+      "input": "ne … pas",
+      "annotation": "ne … pas / ～ではない、～しない",
+      "input_type": "word"
+    },
+    {
+      "display": "et",
+      "input": "et",
+      "annotation": "et / ～と、そして",
+      "input_type": "word"
+    },
+    {
+      "display": "mais",
+      "input": "mais",
+      "annotation": "mais / しかし",
+      "input_type": "word"
+    },
+    {
+      "display": "ou",
+      "input": "ou",
+      "annotation": "ou / または",
+      "input_type": "word"
+    },
+    {
+      "display": "bonjour",
+      "input": "bonjour",
+      "annotation": "bonjour / こんにちは、おはようございます",
+      "input_type": "word"
+    },
+    {
+      "display": "salut",
+      "input": "salut",
+      "annotation": "salut / やあ、じゃあね（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "merci",
+      "input": "merci",
+      "annotation": "merci / ありがとう",
+      "input_type": "word"
+    },
+    {
+      "display": "s'il vous plaît",
+      "input": "s'il vous plaît",
+      "annotation": "s'il vous plaît / お願いします（丁寧）",
+      "input_type": "word"
+    },
+    {
+      "display": "pardon",
+      "input": "pardon",
+      "annotation": "pardon / すみません、ごめんなさい",
+      "input_type": "word"
+    },
+    {
+      "display": "au revoir",
+      "input": "au revoir",
+      "annotation": "au revoir / さようなら",
+      "input_type": "word"
+    },
+    {
+      "display": "bien",
+      "input": "bien",
+      "annotation": "bien / よく、うまく",
+      "input_type": "word"
+    },
+    {
+      "display": "mal",
+      "input": "mal",
+      "annotation": "mal / 悪く、うまくいかず",
+      "input_type": "word"
+    },
+    {
+      "display": "très",
+      "input": "très",
+      "annotation": "très / とても",
+      "input_type": "word"
+    },
+    {
+      "display": "une personne",
+      "input": "une personne",
+      "annotation": "une personne / 人",
+      "input_type": "word"
+    },
+    {
+      "display": "un ami / une amie",
+      "input": "un ami / une amie",
+      "annotation": "un ami / une amie / 友達（男性／女性）",
+      "input_type": "word"
+    },
+    {
+      "display": "un enfant",
+      "input": "un enfant",
+      "annotation": "un enfant / 子ども（男性形の例）",
+      "input_type": "word"
+    },
+    {
+      "display": "une famille",
+      "input": "une famille",
+      "annotation": "une famille / 家族",
+      "input_type": "word"
+    },
+    {
+      "display": "une maison",
+      "input": "une maison",
+      "annotation": "une maison / 家",
+      "input_type": "word"
+    },
+    {
+      "display": "une école",
+      "input": "une école",
+      "annotation": "une école / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "le travail",
+      "input": "le travail",
+      "annotation": "le travail / 仕事",
+      "input_type": "word"
+    },
+    {
+      "display": "un magasin",
+      "input": "un magasin",
+      "annotation": "un magasin / 店",
+      "input_type": "word"
+    },
+    {
+      "display": "un livre",
+      "input": "un livre",
+      "annotation": "un livre / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "l'eau",
+      "input": "l'eau",
+      "annotation": "l'eau / 水（女性名詞）",
+      "input_type": "word"
+    },
+    {
+      "display": "le pain",
+      "input": "le pain",
+      "annotation": "le pain / パン",
+      "input_type": "word"
+    },
+    {
+      "display": "la nourriture",
+      "input": "la nourriture",
+      "annotation": "la nourriture / 食べ物",
+      "input_type": "word"
+    },
+    {
+      "display": "le temps",
+      "input": "le temps",
+      "annotation": "le temps / 時間、天気",
+      "input_type": "word"
+    },
+    {
+      "display": "l'argent",
+      "input": "l'argent",
+      "annotation": "l'argent / お金（男性名詞）",
+      "input_type": "word"
+    },
+    {
+      "display": "aujourd'hui",
+      "input": "aujourd'hui",
+      "annotation": "aujourd'hui / 今日",
+      "input_type": "word"
+    },
+    {
+      "display": "demain",
+      "input": "demain",
+      "annotation": "demain / 明日",
+      "input_type": "word"
+    },
+    {
+      "display": "hier",
+      "input": "hier",
+      "annotation": "hier / 昨日",
+      "input_type": "word"
+    },
+    {
+      "display": "maintenant",
+      "input": "maintenant",
+      "annotation": "maintenant / 今",
+      "input_type": "word"
+    },
+    {
+      "display": "grand",
+      "input": "grand",
+      "annotation": "grand / 大きい、背が高い",
+      "input_type": "word"
+    },
+    {
+      "display": "petit",
+      "input": "petit",
+      "annotation": "petit / 小さい",
+      "input_type": "word"
+    },
+    {
+      "display": "bon",
+      "input": "bon",
+      "annotation": "bon / 良い",
+      "input_type": "word"
+    },
+    {
+      "display": "nouveau",
+      "input": "nouveau",
+      "annotation": "nouveau / 新しい",
+      "input_type": "word"
+    },
+    {
+      "display": "être",
+      "input": "être",
+      "annotation": "être / ～である、いる",
+      "input_type": "word"
+    },
+    {
+      "display": "faire",
+      "input": "faire",
+      "annotation": "faire / する、作る",
+      "input_type": "word"
+    },
+    {
+      "display": "aller",
+      "input": "aller",
+      "annotation": "aller / 行く",
+      "input_type": "word"
+    },
+    {
+      "display": "parler",
+      "input": "parler",
+      "annotation": "parler / 話す",
+      "input_type": "word"
+    },
+    {
+      "display": "comprendre",
+      "input": "comprendre",
+      "annotation": "comprendre / 理解する",
+      "input_type": "word"
+    },
+    {
+      "display": "savoir",
+      "input": "savoir",
+      "annotation": "savoir / 知っている（事実・方法など）",
+      "input_type": "word"
+    },
+    {
+      "display": "vouloir",
+      "input": "vouloir",
+      "annotation": "vouloir / ～したい、欲しい",
+      "input_type": "word"
+    },
+    {
+      "display": "pouvoir",
+      "input": "pouvoir",
+      "annotation": "pouvoir / ～できる",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-28T13:45:45.843Z",
+  "category": "語学",
+  "tags": [
+    "フランス語"
+  ]
+}

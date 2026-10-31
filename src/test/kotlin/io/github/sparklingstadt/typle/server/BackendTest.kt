@@ -38,7 +38,7 @@ class BackendTest {
       assertEquals("noindex", shared.headers().firstValue("X-Robots-Tag").orElse(null))
       assertFalse(server.request("GET", "/api/workspace").headers().firstValue("X-Robots-Tag").isPresent)
       val session = server.request("GET", "/api/auth/session")
-      assertEquals(200 to "{\"user\":null}\n", session.statusCode() to session.body())
+      assertEquals(200 to "{\"user\":null,\"providers\":[\"github\"]}\n", session.statusCode() to session.body())
       assertTrue(logged.any { "connection refused" in it }, logged.toString())
     }
   }

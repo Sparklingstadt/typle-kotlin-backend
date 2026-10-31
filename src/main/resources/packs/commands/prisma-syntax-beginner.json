@@ -1,0 +1,209 @@
+{
+  "id": "prisma-syntax-beginner",
+  "name": "Prisma構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Prisma",
+    "TypeScript"
+  ],
+  "group": "Prisma構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "// Prisma ORM 7 / TypeScript / PostgreSQL",
+      "input": "// Prisma ORM 7 / TypeScript / PostgreSQL",
+      "annotation": "対象環境：例の前提（コードは断片。生成済みClient・DB接続・モデル等が必要。v6以前と設定が異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.$disconnect();",
+      "input": "await prisma.$disconnect();",
+      "annotation": "$disconnect：接続リソースを終了（短命スクリプトの終了時等。サーバーで毎リクエスト切断しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "datasource db {\n  provider = \"postgresql\"\n}",
+      "input": "datasource db { provider = \"postgresql\" }",
+      "annotation": "datasource：DBプロバイダー指定（Prisma 7の接続URLはprisma.config.ts側）",
+      "input_type": "code"
+    },
+    {
+      "display": "model Note {\n  id   Int    @id @default(autoincrement())\n  body String\n}",
+      "input": "model Note { id Int @id @default(autoincrement()) body String }",
+      "annotation": "model：モデル定義（Prisma Schema Language）",
+      "input_type": "code"
+    },
+    {
+      "display": "name String ?",
+      "input": "name String?",
+      "annotation": "String?：任意フィールド（DBでは通常NULL許容）",
+      "input_type": "code"
+    },
+    {
+      "display": "tags String[]",
+      "input": "tags String[]",
+      "annotation": "String[]：配列フィールド（対応DBに依存。このCSVはPostgreSQL）",
+      "input_type": "code"
+    },
+    {
+      "display": "id Int @id @default(autoincrement())",
+      "input": "id Int @id @default(autoincrement())",
+      "annotation": "@id：主キー",
+      "input_type": "code"
+    },
+    {
+      "display": "email String @unique",
+      "input": "email String @unique",
+      "annotation": "@unique：一意制約",
+      "input_type": "code"
+    },
+    {
+      "display": "active Boolean @default(true)",
+      "input": "active Boolean @default(true)",
+      "annotation": "@default：既定値",
+      "input_type": "code"
+    },
+    {
+      "display": "createdAt DateTime @default(now())",
+      "input": "createdAt DateTime @default(now())",
+      "annotation": "@default(now())：作成時日時",
+      "input_type": "code"
+    },
+    {
+      "display": "updatedAt DateTime @updatedAt",
+      "input": "updatedAt DateTime @updatedAt",
+      "annotation": "@updatedAt：Prisma更新時の日時（Prisma ORMレベルで管理。外部SQL更新では自動反映されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "author User @relation(fields: [authorId], references: [id])",
+      "input": "author User @relation(fields: [authorId], references: [id])",
+      "annotation": "@relation：リレーション（対応するauthorId・反対側フィールド等が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "@@unique([authorId, title])",
+      "input": "@@unique([authorId, title])",
+      "annotation": "@@unique：複合一意制約（モデルブロック内。既存データと制約を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "@@index([authorId, published])",
+      "input": "@@index([authorId, published])",
+      "annotation": "@@index：インデックス（モデルブロック内。変更はDBへ適用が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "displayName String @map(\"display_name\") @@map(\"users\")",
+      "input": "displayName String @map(\"display_name\") @@map(\"users\")",
+      "annotation": "@map / @@map：DB上の名前と対応付け（モデル内の別々の宣言例）",
+      "input_type": "code"
+    },
+    {
+      "display": "enum Role {\n  ADMIN\n  MEMBER\n}",
+      "input": "enum Role { ADMIN MEMBER }",
+      "annotation": "enum：列挙型（モデル側で型として参照。DB対応を確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "const users = await prisma.user.findMany();",
+      "input": "const users = await prisma.user.findMany();",
+      "annotation": "findMany：複数件取得（全件取得はデータ量に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "const user = await prisma.user.findUnique({ where: { id: 1 } });",
+      "input": "const user = await prisma.user.findUnique({ where: { id: 1 } });",
+      "annotation": "findUnique：一意条件で1件（なければnull）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ where: { age: { gte: 20 } } });",
+      "input": "await prisma.user.findMany({ where: { age: { gte: 20 } } });",
+      "annotation": "where：絞り込み",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ where: { name: null } });",
+      "input": "await prisma.user.findMany({ where: { name: null } });",
+      "annotation": "null：NULL条件（undefinedと同じ意味ではない。未定義値の扱いは設定も確認）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.user.findMany({ select: {\n    id: true,\n    email: true\n  } });",
+      "input": "await prisma.user.findMany({ select: { id: true, email: true } });",
+      "annotation": "select：取得するフィールドを限定（同じ階層でincludeと併用不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "const count = await prisma.user.count({ where: { active: true } });",
+      "input": "const count = await prisma.user.count({ where: { active: true } });",
+      "annotation": "count：件数",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.post.delete({ where: { id: 1 } });",
+      "input": "await prisma.post.delete({ where: { id: 1 } });",
+      "annotation": "delete：1件削除（対象なしは例外。実データが削除される）",
+      "input_type": "code"
+    },
+    {
+      "display": "await prisma.post.deleteMany({ where: { published: false } });",
+      "input": "await prisma.post.deleteMany({ where: { published: false } });",
+      "annotation": "deleteMany：複数件削除（where省略は全件削除）",
+      "input_type": "code"
+    },
+    {
+      "display": "npx prisma generate",
+      "input": "npx prisma generate",
+      "annotation": "prisma generate：Clientを生成（ターミナルで実行。DBスキーマ変更は適用しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx prisma format",
+      "input": "npx prisma format",
+      "annotation": "prisma format / validate：スキーマ整形・検証（ターミナルで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx prisma validate",
+      "input": "npx prisma validate",
+      "annotation": "prisma format / validate：スキーマ整形・検証（ターミナルで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx prisma migrate dev --name init",
+      "input": "npx prisma migrate dev --name init",
+      "annotation": "prisma migrate dev：開発用マイグレーション（開発用。リセット要求が出る場合がある。本番向けではない）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx prisma migrate deploy",
+      "input": "npx prisma migrate deploy",
+      "annotation": "prisma migrate deploy：既存のマイグレーションを適用（通常CI・デプロイ時。新規マイグレーションやClientを生成しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx prisma db pull",
+      "input": "npx prisma db pull",
+      "annotation": "prisma db pull：既存DBからスキーマへ反映（schema.prismaが変更されるため差分を確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx prisma db push",
+      "input": "npx prisma db push",
+      "annotation": "prisma db push：履歴を作らずDBへ同期（試作等向け。データ損失を伴う変更に注意）",
+      "input_type": "command"
+    },
+    {
+      "display": "npx prisma studio",
+      "input": "npx prisma studio",
+      "annotation": "prisma studio：データ閲覧・編集UI（実データを書き換えられる。Prisma 7の対応DB等を確認）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

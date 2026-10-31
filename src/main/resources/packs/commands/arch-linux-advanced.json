@@ -1,0 +1,210 @@
+{
+  "id": "arch-linux-advanced",
+  "name": "Arch Linuxコマンド（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Arch Linux",
+    "Linux",
+    "シェル"
+  ],
+  "group": "Arch Linuxコマンド",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "cp memo.txt backup.txt",
+      "input": "cp memo.txt backup.txt",
+      "annotation": "cp：ファイルをコピー（コピー先を上書きする場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "ln -s ~/Documents/docs docs-link",
+      "input": "ln -s ~/Documents/docs docs-link",
+      "annotation": "ln -s：シンボリックリンクを作成",
+      "input_type": "command"
+    },
+    {
+      "display": "find . -name \"*.log\"",
+      "input": "find . -name \"*.log\"",
+      "annotation": "find：ファイルを検索（パターンは引用符で囲む）",
+      "input_type": "command"
+    },
+    {
+      "display": "pacman -Qo /usr/bin/bash",
+      "input": "pacman -Qo /usr/bin/bash",
+      "annotation": "pacman -Qo パス：ファイルの所属パッケージを確認",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -R firefox",
+      "input": "sudo pacman -R firefox",
+      "annotation": "sudo pacman -R パッケージ名：パッケージを削除",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -Rs firefox",
+      "input": "sudo pacman -Rs firefox",
+      "annotation": "sudo pacman -Rs パッケージ名：対象と不要な依存を削除（削除予定一覧を確認）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -U ./example-1.0-1-x86_64.pkg.tar.zst",
+      "input": "sudo pacman -U ./example-1.0-1-x86_64.pkg.tar.zst",
+      "annotation": "sudo pacman -U ファイル：ローカルパッケージを導入（実際のファイル名へ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "less /var/log/pacman.log",
+      "input": "less /var/log/pacman.log",
+      "annotation": "パッケージ操作履歴を読む（qで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo pacman -S --needed base-devel git",
+      "input": "sudo pacman -S --needed base-devel git",
+      "annotation": "ビルド用基本ツールを導入（全体更新済みの環境で実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "git clone https://aur.archlinux.org/パッケージ名.git",
+      "input": "git clone https://aur.archlinux.org/パッケージ名.git",
+      "annotation": "git clone URL：AURのビルド手順を取得（実際のAURパッケージ名へ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl start sshd",
+      "input": "sudo systemctl start sshd",
+      "annotation": "sudo systemctl start サービス：今すぐ起動",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl stop sshd",
+      "input": "sudo systemctl stop sshd",
+      "annotation": "sudo systemctl stop サービス：今すぐ停止",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl restart sshd",
+      "input": "sudo systemctl restart sshd",
+      "annotation": "sudo systemctl restart サービス：再起動（接続中サービスでは接続が切れる場合がある）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl enable sshd",
+      "input": "sudo systemctl enable sshd",
+      "annotation": "sudo systemctl enable サービス：OS起動時の自動起動を有効化（今すぐの起動は行わない）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl disable sshd",
+      "input": "sudo systemctl disable sshd",
+      "annotation": "sudo systemctl disable サービス：自動起動を無効化（実行中サービスは停止しない）",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl enable --now sshd",
+      "input": "sudo systemctl enable --now sshd",
+      "annotation": "sudo systemctl enable --now サービス：自動起動を有効化して今すぐ起動",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl list-units --type=service",
+      "input": "systemctl list-units --type=service",
+      "annotation": "読み込まれたサービスを表示（既定では主にアクティブなもの。非アクティブも表示する場合は--allを追加）",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl list-unit-files --type=service",
+      "input": "systemctl list-unit-files --type=service",
+      "annotation": "サービス定義と自動起動設定を一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo systemctl daemon-reload",
+      "input": "sudo systemctl daemon-reload",
+      "annotation": "サービス定義の変更を読み込む（サービスの再起動とは別）",
+      "input_type": "command"
+    },
+    {
+      "display": "systemctl --user status 名前",
+      "input": "systemctl --user status 名前",
+      "annotation": "ユーザーサービスの状態を確認（実際のユニット名へ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -u sshd -f",
+      "input": "journalctl -u sshd -f",
+      "annotation": "journalctl -u サービス -f：指定サービスのログを追跡（Control + Cで終了）",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl -p err -b",
+      "input": "journalctl -p err -b",
+      "annotation": "今回起動のエラー以上のログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl --since \"1 hour ago\"",
+      "input": "journalctl --since \"1 hour ago\"",
+      "annotation": "journalctl --since 日時：指定時点以降のログ",
+      "input_type": "command"
+    },
+    {
+      "display": "journalctl --disk-usage",
+      "input": "journalctl --disk-usage",
+      "annotation": "ログの使用容量",
+      "input_type": "command"
+    },
+    {
+      "display": "ping -c 4 archlinux.org",
+      "input": "ping -c 4 archlinux.org",
+      "annotation": "ping -c 回数 宛先：疎通を確認（応答がなくても通信不可とは限らない）",
+      "input_type": "command"
+    },
+    {
+      "display": "curl -I https://archlinux.org",
+      "input": "curl -I https://archlinux.org",
+      "annotation": "curl -I URL：HTTPヘッダーを確認（curlが必要。HEADリクエストを送信）",
+      "input_type": "command"
+    },
+    {
+      "display": "nmcli device wifi list",
+      "input": "nmcli device wifi list",
+      "annotation": "Wi-Fi一覧（NetworkManager利用時）",
+      "input_type": "command"
+    },
+    {
+      "display": "nmcli --ask device wifi connect \"SSID\"",
+      "input": "nmcli --ask device wifi connect \"SSID\"",
+      "annotation": "nmcli --ask device wifi connect SSID：Wi-Fiに接続（NetworkManager利用時。パスワードを対話入力）",
+      "input_type": "command"
+    },
+    {
+      "display": "cat /etc/os-release",
+      "input": "cat /etc/os-release",
+      "annotation": "OS情報",
+      "input_type": "command"
+    },
+    {
+      "display": "sudo chown user:group file.txt",
+      "input": "sudo chown user:group file.txt",
+      "annotation": "chown：所有者・グループを変更（実在するユーザー・グループへ置き換える）",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -czf backup.tar.gz folder",
+      "input": "tar -czf backup.tar.gz folder",
+      "annotation": "tar -czf：tar.gzで圧縮（既存の同名アーカイブを上書き）",
+      "input_type": "command"
+    },
+    {
+      "display": "tar -xzf backup.tar.gz",
+      "input": "tar -xzf backup.tar.gz",
+      "annotation": "tar -xzf：tar.gzを展開（既存ファイルを上書きする場合がある）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

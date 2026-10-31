@@ -1,0 +1,492 @@
+{
+  "id": "german-basics",
+  "name": "ドイツ語：基礎単語・基礎構文",
+  "words": [
+    {
+      "display": "Ich bin Student / Studentin.",
+      "input": "Ich bin Student / Studentin.",
+      "annotation": "Ich bin Student / Studentin. / 私は大学生です。（男性／女性）",
+      "input_type": "word"
+    },
+    {
+      "display": "Das ist ein Buch.",
+      "input": "Das ist ein Buch.",
+      "annotation": "Das ist ein Buch. / これは本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Das ist nicht mein Buch.",
+      "input": "Das ist nicht mein Buch.",
+      "annotation": "Das ist nicht mein Buch. / これは私の本ではありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Wer ist das?",
+      "input": "Wer ist das?",
+      "annotation": "Wer ist das? / これは誰ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Was ist das?",
+      "input": "Was ist das?",
+      "annotation": "Was ist das? / これは何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Wo ist die Toilette?",
+      "input": "Wo ist die Toilette?",
+      "annotation": "Wo ist die Toilette? / トイレはどこですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Wie heißen Sie?",
+      "input": "Wie heißen Sie?",
+      "annotation": "Wie heißen Sie? / お名前は何ですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich heiße Anna.",
+      "input": "Ich heiße Anna.",
+      "annotation": "Ich heiße Anna. / 私の名前はアンナです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich komme aus Japan.",
+      "input": "Ich komme aus Japan.",
+      "annotation": "Ich komme aus Japan. / 私は日本出身です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich habe eine Frage.",
+      "input": "Ich habe eine Frage.",
+      "annotation": "Ich habe eine Frage. / 質問があります。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich habe keine Zeit.",
+      "input": "Ich habe keine Zeit.",
+      "annotation": "Ich habe keine Zeit. / 時間がありません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich möchte Wasser trinken.",
+      "input": "Ich möchte Wasser trinken.",
+      "annotation": "Ich möchte Wasser trinken. / 水を飲みたいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich muss gehen.",
+      "input": "Ich muss gehen.",
+      "annotation": "Ich muss gehen. / 私は行かなければなりません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich mag Musik.",
+      "input": "Ich mag Musik.",
+      "annotation": "Ich mag Musik. / 私は音楽が好きです。",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich kann Ihnen helfen.",
+      "input": "Ich kann Ihnen helfen.",
+      "annotation": "Ich kann Ihnen helfen. / あなたを手伝えます。",
+      "input_type": "word"
+    },
+    {
+      "display": "Darf ich hereinkommen?",
+      "input": "Darf ich hereinkommen?",
+      "annotation": "Darf ich hereinkommen? / 入ってもいいですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Geben Sie mir bitte Wasser.",
+      "input": "Geben Sie mir bitte Wasser.",
+      "annotation": "Geben Sie mir bitte Wasser. / 水をください。",
+      "input_type": "word"
+    },
+    {
+      "display": "Wie viel kostet das?",
+      "input": "Wie viel kostet das?",
+      "annotation": "Wie viel kostet das? / これはいくらですか？",
+      "input_type": "word"
+    },
+    {
+      "display": "Ich verstehe nicht.",
+      "input": "Ich verstehe nicht.",
+      "annotation": "Ich verstehe nicht. / 理解できません。",
+      "input_type": "word"
+    },
+    {
+      "display": "Wiederholen Sie das bitte.",
+      "input": "Wiederholen Sie das bitte.",
+      "annotation": "Wiederholen Sie das bitte. / もう一度言ってください。",
+      "input_type": "word"
+    },
+    {
+      "display": "ich",
+      "input": "ich",
+      "annotation": "ich / 私",
+      "input_type": "word"
+    },
+    {
+      "display": "du",
+      "input": "du",
+      "annotation": "du / 君、あなた（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "Sie",
+      "input": "Sie",
+      "annotation": "Sie / あなた、あなたたち（丁寧）",
+      "input_type": "word"
+    },
+    {
+      "display": "er",
+      "input": "er",
+      "annotation": "er / 彼、それ（男性名詞を受ける）",
+      "input_type": "word"
+    },
+    {
+      "display": "sie",
+      "input": "sie",
+      "annotation": "sie / 彼女、彼ら、それら",
+      "input_type": "word"
+    },
+    {
+      "display": "wir",
+      "input": "wir",
+      "annotation": "wir / 私たち",
+      "input_type": "word"
+    },
+    {
+      "display": "ihr",
+      "input": "ihr",
+      "annotation": "ihr / 君たち（親しい相手）",
+      "input_type": "word"
+    },
+    {
+      "display": "das",
+      "input": "das",
+      "annotation": "das / これ、それ",
+      "input_type": "word"
+    },
+    {
+      "display": "wer",
+      "input": "wer",
+      "annotation": "wer / 誰",
+      "input_type": "word"
+    },
+    {
+      "display": "was",
+      "input": "was",
+      "annotation": "was / 何",
+      "input_type": "word"
+    },
+    {
+      "display": "wo",
+      "input": "wo",
+      "annotation": "wo / どこで、どこに",
+      "input_type": "word"
+    },
+    {
+      "display": "wohin",
+      "input": "wohin",
+      "annotation": "wohin / どこへ",
+      "input_type": "word"
+    },
+    {
+      "display": "wann",
+      "input": "wann",
+      "annotation": "wann / いつ",
+      "input_type": "word"
+    },
+    {
+      "display": "warum",
+      "input": "warum",
+      "annotation": "warum / なぜ",
+      "input_type": "word"
+    },
+    {
+      "display": "wie",
+      "input": "wie",
+      "annotation": "wie / どのように、どう",
+      "input_type": "word"
+    },
+    {
+      "display": "wie viel",
+      "input": "wie viel",
+      "annotation": "wie viel / いくら、どのくらい",
+      "input_type": "word"
+    },
+    {
+      "display": "ja",
+      "input": "ja",
+      "annotation": "ja / はい",
+      "input_type": "word"
+    },
+    {
+      "display": "nein",
+      "input": "nein",
+      "annotation": "nein / いいえ",
+      "input_type": "word"
+    },
+    {
+      "display": "nicht",
+      "input": "nicht",
+      "annotation": "nicht / ～ではない、～しない",
+      "input_type": "word"
+    },
+    {
+      "display": "und",
+      "input": "und",
+      "annotation": "und / ～と、そして",
+      "input_type": "word"
+    },
+    {
+      "display": "aber",
+      "input": "aber",
+      "annotation": "aber / しかし",
+      "input_type": "word"
+    },
+    {
+      "display": "oder",
+      "input": "oder",
+      "annotation": "oder / または",
+      "input_type": "word"
+    },
+    {
+      "display": "Guten Tag",
+      "input": "Guten Tag",
+      "annotation": "Guten Tag / こんにちは",
+      "input_type": "word"
+    },
+    {
+      "display": "hallo",
+      "input": "hallo",
+      "annotation": "hallo / やあ、こんにちは",
+      "input_type": "word"
+    },
+    {
+      "display": "danke",
+      "input": "danke",
+      "annotation": "danke / ありがとう",
+      "input_type": "word"
+    },
+    {
+      "display": "bitte",
+      "input": "bitte",
+      "annotation": "bitte / お願いします、どうぞ、どういたしまして",
+      "input_type": "word"
+    },
+    {
+      "display": "Entschuldigung",
+      "input": "Entschuldigung",
+      "annotation": "Entschuldigung / すみません、ごめんなさい",
+      "input_type": "word"
+    },
+    {
+      "display": "auf Wiedersehen",
+      "input": "auf Wiedersehen",
+      "annotation": "auf Wiedersehen / さようなら",
+      "input_type": "word"
+    },
+    {
+      "display": "gut",
+      "input": "gut",
+      "annotation": "gut / 良い、うまく",
+      "input_type": "word"
+    },
+    {
+      "display": "schlecht",
+      "input": "schlecht",
+      "annotation": "schlecht / 悪い、うまくいかず",
+      "input_type": "word"
+    },
+    {
+      "display": "der Mensch",
+      "input": "der Mensch",
+      "annotation": "der Mensch / 人、人間",
+      "input_type": "word"
+    },
+    {
+      "display": "der Freund / die Freundin",
+      "input": "der Freund / die Freundin",
+      "annotation": "der Freund / die Freundin / 友達、恋人（男性／女性。文脈による）",
+      "input_type": "word"
+    },
+    {
+      "display": "das Kind",
+      "input": "das Kind",
+      "annotation": "das Kind / 子ども",
+      "input_type": "word"
+    },
+    {
+      "display": "die Familie",
+      "input": "die Familie",
+      "annotation": "die Familie / 家族",
+      "input_type": "word"
+    },
+    {
+      "display": "das Haus",
+      "input": "das Haus",
+      "annotation": "das Haus / 家",
+      "input_type": "word"
+    },
+    {
+      "display": "die Schule",
+      "input": "die Schule",
+      "annotation": "die Schule / 学校",
+      "input_type": "word"
+    },
+    {
+      "display": "die Arbeit",
+      "input": "die Arbeit",
+      "annotation": "die Arbeit / 仕事",
+      "input_type": "word"
+    },
+    {
+      "display": "das Geschäft",
+      "input": "das Geschäft",
+      "annotation": "das Geschäft / 店、商売",
+      "input_type": "word"
+    },
+    {
+      "display": "das Buch",
+      "input": "das Buch",
+      "annotation": "das Buch / 本",
+      "input_type": "word"
+    },
+    {
+      "display": "das Wasser",
+      "input": "das Wasser",
+      "annotation": "das Wasser / 水",
+      "input_type": "word"
+    },
+    {
+      "display": "das Brot",
+      "input": "das Brot",
+      "annotation": "das Brot / パン",
+      "input_type": "word"
+    },
+    {
+      "display": "das Essen",
+      "input": "das Essen",
+      "annotation": "das Essen / 食べ物、食事",
+      "input_type": "word"
+    },
+    {
+      "display": "die Zeit",
+      "input": "die Zeit",
+      "annotation": "die Zeit / 時間",
+      "input_type": "word"
+    },
+    {
+      "display": "das Geld",
+      "input": "das Geld",
+      "annotation": "das Geld / お金",
+      "input_type": "word"
+    },
+    {
+      "display": "heute",
+      "input": "heute",
+      "annotation": "heute / 今日",
+      "input_type": "word"
+    },
+    {
+      "display": "morgen",
+      "input": "morgen",
+      "annotation": "morgen / 明日",
+      "input_type": "word"
+    },
+    {
+      "display": "gestern",
+      "input": "gestern",
+      "annotation": "gestern / 昨日",
+      "input_type": "word"
+    },
+    {
+      "display": "jetzt",
+      "input": "jetzt",
+      "annotation": "jetzt / 今",
+      "input_type": "word"
+    },
+    {
+      "display": "groß",
+      "input": "groß",
+      "annotation": "groß / 大きい、背が高い",
+      "input_type": "word"
+    },
+    {
+      "display": "klein",
+      "input": "klein",
+      "annotation": "klein / 小さい",
+      "input_type": "word"
+    },
+    {
+      "display": "schön",
+      "input": "schön",
+      "annotation": "schön / 美しい、すてきな",
+      "input_type": "word"
+    },
+    {
+      "display": "neu",
+      "input": "neu",
+      "annotation": "neu / 新しい",
+      "input_type": "word"
+    },
+    {
+      "display": "sein",
+      "input": "sein",
+      "annotation": "sein / ～である、いる",
+      "input_type": "word"
+    },
+    {
+      "display": "machen",
+      "input": "machen",
+      "annotation": "machen / する、作る",
+      "input_type": "word"
+    },
+    {
+      "display": "gehen",
+      "input": "gehen",
+      "annotation": "gehen / 歩いて行く",
+      "input_type": "word"
+    },
+    {
+      "display": "sprechen",
+      "input": "sprechen",
+      "annotation": "sprechen / 話す",
+      "input_type": "word"
+    },
+    {
+      "display": "verstehen",
+      "input": "verstehen",
+      "annotation": "verstehen / 理解する",
+      "input_type": "word"
+    },
+    {
+      "display": "wissen",
+      "input": "wissen",
+      "annotation": "wissen / 知っている（事実など）",
+      "input_type": "word"
+    },
+    {
+      "display": "wollen",
+      "input": "wollen",
+      "annotation": "wollen / ～したい、欲する",
+      "input_type": "word"
+    },
+    {
+      "display": "können",
+      "input": "können",
+      "annotation": "können / ～できる",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-28T13:45:45.844Z",
+  "category": "語学",
+  "tags": [
+    "ドイツ語"
+  ]
+}

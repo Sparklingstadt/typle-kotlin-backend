@@ -1,0 +1,245 @@
+{
+  "id": "postgresql-syntax-intermediate-1",
+  "name": "PostgreSQL構文（中級1）",
+  "category": "プログラミング",
+  "tags": [
+    "PostgreSQL",
+    "SQL"
+  ],
+  "group": "PostgreSQL構文",
+  "levels": [
+    "中級1"
+  ],
+  "words": [
+    {
+      "display": "SELECT name AS display_name FROM users AS u;",
+      "input": "SELECT name AS display_name FROM users AS u;",
+      "annotation": "AS：別名を付ける",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE id IN (1, 2, 3);",
+      "input": "SELECT * FROM users WHERE id IN (1, 2, 3);",
+      "annotation": "IN：候補に含まれるか",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE id NOT IN (1, 2);",
+      "input": "SELECT * FROM users WHERE id NOT IN (1, 2);",
+      "annotation": "NOT IN：候補に含まれないか（候補にNULLを含むと意図しない結果になり得る。NOT EXISTSも検討）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE age BETWEEN 20 AND 29;",
+      "input": "SELECT * FROM users WHERE age BETWEEN 20 AND 29;",
+      "annotation": "BETWEEN：両端を含む範囲（日時では>=と<の半開区間が便利）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE age IS DISTINCT FROM 20;",
+      "input": "SELECT * FROM users WHERE age IS DISTINCT FROM 20;",
+      "annotation": "IS DISTINCT FROM：NULLを含めた不等比較（NULLも比較可能な値として扱う）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE name LIKE 'Po%';",
+      "input": "SELECT * FROM users WHERE name LIKE 'Po%';",
+      "annotation": "LIKE：パターン一致（%は任意長、_は任意1文字）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE name ILIKE 'po%';",
+      "input": "SELECT * FROM users WHERE name ILIKE 'po%';",
+      "annotation": "ILIKE：大文字小文字を区別しない一致（大文字小文字の扱いはロケール等に依存）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE name ~* '^po';",
+      "input": "SELECT * FROM users WHERE name ~* '^po';",
+      "annotation": "~ / ~*：正規表現一致（~*は大文字小文字を区別しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users ORDER BY age ASC NULLS LAST;",
+      "input": "SELECT * FROM users ORDER BY age ASC NULLS LAST;",
+      "annotation": "NULLS FIRST / LAST：NULLの並び位置",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users ORDER BY id LIMIT 20 OFFSET 40;",
+      "input": "SELECT * FROM users ORDER BY id LIMIT 20 OFFSET 40;",
+      "annotation": "LIMIT / OFFSET：取得件数・開始位置（一意に並ぶORDER BYを指定。大きなOFFSETは負荷になり得る）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT COUNT(DISTINCT department_id) FROM users;",
+      "input": "SELECT COUNT(DISTINCT department_id) FROM users;",
+      "annotation": "COUNT(DISTINCT 列)：非NULLの異なる値の数",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT SUM(amount), AVG(amount) FROM orders;",
+      "input": "SELECT SUM(amount), AVG(amount) FROM orders;",
+      "annotation": "SUM / AVG：合計・平均（対象なしの場合は通常NULL）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT ARRAY_AGG(id ORDER BY id) FROM users;",
+      "input": "SELECT ARRAY_AGG(id ORDER BY id) FROM users;",
+      "annotation": "ARRAY_AGG：配列へ集約",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT JSONB_AGG(name ORDER BY id) FROM users;",
+      "input": "SELECT JSONB_AGG(name ORDER BY id) FROM users;",
+      "annotation": "JSONB_AGG：JSON配列へ集約",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id FROM users EXCEPT SELECT user_id FROM orders;",
+      "input": "SELECT id FROM users EXCEPT SELECT user_id FROM orders;",
+      "annotation": "INTERSECT / EXCEPT：共通部分・差集合（列数と型に互換性が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO users (name) VALUES ('A'), ('B');",
+      "input": "INSERT INTO users (name) VALUES ('A'), ('B');",
+      "annotation": "複数行INSERT：複数行を追加",
+      "input_type": "code"
+    },
+    {
+      "display": "INSERT INTO counters DEFAULT VALUES RETURNING id;",
+      "input": "INSERT INTO counters DEFAULT VALUES RETURNING id;",
+      "annotation": "DEFAULT VALUES：既定値で追加（IDENTITYの例で作成するcounters表向け。全必須列に既定値がある表で使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "DELETE FROM users WHERE id = 1 RETURNING id;",
+      "input": "DELETE FROM users WHERE id = 1 RETURNING id;",
+      "annotation": "DELETE / WHERE：行を削除（WHEREなしは全行削除。外部キー制約で拒否される場合がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE TABLE items (\n  id bigint PRIMARY KEY\n);",
+      "input": "CREATE TABLE items (id bigint PRIMARY KEY);",
+      "annotation": "PRIMARY KEY：主キー（一意かつNOT NULL）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users ALTER COLUMN email SET NOT NULL;",
+      "input": "ALTER TABLE users ALTER COLUMN email SET NOT NULL;",
+      "annotation": "NOT NULL：NULL禁止（既存NULLがあると失敗）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users ALTER COLUMN active SET DEFAULT true;",
+      "input": "ALTER TABLE users ALTER COLUMN active SET DEFAULT true;",
+      "annotation": "DEFAULT：既定値（既存行の値は変更しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE users DROP CONSTRAINT users_name_unique;",
+      "input": "ALTER TABLE users DROP CONSTRAINT users_name_unique;",
+      "annotation": "DROP CONSTRAINT：制約を削除（制約が存在する場合）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT 42::integer, 10000000000::bigint;",
+      "input": "SELECT 42::integer, 10000000000::bigint;",
+      "annotation": "integer / bigint：整数",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT 'hello'::text, 'abc'::varchar(10);",
+      "input": "SELECT 'hello'::text, 'abc'::varchar(10);",
+      "annotation": "text / varchar(n)：文字列（varchar(n)は長さ制限）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT TIMESTAMPTZ '2026-01-01 12:00:00+09';",
+      "input": "SELECT TIMESTAMPTZ '2026-01-01 12:00:00+09';",
+      "annotation": "timestamptz：時点を扱う日時（表示はセッションTimeZoneに依存。元の地域名は保持しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT '{\"name\":\"Pomo\"}'::jsonb;",
+      "input": "SELECT '{\"name\":\"Pomo\"}'::jsonb;",
+      "annotation": "json / jsonb：JSON（jsonbはインデックス対応。キー順・重複キーの保持等がjsonと異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT ARRAY['go', 'sql']::text[];",
+      "input": "SELECT ARRAY['go', 'sql']::text[];",
+      "annotation": "型[] / ARRAY：配列（PostgreSQLの配列添字は通常1から）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT COALESCE(email, '未登録') FROM users;",
+      "input": "SELECT COALESCE(email, '未登録') FROM users;",
+      "annotation": "COALESCE：最初の非NULL値",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT amount / NULLIF(0, 0) FROM orders;",
+      "input": "SELECT amount / NULLIF(0, 0) FROM orders;",
+      "annotation": "NULLIF：等しいならNULL（ゼロ除算回避等）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT CAST('123' AS integer), '123'::integer;",
+      "input": "SELECT CAST('123' AS integer), '123'::integer;",
+      "annotation": "CAST / ::：型変換（変換不可はエラー）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT EXTRACT(YEAR FROM created_at) FROM users;",
+      "input": "SELECT EXTRACT(YEAR FROM created_at) FROM users;",
+      "annotation": "EXTRACT：日時の要素を取得",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT NOW() AT TIME ZONE 'Asia/Tokyo';",
+      "input": "SELECT NOW() AT TIME ZONE 'Asia/Tokyo';",
+      "annotation": "AT TIME ZONE：タイムゾーンの解釈・変換（入力型により戻り値型・意味が異なる）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT profile #>> '{address,city}' FROM users;",
+      "input": "SELECT profile #>> '{address,city}' FROM users;",
+      "annotation": "#> / #>>：JSONの深いパス",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE profile ? 'name';",
+      "input": "SELECT * FROM users WHERE profile ? 'name';",
+      "annotation": "?：JSONBのキー等の存在（ドライバーによってプレースホルダー記号との扱いに注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM users WHERE 'sql' = ANY(tags);",
+      "input": "SELECT * FROM users WHERE 'sql' = ANY(tags);",
+      "annotation": "ANY：配列要素との比較",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT id, unnest(tags) AS tag FROM users;",
+      "input": "SELECT id, unnest(tags) AS tag FROM users;",
+      "annotation": "unnest：配列を行へ展開",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN READ ONLY;\nSELECT * FROM users;\nCOMMIT;",
+      "input": "BEGIN READ ONLY; SELECT * FROM users; COMMIT;",
+      "annotation": "READ ONLY：読み取り専用トランザクション",
+      "input_type": "code"
+    },
+    {
+      "display": "EXPLAIN SELECT * FROM users WHERE id = 1;",
+      "input": "EXPLAIN SELECT * FROM users WHERE id = 1;",
+      "annotation": "EXPLAIN：実行計画を表示（通常は対象SQLを実行しない）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

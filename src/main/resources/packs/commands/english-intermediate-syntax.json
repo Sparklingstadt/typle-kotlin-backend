@@ -1,0 +1,256 @@
+{
+  "id": "english-intermediate-syntax",
+  "name": "英語（中級構文）",
+  "category": "語学",
+  "tags": [
+    "英語"
+  ],
+  "group": "英語：基礎・中級",
+  "levels": [
+    "中級構文"
+  ],
+  "words": [
+    {
+      "display": "I have lived here for five years.",
+      "input": "I have lived here for five years.",
+      "annotation": "I have lived here for five years. / 私はここに5年間住んでいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "Have you ever been to London?",
+      "input": "Have you ever been to London?",
+      "annotation": "Have you ever been to London? / ロンドンに行ったことがありますか？",
+      "input_type": "word"
+    },
+    {
+      "display": "I have just finished my homework.",
+      "input": "I have just finished my homework.",
+      "annotation": "I have just finished my homework. / ちょうど宿題を終えたところです。",
+      "input_type": "word"
+    },
+    {
+      "display": "I was watching TV when she called.",
+      "input": "I was watching TV when she called.",
+      "annotation": "I was watching TV when she called. / 彼女が電話してきたとき、私はテレビを見ていました。",
+      "input_type": "word"
+    },
+    {
+      "display": "If it rains, we will stay home.",
+      "input": "If it rains, we will stay home.",
+      "annotation": "If it rains, we will stay home. / 雨が降ったら、家にいます。",
+      "input_type": "word"
+    },
+    {
+      "display": "If I were you, I would accept the offer.",
+      "input": "If I were you, I would accept the offer.",
+      "annotation": "If I were you, I would accept the offer. / もし私があなたなら、その申し出を受けるでしょう。",
+      "input_type": "word"
+    },
+    {
+      "display": "If I had known, I would have helped you.",
+      "input": "If I had known, I would have helped you.",
+      "annotation": "If I had known, I would have helped you. / 知っていたら、あなたを手伝ったのに。",
+      "input_type": "word"
+    },
+    {
+      "display": "This bridge was built in 1990.",
+      "input": "This bridge was built in 1990.",
+      "annotation": "This bridge was built in 1990. / この橋は1990年に建てられました。",
+      "input_type": "word"
+    },
+    {
+      "display": "English is spoken in many countries.",
+      "input": "English is spoken in many countries.",
+      "annotation": "English is spoken in many countries. / 英語は多くの国で話されています。",
+      "input_type": "word"
+    },
+    {
+      "display": "The man who lives next door is a doctor.",
+      "input": "The man who lives next door is a doctor.",
+      "annotation": "The man who lives next door is a doctor. / 隣に住んでいる男性は医者です。",
+      "input_type": "word"
+    },
+    {
+      "display": "This is the book that I bought yesterday.",
+      "input": "This is the book that I bought yesterday.",
+      "annotation": "This is the book that I bought yesterday. / これは私が昨日買った本です。",
+      "input_type": "word"
+    },
+    {
+      "display": "I know where she lives.",
+      "input": "I know where she lives.",
+      "annotation": "I know where she lives. / 彼女がどこに住んでいるか知っています。",
+      "input_type": "word"
+    },
+    {
+      "display": "Do you know what time the store opens?",
+      "input": "Do you know what time the store opens?",
+      "annotation": "Do you know what time the store opens? / その店が何時に開くか知っていますか？",
+      "input_type": "word"
+    },
+    {
+      "display": "He said that he was tired.",
+      "input": "He said that he was tired.",
+      "annotation": "He said that he was tired. / 彼は疲れていると言いました。",
+      "input_type": "word"
+    },
+    {
+      "display": "She asked me if I could come.",
+      "input": "She asked me if I could come.",
+      "annotation": "She asked me if I could come. / 彼女は私に来られるかどうか尋ねました。",
+      "input_type": "word"
+    },
+    {
+      "display": "I'm looking forward to seeing you.",
+      "input": "I'm looking forward to seeing you.",
+      "annotation": "I'm looking forward to seeing you. / あなたに会えるのを楽しみにしています。",
+      "input_type": "word"
+    },
+    {
+      "display": "I'm used to getting up early.",
+      "input": "I'm used to getting up early.",
+      "annotation": "I'm used to getting up early. / 私は早起きに慣れています。",
+      "input_type": "word"
+    },
+    {
+      "display": "I used to play tennis.",
+      "input": "I used to play tennis.",
+      "annotation": "I used to play tennis. / 私は以前テニスをしていました。",
+      "input_type": "word"
+    },
+    {
+      "display": "You should see a doctor.",
+      "input": "You should see a doctor.",
+      "annotation": "You should see a doctor. / 医者に診てもらったほうがいいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "You don't have to come.",
+      "input": "You don't have to come.",
+      "annotation": "You don't have to come. / 来なくてもいいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "You must not smoke here.",
+      "input": "You must not smoke here.",
+      "annotation": "You must not smoke here. / ここでたばこを吸ってはいけません。",
+      "input_type": "word"
+    },
+    {
+      "display": "It may rain this afternoon.",
+      "input": "It may rain this afternoon.",
+      "annotation": "It may rain this afternoon. / 午後は雨が降るかもしれません。",
+      "input_type": "word"
+    },
+    {
+      "display": "It is easy for me to read this book.",
+      "input": "It is easy for me to read this book.",
+      "annotation": "It is easy for me to read this book. / この本を読むのは私には簡単です。",
+      "input_type": "word"
+    },
+    {
+      "display": "It is important to sleep well.",
+      "input": "It is important to sleep well.",
+      "annotation": "It is important to sleep well. / よく眠ることは大切です。",
+      "input_type": "word"
+    },
+    {
+      "display": "I want you to help me.",
+      "input": "I want you to help me.",
+      "annotation": "I want you to help me. / あなたに手伝ってほしいです。",
+      "input_type": "word"
+    },
+    {
+      "display": "My mother made me clean my room.",
+      "input": "My mother made me clean my room.",
+      "annotation": "My mother made me clean my room. / 母は私に部屋を掃除させました。",
+      "input_type": "word"
+    },
+    {
+      "display": "I had my hair cut yesterday.",
+      "input": "I had my hair cut yesterday.",
+      "annotation": "I had my hair cut yesterday. / 昨日髪を切ってもらいました。",
+      "input_type": "word"
+    },
+    {
+      "display": "She is too tired to walk.",
+      "input": "She is too tired to walk.",
+      "annotation": "She is too tired to walk. / 彼女は疲れすぎて歩けません。",
+      "input_type": "word"
+    },
+    {
+      "display": "He is old enough to drive.",
+      "input": "He is old enough to drive.",
+      "annotation": "He is old enough to drive. / 彼は運転できる年齢です。",
+      "input_type": "word"
+    },
+    {
+      "display": "The more you practice, the better you get.",
+      "input": "The more you practice, the better you get.",
+      "annotation": "The more you practice, the better you get. / 練習すればするほど上手になります。",
+      "input_type": "word"
+    },
+    {
+      "display": "This is the most interesting movie I have ever seen.",
+      "input": "This is the most interesting movie I have ever seen.",
+      "annotation": "This is the most interesting movie I have ever seen. / これは私が今まで見た中で一番面白い映画です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Not only he but also she was late.",
+      "input": "Not only he but also she was late.",
+      "annotation": "Not only he but also she was late. / 彼だけでなく彼女も遅刻しました。",
+      "input_type": "word"
+    },
+    {
+      "display": "Although it was cold, we went out.",
+      "input": "Although it was cold, we went out.",
+      "annotation": "Although it was cold, we went out. / 寒かったけれど、私たちは出かけました。",
+      "input_type": "word"
+    },
+    {
+      "display": "I stayed home because I had a cold.",
+      "input": "I stayed home because I had a cold.",
+      "annotation": "I stayed home because I had a cold. / 風邪をひいていたので家にいました。",
+      "input_type": "word"
+    },
+    {
+      "display": "I'll wait here until you come back.",
+      "input": "I'll wait here until you come back.",
+      "annotation": "I'll wait here until you come back. / あなたが戻るまでここで待ちます。",
+      "input_type": "word"
+    },
+    {
+      "display": "By the time we arrived, the movie had started.",
+      "input": "By the time we arrived, the movie had started.",
+      "annotation": "By the time we arrived, the movie had started. / 私たちが着いたときには、映画は始まっていました。",
+      "input_type": "word"
+    },
+    {
+      "display": "I wish I could speak French.",
+      "input": "I wish I could speak French.",
+      "annotation": "I wish I could speak French. / フランス語が話せたらいいのに。",
+      "input_type": "word"
+    },
+    {
+      "display": "It's time we went home.",
+      "input": "It's time we went home.",
+      "annotation": "It's time we went home. / もう家に帰る時間です。",
+      "input_type": "word"
+    },
+    {
+      "display": "Would you mind opening the window?",
+      "input": "Would you mind opening the window?",
+      "annotation": "Would you mind opening the window? / 窓を開けていただけますか？",
+      "input_type": "word"
+    },
+    {
+      "display": "I'd rather stay home tonight.",
+      "input": "I'd rather stay home tonight.",
+      "annotation": "I'd rather stay home tonight. / 今夜はむしろ家にいたいです。",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

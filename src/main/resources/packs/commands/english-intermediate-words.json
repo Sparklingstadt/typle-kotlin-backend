@@ -1,0 +1,256 @@
+{
+  "id": "english-intermediate-words",
+  "name": "英語（中級単語）",
+  "category": "語学",
+  "tags": [
+    "英語"
+  ],
+  "group": "英語：基礎・中級",
+  "levels": [
+    "中級単語"
+  ],
+  "words": [
+    {
+      "display": "experience",
+      "input": "experience",
+      "annotation": "experience / 経験",
+      "input_type": "word"
+    },
+    {
+      "display": "opinion",
+      "input": "opinion",
+      "annotation": "opinion / 意見",
+      "input_type": "word"
+    },
+    {
+      "display": "decision",
+      "input": "decision",
+      "annotation": "decision / 決定、決心",
+      "input_type": "word"
+    },
+    {
+      "display": "environment",
+      "input": "environment",
+      "annotation": "environment / 環境",
+      "input_type": "word"
+    },
+    {
+      "display": "government",
+      "input": "government",
+      "annotation": "government / 政府",
+      "input_type": "word"
+    },
+    {
+      "display": "knowledge",
+      "input": "knowledge",
+      "annotation": "knowledge / 知識",
+      "input_type": "word"
+    },
+    {
+      "display": "relationship",
+      "input": "relationship",
+      "annotation": "relationship / 関係",
+      "input_type": "word"
+    },
+    {
+      "display": "opportunity",
+      "input": "opportunity",
+      "annotation": "opportunity / 機会",
+      "input_type": "word"
+    },
+    {
+      "display": "responsibility",
+      "input": "responsibility",
+      "annotation": "responsibility / 責任",
+      "input_type": "word"
+    },
+    {
+      "display": "advantage",
+      "input": "advantage",
+      "annotation": "advantage / 利点",
+      "input_type": "word"
+    },
+    {
+      "display": "challenge",
+      "input": "challenge",
+      "annotation": "challenge / 課題、挑戦",
+      "input_type": "word"
+    },
+    {
+      "display": "solution",
+      "input": "solution",
+      "annotation": "solution / 解決策",
+      "input_type": "word"
+    },
+    {
+      "display": "purpose",
+      "input": "purpose",
+      "annotation": "purpose / 目的",
+      "input_type": "word"
+    },
+    {
+      "display": "influence",
+      "input": "influence",
+      "annotation": "influence / 影響",
+      "input_type": "word"
+    },
+    {
+      "display": "average",
+      "input": "average",
+      "annotation": "average / 平均",
+      "input_type": "word"
+    },
+    {
+      "display": "quality",
+      "input": "quality",
+      "annotation": "quality / 質",
+      "input_type": "word"
+    },
+    {
+      "display": "behavior",
+      "input": "behavior",
+      "annotation": "behavior / 振る舞い、行動",
+      "input_type": "word"
+    },
+    {
+      "display": "achieve",
+      "input": "achieve",
+      "annotation": "achieve / 達成する",
+      "input_type": "word"
+    },
+    {
+      "display": "improve",
+      "input": "improve",
+      "annotation": "improve / 改善する",
+      "input_type": "word"
+    },
+    {
+      "display": "consider",
+      "input": "consider",
+      "annotation": "consider / よく考える、検討する",
+      "input_type": "word"
+    },
+    {
+      "display": "suggest",
+      "input": "suggest",
+      "annotation": "suggest / 提案する",
+      "input_type": "word"
+    },
+    {
+      "display": "require",
+      "input": "require",
+      "annotation": "require / 必要とする",
+      "input_type": "word"
+    },
+    {
+      "display": "reduce",
+      "input": "reduce",
+      "annotation": "reduce / 減らす",
+      "input_type": "word"
+    },
+    {
+      "display": "increase",
+      "input": "increase",
+      "annotation": "increase / 増やす、増える",
+      "input_type": "word"
+    },
+    {
+      "display": "compare",
+      "input": "compare",
+      "annotation": "compare / 比べる",
+      "input_type": "word"
+    },
+    {
+      "display": "develop",
+      "input": "develop",
+      "annotation": "develop / 発達させる、開発する",
+      "input_type": "word"
+    },
+    {
+      "display": "avoid",
+      "input": "avoid",
+      "annotation": "avoid / 避ける",
+      "input_type": "word"
+    },
+    {
+      "display": "manage",
+      "input": "manage",
+      "annotation": "manage / 管理する、なんとかやり遂げる",
+      "input_type": "word"
+    },
+    {
+      "display": "explain",
+      "input": "explain",
+      "annotation": "explain / 説明する",
+      "input_type": "word"
+    },
+    {
+      "display": "prefer",
+      "input": "prefer",
+      "annotation": "prefer / ～の方を好む",
+      "input_type": "word"
+    },
+    {
+      "display": "available",
+      "input": "available",
+      "annotation": "available / 利用できる、手が空いている",
+      "input_type": "word"
+    },
+    {
+      "display": "necessary",
+      "input": "necessary",
+      "annotation": "necessary / 必要な",
+      "input_type": "word"
+    },
+    {
+      "display": "convenient",
+      "input": "convenient",
+      "annotation": "convenient / 便利な",
+      "input_type": "word"
+    },
+    {
+      "display": "serious",
+      "input": "serious",
+      "annotation": "serious / 深刻な、まじめな",
+      "input_type": "word"
+    },
+    {
+      "display": "familiar",
+      "input": "familiar",
+      "annotation": "familiar / よく知っている、なじみのある",
+      "input_type": "word"
+    },
+    {
+      "display": "efficient",
+      "input": "efficient",
+      "annotation": "efficient / 効率的な",
+      "input_type": "word"
+    },
+    {
+      "display": "reliable",
+      "input": "reliable",
+      "annotation": "reliable / 信頼できる",
+      "input_type": "word"
+    },
+    {
+      "display": "obvious",
+      "input": "obvious",
+      "annotation": "obvious / 明らかな",
+      "input_type": "word"
+    },
+    {
+      "display": "recently",
+      "input": "recently",
+      "annotation": "recently / 最近",
+      "input_type": "word"
+    },
+    {
+      "display": "eventually",
+      "input": "eventually",
+      "annotation": "eventually / 最終的に、結局",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

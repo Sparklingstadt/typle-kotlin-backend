@@ -1,0 +1,208 @@
+{
+  "id": "java-syntax-intermediate-2",
+  "name": "Java構文（中級2）",
+  "category": "プログラミング",
+  "tags": [
+    "Java"
+  ],
+  "group": "Java構文",
+  "levels": [
+    "中級2"
+  ],
+  "words": [
+    {
+      "display": "public static void main(String[] args) {\n}",
+      "input": "public static void main(String[] args) {}",
+      "annotation": "main(String[] args)：実行開始用メソッド（Java 21を基準とした通常の起動形式）",
+      "input_type": "code"
+    },
+    {
+      "display": "if (true) {\n  System.out.println(\"OK\");\n}",
+      "input": "if (true) { System.out.println(\"OK\"); }",
+      "annotation": "{ ... }：ブロック",
+      "input_type": "code"
+    },
+    {
+      "display": "int n;\nn = 1;\nSystem.out.println(n);",
+      "input": "int n; n = 1; System.out.println(n);",
+      "annotation": "ローカル変数の初期化：使用前に初期化（未初期化のまま読み取れない）",
+      "input_type": "code"
+    },
+    {
+      "display": "class Sample {\n  int count;\n  String name;\n}",
+      "input": "class Sample { int count; String name; }",
+      "annotation": "フィールドの初期値：フィールドは既定値で初期化（countは0、nameはnull）",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean ok = enabled && !blocked;",
+      "input": "boolean ok = enabled && !blocked;",
+      "annotation": "&& || !：論理演算（&&と||は短絡評価）",
+      "input_type": "code"
+    },
+    {
+      "display": "String message = \"Hello, \" + name;",
+      "input": "String message = \"Hello, \" + name;",
+      "annotation": "文字列 + 値：文字列連結",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean same = name.equals(\"Pomo\");",
+      "input": "boolean same = name.equals(\"Pomo\");",
+      "annotation": "String.equals：文字列の内容比較（nameがnullならNullPointerException）",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean same = Objects.equals(a, b);",
+      "input": "boolean same = Objects.equals(a, b);",
+      "annotation": "Objects.equals：nullを考慮した等値比較（java.util.Objectsをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "int n = Integer.parseInt(\"123\");",
+      "input": "int n = Integer.parseInt(\"123\");",
+      "annotation": "Integer.parseInt：文字列からintへ（不正な形式はNumberFormatException）",
+      "input_type": "code"
+    },
+    {
+      "display": "String text = String.valueOf(123);",
+      "input": "String text = String.valueOf(123);",
+      "annotation": "String.valueOf：文字列へ変換",
+      "input_type": "code"
+    },
+    {
+      "display": "while (count < 5) {\n  count++;\n}",
+      "input": "while (count < 5) { count++; }",
+      "annotation": "while：条件が真の間繰り返す",
+      "input_type": "code"
+    },
+    {
+      "display": "do {\n  count++;\n}\nwhile (count < 5);",
+      "input": "do { count++; } while (count < 5);",
+      "annotation": "do / while：最低1回実行（末尾の;が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "static int doubleOf(int n) {\n  return n * 2;\n}",
+      "input": "static int doubleOf(int n) { return n * 2; }",
+      "annotation": "staticメソッド：クラスに属するメソッド",
+      "input_type": "code"
+    },
+    {
+      "display": "record Result(int value, boolean ok) {\n}",
+      "input": "record Result(int value, boolean ok) {}",
+      "annotation": "複数の値を返す：record等にまとめて返す（Goのような複数戻り値構文はない）",
+      "input_type": "code"
+    },
+    {
+      "display": "List<String> names = new ArrayList<>();",
+      "input": "List<String> names = new ArrayList<>();",
+      "annotation": "List / ArrayList：可変長リスト（java.util.ListとArrayListをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "List<String> names = List.of(\"A\", \"B\");",
+      "input": "List<String> names = List.of(\"A\", \"B\");",
+      "annotation": "List.of：変更不可のリスト（null要素は不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "Integer score = scores.get(\"Pomo\");",
+      "input": "Integer score = scores.get(\"Pomo\");",
+      "annotation": "Map.get：キーに対応する値（キーが存在しない場合null）",
+      "input_type": "code"
+    },
+    {
+      "display": "int score = scores.getOrDefault(\"Pomo\", 0);",
+      "input": "int score = scores.getOrDefault(\"Pomo\", 0);",
+      "annotation": "Map.getOrDefault：キーがない場合の既定値（null値が登録されていれば既定値ではなくnull）",
+      "input_type": "code"
+    },
+    {
+      "display": "boolean exists = scores.containsKey(\"Pomo\");",
+      "input": "boolean exists = scores.containsKey(\"Pomo\");",
+      "annotation": "Map.containsKey：キーの存在確認",
+      "input_type": "code"
+    },
+    {
+      "display": "Set<String> tags = new HashSet<>();",
+      "input": "Set<String> tags = new HashSet<>();",
+      "annotation": "Set / HashSet：重複しない集合（java.util.SetとHashSetをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "List<Integer> nums = new ArrayList<>();",
+      "input": "List<Integer> nums = new ArrayList<>();",
+      "annotation": "Integer等のラッパー型：プリミティブに対応する参照型（型引数にintは使えない）",
+      "input_type": "code"
+    },
+    {
+      "display": "User user = new User(\"Pomo\");",
+      "input": "User user = new User(\"Pomo\");",
+      "annotation": "new：インスタンス生成",
+      "input_type": "code"
+    },
+    {
+      "display": "User(String name) {\n  this.name = name;\n}",
+      "input": "User(String name) { this.name = name; }",
+      "annotation": "コンストラクター：初期化処理（クラス名と同名。戻り値型を書かない）",
+      "input_type": "code"
+    },
+    {
+      "display": "interface Greeter {\n  String greet();\n}",
+      "input": "interface Greeter { String greet(); }",
+      "annotation": "interface：インターフェース定義",
+      "input_type": "code"
+    },
+    {
+      "display": "Dog(String name) {\n  super(name);\n}",
+      "input": "Dog(String name) { super(name); }",
+      "annotation": "super(...)：親コンストラクター呼び出し（Java 21ではコンストラクターの先頭に記述）",
+      "input_type": "code"
+    },
+    {
+      "display": "record User(String name, int age) {\n}",
+      "input": "record User(String name, int age) {}",
+      "annotation": "record：データを保持する型（アクセサー・equals・hashCode・toString等を生成。深い不変性は保証しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "enum Status {\n  TODO,\n  DOING,\n  DONE\n}",
+      "input": "enum Status { TODO, DOING, DONE }",
+      "annotation": "enum：値を限定した型",
+      "input_type": "code"
+    },
+    {
+      "display": "throw new IllegalArgumentException(\"不正な値\");",
+      "input": "throw new IllegalArgumentException(\"不正な値\");",
+      "annotation": "throw：例外を送出",
+      "input_type": "code"
+    },
+    {
+      "display": "void load() throws IOException {}",
+      "input": "void load() throws IOException {}",
+      "annotation": "検査例外：捕捉または宣言が必要な例外（RuntimeExceptionやError系は検査例外ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "IntUnaryOperator twice = x -> x * 2;",
+      "input": "IntUnaryOperator twice = x -> x * 2;",
+      "annotation": "x -> 式：1引数ラムダ（java.util.function.IntUnaryOperatorをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "IntBinaryOperator add = (a, b) -> a + b;",
+      "input": "IntBinaryOperator add = (a, b) -> a + b;",
+      "annotation": "(a, b) -> 式：複数引数ラムダ（java.util.function.IntBinaryOperatorをimport）",
+      "input_type": "code"
+    },
+    {
+      "display": "names.forEach(System.out::println);",
+      "input": "names.forEach(System.out::println);",
+      "annotation": "型・変数::メソッド：メソッド参照",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

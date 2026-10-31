@@ -1,0 +1,214 @@
+{
+  "id": "kotlin-syntax-beginner-2",
+  "name": "Kotlin構文（初級2）",
+  "category": "プログラミング",
+  "tags": [
+    "Kotlin"
+  ],
+  "group": "Kotlin構文",
+  "levels": [
+    "初級2"
+  ],
+  "words": [
+    {
+      "display": "import kotlin.math.sqrt",
+      "input": "import kotlin.math.sqrt",
+      "annotation": "import：型・関数等を読み込む",
+      "input_type": "code"
+    },
+    {
+      "display": "/** 利用者の情報。 */",
+      "input": "/** 利用者の情報。 */",
+      "annotation": "/** ... */：KDocコメント（宣言の前に配置）",
+      "input_type": "code"
+    },
+    {
+      "display": "val n = 1;\nprintln(n)",
+      "input": "val n = 1; println(n)",
+      "annotation": "文末のセミコロン省略：通常の文の区切り（通常は行末の;が不要）",
+      "input_type": "code"
+    },
+    {
+      "display": "val n = age.toLong()",
+      "input": "val n = age.toLong()",
+      "annotation": "toLong()：数値型変換（通常、数値型間の代入変換を明示）",
+      "input_type": "code"
+    },
+    {
+      "display": "val n = \"123\".toInt()",
+      "input": "val n = \"123\".toInt()",
+      "annotation": "toInt()：文字列を整数へ（形式が不正なら例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "val f = 0.5f;\nval d = 0.5",
+      "input": "val f = 0.5f; val d = 0.5",
+      "annotation": "Float / Double：浮動小数点数",
+      "input_type": "code"
+    },
+    {
+      "display": "val ok: Boolean = true",
+      "input": "val ok: Boolean = true",
+      "annotation": "Boolean：真偽値",
+      "input_type": "code"
+    },
+    {
+      "display": "val name: String = \"Pomo\"",
+      "input": "val name: String = \"Pomo\"",
+      "annotation": "String：文字列（文字列自体は不変）",
+      "input_type": "code"
+    },
+    {
+      "display": "val remainder = 10 % 3",
+      "input": "val remainder = 10 % 3",
+      "annotation": "+ - * / %：加減乗除・余り（整数同士の除算は小数部を切り捨て）",
+      "input_type": "code"
+    },
+    {
+      "display": "val same = name == \"Pomo\"",
+      "input": "val same = name == \"Pomo\"",
+      "annotation": "==：内容に基づく等値比較（equalsに基づく。型による特性がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "val sameReference = a === b",
+      "input": "val sameReference = a === b",
+      "annotation": "===：参照の同一性（プリミティブ相当値等の同一性に依存しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "val adult = age >= 20",
+      "input": "val adult = age >= 20",
+      "annotation": "< <= > >=：大小比較",
+      "input_type": "code"
+    },
+    {
+      "display": "val valid = age in 18..65",
+      "input": "val valid = age in 18..65",
+      "annotation": "in / !in：所属判定（範囲・コレクション等に使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "fun double(n: Int) = n * 2",
+      "input": "fun double(n: Int) = n * 2",
+      "annotation": "式本体：単一式の関数（戻り値型を推論可能）",
+      "input_type": "code"
+    },
+    {
+      "display": "greet(name = \"Pomo\")",
+      "input": "greet(name = \"Pomo\")",
+      "annotation": "名前付き引数：引数名を指定",
+      "input_type": "code"
+    },
+    {
+      "display": "var name: String ? = null",
+      "input": "var name: String? = null",
+      "annotation": "型?：nullを許容（String等の非null型にはnullを代入不可）",
+      "input_type": "code"
+    },
+    {
+      "display": "val actual = name?: return",
+      "input": "val actual = name ?: return",
+      "annotation": "?: return：nullなら早期return（関数内で戻り値型に合わせて使用）",
+      "input_type": "code"
+    },
+    {
+      "display": "val length = name!!.length",
+      "input": "val length = name!!.length",
+      "annotation": "!!：非nullアサーション（nullなら例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "val nums = Array(3) {\n  0\n}",
+      "input": "val nums = Array(3) { 0 }",
+      "annotation": "Array(長さ) { 初期値 }：長さを指定した配列（この例はArray<Int>）",
+      "input_type": "code"
+    },
+    {
+      "display": "scores[\"Pomo\"] = 120",
+      "input": "scores[\"Pomo\"] = 120",
+      "annotation": "map[key] = value：Mapに追加・更新（MutableMap）",
+      "input_type": "code"
+    },
+    {
+      "display": "val score = scores[\"Pomo\"]",
+      "input": "val score = scores[\"Pomo\"]",
+      "annotation": "map[key]：Mapの値を取得（キーがなければ通常null）",
+      "input_type": "code"
+    },
+    {
+      "display": "names.forEach(::println)",
+      "input": "names.forEach(::println)",
+      "annotation": "::関数：関数参照",
+      "input_type": "code"
+    },
+    {
+      "display": "class User(val name: String)",
+      "input": "class User(val name: String)",
+      "annotation": "valプロパティ：読み取り専用プロパティ",
+      "input_type": "code"
+    },
+    {
+      "display": "class User(var age: Int)",
+      "input": "class User(var age: Int)",
+      "annotation": "varプロパティ：変更可能なプロパティ",
+      "input_type": "code"
+    },
+    {
+      "display": "protected fun work() {\n}",
+      "input": "protected fun work() {}",
+      "annotation": "protected：クラス内部・サブクラス向け（トップレベル宣言には使えない）",
+      "input_type": "code"
+    },
+    {
+      "display": "private fun helper() {\n}",
+      "input": "private fun helper() {}",
+      "annotation": "private：宣言した範囲に限定（トップレベルでは同じファイル内）",
+      "input_type": "code"
+    },
+    {
+      "display": "val(name, age) = user",
+      "input": "val (name, age) = user",
+      "annotation": "分解宣言：コンポーネントを変数へ（componentN関数に基づく）",
+      "input_type": "code"
+    },
+    {
+      "display": "val text = value as String",
+      "input": "val text = value as String",
+      "annotation": "as：キャスト（型が合わなければ例外）",
+      "input_type": "code"
+    },
+    {
+      "display": "val text = value as ? String",
+      "input": "val text = value as? String",
+      "annotation": "as?：安全キャスト（型が合わなければnull）",
+      "input_type": "code"
+    },
+    {
+      "display": "class Box<T>(val value: T)",
+      "input": "class Box<T>(val value: T)",
+      "annotation": "class Box<T>：型パラメーター付きクラス",
+      "input_type": "code"
+    },
+    {
+      "display": "val n = name.run { length }",
+      "input": "val n = name.run { length }",
+      "annotation": "run：対象をthisとして処理し結果を返す（レシーバーなしの形式もある）",
+      "input_type": "code"
+    },
+    {
+      "display": "error(\"想定外の状態\")",
+      "input": "error(\"想定外の状態\")",
+      "annotation": "error：IllegalStateExceptionを送出（戻り値型はNothing）",
+      "input_type": "code"
+    },
+    {
+      "display": "runBlocking { delay(100) }",
+      "input": "runBlocking { delay(100) }",
+      "annotation": "runBlocking：スレッドをブロックして完了を待つ（通常のsuspend処理から不用意に使わない）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

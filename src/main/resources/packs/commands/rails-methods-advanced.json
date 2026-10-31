@@ -1,0 +1,101 @@
+{
+  "id": "rails-methods-advanced",
+  "name": "Railsメソッド（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Ruby on Rails",
+    "Ruby"
+  ],
+  "group": "Railsメソッド",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "resources :users, only: [:index, :show] do;\n  resources :posts, only: [:index, :create];\nend",
+      "input": "resources :users, only: [:index,:show] do; resources :posts, only: [:index,:create]; end",
+      "annotation": "only / member / nested：公開範囲・関連ルート（routes.drawブロック内。深すぎるネストを避ける）",
+      "input_type": "code"
+    },
+    {
+      "display": "class UsersController < ApplicationController;\n  def show;\n    @user = User.find(params[:id]);\n    render json: @user.as_json(only: [:id, :name]);\n  end;\nend",
+      "input": "class UsersController < ApplicationController; def show; @user = User.find(params[:id]); render json: @user.as_json(only: [:id,:name]); end; end",
+      "annotation": "アクション：入力から処理・応答（認証・認可は別途。機密属性を返さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "before_action :set_user, only: [:show, :update];\nprivate;\ndef set_user;\n  @user = User.find(params[:id]);\nend",
+      "input": "before_action :set_user, only: [:show,:update]; private; def set_user; @user = User.find(params[:id]); end",
+      "annotation": "before_action：事前処理（コントローラー内。ユーザー権限で取得範囲を制限）",
+      "input_type": "code"
+    },
+    {
+      "display": "rescue_from ActiveRecord::RecordNotFound do;\n  render json: { error: 'not found' }, status: :not_found;\nend",
+      "input": "rescue_from ActiveRecord::RecordNotFound do; render json: {error: 'not found'}, status: :not_found; end",
+      "annotation": "rescue_from：例外を応答へ変換（コントローラー内。全Exception等を一律に握りつぶさない）",
+      "input_type": "code"
+    },
+    {
+      "display": "class User < ApplicationRecord;\n  has_many :posts;\nend;\nclass Post < ApplicationRecord;\n  belongs_to :user;\nend",
+      "input": "class User < ApplicationRecord; has_many :posts; end; class Post < ApplicationRecord; belongs_to :user; end",
+      "annotation": "belongs_to / has_many：関連を定義（外部キーはマイグレーションで設定）",
+      "input_type": "code"
+    },
+    {
+      "display": "after_commit :notify_created, on: :create;\nprivate;\ndef notify_created;\n  Rails.logger.info('created');\nend",
+      "input": "after_commit :notify_created, on: :create; private; def notify_created; Rails.logger.info('created'); end",
+      "annotation": "after_commit：確定後の副作用（モデル内。外部通信の再試行等はJob化を検討）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.exists?(email: 'pomo@example.com');\nUser.where(active: true).count;\nPost.group(:user_id).count",
+      "input": "User.exists?(email: 'pomo@example.com'); User.where(active: true).count; Post.group(:user_id).count",
+      "annotation": "exists? / count / sum：存在・集計",
+      "input_type": "code"
+    },
+    {
+      "display": "User.upsert_all([{ id: 1, name: 'Pomo', email: 'pomo@example.com' }], unique_by: :id)",
+      "input": "User.upsert_all([{id: 1,name: 'Pomo',email: 'pomo@example.com'}], unique_by: :id)",
+      "annotation": "upsert_all：一括追加・競合更新（PostgreSQL等の対応とDB制約が前提。検証・callbackを通さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.transaction do;\n  user = User.create!(name: 'Pomo', email: 'tx@example.com');\n  user.posts.create!(title: 'Hello');\nend",
+      "input": "User.transaction do; user = User.create!(name: 'Pomo',email: 'tx@example.com'); user.posts.create!(title: 'Hello'); end",
+      "annotation": "transaction：まとめて確定（例外でDB取引をロールバック。外部副作用は戻らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "class CreateNotes < ActiveRecord::Migration[8.0];\n  def change;\n    create_table :notes do |t|;\n      t.string :title, null: false;\n      t.timestamps;\n    end;\n  end;\nend",
+      "input": "class CreateNotes < ActiveRecord::Migration[8.0]; def change; create_table :notes do |t|; t.string :title, null: false; t.timestamps; end; end; end",
+      "annotation": "create_table：表作成（検証後にrails db:migrate）",
+      "input_type": "code"
+    },
+    {
+      "display": "add_index :users, :email, unique: true;\nadd_reference :posts, :user, foreign_key: true",
+      "input": "add_index :users, :email, unique: true; add_reference :posts, :user, foreign_key: true",
+      "annotation": "add_index / references：制約・索引（マイグレーション内。既存の列・索引があると重複に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "<%= form_with model: @user do |f| %>\n  <%= f.text_field :name %>\n  <%= f.submit %>\n<% end %>",
+      "input": "<%= form_with model: @user do |f| %> <%= f.text_field :name %> <%= f.submit %> <% end %>",
+      "annotation": "form_with：フォーム（対応ルート・アクションとCSRF保護を用意）",
+      "input_type": "code"
+    },
+    {
+      "display": "class NotifyJob < ApplicationJob;\n  def perform(user_id);\n    Rails.logger.info(user_id);\n  end;\nend;\nNotifyJob.perform_later(1)",
+      "input": "class NotifyJob < ApplicationJob; def perform(user_id); Rails.logger.info(user_id); end; end; NotifyJob.perform_later(1)",
+      "annotation": "perform_later：バックグラウンド処理（Jobアダプター・ワーカーの設定が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "class UserTest < ActiveSupport::TestCase;\n  test 'name is required' do;\n    user = User.new(name: nil);\n    assert_not user.valid?;\n  end;\nend",
+      "input": "class UserTest < ActiveSupport::TestCase; test 'name is required' do; user = User.new(name: nil); assert_not user.valid?; end; end",
+      "annotation": "モデルテスト：検証する（test/test_helper等の既存テスト環境が必要）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

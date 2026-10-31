@@ -1,0 +1,223 @@
+{
+  "id": "d6a056c2-9f2b-48ba-b4e6-1d851cc45f41",
+  "name": "Google Cloud CLI（gcloud）コマンド",
+  "category": "プログラミング",
+  "tags": [
+    "Google Cloud",
+    "クラウド"
+  ],
+  "words": [
+    {
+      "display": "gcloud init",
+      "input": "gcloud init",
+      "annotation": "初期設定：認証とプロジェクトなどの初期設定",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud auth login",
+      "input": "gcloud auth login",
+      "annotation": "ログイン：GoogleアカウントでCLIを認証",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud auth list",
+      "input": "gcloud auth list",
+      "annotation": "アカウント確認：認証済みアカウントを一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud config list",
+      "input": "gcloud config list",
+      "annotation": "設定確認：現在のCLI設定を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud config set project PROJECT_ID",
+      "input": "gcloud config set project PROJECT_ID",
+      "annotation": "プロジェクト選択：操作対象の既定プロジェクトを設定（PROJECT_IDを置換）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud config configurations activate CONFIG_NAME",
+      "input": "gcloud config configurations activate CONFIG_NAME",
+      "annotation": "設定セット切替：保存した設定セットを有効化（CONFIG_NAMEを置換）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud projects list",
+      "input": "gcloud projects list",
+      "annotation": "一覧表示：アクセス可能なプロジェクトを一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud projects",
+      "input": "gcloud projects",
+      "annotation": "作成・詳細確認：プロジェクトを作成・管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud services",
+      "input": "gcloud services",
+      "annotation": "API有効化・無効化：Google Cloud APIの利用設定（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud iam",
+      "input": "gcloud iam",
+      "annotation": "IAM・サービスアカウント管理：ロールやサービスアカウントを管理（プロジェクト権限の付与にはgcloud projects add-iam-policy-bindingなどを使用）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud compute",
+      "input": "gcloud compute",
+      "annotation": "VM管理：VMの作成・起動・停止やディスクを管理（コマンドグループ） / ネットワーク管理：VPC・ファイアウォール・IPアドレスを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud compute instances list",
+      "input": "gcloud compute instances list",
+      "annotation": "VM一覧：プロジェクト内のVMを一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud compute ssh VM_NAME --zone=ZONE",
+      "input": "gcloud compute ssh VM_NAME --zone=ZONE",
+      "annotation": "SSH接続：指定したVMにSSH接続（VM_NAMEとZONEを置換）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud run",
+      "input": "gcloud run",
+      "annotation": "Cloud Run管理：サービス・実行バージョン・設定を管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud run deploy SERVICE_NAME --source . --region asia-northeast1",
+      "input": "gcloud run deploy SERVICE_NAME --source . --region asia-northeast1",
+      "annotation": "ソースからデプロイ：現在のディレクトリからCloud Runにデプロイ（SERVICE_NAMEを置換。ソースがビルドに対応している必要あり）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud run services update SERVICE_NAME --update-env-vars KEY=VALUE --region\nasia-northeast1",
+      "input": "gcloud run services update SERVICE_NAME --update-env-vars KEY=VALUE --region asia-northeast1",
+      "annotation": "環境変数更新：Cloud Runの環境変数を追加・更新（SERVICE_NAMEとKEY=VALUEを置換）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud app",
+      "input": "gcloud app",
+      "annotation": "アプリ管理：デプロイ・バージョン・ログの確認（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud container",
+      "input": "gcloud container",
+      "annotation": "GKE管理：クラスタの作成・管理・接続設定の取得（Podなどの操作にはkubectlも使用）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud storage",
+      "input": "gcloud storage",
+      "annotation": "Cloud Storage管理：ファイル転送・バケット・オブジェクト管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud sql",
+      "input": "gcloud sql",
+      "annotation": "Cloud SQL管理：インスタンス・バックアップ・エクスポートを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud sql instances list",
+      "input": "gcloud sql instances list",
+      "annotation": "Cloud SQL一覧：Cloud SQLインスタンスを一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud builds",
+      "input": "gcloud builds",
+      "annotation": "Cloud Build管理：ソースコードやコンテナのビルドを実行・管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud artifacts",
+      "input": "gcloud artifacts",
+      "annotation": "Artifact Registry管理：コンテナイメージなどのリポジトリを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud secrets",
+      "input": "gcloud secrets",
+      "annotation": "機密情報管理：APIキーなどのシークレットとバージョンを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud kms",
+      "input": "gcloud kms",
+      "annotation": "暗号鍵管理：Cloud KMSの暗号鍵や暗号化・復号を管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud logging",
+      "input": "gcloud logging",
+      "annotation": "ログ検索・管理：ログの検索・取得・転送設定（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud dns",
+      "input": "gcloud dns",
+      "annotation": "DNS管理：DNSゾーンとレコードを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud scheduler",
+      "input": "gcloud scheduler",
+      "annotation": "定期実行：Cloud Schedulerのジョブを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud pubsub",
+      "input": "gcloud pubsub",
+      "annotation": "メッセージ配信：Pub/Subのトピックやサブスクリプションを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud tasks",
+      "input": "gcloud tasks",
+      "annotation": "タスクキュー：Cloud Tasksのキューとタスクを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud workflows",
+      "input": "gcloud workflows",
+      "annotation": "処理連携：Workflowsのデプロイ・実行・管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud ai",
+      "input": "gcloud ai",
+      "annotation": "Vertex AI管理：モデル・エンドポイント・学習ジョブなどを管理（コマンドグループ）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud COMMAND --help",
+      "input": "gcloud COMMAND --help",
+      "annotation": "ヘルプ表示：コマンドの構文やオプションを確認（COMMANDを対象コマンドに置換）",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud projects list --format=json",
+      "input": "gcloud projects list --format=json",
+      "annotation": "JSON出力：プロジェクト一覧をJSONで出力",
+      "input_type": "command"
+    },
+    {
+      "display": "gcloud projects list --format='csv(projectId,name)'",
+      "input": "gcloud projects list --format='csv(projectId,name)'",
+      "annotation": "CSV出力：プロジェクトIDと名前をCSVで出力",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:08:26.400Z"
+}

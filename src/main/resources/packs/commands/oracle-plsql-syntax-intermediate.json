@@ -1,0 +1,90 @@
+{
+  "id": "oracle-plsql-syntax-intermediate",
+  "name": "Oracle PL/SQL構文（中級）",
+  "category": "プログラミング",
+  "tags": [
+    "Oracle",
+    "PL/SQL",
+    "SQL"
+  ],
+  "group": "Oracle PL/SQL構文",
+  "levels": [
+    "中級"
+  ],
+  "words": [
+    {
+      "display": "DECLARE\n  v_name VARCHAR2(100) := 'Pomo';\nBEGIN\n  DBMS_OUTPUT.PUT_LINE(v_name);\nEND;",
+      "input": "DECLARE v_name VARCHAR2(100):='Pomo'; BEGIN DBMS_OUTPUT.PUT_LINE(v_name); END;",
+      "annotation": "DECLARE BEGIN END：匿名ブロック（/はSQL*Plus・SQLcl等の実行区切り。API送信時は通常付けない）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  IF 2 > 1 THEN\n    DBMS_OUTPUT.PUT_LINE('yes');\n  ELSIF 2 = 1 THEN\n    NULL;\n  ELSE\n    NULL;\n  END IF;\nEND;",
+      "input": "BEGIN IF 2>1 THEN DBMS_OUTPUT.PUT_LINE('yes'); ELSIF 2=1 THEN NULL; ELSE NULL; END IF; END;",
+      "annotation": "IF ELSIF ELSE：条件分岐",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  FOR i IN 1..3 LOOP\n    CONTINUE WHEN i = 2;\n    DBMS_OUTPUT.PUT_LINE(i);\n  END LOOP;\nEND;",
+      "input": "BEGIN FOR i IN 1..3 LOOP CONTINUE WHEN i=2; DBMS_OUTPUT.PUT_LINE(i); END LOOP; END;",
+      "annotation": "CONTINUE：次の反復へ",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  UPDATE users SET name = 'New'\n  WHERE id = 1;\n  DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT);\nEND;",
+      "input": "BEGIN UPDATE users SET name='New' WHERE id=1; DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT); END;",
+      "annotation": "UPDATE / SQL%ROWCOUNT：更新件数（直前の対応SQLの件数。WHEREなしは全行）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  FOR r IN (\n    SELECT id, name\n    FROM users\n    ORDER BY id\n  ) LOOP\n    DBMS_OUTPUT.PUT_LINE(r.name);\n  END LOOP;\nEND;",
+      "input": "BEGIN FOR r IN (SELECT id,name FROM users ORDER BY id) LOOP DBMS_OUTPUT.PUT_LINE(r.name); END LOOP; END;",
+      "annotation": "カーソルFORループ：行を順に処理（OPEN・FETCH・CLOSEを自動管理）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  TYPE user_rec IS RECORD(id NUMBER, name VARCHAR2(100));\n  r user_rec;\nBEGIN\n  r.id := 1;\n  r.name := 'Pomo';\nEND;",
+      "input": "DECLARE TYPE user_rec IS RECORD(id NUMBER,name VARCHAR2(100)); r user_rec; BEGIN r.id:=1; r.name:='Pomo'; END;",
+      "annotation": "RECORD：複合値",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE OR REPLACE PROCEDURE double_value(p_in IN NUMBER, p_out OUT NUMBER) AS\nBEGIN\n  p_out := p_in * 2;\nEND;",
+      "input": "CREATE OR REPLACE PROCEDURE double_value(p_in IN NUMBER,p_out OUT NUMBER) AS BEGIN p_out:=p_in*2; END;",
+      "annotation": "PROCEDURE / IN OUT：手続きを定義（スキーマへの定義権限が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE OR REPLACE FUNCTION add_one(p_n IN NUMBER) RETURN NUMBER AS\nBEGIN\n  RETURN p_n + 1;\nEND;",
+      "input": "CREATE OR REPLACE FUNCTION add_one(p_n IN NUMBER) RETURN NUMBER AS BEGIN RETURN p_n+1; END;",
+      "annotation": "FUNCTION / RETURN：戻り値を返す",
+      "input_type": "code"
+    },
+    {
+      "display": "CREATE OR REPLACE PACKAGE BODY math_api AS\n  FUNCTION twice(n NUMBER) RETURN NUMBER IS\n  BEGIN\n    RETURN n * 2;\n  END;\nEND;",
+      "input": "CREATE OR REPLACE PACKAGE BODY math_api AS FUNCTION twice(n NUMBER) RETURN NUMBER IS BEGIN RETURN n*2; END; END;",
+      "annotation": "PACKAGE / PACKAGE BODY：宣言と実装を分離（呼出はmath_api.twice(2)等）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_name VARCHAR2(100);\nBEGIN\n  EXECUTE IMMEDIATE 'SELECT name FROM users WHERE id=:id' INTO v_name USING 1;\nEND;",
+      "input": "DECLARE v_name VARCHAR2(100); BEGIN EXECUTE IMMEDIATE 'SELECT name FROM users WHERE id=:id' INTO v_name USING 1; END;",
+      "annotation": "EXECUTE IMMEDIATE / USING：パラメーター付き動的SQL（値をバインド。識別子の未検証連結を避ける）",
+      "input_type": "code"
+    },
+    {
+      "display": "BEGIN\n  SAVEPOINT before_change;\n  UPDATE users SET name = 'New'\n  WHERE id = 1;\n  ROLLBACK TO before_change;\nEND;",
+      "input": "BEGIN SAVEPOINT before_change; UPDATE users SET name='New' WHERE id=1; ROLLBACK TO before_change; END;",
+      "annotation": "COMMIT / ROLLBACK / SAVEPOINT：確定・取消・復帰地点（例は更新を戻す。DDLは暗黙COMMITが生じるため別扱い）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE\n  v_id users.id%TYPE;\nBEGIN\n  SELECT id INTO v_id\n  FROM users\n  WHERE id = 1 FOR UPDATE;\nEND;",
+      "input": "DECLARE v_id users.id%TYPE; BEGIN SELECT id INTO v_id FROM users WHERE id=1 FOR UPDATE; END;",
+      "annotation": "SELECT FOR UPDATE：行をロック（ブロック終了だけでは取引終了しない。COMMIT/ROLLBACKまで保持）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

@@ -1,0 +1,256 @@
+{
+  "id": "chinese-hsk5-words-1",
+  "name": "中国語HSK5級（単語1）",
+  "category": "語学",
+  "tags": [
+    "中国語"
+  ],
+  "group": "中国語：HSK5級レベル単語",
+  "levels": [
+    "単語1"
+  ],
+  "words": [
+    {
+      "display": "爱护",
+      "input": "àihù",
+      "annotation": "àihù / 大切にする、保護する",
+      "input_type": "word"
+    },
+    {
+      "display": "安慰",
+      "input": "ānwèi",
+      "annotation": "ānwèi / 慰める",
+      "input_type": "word"
+    },
+    {
+      "display": "把握",
+      "input": "bǎwò",
+      "annotation": "bǎwò / つかむ、自信",
+      "input_type": "word"
+    },
+    {
+      "display": "保持",
+      "input": "bǎochí",
+      "annotation": "bǎochí / 保つ",
+      "input_type": "word"
+    },
+    {
+      "display": "报告",
+      "input": "bàogào",
+      "annotation": "bàogào / 報告",
+      "input_type": "word"
+    },
+    {
+      "display": "本领",
+      "input": "běnlǐng",
+      "annotation": "běnlǐng / 腕前、能力",
+      "input_type": "word"
+    },
+    {
+      "display": "避免",
+      "input": "bìmiǎn",
+      "annotation": "bìmiǎn / 避ける",
+      "input_type": "word"
+    },
+    {
+      "display": "表达",
+      "input": "biǎodá",
+      "annotation": "biǎodá / 表現する",
+      "input_type": "word"
+    },
+    {
+      "display": "不断",
+      "input": "búduàn",
+      "annotation": "búduàn / 絶えず",
+      "input_type": "word"
+    },
+    {
+      "display": "参与",
+      "input": "cānyù",
+      "annotation": "cānyù / 参与する",
+      "input_type": "word"
+    },
+    {
+      "display": "操心",
+      "input": "cāoxīn",
+      "annotation": "cāoxīn / 気をもむ",
+      "input_type": "word"
+    },
+    {
+      "display": "承认",
+      "input": "chéngrèn",
+      "annotation": "chéngrèn / 認める",
+      "input_type": "word"
+    },
+    {
+      "display": "成就",
+      "input": "chéngjiù",
+      "annotation": "chéngjiù / 業績、成し遂げる",
+      "input_type": "word"
+    },
+    {
+      "display": "充分",
+      "input": "chōngfèn",
+      "annotation": "chōngfèn / 十分な",
+      "input_type": "word"
+    },
+    {
+      "display": "处理",
+      "input": "chǔlǐ",
+      "annotation": "chǔlǐ / 処理する",
+      "input_type": "word"
+    },
+    {
+      "display": "传播",
+      "input": "chuánbō",
+      "annotation": "chuánbō / 広める",
+      "input_type": "word"
+    },
+    {
+      "display": "措施",
+      "input": "cuòshī",
+      "annotation": "cuòshī / 措置",
+      "input_type": "word"
+    },
+    {
+      "display": "答应",
+      "input": "dāying",
+      "annotation": "dāying / 承諾する、返事をする",
+      "input_type": "word"
+    },
+    {
+      "display": "单纯",
+      "input": "dānchún",
+      "annotation": "dānchún / 単純な",
+      "input_type": "word"
+    },
+    {
+      "display": "地道",
+      "input": "dìdao",
+      "annotation": "dìdao / 本場の、生粋の",
+      "input_type": "word"
+    },
+    {
+      "display": "对待",
+      "input": "duìdài",
+      "annotation": "duìdài / 対処する、接する",
+      "input_type": "word"
+    },
+    {
+      "display": "发挥",
+      "input": "fāhuī",
+      "annotation": "fāhuī / 発揮する",
+      "input_type": "word"
+    },
+    {
+      "display": "反映",
+      "input": "fǎnyìng",
+      "annotation": "fǎnyìng / 反映する",
+      "input_type": "word"
+    },
+    {
+      "display": "范围",
+      "input": "fànwéi",
+      "annotation": "fànwéi / 範囲",
+      "input_type": "word"
+    },
+    {
+      "display": "分析",
+      "input": "fēnxī",
+      "annotation": "fēnxī / 分析する",
+      "input_type": "word"
+    },
+    {
+      "display": "风格",
+      "input": "fēnggé",
+      "annotation": "fēnggé / 風格、スタイル",
+      "input_type": "word"
+    },
+    {
+      "display": "否认",
+      "input": "fǒurèn",
+      "annotation": "fǒurèn / 否認する",
+      "input_type": "word"
+    },
+    {
+      "display": "改善",
+      "input": "gǎishàn",
+      "annotation": "gǎishàn / 改善する",
+      "input_type": "word"
+    },
+    {
+      "display": "根本",
+      "input": "gēnběn",
+      "annotation": "gēnběn / 根本、まったく",
+      "input_type": "word"
+    },
+    {
+      "display": "公平",
+      "input": "gōngpíng",
+      "annotation": "gōngpíng / 公平な",
+      "input_type": "word"
+    },
+    {
+      "display": "观念",
+      "input": "guānniàn",
+      "annotation": "guānniàn / 観念、考え方",
+      "input_type": "word"
+    },
+    {
+      "display": "规律",
+      "input": "guīlǜ",
+      "annotation": "guīlǜ / 法則",
+      "input_type": "word"
+    },
+    {
+      "display": "合理",
+      "input": "hélǐ",
+      "annotation": "hélǐ / 合理的な",
+      "input_type": "word"
+    },
+    {
+      "display": "后果",
+      "input": "hòuguǒ",
+      "annotation": "hòuguǒ / （悪い）結果",
+      "input_type": "word"
+    },
+    {
+      "display": "怀念",
+      "input": "huáiniàn",
+      "annotation": "huáiniàn / 懐かしむ",
+      "input_type": "word"
+    },
+    {
+      "display": "建立",
+      "input": "jiànlì",
+      "annotation": "jiànlì / 築く、設立する",
+      "input_type": "word"
+    },
+    {
+      "display": "坚强",
+      "input": "jiānqiáng",
+      "annotation": "jiānqiáng / 強い、たくましい",
+      "input_type": "word"
+    },
+    {
+      "display": "交往",
+      "input": "jiāowǎng",
+      "annotation": "jiāowǎng / 付き合う",
+      "input_type": "word"
+    },
+    {
+      "display": "结合",
+      "input": "jiéhé",
+      "annotation": "jiéhé / 結びつける",
+      "input_type": "word"
+    },
+    {
+      "display": "尽快",
+      "input": "jǐnkuài",
+      "annotation": "jǐnkuài / できるだけ早く",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-29T00:00:00.000Z"
+}

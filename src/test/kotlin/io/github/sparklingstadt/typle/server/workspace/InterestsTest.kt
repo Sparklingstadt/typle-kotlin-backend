@@ -54,7 +54,7 @@ class InterestsTest {
     val text = InterestsTest::class.java.getResource("/default-interests.json")!!.readText()
     val want = (JsonValue.parse(text) as JsonArray).items.map { (it as JsonString).value }
     assertEquals(want, DEFAULT_INTERESTS)
-    assertEquals(22, DEFAULT_INTERESTS.size)
+    assertEquals(23, DEFAULT_INTERESTS.size)
     checkInterests(DEFAULT_INTERESTS)
   }
 }

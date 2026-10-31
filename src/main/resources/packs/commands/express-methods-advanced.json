@@ -1,0 +1,83 @@
+{
+  "id": "express-methods-advanced",
+  "name": "Expressメソッド（上級）",
+  "category": "プログラミング",
+  "tags": [
+    "Express",
+    "Node.js"
+  ],
+  "group": "Expressメソッド",
+  "levels": [
+    "上級"
+  ],
+  "words": [
+    {
+      "display": "app.get('/search', (req, res) => {\n  const q = req.query.q;\n  if (typeof q !== 'string') {\n    res.status(400).json({ error: 'q required' });\n    return;\n  }\n  res.json({ q });\n});",
+      "input": "app.get('/search',(req,res)=>{ const q=req.query.q; if(typeof q!=='string'){res.status(400).json({error:'q required'});return;} res.json({q}); });",
+      "annotation": "req.query：クエリ文字列（値の型・長さを検証。文字列とは限らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "const router = express.Router();\nrouter.get('/', (_req, res) => {\n  res.json([])\n});\napp.use('/users', router);",
+      "input": "const router=express.Router(); router.get('/',(_req,res)=>{res.json([])}); app.use('/users',router);",
+      "annotation": "Router / app.use：サブルートを分離（登録順が重要）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.post('/users', (req, res) => {\n  const name = req.body?.name;\n  if (typeof name !== 'string' || !name.trim()) {\n    res.status(400).json({ error: 'name required' });\n    return;\n  }\n  res.status(201).json({ name });\n});",
+      "input": "app.post('/users',(req,res)=>{ const name=req.body?.name; if(typeof name!=='string'||!name.trim()){res.status(400).json({error:'name required'});return;} res.status(201).json({name}); });",
+      "annotation": "req.body：本文を検証して利用（先に適切なbody parser。型注釈は実行時検証ではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.get('/header', (req, res) => {\n  res.set('X-App', 'sample');\n  res.json({ accept: req.get('Accept') })\n});",
+      "input": "app.get('/header',(req,res)=>{res.set('X-App','sample');res.json({accept:req.get('Accept')})});",
+      "annotation": "res.set / req.get：ヘッダー設定・取得（リクエストヘッダーを無条件で信頼しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.post('/theme', (_req, res) => {\n  res.cookie('theme', 'dark', {\n    httpOnly: true,\n    sameSite: 'lax',\n    secure: process.env.NODE_ENV === 'production',\n    path: '/'\n  });\n  res.json({ ok: true });\n});",
+      "input": "app.post('/theme',(_req,res)=>{ res.cookie('theme','dark',{httpOnly:true,sameSite:'lax',secure:process.env.NODE_ENV==='production',path:'/'}); res.json({ok:true}); });",
+      "annotation": "res.cookie / clearCookie：Cookie設定（認証用Cookieでは期限・CSRF対策等も設計。req.cookiesは追加parser等が必要）",
+      "input_type": "code"
+    },
+    {
+      "display": "import path from 'node:path';\napp.get('/manual', (_req, res) => {\n  res.sendFile(path.resolve('public/manual.pdf'))\n});",
+      "input": "import path from 'node:path'; app.get('/manual',(_req,res)=>{res.sendFile(path.resolve('public/manual.pdf'))});",
+      "annotation": "res.sendFile：ファイル送信（ファイルが必要。未検証パス入力を連結しない）",
+      "input_type": "code"
+    },
+    {
+      "display": "app.use(express.json());\napp.get('/health', (_req, res) => {\n  res.json({ ok: true })\n});\napp.use((_req, res) => {\n  res.status(404).json({ error: 'not found' })\n});",
+      "input": "app.use(express.json()); app.get('/health',(_req,res)=>{res.json({ok:true})}); app.use((_req,res)=>{res.status(404).json({error:'not found'})});",
+      "annotation": "処理の順序：共通前処理を先に登録（404ハンドラーはルートの後）",
+      "input_type": "code"
+    },
+    {
+      "display": "import { randomUUID } from 'node:crypto';\napp.use((_req, res, next) => {\n  res.locals.requestId = randomUUID();\n  next()\n});",
+      "input": "import {randomUUID} from 'node:crypto'; app.use((_req,res,next)=>{res.locals.requestId=randomUUID();next()});",
+      "annotation": "res.locals：同一リクエスト内の値（ログへ秘密を出さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import type { RequestHandler } from 'express';\nconst validateId: RequestHandler = (req, res, next) => {\n  if (!/^\\d+$/.test(req.params.id)) {\n    res.status(400).json({ error: 'invalid id' });\n    return;\n  }\n  next();\n};\napp.get('/users/:id', validateId, (req, res) => {\n  res.json({ id: req.params.id })\n});",
+      "input": "import type {RequestHandler} from 'express'; const validateId:RequestHandler=(req,res,next)=>{ if(!/^\\d+$/.test(req.params.id)){res.status(400).json({error:'invalid id'});return;} next(); }; app.get('/users/:id',validateId,(req,res)=>{res.json({id:req.params.id})});",
+      "annotation": "個別ルートの事前処理：ルート単位で検証（認証認可は別のミドルウェアやサービスで実施）",
+      "input_type": "code"
+    },
+    {
+      "display": "import type { ErrorRequestHandler } from 'express';\nconst onError: ErrorRequestHandler = (err, req, res, next) => {\n  if (res.headersSent) {\n    next(err);\n    return;\n  }\n  console.error(err);\n  res.status(500).json({ error: 'internal error' });\n};\napp.use(onError);",
+      "input": "import type {ErrorRequestHandler} from 'express'; const onError:ErrorRequestHandler=(err,req,res,next)=>{ if(res.headersSent){next(err);return;} console.error(err); res.status(500).json({error:'internal error'}); }; app.use(onError);",
+      "annotation": "4引数エラーハンドラー：失敗応答（ルート等の後に登録。スタック・機密情報を返さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "import request from 'supertest';\nconst response = await request(app).get('/health');\nif (response.status !== 200)\n  throw new Error('unexpected status');",
+      "input": "import request from 'supertest'; const response=await request(app).get('/health'); if(response.status!==200) throw new Error('unexpected status');",
+      "annotation": "Supertest：HTTPテスト（別パッケージ・テスト環境。appとlistenを分けると検証しやすい）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

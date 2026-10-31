@@ -1,0 +1,58 @@
+{
+  "description": "wordCount がないときはリストの単語数になる。",
+  "lists": [
+    {
+      "id": "a",
+      "name": "A",
+      "createdAt": "2026-10-01",
+      "words": [
+        {
+          "display": "ab",
+          "input": "ab",
+          "annotation": ""
+        },
+        {
+          "display": "cd",
+          "input": "cd",
+          "annotation": ""
+        }
+      ],
+      "records": [
+        {
+          "id": "run-1",
+          "time": 3,
+          "date": "2026-10-01T09:00:00.000Z",
+          "mistakes": 0,
+          "accuracy": 100,
+          "wordCount": 2
+        }
+      ]
+    }
+  ],
+  "devices": [
+    {
+      "id": "mac",
+      "name": "MacBook Air",
+      "layout": "JIS"
+    }
+  ],
+  "listId": "a",
+  "input": {
+    "id": "run-2",
+    "time": 2.5,
+    "date": "2026-10-02T10:00:00.000Z",
+    "mistakes": 1,
+    "accuracy": 95.5
+  },
+  "expected": {
+    "added": true,
+    "record": {
+      "id": "run-2",
+      "time": 2.5,
+      "date": "2026-10-02T10:00:00.000Z",
+      "mistakes": 1,
+      "accuracy": 95.5,
+      "wordCount": 2
+    }
+  }
+}

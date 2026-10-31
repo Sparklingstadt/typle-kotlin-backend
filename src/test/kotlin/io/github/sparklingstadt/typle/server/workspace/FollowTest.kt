@@ -15,7 +15,7 @@ import kotlin.test.assertTrue
 // The fixtures are copies of typle-r's tests/fixtures/follow, which the app (tests/followedPacks.test.cjs) and Go
 // (TestFollowFixtures in server/internal/workspace/follow_test.go) check against.
 private val fixtures = listOf(
-  "migrate-copies.json", "migrate-unconverted.json", "sync-added-removed.json", "sync-duplicate-origin.json",
+  "migrate-copies.json", "sync-added-removed.json", "sync-duplicate-origin.json",
   "sync-keeps-name.json", "sync-position.json", "sync-removed-pack.json", "sync-renamed-reordered.json", "sync-words.json",
 )
 
@@ -60,7 +60,7 @@ class FollowTest {
   @Test fun readsOfficialPacks() {
     val official = officialPacks()
     // The same catalog ids, in the same order, as officialPacks() in src/plugins/packs/catalog.ts.
-    assertEquals(30, official.size)
+    assertEquals(40, official.size)
     assertEquals("pack-8f3cf116-1f9f-4579-a071-e600094b104d", official[0].catalogId)
     assertEquals("pack-ef974a4b-3c7a-4eeb-9979-6721a0a1c81a", official[1].catalogId)
     for (entry in official) {
@@ -69,7 +69,7 @@ class FollowTest {
       for (list in entry.lists) assertTrue(list.packId == entry.catalogId && list.records.isEmpty() && listOriginId(list) == null, list.id)
     }
     // Since v0.85.0 the official lists are the lists of the sparklingstadt account, in its order.
-    assertEquals(67, official.sumOf { it.lists.size })
+    assertEquals(86, official.sumOf { it.lists.size })
     assertEquals("8f3cf116-1f9f-4579-a071-e600094b104d", official[0].lists[0].id)
     // The group Arch Linuxコマンド is named after the list arch-linux, which comes first and has no group.
     val arch = official.single { entry -> entry.lists.any { it.id == "arch-linux-beginner" } }
@@ -101,8 +101,10 @@ class FollowTest {
       mine[0].toString())
     for (list in mine.drop(1)) assertEquals("f:" + listOriginId(list), list.id)
     assertEquals("o", w.lists.last().id)
-    // A row without packs is not converted, and so not followed.
-    assertEquals(decode(lists, "[]"), readSaved(lists, "[]", null))
+    // A row without packs gives each list a pack of its own (typle-r v2.0.0), so none follows the catalog.
+    val own = readSaved(lists, "[]", null)
+    assertEquals(listOf("pack-old", "pack-fl", "pack-o"), own.packs.map { it.id })
+    assertEquals(listOf("a"), own.lists[1].words.map { it.display })
   }
 
   // Go's TestDecodeReadsFollowedOrigins.

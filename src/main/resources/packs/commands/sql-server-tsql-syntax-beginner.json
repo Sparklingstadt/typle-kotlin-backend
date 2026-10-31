@@ -1,0 +1,108 @@
+{
+  "id": "sql-server-tsql-syntax-beginner",
+  "name": "SQL Server T-SQL構文（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "SQL Server",
+    "T-SQL",
+    "SQL"
+  ],
+  "group": "SQL Server T-SQL構文",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "SELECT @@VERSION;",
+      "input": "SELECT @@VERSION;",
+      "annotation": "T-SQL / SQL Server：対象環境（SQL Server 2022以降で広く使える主要構文。表・列・権限を準備。Azure各サービスとは一部差がある）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT 1;",
+      "input": "SELECT 1;",
+      "annotation": "; / GO / コメント：文・バッチの区切り（GOはSSMS・sqlcmd等のクライアント区切り。SQL文としてドライバーへ送らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "GO",
+      "input": "GO",
+      "annotation": "; / GO / コメント：文・バッチの区切り（GOはSSMS・sqlcmd等のクライアント区切り。SQL文としてドライバーへ送らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "/* コメント */ SELECT 2;",
+      "input": "/* コメント */ SELECT 2;",
+      "annotation": "; / GO / コメント：文・バッチの区切り（GOはSSMS・sqlcmd等のクライアント区切り。SQL文としてドライバーへ送らない）",
+      "input_type": "code"
+    },
+    {
+      "display": "DECLARE @age int = 20;\nSET @age = 21;\nSELECT @age;",
+      "input": "DECLARE @age int = 20; SET @age = 21; SELECT @age;",
+      "annotation": "DECLARE / SET：変数宣言と代入（補足: @変数の有効範囲はバッチ等）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT N'こんにちは' AS [表示名];",
+      "input": "SELECT N'こんにちは' AS [表示名];",
+      "annotation": "N'...' / [識別子]：Unicode文字列・名前の引用（nvarchar向けUnicodeリテラル。識別子と文字列を区別）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT Id, Name FROM dbo.Users WHERE Age >= 20;",
+      "input": "SELECT Id, Name FROM dbo.Users WHERE Age >= 20;",
+      "annotation": "SELECT / WHERE：行取得",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT TOP (10) * FROM dbo.Users ORDER BY Id;",
+      "input": "SELECT TOP (10) * FROM dbo.Users ORDER BY Id;",
+      "annotation": "TOP：先頭件数（ORDER BYがなければ順番は保証されない）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM dbo.Users WHERE Email IS NULL;",
+      "input": "SELECT * FROM dbo.Users WHERE Email IS NULL;",
+      "annotation": "IS NULL / IS NOT NULL：NULL判定（補足: = NULLは使わない。通常比較にNULLがあるとunknown）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT * FROM dbo.Users WHERE Name LIKE N'Po%';",
+      "input": "SELECT * FROM dbo.Users WHERE Name LIKE N'Po%';",
+      "annotation": "LIKE：パターン一致（%は任意長。大文字小文字の扱いは照合順序等に依存）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT DISTINCT Age FROM dbo.Users;",
+      "input": "SELECT DISTINCT Age FROM dbo.Users;",
+      "annotation": "DISTINCT：重複排除",
+      "input_type": "code"
+    },
+    {
+      "display": "DELETE FROM dbo.Orders OUTPUT DELETED.Id WHERE Id = 1;",
+      "input": "DELETE FROM dbo.Orders OUTPUT DELETED.Id WHERE Id = 1;",
+      "annotation": "DELETE / OUTPUT：行削除（WHEREなしは全行削除）",
+      "input_type": "code"
+    },
+    {
+      "display": "TRUNCATE TABLE dbo.Orders;",
+      "input": "TRUNCATE TABLE dbo.Orders;",
+      "annotation": "TRUNCATE TABLE：表を空にする（IDENTITYをリセット。外部キー等の制約。全データ削除）",
+      "input_type": "code"
+    },
+    {
+      "display": "ALTER TABLE dbo.Users ADD Nickname nvarchar(100) NULL;",
+      "input": "ALTER TABLE dbo.Users ADD Nickname nvarchar(100) NULL;",
+      "annotation": "ALTER TABLE：列追加（スキーマ変更のロック等に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "SELECT CAST('123' AS int), TRY_CONVERT(int, 'abc');",
+      "input": "SELECT CAST('123' AS int), TRY_CONVERT(int,'abc');",
+      "annotation": "CAST / CONVERT / TRY_CONVERT：型変換（TRY_CONVERTは通常変換失敗でNULL。禁止された変換等はエラー）",
+      "input_type": "code"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

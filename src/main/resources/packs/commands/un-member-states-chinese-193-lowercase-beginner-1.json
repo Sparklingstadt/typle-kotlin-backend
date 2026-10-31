@@ -1,0 +1,251 @@
+{
+  "id": "un-member-states-chinese-193-lowercase-beginner-1",
+  "name": "国名：中国語・国連加盟国（小文字・初級1）",
+  "category": "語学",
+  "tags": [
+    "中国語",
+    "国名"
+  ],
+  "group": "国名：中国語・国連加盟国（小文字）",
+  "levels": [
+    "初級1"
+  ],
+  "words": [
+    {
+      "display": "阿富汗",
+      "input": "afuhan",
+      "annotation": "Āfùhàn / アフガニスタン",
+      "input_type": "word"
+    },
+    {
+      "display": "安哥拉",
+      "input": "angela",
+      "annotation": "Āngēlā / アンゴラ",
+      "input_type": "word"
+    },
+    {
+      "display": "奥地利",
+      "input": "aodili",
+      "annotation": "Àodìlì / オーストリア",
+      "input_type": "word"
+    },
+    {
+      "display": "巴哈马",
+      "input": "bahama",
+      "annotation": "Bāhāmǎ / バハマ",
+      "input_type": "word"
+    },
+    {
+      "display": "巴林",
+      "input": "balin",
+      "annotation": "Bālín / バーレーン",
+      "input_type": "word"
+    },
+    {
+      "display": "伯利兹",
+      "input": "bolizi",
+      "annotation": "Bólìzī / ベリーズ",
+      "input_type": "word"
+    },
+    {
+      "display": "不丹",
+      "input": "budan",
+      "annotation": "Bùdān / ブータン",
+      "input_type": "word"
+    },
+    {
+      "display": "巴西",
+      "input": "baxi",
+      "annotation": "Bāxī / ブラジル",
+      "input_type": "word"
+    },
+    {
+      "display": "乍得",
+      "input": "zhade",
+      "annotation": "Zhàdé / チャド",
+      "input_type": "word"
+    },
+    {
+      "display": "智利",
+      "input": "zhili",
+      "annotation": "Zhìlì / チリ",
+      "input_type": "word"
+    },
+    {
+      "display": "古巴",
+      "input": "guba",
+      "annotation": "Gǔbā / キューバ",
+      "input_type": "word"
+    },
+    {
+      "display": "捷克",
+      "input": "jieke",
+      "annotation": "Jiékè / チェコ",
+      "input_type": "word"
+    },
+    {
+      "display": "丹麦",
+      "input": "danmai",
+      "annotation": "Dānmài / デンマーク",
+      "input_type": "word"
+    },
+    {
+      "display": "吉布提",
+      "input": "jibuti",
+      "annotation": "Jíbùtí / ジブチ",
+      "input_type": "word"
+    },
+    {
+      "display": "埃及",
+      "input": "aiji",
+      "annotation": "Āijí / エジプト",
+      "input_type": "word"
+    },
+    {
+      "display": "斐济",
+      "input": "feiji",
+      "annotation": "Fěijì / フィジー",
+      "input_type": "word"
+    },
+    {
+      "display": "芬兰",
+      "input": "fenlan",
+      "annotation": "Fēnlán / フィンランド",
+      "input_type": "word"
+    },
+    {
+      "display": "法国",
+      "input": "faguo",
+      "annotation": "Fǎguó / フランス",
+      "input_type": "word"
+    },
+    {
+      "display": "德国",
+      "input": "deguo",
+      "annotation": "Déguó / ドイツ",
+      "input_type": "word"
+    },
+    {
+      "display": "加纳",
+      "input": "jiana",
+      "annotation": "Jiānà / ガーナ",
+      "input_type": "word"
+    },
+    {
+      "display": "希腊",
+      "input": "xila",
+      "annotation": "Xīlà / ギリシャ",
+      "input_type": "word"
+    },
+    {
+      "display": "海地",
+      "input": "haidi",
+      "annotation": "Hǎidì / ハイチ",
+      "input_type": "word"
+    },
+    {
+      "display": "印度",
+      "input": "yindu",
+      "annotation": "Yìndù / インド",
+      "input_type": "word"
+    },
+    {
+      "display": "伊拉克",
+      "input": "yilake",
+      "annotation": "Yīlākè / イラク",
+      "input_type": "word"
+    },
+    {
+      "display": "意大利",
+      "input": "yidali",
+      "annotation": "Yìdàlì / イタリア",
+      "input_type": "word"
+    },
+    {
+      "display": "日本",
+      "input": "riben",
+      "annotation": "Rìběn / 日本",
+      "input_type": "word"
+    },
+    {
+      "display": "约旦",
+      "input": "yuedan",
+      "annotation": "Yuēdàn / ヨルダン",
+      "input_type": "word"
+    },
+    {
+      "display": "利比亚",
+      "input": "libiya",
+      "annotation": "Lìbǐyà / リビア",
+      "input_type": "word"
+    },
+    {
+      "display": "马里",
+      "input": "mali",
+      "annotation": "Mǎlǐ / マリ",
+      "input_type": "word"
+    },
+    {
+      "display": "马耳他",
+      "input": "maerta",
+      "annotation": "Mǎ'ěrtā / マルタ",
+      "input_type": "word"
+    },
+    {
+      "display": "墨西哥",
+      "input": "moxige",
+      "annotation": "Mòxīgē / メキシコ",
+      "input_type": "word"
+    },
+    {
+      "display": "瑙鲁",
+      "input": "naolu",
+      "annotation": "Nǎolǔ / ナウル",
+      "input_type": "word"
+    },
+    {
+      "display": "阿曼",
+      "input": "aman",
+      "annotation": "Āmàn / オマーン",
+      "input_type": "word"
+    },
+    {
+      "display": "帕劳",
+      "input": "palao",
+      "annotation": "Pàláo / パラオ",
+      "input_type": "word"
+    },
+    {
+      "display": "秘鲁",
+      "input": "bilu",
+      "annotation": "Bìlǔ / ペルー",
+      "input_type": "word"
+    },
+    {
+      "display": "波兰",
+      "input": "bolan",
+      "annotation": "Bōlán / ポーランド",
+      "input_type": "word"
+    },
+    {
+      "display": "苏丹",
+      "input": "sudan",
+      "annotation": "Sūdān / スーダン",
+      "input_type": "word"
+    },
+    {
+      "display": "多哥",
+      "input": "duoge",
+      "annotation": "Duōgē / トーゴ",
+      "input_type": "word"
+    },
+    {
+      "display": "也门",
+      "input": "yemen",
+      "annotation": "Yěmén / イエメン",
+      "input_type": "word"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

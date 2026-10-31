@@ -1,0 +1,107 @@
+{
+  "id": "rails-methods-beginner",
+  "name": "Railsメソッド（初級）",
+  "category": "プログラミング",
+  "tags": [
+    "Ruby on Rails",
+    "Ruby"
+  ],
+  "group": "Railsメソッド",
+  "levels": [
+    "初級"
+  ],
+  "words": [
+    {
+      "display": "class User < ApplicationRecord;\nend",
+      "input": "class User < ApplicationRecord; end",
+      "annotation": "Rails 8系：対象・コード例（生成済みRailsアプリを想定。User(name,email,active,age)とPost(user_id,title,published)等のDBを準備）",
+      "input_type": "code"
+    },
+    {
+      "display": "params.require(:user).permit(:name, :email)",
+      "input": "params.require(:user).permit(:name,:email)",
+      "annotation": "require / permit：従来のStrong Parameters（許可前の入力をそのままmass assignmentしない）",
+      "input_type": "code"
+    },
+    {
+      "display": "render json: { id: 1 }, status: :created",
+      "input": "render json: {id: 1}, status: :created",
+      "annotation": "render json / status：JSON応答（アクション内。必要な属性に限定）",
+      "input_type": "code"
+    },
+    {
+      "display": "redirect_to users_path, status: :see_other",
+      "input": "redirect_to users_path, status: :see_other",
+      "annotation": "redirect_to / head：転送・本文なし応答（1アクションで複数応答しない。redirect_toは自動returnではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "head :no_content",
+      "input": "head :no_content",
+      "annotation": "redirect_to / head：転送・本文なし応答（1アクションで複数応答しない。redirect_toは自動returnではない）",
+      "input_type": "code"
+    },
+    {
+      "display": "scope :active, -> { where(active: true) }",
+      "input": "scope :active, -> { where(active: true) }",
+      "annotation": "scope：検索条件に名前（Userモデル内）",
+      "input_type": "code"
+    },
+    {
+      "display": "enum :status, { draft: 0, published: 1 }",
+      "input": "enum :status, {draft: 0,published: 1}",
+      "annotation": "enum：状態を定義（Post等に対応integer列が必要。メソッド名競合に注意）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.where(active: true).where('age >= ?', 20)",
+      "input": "User.where(active: true).where('age >= ?',20)",
+      "annotation": "all / where：検索条件（動的値はバインド。SQL文字列連結を避ける）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.find(1).update!(name: 'New')",
+      "input": "User.find(1).update!(name: 'New')",
+      "annotation": "update / update!：属性更新（認可したレコード・属性だけ変更）",
+      "input_type": "code"
+    },
+    {
+      "display": "User.find(1).destroy!",
+      "input": "User.find(1).destroy!",
+      "annotation": "destroy / delete_all：削除（destroyはcallback等。delete_allは通常callback・dependent処理を通さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "Post.where(published: false).delete_all",
+      "input": "Post.where(published: false).delete_all",
+      "annotation": "destroy / delete_all：削除（destroyはcallback等。delete_allは通常callback・dependent処理を通さない）",
+      "input_type": "code"
+    },
+    {
+      "display": "bin/rails generate model Note title:string",
+      "input": "bin/rails generate model Note title:string",
+      "annotation": "generate / migrate / routes / test：開発コマンド（生成・DB変更を含む。既存プロジェクトで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "bin/rails db:migrate",
+      "input": "bin/rails db:migrate",
+      "annotation": "generate / migrate / routes / test：開発コマンド（生成・DB変更を含む。既存プロジェクトで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "bin/rails routes",
+      "input": "bin/rails routes",
+      "annotation": "generate / migrate / routes / test：開発コマンド（生成・DB変更を含む。既存プロジェクトで実行）",
+      "input_type": "command"
+    },
+    {
+      "display": "bin/rails test",
+      "input": "bin/rails test",
+      "annotation": "generate / migrate / routes / test：開発コマンド（生成・DB変更を含む。既存プロジェクトで実行）",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T00:00:00.000Z"
+}

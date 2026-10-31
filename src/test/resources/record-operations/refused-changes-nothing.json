@@ -1,0 +1,126 @@
+{
+  "description": "拒否された追加は記録を変えず、後の操作に影響しない。",
+  "lists": [
+    {
+      "id": "a",
+      "name": "A",
+      "createdAt": "2026-10-01",
+      "words": [
+        {
+          "display": "ab",
+          "input": "ab",
+          "annotation": ""
+        }
+      ],
+      "records": [
+        {
+          "id": "old",
+          "time": 3,
+          "date": "2026-10-01T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "name": "B",
+      "createdAt": "2026-10-01",
+      "words": [
+        {
+          "display": "ab",
+          "input": "ab",
+          "annotation": ""
+        },
+        {
+          "display": "ab",
+          "input": "ab",
+          "annotation": ""
+        }
+      ],
+      "records": []
+    }
+  ],
+  "devices": [
+    {
+      "id": "mac",
+      "name": "MacBook",
+      "layout": "JIS"
+    }
+  ],
+  "steps": [
+    {
+      "op": "add",
+      "listId": "a",
+      "input": {
+        "id": "r1",
+        "time": 2,
+        "date": "2026-10-02T10:00:00.000Z",
+        "mistakes": 0,
+        "accuracy": 101
+      },
+      "expected": {
+        "error": "invalidRecord"
+      }
+    },
+    {
+      "op": "add",
+      "listId": "gone",
+      "input": {
+        "id": "r1",
+        "time": 2,
+        "date": "2026-10-02T10:00:00.000Z",
+        "mistakes": 0,
+        "accuracy": 100
+      },
+      "expected": {
+        "error": "listNotFound"
+      }
+    },
+    {
+      "op": "add",
+      "listId": "a",
+      "input": {
+        "id": "r1",
+        "time": 2,
+        "date": "2026-10-02T10:00:00.000Z",
+        "mistakes": 0,
+        "accuracy": 100,
+        "deviceId": "gone"
+      },
+      "expected": {
+        "error": "deviceNotFound"
+      }
+    },
+    {
+      "op": "add",
+      "listId": "a",
+      "input": {
+        "id": "r1",
+        "time": 2,
+        "date": "2026-10-02T10:00:00.000Z",
+        "mistakes": 0,
+        "accuracy": 100
+      },
+      "expected": {
+        "added": true
+      }
+    }
+  ],
+  "expected": {
+    "a": [
+      {
+        "id": "old",
+        "time": 3,
+        "date": "2026-10-01T09:00:00.000Z"
+      },
+      {
+        "id": "r1",
+        "time": 2,
+        "date": "2026-10-02T10:00:00.000Z",
+        "mistakes": 0,
+        "accuracy": 100,
+        "wordCount": 1
+      }
+    ],
+    "b": []
+  }
+}

@@ -157,27 +157,24 @@ class AuthRoutesTest {
 
   @Test fun session() = serve {
     val signedOut = request("GET", "/api/auth/session")
-    assertEquals(200 to "{\"user\":null}\n", signedOut.statusCode() to signedOut.body())
+    assertEquals(200 to "{\"user\":null,\"providers\":[\"github\"]}\n", signedOut.statusCode() to signedOut.body())
     expectJsonHeaders("session", signedOut)
     expectSecurityHeaders("session", signedOut)
     val cookie = sessionCookie(TEST_OWNER, nowMillis = NOW)
     val signedIn = request("GET", "/api/auth/session", headers = mapOf("Cookie" to cookie))
-    assertEquals("{\"user\":{\"id\":\"$TEST_OWNER\",\"name\":\"Tester\",\"image\":null}}\n", signedIn.body())
+    assertEquals("{\"user\":{\"id\":\"$TEST_OWNER\",\"name\":\"Tester\",\"image\":null},\"providers\":[\"github\"]}\n", signedIn.body())
     assertNull(signedIn.cookie("typle-session"))
     expectError(request("PUT", "/api/auth/session"), 405, "methodNotAllowed")
     assertEquals(200 to "", request("HEAD", "/api/auth/session").let { it.statusCode() to it.body() })
   }
 
-  // A session that has grown old is signed again, so an active user stays signed in.
-  @Test fun sessionRenewal() = serve {
+  // A session is not signed again however old it grows (typle-r v0.107.0): it ends MAX_AGE after its login.
+  @Test fun sessionNotRenewed() = serve {
     val old = NOW - 24 * 3600_000L
-    val renewed = request("GET", "/api/auth/session", headers = mapOf("Cookie" to sessionCookie(TEST_OWNER, nowMillis = old)))
-    val cookie = renewed.cookie("typle-session")!!
-    assertEquals(newSession(TEST_OWNER, "Tester", "", NOW), Keys.create(TEST_SECRET).open(cookie.substringAfter('=').substringBefore(';'), NOW))
+    val web = request("GET", "/api/auth/session", headers = mapOf("Cookie" to sessionCookie(TEST_OWNER, nowMillis = old)))
+    assertNull(web.cookie("typle-session"))
     val app = request("GET", "/api/auth/session", headers = mapOf("Authorization" to "Bearer " + appToken(TEST_OWNER, old)))
-    val issued = Keys.create(TEST_SECRET).sealApp(newSession(TEST_OWNER, "Tester", "", NOW))
-    assertEquals("{\"user\":{\"id\":\"$TEST_OWNER\",\"name\":\"Tester\",\"image\":null},\"token\":\"$issued\"}\n", app.body())
-    assertNull(app.cookie("typle-session"))
+    assertEquals("{\"user\":{\"id\":\"$TEST_OWNER\",\"name\":\"Tester\",\"image\":null},\"providers\":[\"github\"]}\n", app.body())
   }
 
   @Test fun signout() = serve {

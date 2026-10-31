@@ -1,0 +1,470 @@
+{
+  "id": "d3638812-0c0a-4f37-a413-d17404344c32",
+  "name": "Linux：シェルとBash",
+  "category": "プログラミング",
+  "tags": [
+    "Linux",
+    "シェル",
+    "Bash"
+  ],
+  "words": [
+    {
+      "display": "$$",
+      "input": "$$",
+      "annotation": "現在のシェルのPID（Bash）",
+      "input_type": "code"
+    },
+    {
+      "display": "$!",
+      "input": "$!",
+      "annotation": "直近にバックグラウンド起動したジョブのPID",
+      "input_type": "code"
+    },
+    {
+      "display": "$?",
+      "input": "$?",
+      "annotation": "直前のコマンドの終了ステータス",
+      "input_type": "code"
+    },
+    {
+      "display": "/proc/self",
+      "input": "/proc/self",
+      "annotation": "アクセス中のプロセス自身",
+      "input_type": "word"
+    },
+    {
+      "display": "/proc/$$",
+      "input": "/proc/$$",
+      "annotation": "シェルのPIDに対応するディレクトリ",
+      "input_type": "word"
+    },
+    {
+      "display": ">",
+      "input": ">",
+      "annotation": "標準出力を上書き保存",
+      "input_type": "code"
+    },
+    {
+      "display": ">>",
+      "input": ">>",
+      "annotation": "標準出力を追記保存",
+      "input_type": "code"
+    },
+    {
+      "display": "<",
+      "input": "<",
+      "annotation": "ファイルから標準入力へ",
+      "input_type": "code"
+    },
+    {
+      "display": "2>",
+      "input": "2>",
+      "annotation": "標準エラー出力だけ保存",
+      "input_type": "code"
+    },
+    {
+      "display": "2>>",
+      "input": "2>>",
+      "annotation": "標準エラー出力を追記",
+      "input_type": "code"
+    },
+    {
+      "display": "2>&1",
+      "input": "2>&1",
+      "annotation": "FD2を現在のFD1と同じ出力先へ接続",
+      "input_type": "code"
+    },
+    {
+      "display": "1>&2",
+      "input": "1>&2",
+      "annotation": "FD1を現在のFD2と同じ出力先へ接続",
+      "input_type": "code"
+    },
+    {
+      "display": "&>",
+      "input": "&>",
+      "annotation": "標準出力とエラー出力をまとめて保存（Bash）",
+      "input_type": "code"
+    },
+    {
+      "display": "<<<",
+      "input": "<<<",
+      "annotation": "Here String：文字列を標準入力に渡す（Bash）",
+      "input_type": "code"
+    },
+    {
+      "display": "<<EOF",
+      "input": "<<EOF",
+      "annotation": "Here Document：複数行を入力に渡す",
+      "input_type": "code"
+    },
+    {
+      "display": "|&",
+      "input": "|&",
+      "annotation": "標準出力と標準エラー出力をパイプへ（Bash）",
+      "input_type": "code"
+    },
+    {
+      "display": "kill -l",
+      "input": "kill -l",
+      "annotation": "シグナル一覧表示",
+      "input_type": "command"
+    },
+    {
+      "display": "kill -TERM 1234",
+      "input": "kill -TERM 1234",
+      "annotation": "kill -TERM：終了を要求",
+      "input_type": "command"
+    },
+    {
+      "display": "kill -HUP 1234",
+      "input": "kill -HUP 1234",
+      "annotation": "kill -HUP：HUPシグナル送信",
+      "input_type": "command"
+    },
+    {
+      "display": "kill -STOP 1234",
+      "input": "kill -STOP 1234",
+      "annotation": "kill -STOP：プロセスを停止",
+      "input_type": "command"
+    },
+    {
+      "display": "kill -CONT 1234",
+      "input": "kill -CONT 1234",
+      "annotation": "kill -CONT：プロセスを再開",
+      "input_type": "command"
+    },
+    {
+      "display": "trap 'echo interrupted' INT",
+      "input": "trap 'echo interrupted' INT",
+      "annotation": "trap：シグナル等を受けた際の処理設定",
+      "input_type": "command"
+    },
+    {
+      "display": "wait \"$pid\"",
+      "input": "wait \"$pid\"",
+      "annotation": "wait：子プロセスなどの完了を待つ",
+      "input_type": "command"
+    },
+    {
+      "display": "disown %1",
+      "input": "disown %1",
+      "annotation": "disown：シェルのジョブ管理から外す（Bash）",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$0\"",
+      "input": "echo \"$0\"",
+      "annotation": "$0：スクリプト名など",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$1\"",
+      "input": "echo \"$1\"",
+      "annotation": "$1：第1引数",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$2\"",
+      "input": "echo \"$2\"",
+      "annotation": "$2：第2引数",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$#\"",
+      "input": "echo \"$#\"",
+      "annotation": "$#：引数の個数",
+      "input_type": "command"
+    },
+    {
+      "display": "printf '%s\\n' \"$@\"",
+      "input": "printf '%s\\n' \"$@\"",
+      "annotation": "$@：全引数",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$*\"",
+      "input": "echo \"$*\"",
+      "annotation": "$*：全引数（引用方法に注意）",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$$\"",
+      "input": "echo \"$$\"",
+      "annotation": "$$：シェルのPID",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$?\"",
+      "input": "echo \"$?\"",
+      "annotation": "$?：直前の終了ステータス",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$!\"",
+      "input": "echo \"$!\"",
+      "annotation": "$!：直近のバックグラウンドジョブのPID",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$-\"",
+      "input": "echo \"$-\"",
+      "annotation": "$-：現在有効なシェルオプション",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$HOME\"",
+      "input": "echo \"$HOME\"",
+      "annotation": "$HOME：ホームディレクトリ",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$PATH\"",
+      "input": "echo \"$PATH\"",
+      "annotation": "$PATH：コマンド検索パス",
+      "input_type": "command"
+    },
+    {
+      "display": "echo \"$PWD\"",
+      "input": "echo \"$PWD\"",
+      "annotation": "$PWD：現在のディレクトリ",
+      "input_type": "command"
+    },
+    {
+      "display": "${HOME}",
+      "input": "${HOME}",
+      "annotation": "${VAR}：変数展開",
+      "input_type": "code"
+    },
+    {
+      "display": "${PORT:-3000}",
+      "input": "${PORT:-3000}",
+      "annotation": "${VAR:-default}：未設定・空ならデフォルト値",
+      "input_type": "code"
+    },
+    {
+      "display": "${PORT:=3000}",
+      "input": "${PORT:=3000}",
+      "annotation": "${VAR:=default}：未設定・空なら代入して展開",
+      "input_type": "code"
+    },
+    {
+      "display": "${API_KEY:?required}",
+      "input": "${API_KEY:?required}",
+      "annotation": "${VAR:?error}：未設定・空ならエラー",
+      "input_type": "code"
+    },
+    {
+      "display": "${#NAME}",
+      "input": "${#NAME}",
+      "annotation": "${#VAR}：文字列長",
+      "input_type": "code"
+    },
+    {
+      "display": "${FILE#*.}",
+      "input": "${FILE#*.}",
+      "annotation": "${VAR#pattern}：先頭から最短一致部分を除去",
+      "input_type": "code"
+    },
+    {
+      "display": "${FILE%.*}",
+      "input": "${FILE%.*}",
+      "annotation": "${VAR%pattern}：末尾から最短一致部分を除去",
+      "input_type": "code"
+    },
+    {
+      "display": "${NAME/foo/bar}",
+      "input": "${NAME/foo/bar}",
+      "annotation": "${VAR/old/new}：最初の一致部分を置換",
+      "input_type": "code"
+    },
+    {
+      "display": "$(date)",
+      "input": "$(date)",
+      "annotation": "$(command)：コマンド置換",
+      "input_type": "code"
+    },
+    {
+      "display": "$((1 + 2))",
+      "input": "$((1 + 2))",
+      "annotation": "$((expression))：算術展開",
+      "input_type": "code"
+    },
+    {
+      "display": "echo {1..5}",
+      "input": "echo {1..5}",
+      "annotation": "{1..5}：ブレース展開",
+      "input_type": "command"
+    },
+    {
+      "display": "ls *.js",
+      "input": "ls *.js",
+      "annotation": "*.js：ファイル名のパターン展開",
+      "input_type": "command"
+    },
+    {
+      "display": "ls ?.txt",
+      "input": "ls ?.txt",
+      "annotation": "?.txt：任意の1文字に一致",
+      "input_type": "command"
+    },
+    {
+      "display": "[[ -f file ]]",
+      "input": "[[ -f file ]]",
+      "annotation": "通常ファイルが存在する",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -d dir ]]",
+      "input": "[[ -d dir ]]",
+      "annotation": "ディレクトリが存在する",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -e path ]]",
+      "input": "[[ -e path ]]",
+      "annotation": "ファイルなどが存在する",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -L path ]]",
+      "input": "[[ -L path ]]",
+      "annotation": "シンボリックリンクである",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -r file ]]",
+      "input": "[[ -r file ]]",
+      "annotation": "読み取り可能",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -w file ]]",
+      "input": "[[ -w file ]]",
+      "annotation": "書き込み可能",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -x file ]]",
+      "input": "[[ -x file ]]",
+      "annotation": "実行・検索可能",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -z \"$VAR\" ]]",
+      "input": "[[ -z \"$VAR\" ]]",
+      "annotation": "文字列が空",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ -n \"$VAR\" ]]",
+      "input": "[[ -n \"$VAR\" ]]",
+      "annotation": "文字列が空ではない",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ \"$A\" == \"$B\" ]]",
+      "input": "[[ \"$A\" == \"$B\" ]]",
+      "annotation": "文字列が等しい",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ \"$A\" != \"$B\" ]]",
+      "input": "[[ \"$A\" != \"$B\" ]]",
+      "annotation": "文字列が異なる",
+      "input_type": "code"
+    },
+    {
+      "display": "[[ \"$A\" =~ regex ]]",
+      "input": "[[ \"$A\" =~ regex ]]",
+      "annotation": "正規表現に一致",
+      "input_type": "code"
+    },
+    {
+      "display": "(( A > B ))",
+      "input": "(( A > B ))",
+      "annotation": "数値比較",
+      "input_type": "code"
+    },
+    {
+      "display": "bash script.sh",
+      "input": "bash script.sh",
+      "annotation": "Bashスクリプト実行",
+      "input_type": "command"
+    },
+    {
+      "display": "bash -n script.sh",
+      "input": "bash -n script.sh",
+      "annotation": "構文確認",
+      "input_type": "command"
+    },
+    {
+      "display": "bash -x script.sh",
+      "input": "bash -x script.sh",
+      "annotation": "実行過程を表示",
+      "input_type": "command"
+    },
+    {
+      "display": "declare -i",
+      "input": "declare -i",
+      "annotation": "整数属性の変数を宣言",
+      "input_type": "command"
+    },
+    {
+      "display": "declare -a",
+      "input": "declare -a",
+      "annotation": "配列を宣言",
+      "input_type": "command"
+    },
+    {
+      "display": "local",
+      "input": "local",
+      "annotation": "関数内のローカル変数",
+      "input_type": "command"
+    },
+    {
+      "display": "readonly",
+      "input": "readonly",
+      "annotation": "変数を読み取り専用にする",
+      "input_type": "command"
+    },
+    {
+      "display": "return",
+      "input": "return",
+      "annotation": "関数から戻る",
+      "input_type": "command"
+    },
+    {
+      "display": "exit",
+      "input": "exit",
+      "annotation": "シェル・スクリプトを終了",
+      "input_type": "command"
+    },
+    {
+      "display": "shift",
+      "input": "shift",
+      "annotation": "位置引数をずらす",
+      "input_type": "command"
+    },
+    {
+      "display": "getopts",
+      "input": "getopts",
+      "annotation": "短いオプションを解析",
+      "input_type": "command"
+    },
+    {
+      "display": "mapfile",
+      "input": "mapfile",
+      "annotation": "標準入力などを配列へ読み込む",
+      "input_type": "command"
+    },
+    {
+      "display": "shopt",
+      "input": "shopt",
+      "annotation": "Bash固有のシェル設定を管理",
+      "input_type": "command"
+    }
+  ],
+  "records": [],
+  "createdAt": "2026-10-23T04:08:47.008Z"
+}
